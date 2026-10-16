@@ -350,7 +350,7 @@ footer p+p{margin-top:6px}
       <p class="sub">菲律賓海板塊往西北推擠，上面的呂宋島弧撞上歐亞大陸邊緣，歐亞板塊邊緣被擠壓抬升成臺灣島，也讓島上出現平原、台地、盆地、丘陵、山地。點剖面圖上的地形，看人們怎麼利用這塊土地。</p>
     </div>
     <div class="panel" style="padding:12px 12px 4px;overflow-x:auto">
-      <svg id="profile" viewBox="0 0 960 400" role="img" aria-label="臺灣地形剖面示意圖" style="min-width:640px"></svg>
+      <svg id="profile" viewBox="0 -28 960 428" role="img" aria-label="臺灣地形剖面示意圖" style="min-width:640px"></svg>
     </div>
     <div class="grid2" style="margin-top:20px">
       <div class="panel pad card" id="pfInfo" aria-live="polite"></div>
@@ -817,7 +817,7 @@ const psvg=d3.select('#profile');
 const SEA_Y=210;
 // ground profile (x,y) west -> east
 const prof=[[0,232],[60,226],[90,212],[250,206],[262,184],[370,180],[382,150],[400,140],[420,176],[490,178],[500,146],[515,140],[540,124],[560,134],[580,110],[600,120],[620,96],[640,60],[660,74],[680,30],[692,16],[705,40],[725,22],[745,58],[770,86],[790,150],[805,176],[830,176],[845,128],[860,120],[872,170],[882,212],[930,234],[960,240]];
-psvg.append('rect').attr('x',0).attr('y',0).attr('width',960).attr('height',400).attr('fill','var(--surface)');
+psvg.append('rect').attr('x',0).attr('y',-28).attr('width',960).attr('height',428).attr('fill','var(--surface)');
 // plates under
 psvg.append('rect').attr('x',0).attr('y',250).attr('width',960).attr('height',150).attr('fill','var(--surface-2)');
 psvg.append('text').attr('class','pf-txt').attr('x',420).attr('y',360).text('地函');
@@ -874,7 +874,7 @@ tsvg.append('rect').attr('width',800).attr('height',600).attr('fill','var(--sea)
 const tg=tsvg.append('g');
 d3.range(100,161,10).forEach(d=>tg.append('path').attr('class','m-grid').attr('d',linePath([tproj([d,4]),tproj([d,40])])));
 d3.range(10,41,10).forEach(d=>tg.append('path').attr('class','m-grid').attr('d',linePath([tproj([100,d]),tproj([160,d])])));
-d3.range(100,161,10).forEach(d=>{const p=tproj([d,4]);tg.append('text').attr('class','m-grid-t').attr('x',p[0]+3).attr('y',592).text(d+'°E');});
+d3.range(100,161,10).forEach(d=>{const p=tproj([d,4]);const rt=p[0]>720;tg.append('text').attr('class','m-grid-t').attr('x',rt?p[0]-3:p[0]+3).attr('y',592).attr('text-anchor',rt?'end':null).text(d+'°E');});
 d3.range(10,41,10).forEach(d=>{const p=tproj([100,d]);tg.append('text').attr('class','m-grid-t').attr('x',4).attr('y',p[1]-3).text(d+'°N');});
 tg.append('g').selectAll('path').data(WORLD).join('path').attr('class','m-land').attr('d',tpath);
 tg.append('g').selectAll('path').data(LAKE).join('path').attr('fill','var(--sea)').attr('d',tpath);
@@ -882,7 +882,7 @@ tg.append('path').datum(TAIWAN).attr('class','m-tw').attr('d',tpath);
 tg.append('path').attr('class','m-trop').attr('d',linePath([tproj([100,23.44]),tproj([160,23.44])]));
 tg.append('text').attr('class','m-trop-t').attr('x',tproj([150,23.44])[0]).attr('y',tproj([150,23.44])[1]-5).text('北回歸線');
 COUNTRIES.forEach(c=>{const p=tproj([c[1],c[2]]);if(p[0]<0||p[0]>800||p[1]<0||p[1]>600)return;
-  const t=tg.append('text').attr('x',p[0]).attr('y',p[1]).attr('class',c[3]===0?'m-ocn':(c[3]===1?'m-cty':'m-cty'));
+  const t=tg.append('text').attr('x',Math.min(770,Math.max(30,p[0]))).attr('y',p[1]).attr('class',c[3]===0?'m-ocn':(c[3]===1?'m-cty':'m-cty'));
   if(c[3]===2)t.attr('font-size',12).attr('fill-opacity',.55);
   if(c[3]===1&&c[0]==='臺灣')t.attr('y',p[1]-18).attr('font-size',15.5).attr('fill-opacity',1);
   t.text(c[0]);});
@@ -1138,7 +1138,7 @@ const mtnPts=[[0,0],[60,20],[120,120],[150,560],[200,560],[240,520],[280,900],[3
 const mline=d3.area().x(d=>d[0]).y0(MH).y1(d=>hy(d[1])).curve(d3.curveCatmullRom);
 mt.append('path').attr('class','mt-body').attr('d',mline(mtnPts));
 mt.append('path').attr('class','mt-snow').attr('d','M488,'+hy(3400)+' L520,'+hy(3952)+' L548,'+hy(3520)+' L530,'+hy(3300)+' L515,'+hy(3450)+' L500,'+hy(3300)+'Z');
-mt.append('g').attr('class','ax').attr('transform','translate(36,0)').call(d3.axisLeft(hy).tickValues([0,1000,2000,3000,4000]).tickFormat(d=>d+'m').tickSize(0)).call(g=>g.select('.domain').remove());
+mt.append('g').attr('class','ax').attr('transform','translate(48,0)').call(d3.axisLeft(hy).tickValues([0,1000,2000,3000,4000]).tickFormat(d=>d+'m').tickSize(0)).call(g=>g.select('.domain').remove());
 [['埔里鎮 550m',175,550],['仁愛鄉 約2100m',392,2100],['玉山 3952m',520,3952]].forEach(([t,x,h])=>{mt.append('circle').attr('class','mt-refdot').attr('cx',x).attr('cy',hy(h)).attr('r',3.5);mt.append('text').attr('class','mt-ref').attr('x',x+(x>480?-8:8)).attr('y',hy(h)-8).attr('text-anchor',x>480?'end':'start').text(t);});
 const hLine=mt.append('line').attr('class','mt-line').attr('x1',40).attr('x2',MW);
 const hPin=mt.append('circle').attr('class','mt-pin').attr('r',8);
