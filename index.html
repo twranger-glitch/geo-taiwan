@@ -824,7 +824,7 @@ psvg.append('text').attr('class','pf-txt').attr('x',420).attr('y',360).text('地
 psvg.append('path').attr('class','pf-plate-eu').attr('d','M0,250 L800,250 C840,272 872,322 905,400 L835,400 C808,345 782,308 740,300 L0,300 Z');
 psvg.append('path').attr('class','pf-plate-ph').attr('d','M800,250 L960,250 L960,400 L905,400 C872,322 840,272 800,250 Z');
 psvg.append('text').attr('class','pf-txt b').attr('x',40).attr('y',290).text('歐亞板塊');
-psvg.append('text').attr('class','pf-txt b').attr('x',874).attr('y',345).text('菲律賓海板塊');
+[['菲律賓',918,345],['海板塊',918,363]].forEach(([t,x,y])=>psvg.append('text').attr('class','pf-txt b').attr('x',x).attr('y',y).attr('text-anchor','middle').text(t));
 const arr=psvg.append('g').attr('transform','translate(912,288)');
 arr.append('path').attr('d','M38,0 L-22,0').attr('stroke','var(--typhoon)').attr('stroke-width',4).attr('fill','none');
 arr.append('path').attr('d','M-22,-8 L-36,0 L-22,8Z').attr('fill','var(--typhoon)');
