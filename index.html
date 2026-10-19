@@ -270,6 +270,10 @@ footer{padding-block:32px 48px;color:var(--muted);font-size:15.5px}
 footer p+p{margin-top:6px}
 .tooltip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:14.5px;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:5}
 .credit{margin-top:14px;text-align:right;font-size:12px;letter-spacing:.04em;opacity:.55}
+.ext-link{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ext-link a{font-weight:700;color:var(--typhoon);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.ext-link a:hover{opacity:.8}
+.ext-link span{font-size:14px;color:var(--muted)}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -398,6 +402,7 @@ footer p+p{margin-top:6px}
       <div class="panel pad card" id="tyCard" aria-live="polite"></div>
     </div>
     <p class="note" style="margin-top:14px">1945–2024 年路徑取自 IBTrACS v04r01（WMO 最佳路徑，西北太平洋）；2025 年兩筆為本站整理，尚未與官方資料逐點核對。登陸判定以粗略的臺灣輪廓計算。強度依最大持續風速（秒速）分級：輕度 17.2–32.6 m/s、中度 32.7–50.9 m/s、強烈 51 m/s 以上，採臺灣中央氣象署的標準。</p>
+    <div class="ext-link"><a href="https://typhoon-taiwan.vercel.app/" target="_blank" rel="noopener">看即時颱風路徑與預報（臺灣颱風預報站）↗</a><span>外部網站，預報資料以該站為準</span></div>
   </div>
 </section>
 
