@@ -23,7 +23,8 @@ DAILY_URL = "https://opendata.wra.gov.tw/api/v2/51023e88-4c76-4dbc-bbb9-470da690
 HOURLY_URL = "https://opendata.wra.gov.tw/api/v2/2be9044c-6e44-4856-aad5-dd108c2e6679?format=JSON"
 OUT = os.path.join(os.path.dirname(__file__), "..", "data", "reservoirs")
 KEEP_HOURLY_DAYS = 45
-REGION = {"1": "北部", "2": "中部", "3": "南部", "4": "東部"}
+REGION = {"1": "北部", "2": "中部", "3": "南部", "4": "東部", "5": "離島"}
+ISLAND_IDS = {"31301"}  # 澎湖成功水庫
 
 
 def tls_context():
@@ -110,7 +111,7 @@ def main():
             continue
         pct = round(sto / cap * 100, 2)
         out.append({
-            "id": rid, "name": name, "region": REGION.get(rid[:1], "其他"),
+            "id": rid, "name": name, "region": "離島" if rid in ISLAND_IDS else REGION.get(rid[:1], "其他"),
             "capacity": round(cap, 2), "storage": round(sto, 2), "percent": pct,
             "water_level": num(h.get("waterlevel")), "observed_at": h_t.isoformat(),
             "suspect": pct > 105,
