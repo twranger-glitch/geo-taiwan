@@ -310,6 +310,14 @@ footer p+p{margin-top:6px}
 .ts-scale text{font-size:14px;fill:var(--ink)}
 .ts-badge rect{fill:var(--surface);stroke:var(--line)}
 .ts-badge text{font-size:16px;font-weight:700;fill:var(--ink)}
+.sim-tabs{display:flex;gap:8px;margin-bottom:10px}
+.sim-tabs .chip[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#worldsim{width:100%;height:auto;display:block}
+.ws-bg{fill:var(--surface-2)}
+.ws-sphere{fill:var(--sea);stroke:var(--line)}
+.wslab{font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px;pointer-events:none}
+.wslab.ocn{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:16px}
+@media (max-width:640px){.wslab{font-size:20px;stroke-width:4px}.wslab.ocn{font-size:22px}}
 @media (max-width:640px){
   .tslab{font-size:22px;stroke-width:4px}.tslab.big{font-size:27px}.tslab.sm{font-size:20px}.tslab.ts-sea-lab{font-size:22px}
   .ts-arrow text{font-size:21px}.ts-scale text{font-size:20px}.ts-badge text{font-size:22px}
@@ -395,7 +403,10 @@ footer p+p{margin-top:6px}
       </div>
       <div class="sim-ticks" id="simTicks"></div>
       <div class="grid2">
-        <div class="map-box"><svg id="twsim" viewBox="0 0 600 520" role="img" aria-label="臺灣附近板塊移動模擬圖"></svg></div>
+        <div>
+          <div class="sim-tabs" id="simTabs" role="tablist" aria-label="地圖範圍"><button class="chip" type="button" role="tab" data-v="tw" aria-selected="true">臺灣附近</button><button class="chip" type="button" role="tab" data-v="world" aria-selected="false">全世界</button></div>
+          <div class="map-box"><svg id="twsim" viewBox="0 0 600 520" role="img" aria-label="臺灣附近板塊移動模擬圖"></svg><svg id="worldsim" viewBox="0 0 600 330" role="img" aria-label="全世界板塊移動模擬圖" style="display:none"></svg></div>
+        </div>
         <div class="panel pad card" id="simInfo" aria-live="polite"></div>
       </div>
     </div>
@@ -1013,6 +1024,75 @@ function renderTwSim(t){
   {const bb=tsBadgeT.node().getBBox();tsBadgeBg.attr('width',bb.width+24).attr('y',bb.y-7).attr('height',bb.height+14);}
 }
 
+/* --- world map (Pacific-centred, same rotations as the globe) --- */
+let simView='tw';
+const WS_W=600,WS_H=330;
+const wsv=d3.select('#worldsim');
+const wsProj=d3.geoNaturalEarth1().rotate([-150,0]).fitExtent([[6,6],[WS_W-6,WS_H-6]],{type:'Sphere'});
+const wsPath=d3.geoPath(wsProj);
+const wsDefs=wsv.append('defs');
+wsv.append('rect').attr('width',WS_W).attr('height',WS_H).attr('class','ws-bg');
+wsv.append('path').datum({type:'Sphere'}).attr('class','ws-sphere').attr('d',wsPath);
+wsv.append('path').datum(d3.geoGraticule10()).attr('class','m-grid').attr('d',wsPath);
+const wsGhost=wsv.append('g').attr('class','ts-ghost');
+wsGhost.selectAll('path').data(WORLD.concat([TWD_F])).join('path').attr('d',wsPath);
+const wsClips=G_CODES.map(c=>({c,path:wsDefs.append('clipPath').attr('id','wsc-'+c).append('path')}));
+const wsLand=wsv.append('g');
+const wsGroups=G_CODES.map(c=>{const g=wsLand.append('g').attr('clip-path',`url(#wsc-${c})`);
+  const idx=SIMD.contP.map((l,i)=>l.includes(c)?i:-1).filter(i=>i>=0);
+  return {c,paths:idx.map(i=>({i,el:g.append('path').attr('class','m-land')}))};});
+const wsTwWclip=wsDefs.append('clipPath').attr('id','wsc-tw-w').append('path').attr('clip-rule','evenodd');
+const wsTwEclip=wsDefs.append('clipPath').attr('id','wsc-tw-e').append('path');
+const wsTwW=wsv.append('path').attr('class','m-tw').attr('clip-path','url(#wsc-tw-w)');
+const wsTwE=wsv.append('path').attr('class','ts-cr').attr('clip-path','url(#wsc-tw-e)');
+// labels: oceans and major countries only, so the small map stays readable
+// placement priority: oceans, then Taiwan and its neighbours, then the rest
+const WS_KEEP=['臺灣','中國','日本','澳洲','印尼','印度','俄羅斯','美國','加拿大','巴西','阿根廷','南非','墨西哥','格陵蘭','沙烏地阿拉伯','埃及'];
+const WS_LAB=COUNTRIES.map((d,i)=>({d,i})).filter(o=>o.d[3]===0||WS_KEEP.includes(o.d[0]))
+  .sort((a,b)=>(a.d[3]===0?-1:WS_KEEP.indexOf(a.d[0]))-(b.d[3]===0?-1:WS_KEEP.indexOf(b.d[0])));
+const wsLab=wsv.selectAll('text.wslab').data(WS_LAB).join('text').attr('class',o=>'wslab'+(o.d[3]===0?' ocn':'')).attr('text-anchor','middle').text(o=>o.d[0]);
+const wsBadge=wsv.append('g').attr('class','ts-badge');
+const wsBadgeBg=wsBadge.append('rect').attr('x',10).attr('y',10).attr('rx',10).attr('height',30);
+const wsBadgeT=wsBadge.append('text').attr('x',22).attr('y',31);
+let wsGeo0=null;
+function renderWorldSim(t){
+  const G=t>0&&simGeo?simGeo:(wsGeo0||(wsGeo0=buildSimGeo(0)));
+  wsClips.forEach(o=>o.path.attr('d',wsPath(G.clip[o.c])||''));
+  wsGroups.forEach(o=>o.paths.forEach(p=>p.el.attr('d',wsPath(G.cont[p.i][o.c])||'')));
+  wsTwWclip.attr('d',(wsPath({type:'Sphere'})||'')+(wsPath(G.crW)||''));
+  wsTwEclip.attr('d',wsPath(G.crE)||'');
+  wsTwW.attr('d',wsPath(G.twW)||'');wsTwE.attr('d',wsPath(G.twE)||'');
+  wsGhost.style('display',t>0?null:'none');
+  wsBadgeT.text(t>0?simLabel(t):'現在的位置');
+  const bb0=wsBadgeT.node().getBBox();const placed=[[0,0,bb0.x+bb0.width+18,bb0.y+bb0.height+12]];   // the time badge
+  wsLab.each(function(o){const p=wsProj(G.cty[o.i]);const el=d3.select(this).style('display',null).attr('x',p?p[0]:-99).attr('y',p?p[1]:-99);
+    if(!p){el.style('display','none');return;}
+    const b=this.getBBox();const box=[b.x-2,b.y-1,b.x+b.width+2,b.y+b.height+1];
+    const ok=box[0]>3&&box[2]<WS_W-3&&box[1]>3&&box[3]<WS_H-3&&!placed.some(q=>box[0]<q[2]&&box[2]>q[0]&&box[1]<q[3]&&box[3]>q[1]);
+    if(ok)placed.push(box);el.style('display',ok?null:'none');});
+  wsBadgeT.text(t>0?simLabel(t):'現在的位置');
+  {const bb=wsBadgeT.node().getBBox();wsBadgeBg.attr('width',bb.width+24).attr('y',bb.y-6).attr('height',bb.height+12);}
+}
+function worldText(t,n){
+  if(!(t>0))return '全世界的板塊都在動：大西洋每年變寬約 2 公分，澳洲每年往北靠近亞洲約 7 公分，太平洋板塊帶著洛杉磯每年往北走約 5 公分。拉動時間，看看世界地圖會怎麼變。';
+  const lab=simLabel(t);
+  const atl=n.atl[1]-n.atl[0],syd=n.tpeSyd[0]-n.tpeSyd[1],la=n.laSf[1]-n.laSf[0];
+  let s=`${lab}，大西洋變寬了約 ${fmtKm(atl)} 公里，澳洲往亞洲靠近了約 ${fmtKm(syd)} 公里，`;
+  s+=la<0?`洛杉磯和舊金山的距離縮短了 ${fmtKm(-la)} 公里。`:`洛杉磯已經往北越過舊金山，兩地又拉開到 ${fmtKm(n.laSf[1])} 公里。`;
+  if(t<=0.1)s+='這些變化放在世界地圖上還小到看不出來。';
+  else if(t<=1)s+='世界地圖上仍然很難看出差別，一百萬年對地球來說並不長。';
+  else if(t<=5)s+='世界地圖上開始看得出一點移動：虛線是現在的位置。';
+  else s+='照這個速度，澳洲會撞上東南亞、大西洋越來越寬、印度繼續往北擠。不過這麼長的時間裡板塊本身也會改變，地圖只是「照現在的速度一直走」的想像。';
+  return s;
+}
+function setSimView(v){
+  simView=v;
+  document.querySelectorAll('#simTabs [data-v]').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
+  $('#twsim').style.display=v==='tw'?'':'none';$('#worldsim').style.display=v==='world'?'':'none';
+  if(v==='tw')renderTwSim(SIMT);else renderWorldSim(SIMT);
+  simInfo.innerHTML=simInfoHtml(SIMT,simIdx);
+}
+
 /* --- numbers + explanation --- */
 const SIM_PTS={cr:[[121.38,23.1],'PS'],tpe:[[121.5,25.03],'YA'],syd:[[151.2,-33.87],'AU'],nyc:[[-74.0,40.7],'NA'],lis:[[-9.14,38.72],'EU'],
   la:[[-118.25,34.05],'PA'],sf:[[-122.42,37.77],'NA']};
@@ -1041,7 +1121,7 @@ function simInfoHtml(t,i){
   const n=simNumbers(t);const lab=simLabel(t);
   const d=(a)=>{const diff=a[1]-a[0];return `${fmtKm(a[1])} 公里 <span class="sim-delta">${t>0?(diff>=0?'＋':'－')+fmtKm(Math.abs(diff)):''}</span>`;};
   return `<div class="label">板塊時光機</div><h3 style="margin-top:2px">${t>0?lab+'的臺灣與世界':'現在的板塊運動'}</h3>
-  <p style="margin-top:8px">${TW_TEXT[i]}</p>
+  <p style="margin-top:8px">${simView==='world'?worldText(t,n):TW_TEXT[i]}</p>
   <div class="stats">
     <div class="stat"><div class="k">海岸山脈往${t>0?dirName(n.crAz):'西北'}移動</div><div class="v num">${t>0?fmtKm(n.cr)+' 公里':'每年約 8 公分'}</div></div>
     <div class="stat"><div class="k">臺北到雪梨（澳洲往北靠近亞洲）</div><div class="v num">${d(n.tpeSyd)}</div></div>
@@ -1059,7 +1139,7 @@ function applySim(t,i){
   if(on){simGeo=buildSimGeo(t);}
   setGlobeSimMode(on);
   if(on)renderGlobeSim();else renderGlobe();
-  renderTwSim(t);
+  if(simView==='tw')renderTwSim(t);else renderWorldSim(t);
   if(i!=null){simInfo.innerHTML=simInfoHtml(t,i);}
   simOut.textContent=simLabel(t);
   gSimBadge.hidden=!on;if(on)gSimBadge.querySelector('b').textContent=simLabel(t);
@@ -1090,6 +1170,7 @@ $('#gSimReset').addEventListener('click',()=>{stopSimPlay();goSim(0,true);});
 $('#simTicks').innerHTML=SIM_PRESETS.map((p,i)=>`<button type="button" data-i="${i}">${p[1].replace('後','')}</button>`).join('');
 $('#simTicks').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;stopSimPlay();goSim(+b.dataset.i,true);});
 applySim(0,0);
+$('#simTabs').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)setSimView(b.dataset.v);});
 
 const PF=[
  {k:'sea',n:'臺灣海峽',x0:0,x1:90},
