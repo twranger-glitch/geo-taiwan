@@ -1,11 +1,9 @@
 name: 更新台電即時發電資料
 
 on:
+  schedule:
+    - cron: "*/10 * * * *"   # 每 10 分鐘（GitHub 可能延遲幾分鐘）
   workflow_dispatch:
-    inputs:
-      mode:
-        description: "probe 或 fetch"
-        default: "fetch"
 
 permissions:
   contents: write
@@ -17,21 +15,27 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: src
+      - name: 取出資料分支
+        run: |
+          git clone --depth 1 --branch power-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data || {
+            mkdir data && cd data && git init -q -b power-data && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"; }
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: 探測
-        if: inputs.mode == 'probe'
-        run: python scripts/probe_power.py
-      - name: 有變動才提交
+      - name: 抓取台電開放資料
+        working-directory: data
+        run: python ../src/scripts/fetch_power.py
+      - name: 更新資料分支（只保留一個提交，避免歷史變大）
+        working-directory: data
         run: |
           git config user.name "power-bot"
           git config user.email "power-bot@users.noreply.github.com"
-          git add data/power
-          if git diff --cached --quiet; then echo "沒有新資料"; else
-            git commit -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
-            git pull --rebase origin main
-            git push
-          fi
+          git add -A
+          git commit -q -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')" --allow-empty
+          git reset -q --soft $(git commit-tree HEAD^{tree} -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')")
+          git push -q -f origin HEAD:power-data
