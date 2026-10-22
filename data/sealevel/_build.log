@@ -4,5 +4,5 @@ no tile (sea) 22 119
 no tile (sea) 22 122
 no tile (sea) 23 122
 no tile (sea) 25 120
-coastline download failed https://www.soest.hawaii.edu/pwessel/gshhg/gshhg-shp-2.3.7.zip <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>
-no coastline source reachable
+tw (1065, 840) 135918 bytes
+tn (780, 960) 228563 bytes

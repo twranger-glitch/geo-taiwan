@@ -1,1 +1,1 @@
-{"lon0": 119.3, "lon1": 122.1, "lat0": 21.85, "lat1": 25.4, "cell_deg": 0.0033333333333333335, "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 25th percentile", "w": 840, "h": 1065, "encoding": "0 ocean; 1-201 land (c-1)/2 m; 202-255 land 100+(c-201)*75 m"}
+{"lon0": 119.3, "lon1": 122.1, "lat0": 21.85, "lat1": 25.4, "cell_deg": 0.0033333333333333335, "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 15th percentile; coastline from GSHHG full resolution", "w": 840, "h": 1065, "encoding": "0 ocean; 1-201 land (c-1)/2 m; 202-255 land 100+(c-201)*75 m"}
