@@ -26,7 +26,7 @@ jobs:
         if: inputs.mode == 'build'
         run: |
           mkdir -p data/sealevel
-          python scripts/build_dem.py 2>&1 | tee data/sealevel/_build.log || true
+          PARTS="tw tn" python scripts/build_dem.py 2>&1 | tee data/sealevel/_build.log || true
       - name: 提交
         run: |
           git config user.name "dem-bot"

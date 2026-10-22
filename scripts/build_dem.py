@@ -3,7 +3,7 @@
 Sources (downloaded inside GitHub Actions):
   Taiwan  Copernicus GLO-30 DEM (ESA, 1 arc-second), reduced to coarser cells with a low
           percentile so that buildings and trees count less (the DEM is a surface model);
-          sea/land from OpenStreetMap land polygons (osmdata.openstreetmap.de, ODbL).
+          sea/land from the GSHHG full-resolution shoreline (Wessel & Smith, NOAA).
   World   GMT earth_relief 10 arc-minute (SRTM15+) and earth_mask 5 arc-minute.
 
 Each grid is written as an 8-bit grayscale PNG plus a JSON description:
@@ -57,20 +57,31 @@ def encode(elev, ocean):
     return code
 
 
-def osm_land(lon0, lon1, lat0, lat1, cell):
-    """Rasterise OpenStreetMap land polygons (coastline-derived) onto the grid."""
+def coast_land(lon0, lon1, lat0, lat1, cell):
+    """Rasterise GSHHG full-resolution shoreline (level 1 = land/ocean boundary) onto the grid."""
     import zipfile
     import fiona
     from rasterio import features
     from rasterio.transform import from_origin
-    z = download("https://osmdata.openstreetmap.de/download/land-polygons-split-4326.zip", f"{TMP}/land.zip")
-    d = f"{TMP}/land"
+    z = None
+    for url in ["https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip",
+                "https://www.soest.hawaii.edu/pwessel/gshhg/gshhg-shp-2.3.7.zip"]:
+        try:
+            z = download(url, f"{TMP}/gshhg.zip")
+            if z:
+                break
+        except Exception as e:
+            print("coastline download failed", url, e, flush=True)
+    if not z:
+        raise SystemExit("no coastline source reachable")
+    d = f"{TMP}/gshhg"
     if not os.path.exists(d):
         zipfile.ZipFile(z).extractall(d)
-    shp = [os.path.join(r, f) for r, _, fs in os.walk(d) for f in fs if f.endswith(".shp")][0]
+    shp = [os.path.join(r, f) for r, _, fs in os.walk(d) for f in fs if f == "GSHHS_f_L1.shp"][0]
     w, h = int(round((lon1 - lon0) / cell)), int(round((lat1 - lat0) / cell))
     with fiona.open(shp) as src:
         geoms = [f["geometry"] for f in src.filter(bbox=(lon0, lat0, lon1, lat1))]
+    print("coast polygons", len(geoms), flush=True)
     return features.rasterize(((g, 1) for g in geoms), out_shape=(h, w),
                               transform=from_origin(lon0, lat1, cell, cell), fill=0, dtype="uint8").astype(bool)
 
@@ -149,7 +160,7 @@ def world_grid():
 def main():
     os.makedirs(OUT, exist_ok=True)
     os.makedirs(TMP, exist_ok=True)
-    which = sys.argv[1:] or ["world", "tw", "tn"]
+    which = sys.argv[1:] or os.environ.get("PARTS", "world tw tn").split()
     for part in which:
         try:
             build(part)
@@ -168,16 +179,16 @@ def build(part):
               "source": "GMT earth_relief 10m (SRTM15+) and earth_mask 5m"})
     if "tw" in which:
         g, cell = taiwan_grid(119.3, 122.1, 21.85, 25.4, 12, 15)
-        land = osm_land(119.3, 122.1, 21.85, 25.4, cell)
+        land = coast_land(119.3, 122.1, 21.85, 25.4, cell)
         save("tw", encode(np.maximum(g, 0), ~land),
              {"lon0": 119.3, "lon1": 122.1, "lat0": 21.85, "lat1": 25.4, "cell_deg": cell,
-              "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 15th percentile; coastline from OpenStreetMap land polygons"})
+              "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 15th percentile; coastline from GSHHG full resolution"})
     if "tn" in which:
         g, cell = taiwan_grid(120.0, 120.8, 22.8, 23.45, 3, 10)
-        land = osm_land(120.0, 120.8, 22.8, 23.45, cell)
+        land = coast_land(120.0, 120.8, 22.8, 23.45, cell)
         save("tn", encode(np.maximum(g, 0), ~land),
              {"lon0": 120.0, "lon1": 120.8, "lat0": 22.8, "lat1": 23.45, "cell_deg": cell,
-              "source": "Copernicus GLO-30 DEM, 3 arc-second cells, 10th percentile; coastline from OpenStreetMap land polygons"})
+              "source": "Copernicus GLO-30 DEM, 3 arc-second cells, 10th percentile; coastline from GSHHG full resolution"})
 
 
 if __name__ == "__main__":
