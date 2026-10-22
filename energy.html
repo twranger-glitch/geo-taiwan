@@ -415,12 +415,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .dc1{font-size:17px;fill:var(--muted)}
 .dc2{font-family:var(--f-num);font-size:46px;font-weight:600;fill:var(--ink)}
 .big-line{font-size:20px;line-height:1.6}
-.splitbar{display:flex;height:22px;border-radius:11px;overflow:hidden;margin-top:14px;background:var(--surface-2)}
-.splitbar i{display:block;height:100%}
-.split-lab{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:4px;font-weight:700}
 .mix{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
-.mix li{display:grid;grid-template-columns:16px minmax(0,1fr) auto 7.5em;gap:10px;align-items:center;font-size:17px;padding:4px 0;border-bottom:1px dashed var(--line)}
-.mix li i{width:16px;height:16px;border-radius:4px}
 .mix .p{font-family:var(--f-num);font-weight:600;font-size:20px}
 .mix .m{font-family:var(--f-num);color:var(--muted);font-size:14.5px;text-align:right}
 .mix li.nuc{opacity:.6}
@@ -439,20 +434,20 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .kpi{font-size:18px}
 .kpi small{display:block;color:var(--muted);font-size:15px;margin-top:4px}
 .meter{height:14px;border-radius:7px;background:var(--surface-2);overflow:hidden;margin-top:10px}
-.meter i{display:block;height:100%;background:#2fa6a0;border-radius:7px;transition:width .6s}
-.meter.sun i{background:#e0a800}
+.meter i{display:block;height:100%;background:#009E73;border-radius:7px;transition:width .6s}
+.meter.sun i{background:#B8860B}
 .farms{display:grid;gap:5px;margin-top:8px}
-.farm{display:grid;grid-template-columns:7.5em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14.5px}
+.farm{display:grid;grid-template-columns:7.5em minmax(0,1fr) 6.2em;gap:8px;align-items:center;font-size:14.5px}
 .fn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fb{position:relative;height:12px}
 .fb i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
-.fb i.c{background:color-mix(in srgb,#2fa6a0 22%,var(--surface))}
-.fb i.m{background:#2fa6a0}
+.fb i.c{background:color-mix(in srgb,#009E73 22%,var(--surface))}
+.fb i.m{background:#009E73}
 .fv{font-family:var(--f-num);text-align:right;line-height:1.1}
 .fv em{display:block;font-style:normal;font-family:var(--f-body);font-size:11.5px;color:var(--typhoon)}
 .guess{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .guess button{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 18px;font-weight:700;font-size:17px}
-.guess button[aria-pressed="true"]{background:#2fa6a0;color:#fff;border-color:#2fa6a0}
+.guess button[aria-pressed="true"]{background:#009E73;color:#fff;border-color:#009E73}
 .why3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
 .why3>div{background:var(--surface-2);border-radius:12px;padding:8px;text-align:center}
 .why3 svg{width:64px;height:64px;display:block;margin:0 auto}
@@ -466,6 +461,39 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .sim-leg span{display:inline-flex;align-items:center;gap:6px}
 .sim-leg i{display:inline-block}
 .sim-leg i{height:10px !important;width:16px !important;border-radius:3px}
+
+.grp-t{font-size:15px;font-weight:700;color:var(--muted);margin-top:12px}
+.grpbar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin-top:6px;background:var(--surface-2)}
+.gseg{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;min-width:3px}
+.g-f{background-image:repeating-linear-gradient(45deg,#ffffff22 0 4px,transparent 4px 9px)}
+.g-s{background-image:radial-gradient(#0005 1.4px,transparent 1.6px);background-size:7px 7px}
+.grp-note{display:flex;flex-direction:column;gap:2px;margin-top:6px;font-size:15.5px}
+.grp-note span{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.grp-note small{color:var(--muted);font-size:13.5px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;flex:none;box-shadow:inset 0 0 0 1px #0003}
+.sw.dash{background:none !important;box-shadow:none;border-top:3px solid;height:0;width:18px;border-radius:0;vertical-align:4px}
+.mix li{list-style:none}
+.mix li>button,.mix li>div{width:100%;display:grid;grid-template-columns:20px minmax(0,1fr) auto 7.5em 14px;gap:8px;align-items:center;font-size:17px;padding:6px 4px;border:0;border-bottom:1px dashed var(--line);background:none;text-align:left;color:var(--ink);border-radius:8px}
+.mix li>button:hover,.mix li>button:focus-visible{background:var(--surface-2)}
+.mix .go{color:var(--muted);font-weight:700}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chipset button{display:inline-flex;align-items:center;border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-weight:700;font-size:15.5px;color:var(--ink)}
+.chipset button[aria-selected="true"]{border-color:var(--ink);background:var(--surface-2);box-shadow:inset 0 -3px 0 var(--ink)}
+.hist-stat{font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.chartbox{position:relative}
+.tip{position:fixed;z-index:60;max-width:300px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.18);pointer-events:none}
+.tip[hidden]{display:none}
+.tip table{border-collapse:collapse;margin-top:4px;font-size:14.5px}
+.tip td{padding:1px 6px 1px 0;white-space:nowrap}
+.tip td:nth-child(n+2){text-align:right;font-family:var(--f-num)}
+.tip small{color:var(--muted)}
+.seg{cursor:pointer;outline:none}
+.seg:focus-visible .fill{stroke:var(--ink);stroke-width:4}
+.dlab{font-size:14px;font-weight:700;fill:var(--ink)}
+.tz{font-size:17px;font-weight:700;fill:#10313b}
+#areaLeg button{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;font-size:14.5px;color:var(--ink)}
+#areaLeg button:hover{border-color:var(--ink)}
+.fv small{color:var(--muted);font-size:11.5px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <header class="top">
@@ -484,9 +512,10 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 
 <nav class="rail" aria-label="段落">
   <div class="wrap" id="rail">
-    <a href="#now"><span class="dot" style="background:#e8833a"></span>現在的發電組成</a>
-    <a href="#wind"><span class="dot" style="background:#2fa6a0"></span>風力發電</a>
-    <a href="#sun"><span class="dot" style="background:#f2c230"></span>太陽能發電</a>
+    <a href="#now"><span class="dot" style="background:#E69F00"></span>現在的發電組成</a>
+    <a href="#hist"><span class="dot" style="background:#0072B2"></span>發電紀錄</a>
+    <a href="#wind"><span class="dot" style="background:#009E73"></span>風力發電</a>
+    <a href="#sun"><span class="dot" style="background:#F0E442"></span>太陽能發電</a>
     <a href="#today"><span class="dot" style="background:var(--wind)"></span>一天的變化</a>
   </div>
 </nav>
@@ -495,7 +524,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 <section class="unit" id="now">
   <div class="wrap">
     <div class="unit-head">
-      <div class="badge" style="background:#e8833a">電</div>
+      <div class="badge" style="background:#B86E00">電</div>
       <h2>這一刻，臺灣的電從哪裡來？</h2>
       <p class="sub" id="nowSub">正在向台電拿最新資料……</p>
     </div>
@@ -505,8 +534,10 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       </div>
       <div class="panel pad">
         <p class="big-line" id="headline"></p>
-        <div class="splitbar" id="split" aria-hidden="true"></div>
-        <div class="split-lab" id="splitLab"></div>
+        <div class="grp-t">把所有發電方式分成三大類：</div>
+        <div class="grpbar" id="grp" role="img"></div>
+        <div class="grp-note" id="grpNote"></div>
+        <div class="grp-t" style="margin-top:14px">每一種發電方式（點一下看它的發電紀錄）：</div>
         <ul class="mix" id="mixList"></ul>
         <div class="stamp"><span id="stamp"></span><button class="bigbtn alt" id="refresh">重新整理</button></div>
       </div>
@@ -514,10 +545,32 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   </div>
 </section>
 
+<section class="unit" id="hist">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#0072B2">史</div>
+      <h2 id="histTitle">發電紀錄</h2>
+      <p class="sub">選一種發電方式，看看它過去發了多少電。把游標移到圖上（手機用手指點），就會顯示那個時間的數字。</p>
+    </div>
+    <div class="chipset" id="histCats" role="tablist" aria-label="選擇發電方式"></div>
+    <div class="tabs" id="histRange" role="tablist" style="margin-top:10px">
+      <button role="tab" data-r="1" aria-selected="false">今天</button>
+      <button role="tab" data-r="3" aria-selected="true">最近 3 天</button>
+      <button role="tab" data-r="7" aria-selected="false">最近 7 天</button>
+      <button role="tab" data-r="30" aria-selected="false">最近 30 天</button>
+    </div>
+    <div class="panel pad" style="margin-top:12px">
+      <p class="hist-stat" id="histStat"></p>
+      <div class="chartbox"><svg id="histSvg" class="sim-chart" role="img" aria-label="發電紀錄折線圖"></svg></div>
+      <p class="note" id="histNote"></p>
+    </div>
+  </div>
+</section>
+
 <section class="unit" id="wind">
   <div class="wrap">
     <div class="unit-head">
-      <div class="badge" style="background:#2fa6a0">風</div>
+      <div class="badge" style="background:#007A5A">風</div>
       <h2>風力發電機現在轉得動嗎？ <span class="page-ref">課本 p.53</span></h2>
       <p class="sub">把臺灣所有風力發電機加起來，現在發了多少電？風車轉得越快，代表發的電越接近它們最多能發的量。</p>
     </div>
@@ -567,27 +620,28 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
     <div class="unit-head">
       <div class="badge" style="background:var(--wind)">日</div>
       <h2>一天之中，發電組成怎麼變？</h2>
-      <p class="sub">這個網站從 2026 年 10 月 22 日開始，每 10 分鐘記錄一次。選一天看看：白天太陽能變多、晚上用電少，颱風天的風力又是怎麼變的？</p>
+      <p class="sub">把游標移到圖上可以看到每種發電方式的名稱和數字。這個網站從 2026 年 10 月 22 日開始，每 10 分鐘記錄一次。選一天看看：白天太陽能變多、晚上用電少，颱風天的風力又是怎麼變的？</p>
     </div>
     <div class="tabs" id="dayTabs" role="tablist"></div>
     <div class="panel pad" style="margin-top:12px">
-      <svg id="area" class="sim-chart" role="img" aria-label="一天中各種發電方式的變化"></svg>
+      <div class="chartbox"><svg id="area" class="sim-chart" role="img" aria-label="一天中各種發電方式的變化"></svg></div>
       <div class="sim-leg" id="areaLeg"></div>
     </div>
     <div class="panel pad" style="margin-top:14px">
       <h3 style="font-size:20px">風力發電比一比</h3>
-      <p class="note">每一條線是一天的風力發電量。颱風前、颱風天、颱風後放在一起比較。</p>
-      <svg id="windCmp" class="sim-chart" role="img" aria-label="不同日子的風力發電量"></svg>
+      <p class="note">每一條線是一天的風力發電量，線的樣式（實線、虛線、點線）和線尾的日期都不一樣，不用分辨顏色也看得懂。</p>
+      <div class="chartbox"><svg id="windCmp" class="sim-chart" role="img" aria-label="不同日子的風力發電量"></svg></div>
       <div class="sim-leg" id="windLeg"></div>
     </div>
   </div>
 </section>
 </main>
+<div class="tip" id="tip" role="status" aria-live="polite" hidden></div>
 
 
 <footer>
   <div class="wrap">
-    <p>資料來源：<a href="https://data.gov.tw/dataset/8931">台灣電力公司「各機組發電量」開放資料</a>（台電每 10 分鐘更新，本站約每 10 分鐘抓取一次，可能晚 10 到 20 分鐘）。圖中「燃煤」包含汽電共生，「水力」包含抽蓄水力。</p>
+    <p>資料來源：<a href="https://data.gov.tw/dataset/8931">台灣電力公司「各機組發電量」開放資料</a>（台電每 10 分鐘更新，本站約每 10 分鐘抓取一次，可能晚 10 到 20 分鐘）。圖中「燃煤」包含汽電共生，「水力」包含抽蓄水力。配色採用色弱友善的配色，圖上也都標有文字。</p>
     <p>風機啟動與停機的風速為一般風力發電機的大約數值。</p>
     <p class="credit">海佃地圖 ｜ Haidian Hidden Library ｜ 2026</p>
   </div>
@@ -675,50 +729,109 @@ function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w|
 
 (function(){
 const BASE='https://raw.githubusercontent.com/twranger-glitch/geo-taiwan/power-data/';
+/* colour-blind-friendly palette (Okabe–Ito) + a pattern per group so colour is never the only cue */
 const CAT=[
- {k:'gas',n:'天然氣',c:'#e8833a',t:['燃氣','民營電廠-燃氣'],f:1},
- {k:'coal',n:'燃煤',c:'#7a6658',t:['燃煤','民營電廠-燃煤','汽電共生'],f:1},
- {k:'oil',n:'燃油',c:'#b0503f',t:['燃料油','燃油','輕油'],f:1},
- {k:'nuc',n:'核能',c:'#8e5bb5',t:['核能'],f:0},
- {k:'solar',n:'太陽能',c:'#f2c230',t:['太陽能'],r:1},
- {k:'wind',n:'風力',c:'#2fa6a0',t:['風力'],r:1},
- {k:'hydro',n:'水力',c:'#3c7fd1',t:['水力'],r:1},
- {k:'other',n:'其他再生能源',c:'#6aa84f',t:['其它再生能源','其他再生能源','地熱','生質能'],r:1},
- {k:'store',n:'儲能（電池放電）',c:'#a99bc8',t:['儲能']}];
+ {k:'gas',n:'天然氣',c:'#E69F00',t:['燃氣','民營電廠-燃氣'],g:'f'},
+ {k:'coal',n:'燃煤',c:'#5E5E5E',t:['燃煤','民營電廠-燃煤','汽電共生'],g:'f'},
+ {k:'oil',n:'燃油',c:'#D55E00',t:['燃料油','燃油','輕油'],g:'f'},
+ {k:'nuc',n:'核能',c:'#882255',t:['核能'],g:'n'},
+ {k:'solar',n:'太陽能',c:'#F0E442',t:['太陽能'],g:'r'},
+ {k:'wind',n:'風力',c:'#009E73',t:['風力'],g:'r'},
+ {k:'hydro',n:'水力',c:'#0072B2',t:['水力','抽蓄發電'],g:'r'},
+ {k:'other',n:'其他再生能源',c:'#56B4E9',t:['其它再生能源','其他再生能源','地熱','生質能'],g:'r'},
+ {k:'store',n:'儲能（電池放電）',c:'#CC79A7',t:['儲能'],g:'s'}];
+const C=k=>CAT.find(c=>c.k===k);
+const GRP={f:['火力（燒燃料）','#4D4D4D','#fff'],r:['再生能源','#007A5A','#fff'],s:['儲能','#CC79A7','#1b1b1b'],n:['核能','#882255','#fff']};
+const ink=c=>{const r=parseInt(c.slice(1,3),16),g=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);return (r*299+g*587+b*114)/1000>150?'#1b1b1b':'#fff';};
 const SKIP=t=>/負載/.test(t);
 function group(types){const out={};CAT.forEach(c=>out[c.k]=0);
-  for(const [t,v] of Object.entries(types)){if(SKIP(t))continue;const mw=typeof v==='number'?v:v.mw;if(!(mw>0))continue;const c=CAT.find(c=>c.t.includes(t))||CAT.find(c=>c.k==='other');out[c.k]+=mw;}
+  for(const [t,v] of Object.entries(types)){if(SKIP(t))continue;const mw=typeof v==='number'?v:v&&v.mw;if(!(mw>0))continue;const c=CAT.find(c=>c.t.includes(t))||C('other');out[c.k]+=mw;}
   return out;}
 const fmt=v=>Math.round(v).toLocaleString('zh-TW');
 const pct=(v,T)=>T?(v/T*100):0;
+const pf=p=>p<1?p.toFixed(1):p.toFixed(0);
 const hm=s=>s.slice(11,16);
-let NOW=null,DAYS=[],SER={},sel=null;
+let NOW=null,DAYS=[],SER={},sel=null,hcat='wind',hrange='3';
 async function getJSON(p){const r=await fetch(BASE+p+'?v='+Math.floor(Date.now()/120000),{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json();}
 async function load(){try{NOW=await getJSON('now.json');drawNow();drawWind();drawSun();
     DAYS=await getJSON('days.json');for(const d of DAYS.slice(-7)){if(!SER[d]||d===DAYS[DAYS.length-1])SER[d]=await getJSON('day/'+d+'.json');}
-    if(!sel||!DAYS.includes(sel))sel=DAYS[DAYS.length-1];tabs();drawArea();drawWindCmp();}
+    if(!sel||!DAYS.includes(sel))sel=DAYS[DAYS.length-1];tabs();drawArea();drawWindCmp();drawHist();}
   catch(e){$('#nowSub').textContent='暫時拿不到台電的資料，請稍後按「重新整理」再試一次。';console.warn(e);}}
+/* ---------- tooltip ---------- */
+const tip=$('#tip');
+function showTip(html,x,y){tip.innerHTML=html;tip.hidden=false;const r=tip.getBoundingClientRect(),W=innerWidth;let L=x+14,T=y+14;if(L+r.width>W-8)L=x-r.width-14;if(L<8)L=8;if(T+r.height>innerHeight-8)T=y-r.height-14;tip.style.left=L+'px';tip.style.top=T+'px';}
+const hideTip=()=>{tip.hidden=true;};
+addEventListener('scroll',hideTip,{passive:true});
+const sw=c=>`<i class="sw" style="background:${c.c}"></i>`;
+/* patterns */
+function patterns(svg){const d=svg.append('defs');
+  const h=d.append('pattern').attr('id',svg.attr('id')+'-hatch').attr('width',8).attr('height',8).attr('patternUnits','userSpaceOnUse').attr('patternTransform','rotate(45)');h.append('rect').attr('width',8).attr('height',8).attr('fill','none');h.append('line').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',8).attr('stroke','#0006').attr('stroke-width',2);
+  const p=d.append('pattern').attr('id',svg.attr('id')+'-dots').attr('width',8).attr('height',8).attr('patternUnits','userSpaceOnUse');p.append('circle').attr('cx',4).attr('cy',4).attr('r',1.6).attr('fill','#0006');}
+const patFor=(svg,c)=>c.g==='f'?`url(#${svg.attr('id')}-hatch)`:c.g==='s'?`url(#${svg.attr('id')}-dots)`:'none';
 /* ---------- now ---------- */
 function drawNow(){const g=group(NOW.types),T=Object.values(g).reduce((a,b)=>a+b,0);const t=NOW.t;
   $('#nowSub').innerHTML=`資料時間：<b>${t.slice(0,10).replace(/-/g,'/')} ${hm(t)}</b>　全臺灣這一刻總共發電約 <b>${fmt(T)}</b> 百萬瓦（MW）。`;
   const L=CAT.map(c=>({...c,v:g[c.k]})).filter(c=>c.v>0).sort((a,b)=>b.v-a.v);
-  const ren=CAT.filter(c=>c.r).reduce((a,c)=>a+g[c.k],0),fos=CAT.filter(c=>c.f).reduce((a,c)=>a+g[c.k],0);
-  $('#headline').innerHTML=`現在臺灣的電，最多來自<b style="color:${L[0].c}">${L[0].n}</b>（${pct(L[0].v,T).toFixed(0)}%）。<br>燒燃料的火力發電約 <b>${pct(fos,T).toFixed(0)}%</b>，再生能源約 <b style="color:#3f8f3a">${pct(ren,T).toFixed(0)}%</b>。`;
-  $('#split').innerHTML=L.map(c=>`<i style="width:${pct(c.v,T)}%;background:${c.c}" title="${c.n}"></i>`).join('');
-  $('#splitLab').innerHTML=`<span>◀ 火力 ${pct(fos,T).toFixed(0)}%</span><span>再生能源 ${pct(ren,T).toFixed(0)}% ▶</span>`;
-  $('#mixList').innerHTML=L.map(c=>`<li><i style="background:${c.c}"></i><b>${c.n}</b><span class="p">${pct(c.v,T)<1?pct(c.v,T).toFixed(1):pct(c.v,T).toFixed(0)}%</span><span class="m">${fmt(c.v)} MW</span></li>`).join('')+(g.nuc>0?'':'<li class="nuc"><i style="background:#8e5bb5"></i><b>核能</b><span class="p">0%</span><span class="m">2025 年起沒有運轉</span></li>');
+  $('#headline').innerHTML=`現在臺灣的電，最多來自<b>${L[0].n}</b>（${pf(pct(L[0].v,T))}%），其次是<b>${L[1].n}</b>（${pf(pct(L[1].v,T))}%）。`;
+  // three groups bar: the bar and its labels show the same thing
+  const G={};L.forEach(c=>G[c.g]=(G[c.g]||0)+c.v);const order=['f','n','r','s'].filter(k=>G[k]>0);
+  $('#grp').setAttribute('aria-label',order.map(k=>`${GRP[k][0]} ${pf(pct(G[k],T))}%`).join('、'));
+  $('#grp').innerHTML=order.map(k=>{const p=pct(G[k],T);return `<div class="gseg g-${k}" style="width:${p}%;background:${GRP[k][1]};color:${GRP[k][2]}" title="${GRP[k][0]} ${pf(p)}%">${p>=14?`<span>${GRP[k][0]} ${pf(p)}%</span>`:''}</div>`;}).join('');
+  $('#grpNote').innerHTML=order.map(k=>`<span><i class="sw g-${k}" style="background:${GRP[k][1]}"></i>${GRP[k][0]}：<b>${pf(pct(G[k],T))}%</b><small>（${L.filter(c=>c.g===k).map(c=>c.n.replace(/（.*）/,'')).join('、')}）</small></span>`).join('');
+  $('#mixList').innerHTML=L.map(c=>`<li><button data-k="${c.k}" aria-label="${c.n} ${pf(pct(c.v,T))}%，看發電紀錄"><i class="sw ${'g-'+c.g}" style="background:${c.c}"></i><b>${c.n}</b><span class="p">${pf(pct(c.v,T))}%</span><span class="m">${fmt(c.v)} MW</span><span class="go" aria-hidden="true">›</span></button></li>`).join('')+(g.nuc>0?'':'<li class="nuc"><div><i class="sw" style="background:#882255"></i><b>核能</b><span class="p">0%</span><span class="m">2025 年起沒有運轉</span></div></li>');
   $('#stamp').textContent=`台電資料時間 ${hm(t)}，網頁每 5 分鐘自動更新`;
   // donut
-  const svg=d3.select('#donut');svg.selectAll('*').remove();const R=200,g0=svg.append('g').attr('transform','translate(210,210)');
-  const arcs=d3.pie().sort(null).value(d=>d.v)(L);const A=d3.arc().innerRadius(118).outerRadius(R).padAngle(0.006);
-  g0.selectAll('path').data(arcs).join('path').attr('d',A).attr('fill',d=>d.data.c).attr('stroke','var(--surface)').attr('stroke-width',2).append('title').text(d=>`${d.data.n} ${fmt(d.data.v)} MW`);
+  const svg=d3.select('#donut');svg.selectAll('*').remove();patterns(svg);const R=200,g0=svg.append('g').attr('transform','translate(210,210)');
+  const arcs=d3.pie().sort(null).value(d=>d.v)(L);const A=d3.arc().innerRadius(118).outerRadius(R).padAngle(0.006),A2=d3.arc().innerRadius(114).outerRadius(R+8).padAngle(0.006);
+  const seg=g0.selectAll('g.seg').data(arcs).join('g').attr('class','seg').attr('tabindex',0).attr('role','button').attr('aria-label',d=>`${d.data.n} ${pf(pct(d.data.v,T))}%`);
+  seg.append('path').attr('class','fill').attr('d',A).attr('fill',d=>d.data.c).attr('stroke','var(--surface)').attr('stroke-width',2);
+  seg.append('path').attr('d',A).attr('fill',d=>patFor(svg,d.data)).attr('pointer-events','none');
+  const tipOf=d=>`${sw(d.data)}<b>${d.data.n}</b><br>${pf(pct(d.data.v,T))}%　${fmt(d.data.v)} MW<br><small>點一下看發電紀錄</small>`;
+  seg.on('mousemove',(e,d)=>showTip(tipOf(d),e.clientX,e.clientY)).on('mouseenter',function(e,d){d3.select(this).select('.fill').attr('d',A2);})
+     .on('mouseleave',function(){d3.select(this).select('.fill').attr('d',A);hideTip();})
+     .on('focus',function(e,d){const r=this.getBoundingClientRect();showTip(tipOf(d),r.right,r.top);}).on('blur',hideTip)
+     .on('click',(e,d)=>openHist(d.data.k)).on('keydown',(e,d)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openHist(d.data.k);}});
   const Lb=d3.arc().innerRadius(160).outerRadius(160);
-  g0.selectAll('text.dl').data(arcs.filter(a=>a.endAngle-a.startAngle>0.32)).join('text').attr('class','dl').attr('transform',d=>`translate(${Lb.centroid(d)})`).attr('text-anchor','middle').attr('dy',6).text(d=>d.data.n.replace(/（.*）/,''));
+  g0.selectAll('text.dl').data(arcs.filter(a=>a.endAngle-a.startAngle>0.32)).join('text').attr('class','dl').attr('transform',d=>`translate(${Lb.centroid(d)})`).attr('text-anchor','middle').attr('dy',6).attr('fill',d=>ink(d.data.c)).attr('stroke',d=>ink(d.data.c)==='#fff'?'#0007':'#fff9').text(d=>d.data.n.replace(/（.*）/,''));
   g0.append('text').attr('class','dc1').attr('text-anchor','middle').attr('y',-34).text('總發電量');
   g0.append('text').attr('class','dc2').attr('text-anchor','middle').attr('y',18).text(fmt(T));
   g0.append('text').attr('class','dc1').attr('text-anchor','middle').attr('y',48).text('百萬瓦（MW）');}
+$('#mixList').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)openHist(b.dataset.k);});
+/* ---------- history of one energy ---------- */
+function openHist(k){hcat=k;drawHist();document.getElementById('hist').scrollIntoView({behavior:'smooth',block:'start'});}
+async function drawHist(){const c=C(hcat);$('#histTitle').innerHTML=`「${c.n.replace(/（.*）/,'')}」的發電紀錄`;
+  $('#histCats').innerHTML=CAT.filter(x=>x.k!=='nuc').map(x=>`<button role="tab" data-k="${x.k}" aria-selected="${x.k===hcat}">${sw(x)}${x.n.replace(/（.*）/,'')}</button>`).join('');
+  $$('#histRange [data-r]').forEach(b=>b.setAttribute('aria-selected',b.dataset.r===hrange));
+  let pts=[];const want=DAYS.slice(-(+hrange));
+  for(const d of want){if(!SER[d]){try{SER[d]=await getJSON('day/'+d+'.json');}catch(e){SER[d]=[];}}}
+  want.forEach(d=>(SER[d]||[]).forEach(([t,ty])=>pts.push([new Date(t+'Z'),group(ty)[hcat]])));
+  $('#histNote').textContent=`這個網站從 2026 年 10 月 22 日下午開始記錄，每 10 分鐘一筆，資料會一天一天累積。${want.length<+hrange?`目前只有 ${want.length} 天的資料。`:''}`;
+  const svg=d3.select('#histSvg');const W=900,H=300,M={l:64,r:24,t:18,b:40};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  if(pts.length<2){$('#histStat').textContent='資料還不夠多，過一陣子再來看。';return;}
+  const vs=pts.map(p=>p[1]),mx=d3.max(vs),mn=d3.min(vs),av=d3.mean(vs),imx=vs.indexOf(mx),imn=vs.indexOf(mn);
+  const df=d=>`${d.getUTCMonth()+1}/${d.getUTCDate()} ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}`;
+  $('#histStat').innerHTML=`${sw(c)}<b>${c.n}</b>　最多 <b>${fmt(mx)}</b> MW（${df(pts[imx][0])}）　最少 <b>${fmt(mn)}</b> MW（${df(pts[imn][0])}）　平均 <b>${fmt(av)}</b> MW`;
+  const x=d3.scaleUtc().domain(d3.extent(pts,p=>p[0])).range([M.l,W-M.r]),y=d3.scaleLinear().domain([0,mx*1.1||1]).nice().range([H-M.b,M.t]);
+  const span=x.domain()[1]-x.domain()[0];
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).ticks(span<2*864e5?8:7).tickFormat(d=>span<2*864e5?(d.getUTCHours()===0?`${d.getUTCMonth()+1}/${d.getUTCDate()}`:d.getUTCHours()+' 時'):`${d.getUTCMonth()+1}/${d.getUTCDate()}`));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d?fmt(d):''));
+  svg.append('text').attr('x',M.l).attr('y',M.t-4).attr('class','axl').text('MW');
+  svg.append('path').attr('d',d3.area().x(p=>x(p[0])).y0(y(0)).y1(p=>y(p[1]))(pts)).attr('fill',c.c).attr('opacity',.25);
+  svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1]))(pts)).attr('fill','none').attr('stroke',c.k==='solar'?'#8a7d00':c.c).attr('stroke-width',2.5);
+  crosshair(svg,W,H,M,x,y,pts.map(p=>p[0]),i=>`${sw(c)}<b>${c.n}</b><br>${df(pts[i][0])}<br><b>${fmt(pts[i][1])}</b> MW`,i=>[[pts[i][1],c.k==='solar'?'#8a7d00':c.c]]);}
+$('#histCats').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b){hcat=b.dataset.k;drawHist();}});
+$('#histRange').addEventListener('click',e=>{const b=e.target.closest('[data-r]');if(b){hrange=b.dataset.r;drawHist();}});
+/* hover/touch crosshair shared by the charts */
+function crosshair(svg,W,H,M,x,y,xs,html,dots){const g=svg.append('g').style('display','none').attr('pointer-events','none');
+  const ln=g.append('line').attr('y1',M.t).attr('y2',H-M.b).attr('stroke','var(--ink)').attr('stroke-dasharray','3 3');const dg=g.append('g');
+  const ov=svg.append('rect').attr('x',M.l).attr('y',M.t).attr('width',W-M.l-M.r).attr('height',H-M.t-M.b).attr('fill','transparent').style('cursor','crosshair');
+  const near=e=>{const [mx]=d3.pointer(e,svg.node());const v=x.invert(mx);let i=d3.bisector(d=>d).center(xs,v);return Math.max(0,Math.min(xs.length-1,i));};
+  const mv=e=>{const i=near(e);const X=x(xs[i]);g.style('display',null);ln.attr('x1',X).attr('x2',X);dg.selectAll('*').remove();(dots?dots(i):[]).forEach(([v,c])=>dg.append('circle').attr('cx',X).attr('cy',y(v)).attr('r',5).attr('fill',c).attr('stroke','#fff').attr('stroke-width',2));
+    const pt=e.touches?e.touches[0]:e;showTip(html(i),pt.clientX,pt.clientY);};
+  ov.on('mousemove',mv).on('touchstart',e=>{mv(e);},{passive:true}).on('touchmove',e=>{mv(e);},{passive:true}).on('mouseleave',()=>{g.style('display','none');hideTip();});
+  return ov;}
 /* ---------- wind ---------- */
-function turbine(sel,cf,stopped){const s=d3.select(sel);s.selectAll('*').remove();
+function turbine(sel,cf){const s=d3.select(sel);s.selectAll('*').remove();
   s.append('rect').attr('width',300).attr('height',300).attr('rx',18).attr('fill',cf<0.03?'#dfe6ea':'#d9eef6');
   s.append('path').attr('d','M0 250 Q150 230 300 250 V300 H0Z').attr('fill','#bcd9a3');
   s.append('path').attr('d','M146 120 L140 262 H160 L154 120Z').attr('fill','#eef2f4').attr('stroke','#8a969c');
@@ -726,7 +839,8 @@ function turbine(sel,cf,stopped){const s=d3.select(sel);s.selectAll('*').remove(
   [0,120,240].forEach(a=>r.append('path').attr('d','M0 0 C6 -20 6 -70 0 -100 C-4 -70 -5 -20 0 0Z').attr('fill','#fff').attr('stroke','#8a969c').attr('transform',`rotate(${a})`));
   b.append('circle').attr('r',8).attr('fill','#eef2f4').attr('stroke','#8a969c');
   const sp=cf<0.02?0:Math.max(0.5,4.5-4*cf);if(sp)r.style('animation',`spin ${sp}s linear infinite`);
-  if(cf>0.02)for(let i=0;i<3;i++)s.append('path').attr('class','gust').attr('d',`M${10+i*8} ${70+i*40} q30 -10 60 0 t60 0`).style('animation-duration',(2.4-cf*1.6)+'s').style('animation-delay',(i*0.4)+'s');}
+  if(cf>0.02)for(let i=0;i<3;i++)s.append('path').attr('class','gust').attr('d',`M${10+i*8} ${70+i*40} q30 -10 60 0 t60 0`).style('animation-duration',(2.4-cf*1.6)+'s').style('animation-delay',(i*0.4)+'s');
+  s.append('text').attr('x',150).attr('y',290).attr('text-anchor','middle').attr('class','tz').text(sp?'轉動中':'停住了');}
 function drawWind(){const w=NOW.types['風力']||{mw:0,cap:0};const U=(NOW.units&&NOW.units['風力'])||[];
   const cap=U.reduce((a,u)=>a+(u[2]||0),0)||w.cap,mw=w.mw,cf=cap?mw/cap:0;turbine('#turb',cf);
   const T=Object.values(group(NOW.types)).reduce((a,b)=>a+b,0);
@@ -734,7 +848,7 @@ function drawWind(){const w=NOW.types['風力']||{mw:0,cap:0};const U=(NOW.units
   $('#windBar').style.width=Math.min(100,cf*100)+'%';
   $('#windNote').innerHTML=`所有風機加起來最多約 ${fmt(cap)} MW，現在發揮了 <b>${(cf*100).toFixed(0)}%</b>。`+(cf<0.05?'<br>現在風力發電幾乎停了！可能是風太小，也可能是風太大、風機停下來保護自己。':cf>0.6?'<br>風很強，風機轉得很賣力！':'');
   const F=U.filter(u=>u[2]>0).sort((a,b)=>b[2]-a[2]).slice(0,14),mx=d3.max(F,u=>u[2])||1;
-  $('#farms').innerHTML=F.map(u=>`<div class="farm"><span class="fn">${u[0].replace(/\(註\d+\)/,'')}</span><div class="fb"><i class="c" style="width:${u[2]/mx*100}%"></i><i class="m" style="width:${(u[1]||0)/mx*100}%"></i></div><span class="fv">${fmt(u[1]||0)}${u[3]?`<em>${u[3]}</em>`:''}</span></div>`).join('');}
+  $('#farms').innerHTML=F.map(u=>`<div class="farm"><span class="fn">${u[0].replace(/\(註\d+\)/,'')}</span><div class="fb"><i class="c" style="width:${u[2]/mx*100}%"></i><i class="m" style="width:${(u[1]||0)/mx*100}%"></i></div><span class="fv">${fmt(u[1]||0)}<small>/${fmt(u[2])}</small>${u[3]?`<em>${u[3]}</em>`:''}</span></div>`).join('');}
 /* ---------- sun ---------- */
 function drawSun(){const s=NOW.types['太陽能']||{mw:0,cap:0},cf=s.cap?s.mw/s.cap:0,h=+NOW.t.slice(11,13);
   const v=d3.select('#sunSvg');v.selectAll('*').remove();const night=h<6||h>=18;
@@ -744,6 +858,7 @@ function drawSun(){const s=NOW.types['太陽能']||{mw:0,cap:0},cf=s.cap?s.mw/s.
   else v.append('path').attr('d','M220 50a26 26 0 1 0 22 40a22 22 0 1 1 -22 -40z').attr('fill','#f7f1c8');
   for(let i=0;i<3;i++){const g=v.append('g').attr('transform',`translate(${40+i*78},190) skewX(-18)`);for(let r=0;r<3;r++)for(let c=0;c<3;c++)g.append('rect').attr('x',c*20).attr('y',r*16).attr('width',19).attr('height',15).attr('fill',d3.interpolateRgb('#3a4a66','#4f8fd6')(night?0:cf)).attr('stroke','#cfd8de');
     g.append('path').attr('d','M30 48v30').attr('stroke','#8a969c').attr('stroke-width',4);}
+  v.append('text').attr('x',150).attr('y',290).attr('text-anchor','middle').attr('class','tz').attr('fill',night?'#fff':null).text(night?'晚上':cf<0.1?'陰天或傍晚':'有陽光');
   const T=Object.values(group(NOW.types)).reduce((a,b)=>a+b,0);
   $('#sunKpi').innerHTML=`<b>${fmt(s.mw)}</b> MW<small>占全臺灣發電的 ${pct(s.mw,T).toFixed(1)}%</small>`;
   $('#sunBar').style.width=Math.min(100,cf*100)+'%';
@@ -753,37 +868,46 @@ const DL=d=>{const [y,m,dd]=d.split('-');return `${+m}/${+dd}`;};
 function tabs(){$('#dayTabs').innerHTML=DAYS.slice(-7).map(d=>`<button role="tab" data-d="${d}" aria-selected="${d===sel}">${DL(d)}${d===DAYS[DAYS.length-1]?'（今天）':''}</button>`).join('');}
 $('#dayTabs').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(b){sel=b.dataset.d;tabs();drawArea();}});
 const hours=s=>+s.slice(11,13)+(+s.slice(14,16))/60;
-function drawArea(){const S=SER[sel]||[];const svg=d3.select('#area');const W=900,H=340,M={l:64,r:30,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
-  const keys=CAT.map(c=>c.k);const rows=S.map(([t,ty])=>({h:hours(t),...group(ty)}));
+function drawArea(){const S=SER[sel]||[];const svg=d3.select('#area');const W=900,H=340,M={l:64,r:110,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();patterns(svg);
+  const keys=CAT.map(c=>c.k);const rows=S.map(([t,ty])=>({h:hours(t),t,...group(ty)}));
   const x=d3.scaleLinear().domain([0,24]).range([M.l,W-M.r]);const st=d3.stack().keys(keys)(rows);const ymax=d3.max(rows,r=>keys.reduce((a,k)=>a+r[k],0))||40000;
   const y=d3.scaleLinear().domain([0,ymax*1.08]).nice().range([H-M.b,M.t]);
   svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).tickValues([0,3,6,9,12,15,18,21,24]).tickFormat(d=>d+' 時'));
   svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d?d/10000+' 萬':''));
   svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('class','axl').text('MW');
-  if(rows.length<2){svg.append('text').attr('x',W/2).attr('y',H/2).attr('text-anchor','middle').attr('class','axl big').text(rows.length?`這一天目前只有 ${hm(S[0][0])} 一筆資料，之後會越來越多`:'還沒有資料');}
+  if(rows.length<2){svg.append('text').attr('x',(M.l+W-M.r)/2).attr('y',H/2).attr('text-anchor','middle').attr('class','axl big').text(rows.length?`這一天目前只有 ${hm(S[0][0])} 一筆資料，之後會越來越多`:'還沒有資料');}
   const ar=d3.area().x(d=>x(d.data.h)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveMonotoneX);
-  svg.selectAll('path.ar').data(st).join('path').attr('class','ar').attr('d',ar).attr('fill',d=>CAT.find(c=>c.k===d.key).c).attr('opacity',.92);
-  if(rows.length===1)st.forEach(s=>{const d=s[0];svg.append('rect').attr('x',x(d.data.h)-6).attr('width',12).attr('y',y(d[1])).attr('height',y(d[0])-y(d[1])).attr('fill',CAT.find(c=>c.k===s.key).c);});
-  $('#areaLeg').innerHTML=CAT.filter(c=>rows.some(r=>r[c.k]>0)).map(c=>`<span><i style="background:${c.c}"></i>${c.n}</span>`).join('');}
-function drawWindCmp(){const svg=d3.select('#windCmp');const W=900,H=280,M={l:64,r:30,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
-  const ds=DAYS.slice(-7),C=d3.schemeTableau10;const lines=ds.map(d=>(SER[d]||[]).map(([t,ty])=>[hours(t),group(ty).wind]));
+  const lay=svg.selectAll('g.lay').data(st.filter(s=>rows.some(r=>r[s.key]>0))).join('g').attr('class','lay');
+  lay.append('path').attr('d',ar).attr('fill',d=>C(d.key).c);lay.append('path').attr('d',ar).attr('fill',d=>patFor(svg,C(d.key))).attr('pointer-events','none');
+  // direct labels at the right edge
+  if(rows.length){const last=rows.length-1,used=[];st.forEach(s=>{const d=s[last];const h=y(d[0])-y(d[1]);if(h<3)return;let yy=(y(d[0])+y(d[1]))/2;while(used.some(u=>Math.abs(u-yy)<15))yy-=15;used.push(yy);
+      svg.append('line').attr('x1',x(rows[last].h)+2).attr('x2',x(rows[last].h)+10).attr('y1',(y(d[0])+y(d[1]))/2).attr('y2',yy).attr('stroke','var(--muted)');
+      svg.append('text').attr('x',x(rows[last].h)+12).attr('y',yy+5).attr('class','dlab').text(C(s.key).n.replace(/（.*）/,''));});}
+  if(rows.length)crosshair(svg,W,H,M,x,y,rows.map(r=>r.h),i=>{const r=rows[i],T=keys.reduce((a,k)=>a+r[k],0);return `<b>${DL(sel)} ${hm(r.t)}</b>　共 ${fmt(T)} MW<table>${CAT.slice().reverse().filter(c=>r[c.k]>0).map(c=>`<tr><td>${sw(c)}${c.n}</td><td>${fmt(r[c.k])}</td><td>${pf(pct(r[c.k],T))}%</td></tr>`).join('')}</table>`;});
+  $('#areaLeg').innerHTML=CAT.filter(c=>rows.some(r=>r[c.k]>0)).map(c=>`<button data-k="${c.k}">${sw(c)}${c.n}</button>`).join('');}
+$('#areaLeg').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)openHist(b.dataset.k);});
+const DASH=['','8 5','2 4','12 4 3 4','4 3','14 6','1 3'];
+function drawWindCmp(){const svg=d3.select('#windCmp');const W=900,H=280,M={l:64,r:60,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const ds=DAYS.slice(-7),COL=['#0072B2','#E69F00','#009E73','#CC79A7','#D55E00','#56B4E9','#5E5E5E'];const lines=ds.map(d=>(SER[d]||[]).map(([t,ty])=>[hours(t),group(ty).wind,t]));
   const x=d3.scaleLinear().domain([0,24]).range([M.l,W-M.r]),y=d3.scaleLinear().domain([0,Math.max(1000,d3.max(lines.flat(),p=>p[1])||0)*1.1]).nice().range([H-M.b,M.t]);
   svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).tickValues([0,3,6,9,12,15,18,21,24]).tickFormat(d=>d+' 時'));
   svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d?fmt(d):''));
   svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('class','axl').text('MW');
-  lines.forEach((L,i)=>{const col=C[i%10];if(L.length>1)svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1])).curve(d3.curveMonotoneX)(L)).attr('fill','none').attr('stroke',col).attr('stroke-width',ds[i]===ds[ds.length-1]?4:2.5);
-    L.length&&svg.append('circle').attr('cx',x(L[L.length-1][0])).attr('cy',y(L[L.length-1][1])).attr('r',5).attr('fill',col);});
-  $('#windLeg').innerHTML=ds.map((d,i)=>`<span><i style="background:${C[i%10]}"></i>${DL(d)}</span>`).join('');}
+  const used=[];lines.forEach((L,i)=>{const col=COL[(ds.length-1-i)%7],dash=DASH[(ds.length-1-i)%7];if(L.length>1)svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1])).curve(d3.curveMonotoneX)(L)).attr('fill','none').attr('stroke',col).attr('stroke-width',i===ds.length-1?4:2.5).attr('stroke-dasharray',dash||null);
+    if(L.length){const p=L[L.length-1];svg.append('circle').attr('cx',x(p[0])).attr('cy',y(p[1])).attr('r',4.5).attr('fill',col);let yy=y(p[1])+5;while(used.some(u=>Math.abs(u-yy)<15))yy-=15;used.push(yy);svg.append('text').attr('x',x(p[0])+8).attr('y',yy).attr('class','dlab').attr('fill',col==='#E69F00'?'#8a5a00':col).text(DL(ds[i]));}});
+  const xs=d3.range(0,24.001,1/6);
+  crosshair(svg,W,H,M,x,y,xs,i=>{const h=xs[i];const rowsH=lines.map((L,k)=>{let best=null;L.forEach(p=>{if(Math.abs(p[0]-h)<0.09)best=p;});return best?`<tr><td><i class="sw dash" style="border-color:${COL[(ds.length-1-k)%7]}"></i>${DL(ds[k])}</td><td>${fmt(best[1])} MW</td></tr>`:'';}).join('');
+    return `<b>${String(Math.floor(h)).padStart(2,'0')}:${String(Math.round(h%1*60)).padStart(2,'0')} 的風力發電</b>${rowsH?`<table>${rowsH}</table>`:'<br>這個時間沒有資料'}`;});
+  $('#windLeg').innerHTML=ds.map((d,i)=>`<span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="${COL[(ds.length-1-i)%7]}" stroke-width="3" stroke-dasharray="${DASH[(ds.length-1-i)%7]}"/></svg>${DL(d)}</span>`).join('');}
 /* ---------- guess ---------- */
 const GK='hhl-energy-guess';let gv=null;try{gv=localStorage.getItem(GK);}catch(e){}
 const GT={up:'變多',down:'變少',same:'差不多'};
 function guessUI(){$$('#guess [data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===gv));$('#guessNote').textContent=gv?`你猜「${GT[gv]}」。颱風過後，到下面「風力發電比一比」看看答案！`:'';}
 $('#guess').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;gv=b.dataset.g;try{localStorage.setItem(GK,gv);}catch(e){}guessUI();});guessUI();
-// small turbine icons in the explainer
 $$('.why3 svg').forEach((s,i)=>{s.innerHTML='';const d=d3.select(s);d.append('path').attr('d','M40 40V76').attr('stroke','#8a969c').attr('stroke-width',4);
-  const b=d.append('g').attr('transform','translate(40,40)').append('g').attr('class','blades');[0,120,240].forEach(a=>b.append('path').attr('d','M0 0L0 -30').attr('stroke',i===2?'#d9462b':'#2fa6a0').attr('stroke-width',5).attr('stroke-linecap','round').attr('transform',`rotate(${a})`));
+  const b=d.append('g').attr('transform','translate(40,40)').append('g').attr('class','blades');[0,120,240].forEach(a=>b.append('path').attr('d','M0 0L0 -30').attr('stroke',i===2?'#D55E00':'#009E73').attr('stroke-width',5).attr('stroke-linecap','round').attr('transform',`rotate(${a})`));
   if(i===1)b.style('animation','spin 1.4s linear infinite');d.append('circle').attr('cx',40).attr('cy',40).attr('r',4).attr('fill','#8a969c');
-  if(i===0)d.append('text').attr('x',62).attr('y',20).attr('class','wz').text('…');if(i===2)d.append('text').attr('x',58).attr('y',20).attr('class','wz red').text('停');});
+  if(i===0)d.append('text').attr('x',62).attr('y',20).attr('class','wz').text('…');if(i===2)d.append('text').attr('x',56).attr('y',20).attr('class','wz red').text('停');});
 $('#refresh').onclick=load;load();setInterval(load,5*60*1000);
 railSpy();document.body.dataset.ready='1';
 })();
