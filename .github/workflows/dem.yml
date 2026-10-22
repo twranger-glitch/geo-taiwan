@@ -21,7 +21,7 @@ jobs:
           python-version: "3.12"
       - name: 安裝套件
         if: inputs.mode == 'build'
-        run: pip install numpy rasterio pillow netCDF4 scipy
+        run: pip install numpy rasterio fiona pillow netCDF4 scipy
       - name: 建立地形資料
         if: inputs.mode == 'build'
         run: |

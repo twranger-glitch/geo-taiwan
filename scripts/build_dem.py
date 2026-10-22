@@ -2,7 +2,8 @@
 
 Sources (downloaded inside GitHub Actions):
   Taiwan  Copernicus GLO-30 DEM (ESA, 1 arc-second), reduced to coarser cells with a low
-          percentile so that buildings and trees count less (the DEM is a surface model).
+          percentile so that buildings and trees count less (the DEM is a surface model);
+          sea/land from OpenStreetMap land polygons (osmdata.openstreetmap.de, ODbL).
   World   GMT earth_relief 10 arc-minute (SRTM15+) and earth_mask 5 arc-minute.
 
 Each grid is written as an 8-bit grayscale PNG plus a JSON description:
@@ -54,6 +55,24 @@ def encode(elev, ocean):
     code = code.astype(np.uint8)
     code[ocean] = 0
     return code
+
+
+def osm_land(lon0, lon1, lat0, lat1, cell):
+    """Rasterise OpenStreetMap land polygons (coastline-derived) onto the grid."""
+    import zipfile
+    import fiona
+    from rasterio import features
+    from rasterio.transform import from_origin
+    z = download("https://osmdata.openstreetmap.de/download/land-polygons-split-4326.zip", f"{TMP}/land.zip")
+    d = f"{TMP}/land"
+    if not os.path.exists(d):
+        zipfile.ZipFile(z).extractall(d)
+    shp = [os.path.join(r, f) for r, _, fs in os.walk(d) for f in fs if f.endswith(".shp")][0]
+    w, h = int(round((lon1 - lon0) / cell)), int(round((lat1 - lat0) / cell))
+    with fiona.open(shp) as src:
+        geoms = [f["geometry"] for f in src.filter(bbox=(lon0, lat0, lon1, lat1))]
+    return features.rasterize(((g, 1) for g in geoms), out_shape=(h, w),
+                              transform=from_origin(lon0, lat1, cell, cell), fill=0, dtype="uint8").astype(bool)
 
 
 def ocean_from_low(elev, thresh=0.3):
@@ -148,15 +167,17 @@ def build(part):
              {"lon0": -180, "lon1": 180, "lat0": -90, "lat1": 90, "cell_deg": 1 / 3,
               "source": "GMT earth_relief 10m (SRTM15+) and earth_mask 5m"})
     if "tw" in which:
-        g, cell = taiwan_grid(119.3, 122.1, 21.85, 25.4, 12, 25)
-        save("tw", encode(np.maximum(g, 0), ocean_from_low(g)),
+        g, cell = taiwan_grid(119.3, 122.1, 21.85, 25.4, 12, 15)
+        land = osm_land(119.3, 122.1, 21.85, 25.4, cell)
+        save("tw", encode(np.maximum(g, 0), ~land),
              {"lon0": 119.3, "lon1": 122.1, "lat0": 21.85, "lat1": 25.4, "cell_deg": cell,
-              "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 25th percentile"})
+              "source": "Copernicus GLO-30 DEM, 12 arc-second cells, 15th percentile; coastline from OpenStreetMap land polygons"})
     if "tn" in which:
-        g, cell = taiwan_grid(120.0, 120.8, 22.8, 23.45, 3, 25)
-        save("tn", encode(np.maximum(g, 0), ocean_from_low(g)),
+        g, cell = taiwan_grid(120.0, 120.8, 22.8, 23.45, 3, 10)
+        land = osm_land(120.0, 120.8, 22.8, 23.45, cell)
+        save("tn", encode(np.maximum(g, 0), ~land),
              {"lon0": 120.0, "lon1": 120.8, "lat0": 22.8, "lat1": 23.45, "cell_deg": cell,
-              "source": "Copernicus GLO-30 DEM, 3 arc-second cells, 25th percentile"})
+              "source": "Copernicus GLO-30 DEM, 3 arc-second cells, 10th percentile; coastline from OpenStreetMap land polygons"})
 
 
 if __name__ == "__main__":
