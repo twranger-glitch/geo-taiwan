@@ -1,0 +1,20 @@
+name: 更新台電過去發電紀錄
+on:
+  schedule:
+    - cron: "41 3 2 * *"   # 每月 2 日
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/build_power_history.py 2>&1 | tee /tmp/h.log
+      - run: |
+          git config user.name "power-bot"; git config user.email "power-bot@users.noreply.github.com"
+          git add data/power
+          git diff --cached --quiet || { git commit -qm "台電過去發電紀錄"; git pull -q --rebase origin main; git push -q; }
