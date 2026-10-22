@@ -1,12 +1,15 @@
 name: 更新台電即時發電資料
 
+# GitHub 的排程常常延遲很久，所以每次執行都會在同一個工作裡連續抓將近 6 小時
+# （每 10 分鐘一次），結束前再自動啟動下一輪。每小時的排程只是備援。
 on:
   schedule:
-    - cron: "*/10 * * * *"   # 每 10 分鐘（GitHub 可能延遲幾分鐘）
+    - cron: "7 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: power
@@ -15,27 +18,40 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 358
     steps:
       - uses: actions/checkout@v4
         with:
           path: src
-      - name: 取出資料分支
-        run: |
-          git clone --depth 1 --branch power-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data || {
-            mkdir data && cd data && git init -q -b power-data && git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"; }
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: 抓取台電開放資料
-        working-directory: data
-        run: python ../src/scripts/fetch_power.py
-      - name: 更新資料分支（只保留一個提交，避免歷史變大）
-        working-directory: data
+      - name: 連續抓取台電開放資料
+        env:
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         run: |
+          git clone -q --depth 1 --branch power-data "$REPO_URL" data || { mkdir data && cd data && git init -q -b power-data && git remote add origin "$REPO_URL" && cd ..; }
+          cd data
           git config user.name "power-bot"
           git config user.email "power-bot@users.noreply.github.com"
-          git add -A
-          git commit -q -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')" --allow-empty
-          git reset -q --soft $(git commit-tree HEAD^{tree} -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')")
-          git push -q -f origin HEAD:power-data
+          end=$(( $(date +%s) + 342*60 ))
+          while [ $(date +%s) -lt $end ]; do
+            if python ../src/scripts/fetch_power.py; then
+              git add -A
+              if ! git diff --cached --quiet || [ -z "$(git log -1 --format=%H 2>/dev/null)" ]; then
+                tree=$(git write-tree)
+                c=$(git commit-tree "$tree" -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')")
+                git reset -q --soft "$c"
+                git push -q -f origin HEAD:power-data || echo "push 失敗，下一輪再試"
+              fi
+            fi
+            # 等到下一個 10 分鐘整點過後 3 分鐘（台電通常在整 10 分鐘後更新）
+            now=$(date +%s); next=$(( (now/600+1)*600 + 180 ))
+            [ $next -gt $end ] && break
+            sleep $(( next - now ))
+          done
+      - name: 啟動下一輪
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run power.yml -R ${{ github.repository }} --ref main || true
