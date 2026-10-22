@@ -1,6 +1,13 @@
-FABDEM tiles [(21, 120), (21, 121), (22, 120), (22, 121), (23, 120), (23, 121), (24, 120), (24, 121), (25, 121)]
+FABDEM tiles [(21, 120), (21, 121), (22, 120), (22, 121), (23, 120), (23, 121), (24, 120), (24, 121), (24, 122), (25, 121), (25, 122)]
 http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N21_00_E119_00_DEM/Copernicus_DSM_COG_10_N21_00_E119_00_DEM.tif
+http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N21_00_E122_00_DEM/Copernicus_DSM_COG_10_N21_00_E122_00_DEM.tif
 http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N22_00_E119_00_DEM/Copernicus_DSM_COG_10_N22_00_E119_00_DEM.tif
+http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N22_00_E122_00_DEM/Copernicus_DSM_COG_10_N22_00_E122_00_DEM.tif
+http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N23_00_E122_00_DEM/Copernicus_DSM_COG_10_N23_00_E122_00_DEM.tif
 http 404 https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N25_00_E120_00_DEM/Copernicus_DSM_COG_10_N25_00_E120_00_DEM.tif
-grid 9720 12780
-mask (12780, 10080) vs (12780, 9720)
+grid 10080 12780
+reclaimed land cells added 546411
+flood done
+tw (1065, 840)
+tn (780, 960)
+tiles 232 bytes 45628640
