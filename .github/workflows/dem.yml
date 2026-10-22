@@ -24,7 +24,9 @@ jobs:
         run: pip install numpy rasterio pillow netCDF4 scipy
       - name: 建立地形資料
         if: inputs.mode == 'build'
-        run: python scripts/build_dem.py
+        run: |
+          mkdir -p data/sealevel
+          python scripts/build_dem.py 2>&1 | tee data/sealevel/_build.log || true
       - name: 提交
         run: |
           git config user.name "dem-bot"

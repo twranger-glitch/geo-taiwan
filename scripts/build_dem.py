@@ -131,6 +131,17 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     os.makedirs(TMP, exist_ok=True)
     which = sys.argv[1:] or ["world", "tw", "tn"]
+    for part in which:
+        try:
+            build(part)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            print("FAILED", part, flush=True)
+
+
+def build(part):
+    which = [part]
     if "world" in which:
         z, ocean = world_grid()
         save("world", encode(np.maximum(z, 0), ocean),
