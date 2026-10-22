@@ -185,6 +185,10 @@ def main():
     h, w = elev.shape
     print("grid", w, h, flush=True)
     land = land_mask(h, w)
+    # the shoreline data is older than some reclaimed land (harbours, industrial parks): count clearly raised ground as land
+    raised = elev >= 1.0
+    print("reclaimed land cells added", int((raised & ~land).sum()), flush=True)
+    land |= raised
     e = np.maximum(elev, 0)
     code = np.where(e <= 100, 1 + np.clip(np.round(e * 2), 0, 200), 201 + np.clip(np.round((e - 100) / 75), 1, 54)).astype(np.uint8)
     code[~land] = 0
