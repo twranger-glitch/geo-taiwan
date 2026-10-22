@@ -1,0 +1,37 @@
+name: 更新台電即時發電資料
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe 或 fetch"
+        default: "fetch"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: power
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 探測
+        if: inputs.mode == 'probe'
+        run: python scripts/probe_power.py
+      - name: 有變動才提交
+        run: |
+          git config user.name "power-bot"
+          git config user.email "power-bot@users.noreply.github.com"
+          git add data/power
+          if git diff --cached --quiet; then echo "沒有新資料"; else
+            git commit -m "台電即時發電資料 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+            git pull --rebase origin main
+            git push
+          fi
