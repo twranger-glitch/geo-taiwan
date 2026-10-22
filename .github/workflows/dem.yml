@@ -5,7 +5,7 @@ on:
     inputs:
       mode:
         description: "probe 或 build"
-        default: "probe"
+        default: "build"
 
 permissions:
   contents: write
@@ -22,9 +22,6 @@ jobs:
       - name: 安裝套件
         if: inputs.mode == 'build'
         run: pip install numpy rasterio pillow netCDF4 scipy
-      - name: 探測資料來源
-        if: inputs.mode == 'probe'
-        run: python scripts/probe_dem.py
       - name: 建立地形資料
         if: inputs.mode == 'build'
         run: python scripts/build_dem.py
