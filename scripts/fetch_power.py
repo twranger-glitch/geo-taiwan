@@ -17,7 +17,7 @@ types, units = {}, {}
 for r in rows:
     ty = (r.get('機組類型') or '').strip(); nm = (r.get('機組名稱') or '').strip()
     if not ty or '小計' in nm or '合計' in nm or '總計' in nm: continue
-    ty = re.sub(r'\(.*?\)', '', ty).strip()
+    ty = re.sub(r'<[^>]*>', '', re.sub(r'\(.*?\)', '', ty)).strip()
     mw, cap = num(r.get('淨發電量(MW)')), num(r.get('裝置容量(MW)'))
     a = types.setdefault(ty, {'mw': 0.0, 'cap': 0.0, 'n': 0})
     if mw is not None: a['mw'] += mw
