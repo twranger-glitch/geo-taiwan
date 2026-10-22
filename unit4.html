@@ -10,8 +10,8 @@
   --ink:#10313b; --muted:#557079; --line:#cad8d8;
   --sea:#cfe4e7; --sea-deep:#0f3644; --land:#b8c79f; --land-ink:#7d9468;
   --typhoon:#d9462b; --plate:#d8901a; --wind:#2a86b8; --rain:#3a9fb5; --leaf:#4f8a4a;
-  --cat1:#2f6fd6; --cat2:#2f9e55; --cat3:#d9462b;
-  --conv:#e2553a; --div:#21a6a0; --trans:#e2a21a;
+  --cat1:#3B8EDB; --cat2:#E69F00; --cat3:#B2182B;
+  --conv:#D55E00; --div:#0098A6; --trans:#C79100;
   --shadow:0 1px 2px rgba(16,49,59,.06),0 8px 24px rgba(16,49,59,.07);
   --f-display:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
   --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
@@ -22,7 +22,7 @@
   --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
   --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
   --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
-  --cat1:#6a9cff; --cat2:#4fcf7e; --cat3:#ff7155;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
   --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
   color-scheme:dark}}
@@ -31,7 +31,7 @@
   --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
   --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
   --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
-  --cat1:#6a9cff; --cat2:#4fcf7e; --cat3:#ff7155;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
   --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
   color-scheme:dark}
@@ -85,6 +85,9 @@ section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-
 .chip:hover{border-color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .chip .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+.chip[data-l="div"] .sw{background:repeating-linear-gradient(90deg,var(--div) 0 6px,transparent 6px 9px) !important;width:22px}
+.chip[data-l="trans"] .sw{background:repeating-linear-gradient(90deg,var(--trans) 0 2px,transparent 2px 6px) !important;width:22px}
+.chip[data-l="conv"] .sw{width:22px;height:5px}
 .label{font-size:14.5px;letter-spacing:.1em;color:var(--muted);font-weight:700}
 .think{border-left:4px solid var(--plate);background:var(--surface-2);padding:12px 16px;border-radius:0 12px 12px 0;font-size:18px}
 .think b{font-family:var(--f-display);font-weight:400;color:var(--plate)}
@@ -153,6 +156,7 @@ section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-
 .m-trop{stroke:#9b59b6;stroke-dasharray:6 4;stroke-width:1.2;fill:none}
 .m-trop-t{font-size:14px;fill:#9b59b6}
 .trk{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6;stroke-opacity:.55;transition:opacity .25s}
+.trk[data-c="1"]{stroke-width:1.1}.trk[data-c="2"]{stroke-width:2}.trk[data-c="3"]{stroke-width:3;stroke-opacity:.7}
 .trk-g{cursor:pointer;transition:opacity .25s}
 .trk-g.dim{opacity:.08}
 .trk-g.sel .trk{stroke-opacity:1;stroke-width:3.4}
@@ -161,7 +165,8 @@ section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-
 .tnm{font-size:15px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
 .ty-legend{position:absolute;left:12px;top:12px;background:color-mix(in srgb,var(--surface) 88%,transparent);border-radius:12px;padding:8px 12px;font-size:14.5px;display:flex;flex-direction:column;gap:3px}
 .ty-legend span{display:flex;align-items:center;gap:6px}
-.ty-legend i{width:18px;height:3px;border-radius:2px;display:inline-block}
+.ty-legend i{width:22px;height:3px;border-radius:2px;display:inline-block}
+.ty-legend span:nth-child(1) i{height:5px}.ty-legend span:nth-child(3) i{height:2px}
 .ty-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
 .ty-item{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;display:grid;grid-template-columns:auto 1fr;gap:0 10px;align-items:center;transition:all .15s;min-width:0}
 .ty-item:hover{border-color:var(--ink)}
@@ -214,6 +219,9 @@ section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-
 .qopt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 14px;font-size:18px}
 .qopt.right{background:color-mix(in srgb,var(--leaf) 20%,var(--surface));border-color:var(--leaf)}
 .qopt.wrong{background:color-mix(in srgb,var(--typhoon) 15%,var(--surface));border-color:var(--typhoon)}
+.qopt.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qopt.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qopt.wrong{border-style:dashed}
 .qfb{margin-top:10px;font-size:18px;min-height:1.5em}
 @media (prefers-reduced-motion:reduce){.ms-wind,.spiral.spin{animation:none}}
 
@@ -385,6 +393,9 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .qo:hover:not(:disabled){border-color:var(--ink)}
 .qo.right{background:color-mix(in srgb,var(--leaf) 22%,var(--surface));border-color:var(--leaf)}
 .qo.wrong{background:color-mix(in srgb,var(--typhoon) 16%,var(--surface));border-color:var(--typhoon)}
+.qo.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qo.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qo.wrong{border-style:dashed}
 .qo:disabled{cursor:default}
 .qfb{margin-top:8px;font-size:16px}
 .qscore{font-family:var(--f-num);font-weight:600;margin-left:8px}
@@ -423,11 +434,11 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .yb-track input{width:100%;margin:0;height:30px;accent-color:var(--typhoon);position:relative;z-index:2}
 .yb-eras{margin:4px 0 0}
 .yb-row{display:grid;grid-template-columns:2.6em 1fr;gap:6px;align-items:center;font-size:13px;color:var(--muted);margin-left:-2.6em}
-.yb-row>div{position:relative;height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}
-.yb-row i{position:absolute;top:0;bottom:0}
+.yb-row>div{position:relative;height:18px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.yb-row i{position:absolute;top:0;bottom:0;font-style:normal;font-size:12px;font-weight:700;line-height:18px;text-align:center;overflow:hidden;white-space:nowrap}
 .yb-ticks{position:relative;height:24px;margin-top:4px}
 .yb-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--f-num);font-size:12.5px;color:var(--muted);top:4px}
-.yb-ticks b{position:absolute;top:-34px;width:2px;height:6px;margin-left:-1px;background:var(--ink);opacity:.5}
+.yb-ticks b{position:absolute;top:-54px;width:2px;height:6px;margin-left:-1px;background:var(--ink);opacity:.5}
 @media (max-width:640px){.yb-row{margin-left:0;grid-template-columns:2.4em 1fr}.yb-ticks span:nth-child(even){display:none}}
 .yr{font-family:var(--f-num);font-size:44px;font-weight:600;line-height:1;color:var(--typhoon)}
 .yr small{font-family:var(--f-body);font-size:18px;color:var(--muted);margin-left:4px}
@@ -593,7 +604,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .nm-d{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .nm-guess{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .v{display:inline-block;border-radius:999px;padding:3px 12px;font-weight:700;font-size:15px;color:#fff;border:0}
-.v.doc{background:#1f7a3a}.v.leg{background:#c97a12}.v.no{background:#6b7c85}
+.v.doc{background:#0072B2}.v.leg{background:#E69F00;color:#1b1b1b}.v.no{background:#6b7c85}
 .nm-guess .v{padding:7px 16px;font-size:16px}
 .nm-key{display:flex;gap:6px;flex-wrap:wrap}
 .nm-verdict{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
@@ -902,7 +913,7 @@ function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w|
   return {x,y,svg};}
 
 (function(){
-const NL='#e07a2f',ES='#c0392b',ZH='#2a6fb0',QG='#6b5ca5',NA='#4f8a4a';
+const NL='#E69F00',ES='#D55E00',ZH='#0072B2',QG='#CC79A7',NA='#009E73';
 
 /* =========================================================
    1. voyage Europe -> Asia
@@ -924,7 +935,7 @@ STOPS.forEach((s,i)=>marker(vm,s.ll[0],s.ll[1],{label:s.n,color:NL,r:7,side:i===
 [['瓷器、絲綢',112,30],['香料',128,-3]].forEach(([t,lo,la])=>{const p=vm.pin(lo,la);p.append('text').attr('class','mlabel soft').attr('text-anchor','middle').text(t);});
 [['大西洋',-32,15],['印度洋',75,-18],['太平洋',150,10]].forEach(([t,lo,la])=>{const p=vm.pin(lo,la);p.append('text').attr('class','mlabel sea').attr('text-anchor','middle').text(t);});
 function placeShip(f){const pt=vline.node().getPointAtLength(f*vL),p2=vline.node().getPointAtLength(Math.min(vL,f*vL+2));ship.attr('transform',`translate(${pt.x},${pt.y}) scale(${1/vm.sc()})`);vdone.attr('stroke-dasharray',`${f*vL} ${vL}`);}
-function goStop(i){const s=STOPS[i];$('#voyCard').innerHTML=`<span class="pill" style="background:${NL}">第 ${i+1} 站，共 ${STOPS.length} 站</span><h3 style="margin-top:8px">${s.n}</h3><p>${s.t}</p>${i===3?'<div class="qbox"><b>想一想</b>歐洲商人想要中國的瓷器和絲綢，為什麼會來到臺灣？</div>':''}`;$('#voyStep').textContent=`目前在：${s.n}`;}
+function goStop(i){const s=STOPS[i];$('#voyCard').innerHTML=`<span class="pill" style="background:${NL};color:#1b1b1b">第 ${i+1} 站，共 ${STOPS.length} 站</span><h3 style="margin-top:8px">${s.n}</h3><p>${s.t}</p>${i===3?'<div class="qbox"><b>想一想</b>歐洲商人想要中國的瓷器和絲綢，為什麼會來到臺灣？</div>':''}`;$('#voyStep').textContent=`目前在：${s.n}`;}
 let vf=0,vrun=null;
 $('#voyGo').onclick=()=>{if(vrun){vrun.stop();vrun=null;}vf=0;let si=0;goStop(0);
   vrun=d3.timer(el=>{vf=Math.min(1,el/9000);placeShip(vf);while(si<STOPS.length-1&&vf>=STOPS[si+1].f){si++;goStop(si);}if(vf>=1){vrun.stop();vrun=null;}});};
@@ -947,9 +958,9 @@ const PT={bat:[106.8,-6.2],mac:[113.55,22.2],peng:[119.58,23.57],an:[120.16,23.0
 const HUB={
  nl:{draw(){seg([PT.bat,PT.mac,PT.peng,PT.an],NL,'a-nl');seg([PT.mni,[121.6,20],PT.kee],ES,'a-es');
    [['巴達維亞',PT.bat,'r',NL],['澳門',PT.mac,'l',NL],['澎湖',PT.peng,'l',NL],['大員（安平）',PT.an,'b',NL],['馬尼拉',PT.mni,'l',ES],['雞籠（基隆）',PT.kee,'r',ES]].forEach(([n,p,s,c])=>marker(hm,p[0],p[1],{label:n,color:c,r:7,side:s}).classed('hubmk',true));},
-  card:`<span class="pill" style="background:${NL}">荷蘭人</span> <span class="pill" style="background:${ES}">西班牙人</span><h3 style="margin-top:8px">先到南部，再到北部</h3>
-   <p><b style="color:${NL}">荷蘭人</b>從亞洲的據點巴達維亞出發，先到澳門、再到澎湖登陸。後來被明帝國的軍隊趕走，便轉往臺灣，1624 年在大員（今臺南安平）建立據點。</p>
-   <p><b style="color:${ES}">西班牙人</b>從亞洲的據點馬尼拉北上，1626 年來到臺灣北部的雞籠（基隆），把中國的商品轉運到日本和菲律賓。</p>
+  card:`<span class="pill" style="background:${NL};color:#1b1b1b">荷蘭人</span> <span class="pill" style="background:${ES}">西班牙人</span><h3 style="margin-top:8px">先到南部，再到北部</h3>
+   <p><b style="color:#8A5A00">荷蘭人</b>從亞洲的據點巴達維亞出發，先到澳門、再到澎湖登陸。後來被明帝國的軍隊趕走，便轉往臺灣，1624 年在大員（今臺南安平）建立據點。</p>
+   <p><b style="color:#A33F00">西班牙人</b>從亞洲的據點馬尼拉北上，1626 年來到臺灣北部的雞籠（基隆），把中國的商品轉運到日本和菲律賓。</p>
    <div class="qbox"><b>想一想</b>觀察地圖，荷蘭人來到臺灣以前，為什麼會先去澳門和澎湖？</div>`},
  zheng:{draw(){seg([PT.fuj,PT.peng,PT.an],ZH,'a-zh');[['福建（廈門、金門）',PT.fuj,'l',ZH],['澎湖',PT.peng,'t',ZH],['安平',PT.an,'b',ZH]].forEach(([n,p,s,c])=>marker(hm,p[0],p[1],{label:n,color:c,r:7,side:s}).classed('hubmk',true));},
   card:`<span class="pill" style="background:${ZH}">鄭成功</span><h3 style="margin-top:8px">從福建渡海來臺</h3><p>明帝國被清帝國打敗以後，鄭成功和清帝國作戰也失敗了。為了找一個反清復明的基地、維持海上貿易的據點，也為了解決軍隊糧食不夠的問題，他選擇離福建不遠的臺灣。</p><p>1661 年鄭成功先攻取澎湖，再進攻普羅民遮城、圍攻熱蘭遮城；1662 年荷蘭人投降撤離，開始了鄭氏政權在臺灣的經營。</p><div class="qbox"><b>想一想</b>荷蘭人、西班牙人和鄭氏政權選擇來臺灣，和臺灣的地理位置有什麼關係？</div>`},
@@ -990,6 +1001,7 @@ const EV=[[1624,'荷蘭人從今天的臺南安平一帶登陸，建立奧倫尼
  [1684,'臺灣成為清帝國統治的領土，進入清帝國時期。','an']];
 const who=(y,part)=>part==='s'?(y<1624?null:y<1662?'nl':y<1684?'zh':'qg'):(y<1626?null:y<1642?'es':y<1662?'nl':y<1684?'zh':'qg');
 const WHO={nl:['荷蘭人',NL],es:['西班牙人',ES],zh:['鄭氏政權',ZH],qg:['清帝國',QG]};
+const TXT={nl:'#8A5A00',es:'#A33F00',zh:'#0072B2',qg:'#8F3F73',na:'#00684B'},ONC={nl:'#1b1b1b',es:'#fff',zh:'#fff',qg:'#1b1b1b',na:'#1b1b1b'};
 const rm=reliefMap('#rulSvg',{crop:[119.3,122.2,21.85,25.4],maxZoom:5});zoomButtons($('#rulBox'),rm);
 const zone=(lon,lat,r)=>{const p=rm.P(lon,lat);return rm.g.insert('circle','.zs').attr('cx',p[0]).attr('cy',p[1]).attr('r',r).attr('class','zone');};
 const zS=zone(120.25,23.05,150),zN=zone(121.6,25.08,95);
@@ -997,16 +1009,16 @@ const tagS=rm.pin(119.95,22.35),tagN=rm.pin(120.2,25.2);
 [tagS,tagN].forEach(t=>{t.append('rect').attr('class','ztag-bg').attr('rx',10).attr('height',32).attr('y',-22);t.append('text').attr('class','ztag').attr('y',0);});
 const FORTS=[['熱蘭遮城',120.1603,23.0016,1624,'l'],['普羅民遮城',120.2025,22.9975,1653,'r'],['聖薩爾瓦多城',121.765,25.16,1626,'t'],['聖多明哥城',121.433,25.175,1628,'l'],['承天府',120.205,22.99,1662,'b']];
 const fMk=FORTS.map(f=>marker(rm,f[1],f[2],{label:f[0],color:'#10313b',r:6,side:f[4]}));
-$('#rulEras').innerHTML=['s','n'].map(part=>{let out='',y0=1620,cur=who(1620,part);for(let y=1621;y<=1691;y++){const w=y<=1690?who(y,part):'__';if(w!==cur){if(cur)out+=`<i style="left:${(y0-1620)/70*100}%;width:${(y-y0)/70*100}%;background:${WHO[cur][1]}"></i>`;y0=y;cur=w;}}return `<div class="yb-row"><span>${part==='s'?'南部':'北部'}</span><div>${out}</div></div>`;}).join('');
+$('#rulEras').innerHTML=['s','n'].map(part=>{let out='',y0=1620,cur=who(1620,part);for(let y=1621;y<=1691;y++){const w=y<=1690?who(y,part):'__';if(w!==cur){if(cur)out+=`<i style="left:${(y0-1620)/70*100}%;width:${(y-y0)/70*100}%;background:${WHO[cur][1]};color:${cur==='zh'?'#fff':'#1b1b1b'}" title="${WHO[cur][0]}">${(y-y0)>=8?WHO[cur][0].replace('政權','').replace('人',''):''}</i>`;y0=y;cur=w;}}return `<div class="yb-row"><span>${part==='s'?'南部':'北部'}</span><div>${out}</div></div>`;}).join('');
 $('#rulTicks').innerHTML=[1620,1630,1640,1650,1660,1670,1680,1690].map(y=>`<span style="left:${(y-1620)/70*100}%">${y}</span>`).join('')+EV.map(e=>`<b style="left:${(e[0]-1620)/70*100}%" title="${e[0]}"></b>`).join('');
 function drawYear(y){const s=who(y,'s'),n=who(y,'n');
   zS.attr('fill',s?WHO[s][1]:NA).attr('opacity',s?.32:.18);zN.attr('fill',n?WHO[n][1]:NA).attr('opacity',n?.32:.18);
-  [[tagS,s,'南部'],[tagN,n,'北部']].forEach(([t,w,p])=>{const txt=`${p}：${w?WHO[w][0]:'原住民族'}`;t.select('text').text(txt).attr('fill',w?WHO[w][1]:NA);const bb=t.select('text').node().getBBox();t.select('rect').attr('x',bb.x-10).attr('width',bb.width+20);});
+  [[tagS,s,'南部'],[tagN,n,'北部']].forEach(([t,w,p])=>{const txt=`${p}：${w?WHO[w][0]:'原住民族'}`;t.select('text').text(txt).attr('fill',TXT[w||'na']);const bb=t.select('text').node().getBBox();t.select('rect').attr('x',bb.x-10).attr('width',bb.width+20);});
   fMk.forEach((m,i)=>m.style('display',y>=FORTS[i][3]&&!(FORTS[i][0]==='承天府'&&y>=1684)&&!((FORTS[i][0]==='聖薩爾瓦多城'||FORTS[i][0]==='聖多明哥城')&&y>=1642&&y<1644&&false)?null:'none'));
   const past=EV.filter(e=>e[0]<=y),e=past[past.length-1],exact=EV.find(x=>x[0]===y);
   const china=y<1644?'明帝國時期':'清帝國時期';
   $('#rulCard').innerHTML=`<div class="yr">${y}<small>年</small></div><div class="meta">這時候的中國：${china}</div>
-   <div class="who2"><span style="background:${s?WHO[s][1]:NA}">南部：${s?WHO[s][0]:'原住民族'}</span><span style="background:${n?WHO[n][1]:NA}">北部：${n?WHO[n][0]:'原住民族'}</span></div>
+   <div class="who2"><span style="background:${s?WHO[s][1]:NA};color:${ONC[s||'na']}">南部：${s?WHO[s][0]:'原住民族'}</span><span style="background:${n?WHO[n][1]:NA};color:${ONC[n||'na']}">北部：${n?WHO[n][0]:'原住民族'}</span></div>
    ${exact?`<span class="k">這一年發生了</span><p style="margin-top:2px">${exact[1]}</p>`:e?`<span class="k">最近一件大事（${e[0]} 年）</span><p style="margin-top:2px">${e[1]}</p>`:'<p>這時候還沒有歐洲人在臺灣建立據點。中國和日本的海商會到臺灣做生意，鄭芝龍的船隊也在這一帶海上貿易。</p>'}
    ${y>=1624&&y<1662?'<p class="note" style="margin-top:8px">荷蘭人從中國招募漢人來臺開墾，種稻米和甘蔗，輸出蔗糖賺錢。</p>':''}`;
   $('#rulYear').setAttribute('aria-valuetext',y+' 年');}
@@ -1397,7 +1409,7 @@ reset();
     if(T.quiz&&T.pts.every((q,k)=>ans[tab+k]))$('#nmDetail').innerHTML+='<div class="qbox"><b>想一想</b>用「紅毛」命名的東西，一定和荷蘭人有關嗎？為什麼「相傳」的說法也要查證？</div>';
     if(fly&&p[1]!=null)nm.flyTo(p[1],p[2],Math.max(nm.k(),tab==='es'?6:4.5));setTimeout(declutter,fly?760:0);}
   $('#nmDetail').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b||sel==null)return;const p=NM[tab].pts[sel];ans[tab+sel]={v:b.dataset.v,ok:b.dataset.v===p[6]};
-    if(ms[sel])ms[sel].select('circle.dot').attr('fill',{doc:'#1f7a3a',leg:'#d9922b',no:'#8a969c'}[p[6]]);pick(sel,false);});
+    if(ms[sel])ms[sel].select('circle.dot').attr('fill',{doc:'#0072B2',leg:'#E69F00',no:'#8a969c'}[p[6]]);pick(sel,false);});
   $('#nmChips').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)pick(+b.dataset.i,true);});
   $('#nameTabs').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b){tab=b.dataset.n;draw();}});
   draw();})();
