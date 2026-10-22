@@ -1,0 +1,790 @@
+<meta charset="utf-8">
+<title>臺灣即時發電｜海佃地圖</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a field-survey notebook — sticky unit rail on top, each unit a full-width band with a map/instrument on one side and a reading card on the other */
+:root{
+  --paper:#e9f0ef; --surface:#ffffff; --surface-2:#f4f8f7;
+  --ink:#10313b; --muted:#557079; --line:#cad8d8;
+  --sea:#cfe4e7; --sea-deep:#0f3644; --land:#b8c79f; --land-ink:#7d9468;
+  --typhoon:#d9462b; --plate:#d8901a; --wind:#2a86b8; --rain:#3a9fb5; --leaf:#4f8a4a;
+  --cat1:#2f6fd6; --cat2:#2f9e55; --cat3:#d9462b;
+  --conv:#e2553a; --div:#21a6a0; --trans:#e2a21a;
+  --shadow:0 1px 2px rgba(16,49,59,.06),0 8px 24px rgba(16,49,59,.07);
+  --f-display:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#6a9cff; --cat2:#4fcf7e; --cat3:#ff7155;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#6a9cff; --cat2:#4fcf7e; --cat3:#ff7155;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--wind);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+
+/* Header */
+header.top{padding-block:28px 18px;position:relative;overflow:hidden}
+.top .wrap{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+.kicker{font-size:15.5px;letter-spacing:.12em;color:var(--muted);font-weight:500}
+h1{font-size:clamp(30px,5vw,48px);margin-top:4px}
+h1 .accent{color:var(--typhoon)}
+.lede{max-width:40em;color:var(--muted);margin-top:8px}
+.coord{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:right;line-height:1.6;white-space:nowrap}
+.contour{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.contour path{fill:none;stroke:var(--line);stroke-width:1}
+
+/* Rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center;transition:background .2s,border-color .2s}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:8px;height:8px;border-radius:50%}
+
+/* Sections */
+section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
+.unit-head{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:start;margin-bottom:24px}
+.badge{grid-row:span 2;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-size:26px}
+.unit-head h2{font-size:clamp(24px,3.4vw,32px)}
+.unit-head .sub{color:var(--muted);max-width:46em}
+.page-ref{display:inline-block;font-family:var(--f-num);font-size:14.5px;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:8px;color:var(--muted);vertical-align:middle;letter-spacing:.02em}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.grid2.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+@media (max-width:860px){.grid2,.grid2.rev{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);min-width:0}
+.panel.pad{padding:20px 22px}
+.stage{position:relative;min-width:0}
+.card h3{font-size:22px}
+.card .meta{font-size:15.5px;color:var(--muted);margin-top:2px}
+.card p+p{margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:17px;display:inline-flex;gap:6px;align-items:center;transition:all .15s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+.label{font-size:14.5px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.think{border-left:4px solid var(--plate);background:var(--surface-2);padding:12px 16px;border-radius:0 12px 12px 0;font-size:18px}
+.think b{font-family:var(--f-display);font-weight:400;color:var(--plate)}
+.note{font-size:15px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.stat{background:var(--surface-2);border-radius:12px;padding:10px 12px;min-width:0}
+.stat .k{font-size:14.5px;color:var(--muted)}
+.stat .v{font-weight:700;font-size:18px;line-height:1.45}
+.tag{display:inline-block;font-size:14.5px;font-weight:700;border-radius:6px;padding:1px 8px;color:#fff}
+
+/* Globe */
+.globe-box{background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--sea-deep) 40%,var(--paper)) 0%,var(--paper) 70%);border-radius:24px;padding:8px;position:relative}
+#globe{width:100%;height:auto;display:block;touch-action:none;cursor:grab;max-width:640px;margin:0 auto}
+#globe:active{cursor:grabbing}
+.g-sea{fill:var(--sea-deep)}
+.g-grat{fill:none;stroke:#ffffff;stroke-opacity:.08;stroke-width:.6}
+.g-land{fill:#7fa27c;stroke:#c9dcc0;stroke-width:.5;stroke-opacity:.7}
+.g-lake{fill:#0f3644}
+.g-b{cursor:pointer}
+.g-tw{fill:#e7c66d;stroke:#fff;stroke-width:.6}
+.g-b{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.g-b.conv{stroke:#ff6a4d;stroke-width:2.6}
+.g-poly{fill-opacity:.34;stroke:#ffffff;stroke-opacity:.45;stroke-width:.8}
+.g-b.hand{opacity:.5}
+.g-b.div{stroke:#4fe0d6;stroke-width:2.2;stroke-dasharray:6 4}
+.g-b.trans{stroke:#ffc23d;stroke-width:2.2;stroke-dasharray:1 5}
+.g-b.hl{stroke-width:5}
+.g-plate{font-family:var(--f-display);font-size:18px;fill:#ffffff;fill-opacity:.85;paint-order:stroke;stroke:#0a2630;stroke-width:3px;cursor:pointer;text-anchor:middle}
+.g-plate:hover{fill:#ffd36b;fill-opacity:1}
+.g-eq{fill:#ff5a3c;fill-opacity:.75;stroke:#fff;stroke-width:1;cursor:pointer}
+.g-eq.sel{fill:#ffd23d;fill-opacity:1;stroke-width:2}
+.g-eq-pulse{fill:none;stroke:#ffd23d;stroke-width:2;pointer-events:none}
+.g-mt{fill:#ffd36b;stroke:#3b2a05;stroke-width:1;cursor:pointer}
+.g-mt.sel{fill:#fff}
+.g-halo{fill:url(#halo);pointer-events:none}
+.globe-tools{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px}
+.icon-btn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:18px;line-height:1;box-shadow:var(--shadow)}
+.icon-btn svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2}
+.globe-hint{position:absolute;left:16px;bottom:12px;font-size:14.5px;color:var(--muted);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:2px 10px;border-radius:999px}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mag-scale{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--muted)}
+
+/* Profile */
+#profile{width:100%;height:auto;display:block}
+.pf-zone{cursor:pointer}
+.pf-zone .hit{fill:transparent}
+.pf-zone:hover .hit,.pf-zone.on .hit{fill:var(--ink);fill-opacity:.06}
+.pf-zone text{font-family:var(--f-display);font-size:18px;fill:var(--ink);text-anchor:middle}
+.pf-zone.on text{fill:var(--typhoon)}
+.pf-ground{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.pf-sea{fill:var(--sea)}
+.pf-plate-eu{fill:color-mix(in srgb,var(--plate) 30%,var(--surface))}
+.pf-plate-ph{fill:color-mix(in srgb,var(--typhoon) 22%,var(--surface))}
+.pf-txt{font-size:15.5px;fill:var(--muted)}
+.pf-txt.b{fill:var(--ink);font-weight:700}
+
+/* Typhoon */
+.ty-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:960px){.ty-layout{grid-template-columns:minmax(0,1fr)}}
+.map-box{background:var(--sea);border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
+#tymap{width:100%;height:auto;display:block}
+.m-land{fill:var(--land);stroke:var(--land-ink);stroke-width:.5}
+.m-tw{fill:color-mix(in srgb,var(--land) 70%,var(--plate));stroke:var(--land-ink);stroke-width:.8}
+.m-grid{stroke:var(--ink);stroke-opacity:.08;fill:none}
+.m-grid-t{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.m-trop{stroke:#9b59b6;stroke-dasharray:6 4;stroke-width:1.2;fill:none}
+.m-trop-t{font-size:14px;fill:#9b59b6}
+.trk{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6;stroke-opacity:.55;transition:opacity .25s}
+.trk-g{cursor:pointer;transition:opacity .25s}
+.trk-g.dim{opacity:.08}
+.trk-g.sel .trk{stroke-opacity:1;stroke-width:3.4}
+.trk-g .hit{stroke:transparent;stroke-width:12;fill:none}
+.tdt{font-family:var(--f-num);font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px}
+.tnm{font-size:15px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ty-legend{position:absolute;left:12px;top:12px;background:color-mix(in srgb,var(--surface) 88%,transparent);border-radius:12px;padding:8px 12px;font-size:14.5px;display:flex;flex-direction:column;gap:3px}
+.ty-legend span{display:flex;align-items:center;gap:6px}
+.ty-legend i{width:18px;height:3px;border-radius:2px;display:inline-block}
+.ty-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.ty-item{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;display:grid;grid-template-columns:auto 1fr;gap:0 10px;align-items:center;transition:all .15s;min-width:0}
+.ty-item:hover{border-color:var(--ink)}
+.ty-item[aria-pressed="true"]{border-color:var(--typhoon);box-shadow:0 0 0 2px color-mix(in srgb,var(--typhoon) 30%,transparent)}
+.ty-item .yr{font-family:var(--f-num);font-size:14.5px;color:var(--muted);grid-column:2}
+.ty-item .nm{font-weight:700;grid-column:2;line-height:1.3}
+.ty-item .cat{grid-row:1/3;width:10px;height:30px;border-radius:4px}
+.spiral{width:42px;height:42px;flex:none}
+.spiral.spin{animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(-360deg)}}
+.ty-card-head{display:flex;gap:12px;align-items:center}
+.res-bars{display:grid;gap:6px;margin-top:8px}
+.res-row{display:grid;grid-template-columns:56px 1fr 52px;gap:8px;align-items:center;font-size:15.5px}
+.res-bar{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.res-bar i{display:block;height:100%;background:var(--rain);border-radius:5px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:7px 16px;border-radius:999px;font-size:17px;display:inline-flex;gap:6px;align-items:center}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+
+.ty-tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.ty-tools select,.ty-tools input{font:inherit;font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.ty-tools input{flex:1;min-width:180px}
+.g-cty{font-family:var(--f-body);font-size:14px;fill:#f2f7f4;fill-opacity:.9;paint-order:stroke;stroke:#0a2630;stroke-width:2.6px;text-anchor:middle;pointer-events:none}
+.g-ocn{font-family:var(--f-display);font-size:17px;fill:#bfe3ea;fill-opacity:.6;font-style:italic;text-anchor:middle;pointer-events:none}
+.m-cty{font-family:var(--f-body);font-size:14px;fill:var(--ink);fill-opacity:.7;text-anchor:middle;paint-order:stroke;stroke:var(--sea);stroke-width:2.5px}
+.m-ocn{font-family:var(--f-display);font-size:17px;fill:var(--muted);font-style:italic;text-anchor:middle}
+
+/* Monsoon */
+#monsoon{width:100%;height:auto;display:block}
+.ms-sea{fill:var(--sea)}
+.ms-tw{fill:var(--land);stroke:var(--land-ink);stroke-width:1.2}
+.ms-mt{fill:color-mix(in srgb,var(--plate) 65%,var(--land));stroke:var(--land-ink);stroke-width:.6}
+.ms-wind{fill:none;stroke:var(--wind);stroke-width:3;stroke-linecap:round;stroke-dasharray:14 12;animation:flow 1.2s linear infinite}
+.ms-wind.summer{stroke:var(--typhoon)}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.ms-head{fill:var(--wind)}
+.ms-head.summer{fill:var(--typhoon)}
+.ms-cloud{fill:var(--surface);stroke:var(--muted);stroke-width:1}
+.ms-drop{stroke:var(--rain);stroke-width:2;stroke-linecap:round}
+.ms-txt{font-family:var(--f-display);font-size:16px;fill:var(--ink)}
+.ms-sm{font-size:14.5px;fill:var(--muted)}
+.season-toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.season-toggle button{border:0;background:transparent;padding:6px 16px;border-radius:999px;font-size:18px}
+.season-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.turbine-card{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+#compass{width:120px;height:120px}
+.cmp-ring{fill:var(--surface-2);stroke:var(--line)}
+.cmp-t{font-family:var(--f-num);font-size:14px;fill:var(--muted);text-anchor:middle}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.qopt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 14px;font-size:18px}
+.qopt.right{background:color-mix(in srgb,var(--leaf) 20%,var(--surface));border-color:var(--leaf)}
+.qopt.wrong{background:color-mix(in srgb,var(--typhoon) 15%,var(--surface));border-color:var(--typhoon)}
+.qfb{margin-top:10px;font-size:18px;min-height:1.5em}
+@media (prefers-reduced-motion:reduce){.ms-wind,.spiral.spin{animation:none}}
+
+/* Charts */
+.chart{width:100%;height:auto;display:block}
+.ax text{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.ax line,.ax path{stroke:var(--line)}
+.gridl{stroke:var(--line);stroke-dasharray:2 4}
+.bar-tw{fill:var(--rain);fill-opacity:.45}
+.bar-tn{fill:var(--typhoon)}
+.band{fill:var(--plate);fill-opacity:.13}
+.band-t{font-family:var(--f-display);font-size:15.5px;fill:var(--plate)}
+.val{font-family:var(--f-num);font-size:14px;fill:var(--ink);text-anchor:middle}
+.ln{fill:none;stroke-width:2.5}
+.ln-dot{stroke:var(--surface);stroke-width:1.5}
+.cmp-bars{display:grid;gap:8px;margin-top:6px}
+.cmp-row{display:grid;grid-template-columns:96px 1fr 80px;gap:10px;align-items:center;font-size:17px}
+.cmp-row .tr{height:16px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.cmp-row .tr i{display:block;height:100%;border-radius:8px}
+
+/* Elevation */
+#mtn{width:100%;height:auto;display:block}
+.mt-sky{fill:var(--surface-2)}
+.mt-body{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.mt-snow{fill:var(--surface);opacity:.9}
+.mt-line{stroke:var(--typhoon);stroke-width:1.5;stroke-dasharray:5 4}
+.mt-pin{fill:var(--typhoon);stroke:var(--surface);stroke-width:2}
+.mt-ref{font-size:14.5px;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px}
+.mt-refdot{fill:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--typhoon)}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.big{font-family:var(--f-num);font-size:30px;font-weight:600;line-height:1.1}
+.crop{display:flex;gap:12px;align-items:center;margin-top:12px;background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.crop-ico{width:46px;height:46px;flex:none;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-size:20px;color:#fff}
+
+/* Calendar */
+.cal{overflow-x:auto}
+.cal-grid{display:grid;grid-template-columns:110px repeat(12,minmax(44px,1fr));min-width:700px;gap:0}
+.cal-h{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:center;padding:4px 0}
+.cal-rain{grid-column:2/-1;display:grid;grid-template-columns:repeat(12,1fr);align-items:end;height:70px;gap:6px;padding:0 6px;border-bottom:1px solid var(--line)}
+.cal-rain i{display:block;background:var(--rain);opacity:.4;border-radius:4px 4px 0 0}
+.cal-row{display:contents}
+.cal-name{font-size:17px;font-weight:700;padding:8px 8px 8px 0;display:flex;align-items:center;border-bottom:1px dashed var(--line)}
+.cal-track{grid-column:2/-1;position:relative;border-bottom:1px dashed var(--line);height:44px}
+.cal-bar{position:absolute;top:9px;height:26px;border-radius:13px;border:0;color:#fff;font-size:15.5px;padding:0 10px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-bar[aria-pressed="true"]{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.cal-detail{margin-top:18px}
+
+/* Quiz */
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.qcard .qn{font-family:var(--f-num);font-size:14.5px;color:var(--muted)}
+.qcard h3{font-size:18px;margin-top:2px}
+.score{font-family:var(--f-display);font-size:20px}
+footer{padding-block:32px 48px;color:var(--muted);font-size:15.5px}
+footer p+p{margin-top:6px}
+.tooltip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:14.5px;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:5}
+.credit{margin-top:14px;text-align:right;font-size:12px;letter-spacing:.04em;opacity:.55}
+.ext-link{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ext-link a{font-weight:700;color:var(--typhoon);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.ext-link a:hover{opacity:.8}
+.ext-link span{font-size:14px;color:var(--muted)}
+/* plate time machine */
+.g-tw-cr{fill:#f0a35e}
+.g-poly.sim{fill-opacity:0;stroke-opacity:.3;stroke-width:.7}
+.sim-badge{position:absolute;left:16px;top:12px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 14px;font-size:15px;display:flex;gap:10px;align-items:center;max-width:calc(100% - 90px);flex-wrap:wrap}
+.sim-badge[hidden]{display:none}
+.sim-badge button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:2px 12px;font-size:14.5px}
+.sim-box{margin-top:36px}
+.sim-head h3{font-size:clamp(21px,2.6vw,26px)}
+.sim-head .sub{color:var(--muted);margin-top:4px;max-width:46em}
+.sim-ctl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 4px}
+.sim-ctl input{flex:1;min-width:200px}
+.sim-ctl output{font-weight:700;font-size:20px;min-width:6.5em}
+.sim-ticks{display:flex;justify-content:space-between;gap:2px 6px;flex-wrap:wrap;margin-bottom:16px}
+.sim-ticks button{border:0;background:none;color:var(--muted);font-size:14.5px;padding:2px 2px}
+.sim-ticks button:hover{color:var(--ink);text-decoration:underline}
+.sim-delta{font-size:14.5px;color:var(--muted);font-weight:400}
+.sim-faq{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.sim-faq summary{cursor:pointer;font-weight:700}
+.sim-faq p{margin-top:6px}
+#twsim{width:100%;height:auto;display:block}
+.ts-sea{fill:var(--sea)}
+.ts-ghost path{fill:none;stroke:var(--ink);stroke-opacity:.4;stroke-width:1;stroke-dasharray:3 3}
+.ts-cr{fill:var(--plate);stroke:var(--land-ink);stroke-width:.8}
+.ts-valley{fill:none;stroke:var(--typhoon);stroke-width:2.2;stroke-dasharray:6 4}
+.ts-valley.moved{stroke-opacity:.55}
+.tslab{font-size:15px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px;pointer-events:none}
+.tslab.big{font-size:20px;font-weight:700}
+.tslab.cr{font-weight:700}
+.tslab.sm{font-size:14px}
+.tslab.ts-sea-lab{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:17px}
+.ts-arrow line,.ts-arrow path{stroke:var(--typhoon);stroke-width:3;fill:none;stroke-linecap:round}
+.ts-arrow text{font-size:14.5px;fill:var(--typhoon);font-weight:700;paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ts-scale path{fill:none;stroke:var(--ink);stroke-width:1.5}
+.ts-scale text{font-size:14px;fill:var(--ink)}
+.ts-badge rect{fill:var(--surface);stroke:var(--line)}
+.ts-badge text{font-size:16px;font-weight:700;fill:var(--ink)}
+.sim-tabs{display:flex;gap:8px;margin-bottom:10px}
+.sim-tabs .chip[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#worldsim{width:100%;height:auto;display:block}
+.ws-bg{fill:var(--surface-2)}
+.ws-sphere{fill:var(--sea);stroke:var(--line)}
+.wslab{font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px;pointer-events:none}
+.wslab.ocn{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:16px}
+@media (max-width:640px){.wslab{font-size:20px;stroke-width:4px}.wslab.ocn{font-size:22px}}
+@media (max-width:640px){
+  .tslab{font-size:22px;stroke-width:4px}.tslab.big{font-size:27px}.tslab.sm{font-size:20px}.tslab.ts-sea-lab{font-size:22px}
+  .ts-arrow text{font-size:21px}.ts-scale text{font-size:20px}.ts-badge text{font-size:22px}
+}
+</style>
+<style>
+.top .unit-link{font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15.5px;white-space:nowrap}
+.top .unit-link:hover{border-color:var(--ink)}
+.top .links{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.top .unit-link{white-space:normal}.top .links{align-items:flex-start}}
+/* rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:16.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+/* maps */
+.mapbox{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--sea);touch-action:none}
+.mapbox svg{display:block;width:100%;height:auto;max-height:80vh;cursor:grab}
+.mapbox svg:active{cursor:grabbing}
+.mapbox .zoomer{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
+.mapbox .zoomer button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:21px;font-weight:700;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.mapbox .zoomer button:hover{border-color:var(--ink)}
+.mapbox .mhint{position:absolute;left:10px;bottom:10px;font-size:13.5px;color:#10313b;background:#ffffffe0;border-radius:8px;padding:2px 8px;pointer-events:none}
+.mk{cursor:pointer}
+.mk circle.dot{stroke:#fff;stroke-width:2}
+.mk:hover circle.dot,.mk:focus-visible circle.dot{stroke:#10313b;stroke-width:3}
+.mk.sel circle.dot{stroke:#10313b;stroke-width:3.5}
+.mk .ring{fill:none;stroke:#ffd23f;stroke-width:4;opacity:0}
+.mk.sel .ring{opacity:1}
+.mk text,.mlabel{font-size:16px;font-weight:700;fill:#10313b;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.mlabel.soft{font-weight:500;fill:#3d5560;font-size:14px}
+.mlabel.sea{fill:#2a6f8f;font-style:italic;font-weight:500}
+.land{fill:var(--land);stroke:var(--land-ink);stroke-width:.6}
+.land.plain{stroke:none}
+.route{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.route.dash{stroke-dasharray:8 6}
+/* cards and layout */
+.duo{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.duo{grid-template-columns:minmax(0,1fr)}}
+.card h3{font-size:24px}
+.card .meta{font-size:15px;color:var(--muted);margin-top:2px}
+.card p{margin-top:8px}
+.card .k{display:block;font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:12px}
+.pill{display:inline-block;font-size:14px;font-weight:700;border-radius:999px;padding:1px 10px;color:#fff}
+.qbox{margin-top:12px;border-radius:12px;background:color-mix(in srgb,var(--plate) 14%,var(--surface));padding:10px 14px}
+.qbox b{display:block;font-size:14px;color:var(--muted);letter-spacing:.06em}
+.tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+.tabs button{border:0;background:none;font-weight:700;font-size:16px;padding:6px 14px;border-radius:999px;color:var(--muted)}
+.tabs button[aria-selected="true"],.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.bigbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:9px 18px;font-weight:700;font-size:16.5px;background:var(--ink);color:var(--paper)}
+.bigbtn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.bigbtn:disabled{opacity:.45;cursor:default}
+.hint-line{font-size:15px;color:var(--muted);margin-top:8px}
+/* quiz */
+.quiz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.qcard .qn{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.08em}
+.qcard h3{font-size:20px;margin-top:4px}
+.qopts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.qo{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-size:17px}
+.qo:hover:not(:disabled){border-color:var(--ink)}
+.qo.right{background:color-mix(in srgb,var(--leaf) 22%,var(--surface));border-color:var(--leaf)}
+.qo.wrong{background:color-mix(in srgb,var(--typhoon) 16%,var(--surface));border-color:var(--typhoon)}
+.qo:disabled{cursor:default}
+.qfb{margin-top:8px;font-size:16px}
+.qscore{font-family:var(--f-num);font-weight:600;margin-left:8px}
+/* timeline slider with visual */
+.tl{position:relative;margin-top:10px}
+.tl input[type=range]{width:100%;accent-color:var(--plate);height:30px}
+.sim-chart{width:100%;height:auto;display:block}
+.sim-chart .ax text{font-family:var(--f-num);font-size:13px;fill:var(--muted)}
+.sim-chart .ax line,.sim-chart .ax path{stroke:var(--line)}
+.toggles{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.toggles label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;cursor:pointer}
+.toggles input{width:20px;height:20px;margin-top:4px;flex:none}
+.toggles small{display:block;color:var(--muted);font-size:14px}
+.rangebox{margin-top:12px}
+.rangebox label{font-weight:700}
+.rangebox input{width:100%;height:30px}
+.rangebox .rv{font-family:var(--f-num);font-weight:600}
+.story{position:relative}
+.story-panel{min-height:9em}
+.story-nav{display:flex;gap:10px;align-items:center;margin-top:12px}
+.story-dots{display:flex;gap:6px}
+.story-dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.story-dots i.on{background:var(--ink)}
+</style>
+<style>
+#donut{display:block;width:100%;max-width:420px;margin:0 auto;height:auto}
+.dl{font-size:19px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#0005;stroke-width:3px}
+.dc1{font-size:17px;fill:var(--muted)}
+.dc2{font-family:var(--f-num);font-size:46px;font-weight:600;fill:var(--ink)}
+.big-line{font-size:20px;line-height:1.6}
+.splitbar{display:flex;height:22px;border-radius:11px;overflow:hidden;margin-top:14px;background:var(--surface-2)}
+.splitbar i{display:block;height:100%}
+.split-lab{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:4px;font-weight:700}
+.mix{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.mix li{display:grid;grid-template-columns:16px minmax(0,1fr) auto 7.5em;gap:10px;align-items:center;font-size:17px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.mix li i{width:16px;height:16px;border-radius:4px}
+.mix .p{font-family:var(--f-num);font-weight:600;font-size:20px}
+.mix .m{font-family:var(--f-num);color:var(--muted);font-size:14.5px;text-align:right}
+.mix li.nuc{opacity:.6}
+.mix li.nuc .m{font-family:var(--f-body)}
+.stamp{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:14.5px;color:var(--muted)}
+.turb-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:16px;align-items:center}
+.turb-row svg{width:100%;height:auto;display:block}
+@media (max-width:520px){.turb-row{grid-template-columns:minmax(0,1fr)}.turb-row svg{max-width:240px;margin:0 auto}}
+.blades{transform-box:view-box}
+#turb .blades,#sunSvg .blades{transform-origin:0 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.why3 .blades{transform-origin:0 0}
+.gust{fill:none;stroke:#ffffffcc;stroke-width:3;stroke-linecap:round;stroke-dasharray:30 200;animation:gust 2s linear infinite}
+@keyframes gust{from{stroke-dashoffset:230}to{stroke-dashoffset:0}}
+.kpi b{font-family:var(--f-num);font-size:46px;font-weight:600;line-height:1}
+.kpi{font-size:18px}
+.kpi small{display:block;color:var(--muted);font-size:15px;margin-top:4px}
+.meter{height:14px;border-radius:7px;background:var(--surface-2);overflow:hidden;margin-top:10px}
+.meter i{display:block;height:100%;background:#2fa6a0;border-radius:7px;transition:width .6s}
+.meter.sun i{background:#e0a800}
+.farms{display:grid;gap:5px;margin-top:8px}
+.farm{display:grid;grid-template-columns:7.5em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14.5px}
+.fn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb{position:relative;height:12px}
+.fb i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.fb i.c{background:color-mix(in srgb,#2fa6a0 22%,var(--surface))}
+.fb i.m{background:#2fa6a0}
+.fv{font-family:var(--f-num);text-align:right;line-height:1.1}
+.fv em{display:block;font-style:normal;font-family:var(--f-body);font-size:11.5px;color:var(--typhoon)}
+.guess{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.guess button{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 18px;font-weight:700;font-size:17px}
+.guess button[aria-pressed="true"]{background:#2fa6a0;color:#fff;border-color:#2fa6a0}
+.why3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.why3>div{background:var(--surface-2);border-radius:12px;padding:8px;text-align:center}
+.why3 svg{width:64px;height:64px;display:block;margin:0 auto}
+.why3 b{display:block;margin-top:2px}
+.why3 span{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+.wz{font-size:16px;font-weight:700;fill:var(--muted)}.wz.red{fill:#d9462b}
+@media (max-width:520px){.why3{grid-template-columns:minmax(0,1fr)}}
+.axl{font-size:13px;fill:var(--muted)}.axl.big{font-size:18px}
+#area,#windCmp{margin-top:6px}
+.sim-leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:8px;font-size:15px;color:var(--muted)}
+.sim-leg span{display:inline-flex;align-items:center;gap:6px}
+.sim-leg i{display:inline-block}
+.sim-leg i{height:10px !important;width:16px !important;border-radius:3px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="kicker">五年級社會 · 第二單元第 2 課補充 · 即時資料</div>
+      <h1>臺灣現在用<span class="accent">什麼</span>發電？</h1>
+      <p class="lede">這一頁每隔幾分鐘就會去拿台電公布的最新資料，告訴你這一刻臺灣的電從哪裡來。颱風、季風、晴天和雨天，都會讓風力和太陽能發電的多少跟著改變。</p>
+    </div>
+    <div class="links">
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#monsoon-sec">← 回到「季風與風力發電機」</a>
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#typhoon">影響臺灣的颱風路徑 →</a>
+    </div>
+  </div>
+</header>
+
+<nav class="rail" aria-label="段落">
+  <div class="wrap" id="rail">
+    <a href="#now"><span class="dot" style="background:#e8833a"></span>現在的發電組成</a>
+    <a href="#wind"><span class="dot" style="background:#2fa6a0"></span>風力發電</a>
+    <a href="#sun"><span class="dot" style="background:#f2c230"></span>太陽能發電</a>
+    <a href="#today"><span class="dot" style="background:var(--wind)"></span>一天的變化</a>
+  </div>
+</nav>
+
+<main>
+<section class="unit" id="now">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#e8833a">電</div>
+      <h2>這一刻，臺灣的電從哪裡來？</h2>
+      <p class="sub" id="nowSub">正在向台電拿最新資料……</p>
+    </div>
+    <div class="duo">
+      <div class="panel pad">
+        <svg id="donut" viewBox="0 0 420 420" role="img" aria-label="現在各種發電方式的比例"></svg>
+      </div>
+      <div class="panel pad">
+        <p class="big-line" id="headline"></p>
+        <div class="splitbar" id="split" aria-hidden="true"></div>
+        <div class="split-lab" id="splitLab"></div>
+        <ul class="mix" id="mixList"></ul>
+        <div class="stamp"><span id="stamp"></span><button class="bigbtn alt" id="refresh">重新整理</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="wind">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#2fa6a0">風</div>
+      <h2>風力發電機現在轉得動嗎？ <span class="page-ref">課本 p.53</span></h2>
+      <p class="sub">把臺灣所有風力發電機加起來，現在發了多少電？風車轉得越快，代表發的電越接近它們最多能發的量。</p>
+    </div>
+    <div class="duo">
+      <div class="panel pad">
+        <div class="turb-row"><svg id="turb" viewBox="0 0 300 300" role="img" aria-label="風力發電機動畫"></svg>
+          <div><div class="kpi" id="windKpi"></div><div class="meter"><i id="windBar"></i></div><p class="note" id="windNote"></p></div></div>
+        <h3 style="margin-top:14px;font-size:19px">各風場現在的發電量</h3>
+        <p class="note">淺色是最多能發的電（裝置容量），深色是現在發的電。</p>
+        <div class="farms" id="farms"></div>
+      </div>
+      <div class="panel pad card">
+        <h3>颱風來了，風力發電會變多還是變少？</h3>
+        <p>先猜猜看，颱風過後再回來看下面「一天的變化」的圖，檢查你猜對了沒有。</p>
+        <div class="guess" id="guess"><button data-g="up">變多</button><button data-g="down">變少</button><button data-g="same">差不多</button></div>
+        <p class="note" id="guessNote"></p>
+        <div class="why3">
+          <div><svg viewBox="0 0 80 80" aria-hidden="true"></svg><b>風太小</b><span>風速小於每秒約 3 公尺，扇葉轉不動，發不了電。</span></div>
+          <div><svg viewBox="0 0 80 80" aria-hidden="true"></svg><b>風剛好</b><span>風越大，發的電越多。大約每秒 12 公尺以上，就能發到最多。</span></div>
+          <div><svg viewBox="0 0 80 80" aria-hidden="true"></svg><b>風太大</b><span>風速超過每秒約 25 公尺（大約 10 級風），風機會自動停下來保護自己。</span></div>
+        </div>
+        <div class="qbox"><b>想一想</b>颱風的風很大，可是風力發電不一定會變多。颱風快要來、還在遠方的時候，和颱風最強、暴風圈籠罩的時候，風力發電可能會有什麼不同？</div>
+        <p class="note" style="margin-top:10px">每台風機停機的風速不太一樣，上面是大約的數字。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="sun">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#e0a800">陽</div>
+      <h2>太陽能發電現在亮不亮？</h2>
+      <p class="sub">太陽能板只有白天有陽光時才能發電。雲越厚、雨越大，發的電就越少。</p>
+    </div>
+    <div class="duo">
+      <div class="panel pad"><div class="turb-row"><svg id="sunSvg" viewBox="0 0 300 300" role="img" aria-label="太陽能發電示意"></svg>
+        <div><div class="kpi" id="sunKpi"></div><div class="meter sun"><i id="sunBar"></i></div><p class="note" id="sunNote"></p></div></div></div>
+      <div class="panel pad card"><h3>為什麼颱風天太陽能發電會變少？</h3><p>颱風帶來厚厚的雲和大雨，陽光照不到太陽能板。同樣是白天，晴天和颱風天的太陽能發電可能差好幾倍。</p>
+        <div class="qbox"><b>比一比</b>在下面「一天的變化」選不同的日子，比較晴天和颱風天中午的黃色區塊，哪一天比較大？</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="today">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:var(--wind)">日</div>
+      <h2>一天之中，發電組成怎麼變？</h2>
+      <p class="sub">這個網站從 2026 年 10 月 22 日開始，每 10 分鐘記錄一次。選一天看看：白天太陽能變多、晚上用電少，颱風天的風力又是怎麼變的？</p>
+    </div>
+    <div class="tabs" id="dayTabs" role="tablist"></div>
+    <div class="panel pad" style="margin-top:12px">
+      <svg id="area" class="sim-chart" role="img" aria-label="一天中各種發電方式的變化"></svg>
+      <div class="sim-leg" id="areaLeg"></div>
+    </div>
+    <div class="panel pad" style="margin-top:14px">
+      <h3 style="font-size:20px">風力發電比一比</h3>
+      <p class="note">每一條線是一天的風力發電量。颱風前、颱風天、颱風後放在一起比較。</p>
+      <svg id="windCmp" class="sim-chart" role="img" aria-label="不同日子的風力發電量"></svg>
+      <div class="sim-leg" id="windLeg"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <p>資料來源：<a href="https://data.gov.tw/dataset/8931">台灣電力公司「各機組發電量」開放資料</a>（台電每 10 分鐘更新，本站約每 10 分鐘抓取一次，可能晚 10 到 20 分鐘）。圖中「燃煤」包含汽電共生，「水力」包含抽蓄水力。</p>
+    <p>風機啟動與停機的風速為一般風力發電機的大約數值。</p>
+    <p class="credit">海佃地圖 ｜ Haidian Hidden Library ｜ 2026</p>
+  </div>
+</footer>
+<script>
+/* shared helpers for the unit pages */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* Taiwan relief map in an SVG. opts.crop=[lon0,lon1,lat0,lat1] picks the visible area.
+   Returns {svg,g,P,k} where P(lon,lat)->[x,y] in map units and k() is the current zoom. */
+function reliefMap(svgSel,opts={}){
+  const R=opts.relief||RELIEF.tw,kx=Math.cos(23.6*Math.PI/180),cell=(R.lon1-R.lon0)/R.w;
+  const P=(lon,lat)=>[(lon-R.lon0)/cell*kx,(R.lat1-lat)/cell];
+  const c=opts.crop||[R.lon0,R.lon1,R.lat0,R.lat1];const a=P(c[0],c[3]),b=P(c[1],c[2]);
+  const VW=b[0]-a[0],VH=b[1]-a[1];
+  const svg=d3.select(svgSel).attr('viewBox',`0 0 ${VW} ${VH}`);
+  svg.append('rect').attr('width',VW).attr('height',VH).attr('fill','var(--sea)');
+  const g=svg.append('g'),inner=g.append('g').attr('transform',`translate(${-a[0]},${-a[1]})`);
+  const img=inner.append('image').attr('href',opts.src||R.src).attr('x',0).attr('y',0).attr('width',R.w*kx).attr('height',R.h).attr('preserveAspectRatio','none');
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||8]).translateExtent([[0,0],[VW,VH]]).extent([[0,0],[VW,VH]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();opts.onZoom&&opts.onZoom(K);});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/VW,r.height/VH);upd();opts.onZoom&&opts.onZoom(K);}}).observe(svg.node());
+  const api={svg,g:inner,P,k:()=>K,s:()=>S,VW,VH,img,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),
+    home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    flyTo:(lon,lat,k)=>{const p=P(lon,lat);svg.transition().duration(700).call(z.transform,d3.zoomIdentity.translate(VW/2,VH/2).scale(k).translate(-(p[0]-a[0]),-(p[1]-a[1])));},
+    // a group that stays the same size on screen while zooming
+    pin:(lon,lat)=>{const p=P(lon,lat);return inner.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);}};
+  return api;}
+function zoomButtons(box,api){const z=document.createElement('div');z.className='zoomer';
+  z.innerHTML='<button aria-label="放大">＋</button><button aria-label="縮小">－</button><button aria-label="回到整張地圖">⤢</button>';
+  const [i,o,h]=z.querySelectorAll('button');i.onclick=api.zoomIn;o.onclick=api.zoomOut;h.onclick=api.home;box.appendChild(z);}
+
+/* flat map (world or East Asia) with land shapes from LANDS */
+function flatMap(svgSel,feats,proj,opts={}){
+  const svg=d3.select(svgSel);const W=+svg.attr('data-w'),H=+svg.attr('data-h');svg.attr('viewBox',`0 0 ${W} ${H}`);
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','var(--sea)');
+  const g=svg.append('g');const path=d3.geoPath(proj);
+  g.append('g').selectAll('path').data(feats).join('path').attr('class','land plain').attr('d',path);
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||6]).translateExtent([[0,0],[W,H]]).extent([[0,0],[W,H]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/W,r.height/H);upd();}}).observe(svg.node());
+  return {svg,g,path,proj,W,H,k:()=>K,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    pin:(lon,lat)=>{const p=proj([lon,lat]);return g.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);},sc:()=>K*S/Math.min(1,Math.max(S,0.72))};}
+
+/* map marker: coloured dot + label that stays readable when zoomed */
+function marker(api,lon,lat,o){const m=api.pin(lon,lat).attr('class','zs mk').attr('tabindex',0).attr('role','button').attr('aria-label',o.label);
+  m.append('circle').attr('class','ring').attr('r',(o.r||9)+5);
+  m.append('circle').attr('class','dot').attr('r',o.r||9).attr('fill',o.color||'var(--typhoon)');
+  if(o.text!==false){const t=m.append('text').text(o.label).attr('dy',5);
+    if(o.side==='l')t.attr('x',-(o.r||9)-6).attr('text-anchor','end');else if(o.side==='t')t.attr('y',-(o.r||9)-8).attr('dy',0).attr('text-anchor','middle');else if(o.side==='b')t.attr('y',(o.r||9)+18).attr('dy',0).attr('text-anchor','middle');else t.attr('x',(o.r||9)+6);}
+  if(o.onClick){m.on('click',o.onClick);m.on('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();o.onClick(e);}});}
+  return m;}
+
+/* quiz */
+function quiz(box,scoreEl,QZ){const st={};
+  const draw=()=>{box.innerHTML=QZ.map((z,i)=>`<div class="panel pad qcard" data-q="${i}"><div class="qn">第 ${i+1} 題</div><h3>${z.q}</h3><div class="qopts">${z.o.map((o,j)=>`<button class="qo" data-j="${j}">${o}</button>`).join('')}</div><div class="qfb"></div></div>`).join('');score();};
+  const score=()=>{const n=Object.keys(st).length,c=Object.values(st).filter(Boolean).length;scoreEl.textContent=n?`答對 ${c} / ${QZ.length}`:'';};
+  box.addEventListener('click',e=>{const b=e.target.closest('.qo');if(!b)return;const card=b.closest('.qcard'),i=+card.dataset.q;if(i in st)return;const j=+b.dataset.j,ok=j===QZ[i].a;st[i]=ok;
+    card.querySelectorAll('.qo').forEach((x,k)=>{if(k===QZ[i].a)x.classList.add('right');else if(k===j)x.classList.add('wrong');x.disabled=true;});
+    card.querySelector('.qfb').innerHTML=(ok?'<b style="color:var(--leaf)">答對了！</b> ':'<b style="color:var(--typhoon)">再想想。</b> ')+QZ[i].e;score();});
+  draw();return ()=>{for(const k in st)delete st[k];draw();};}
+
+/* rail highlight */
+function railSpy(){const links=$$('#rail a'),secs=$$('section.unit');
+  const set=()=>{const mid=innerHeight*0.35;let cur=null;secs.forEach(x=>{const r=x.getBoundingClientRect();if(r.top<=mid&&r.bottom>mid)cur=x;});links.forEach(a=>a.classList.toggle('on',!!cur&&a.getAttribute('href')==='#'+cur.id));};
+  addEventListener('scroll',()=>requestAnimationFrame(set),{passive:true});set();}
+
+/* small line chart for simulations */
+function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w||640,H=opt.h||260,M={l:46,r:30,t:18,b:30};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const x=d3.scaleLinear().domain(opt.x).range([M.l,W-M.r]),y=d3.scaleLinear().domain(opt.y).range([H-M.b,M.t]);
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).ticks(opt.xt||6).tickFormat(opt.xf||(d=>d)));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5));
+  series.forEach(s=>{svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1]))(s.pts)).attr('fill','none').attr('stroke',s.color).attr('stroke-width',3).attr('stroke-dasharray',s.dash||null);
+    if(s.label){const l=s.pts[s.pts.length-1];svg.append('text').attr('x',x(l[0])-4).attr('y',y(l[1])-8).attr('text-anchor','end').attr('font-size',14).attr('font-weight',700).attr('fill',s.color).text(s.label);}});
+  if(opt.ylab)svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('font-size',13).attr('fill','var(--muted)').text(opt.ylab);
+  return {x,y,svg};}
+
+(function(){
+const BASE='https://raw.githubusercontent.com/twranger-glitch/geo-taiwan/power-data/';
+const CAT=[
+ {k:'gas',n:'天然氣',c:'#e8833a',t:['燃氣','民營電廠-燃氣'],f:1},
+ {k:'coal',n:'燃煤',c:'#7a6658',t:['燃煤','民營電廠-燃煤','汽電共生'],f:1},
+ {k:'oil',n:'燃油',c:'#b0503f',t:['燃料油','燃油','輕油'],f:1},
+ {k:'nuc',n:'核能',c:'#8e5bb5',t:['核能'],f:0},
+ {k:'solar',n:'太陽能',c:'#f2c230',t:['太陽能'],r:1},
+ {k:'wind',n:'風力',c:'#2fa6a0',t:['風力'],r:1},
+ {k:'hydro',n:'水力',c:'#3c7fd1',t:['水力'],r:1},
+ {k:'other',n:'其他再生能源',c:'#6aa84f',t:['其它再生能源','其他再生能源','地熱','生質能'],r:1},
+ {k:'store',n:'儲能（電池放電）',c:'#a99bc8',t:['儲能']}];
+const SKIP=t=>/負載/.test(t);
+function group(types){const out={};CAT.forEach(c=>out[c.k]=0);
+  for(const [t,v] of Object.entries(types)){if(SKIP(t))continue;const mw=typeof v==='number'?v:v.mw;if(!(mw>0))continue;const c=CAT.find(c=>c.t.includes(t))||CAT.find(c=>c.k==='other');out[c.k]+=mw;}
+  return out;}
+const fmt=v=>Math.round(v).toLocaleString('zh-TW');
+const pct=(v,T)=>T?(v/T*100):0;
+const hm=s=>s.slice(11,16);
+let NOW=null,DAYS=[],SER={},sel=null;
+async function getJSON(p){const r=await fetch(BASE+p+'?v='+Math.floor(Date.now()/120000),{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json();}
+async function load(){try{NOW=await getJSON('now.json');drawNow();drawWind();drawSun();
+    DAYS=await getJSON('days.json');for(const d of DAYS.slice(-7)){if(!SER[d]||d===DAYS[DAYS.length-1])SER[d]=await getJSON('day/'+d+'.json');}
+    if(!sel||!DAYS.includes(sel))sel=DAYS[DAYS.length-1];tabs();drawArea();drawWindCmp();}
+  catch(e){$('#nowSub').textContent='暫時拿不到台電的資料，請稍後按「重新整理」再試一次。';console.warn(e);}}
+/* ---------- now ---------- */
+function drawNow(){const g=group(NOW.types),T=Object.values(g).reduce((a,b)=>a+b,0);const t=NOW.t;
+  $('#nowSub').innerHTML=`資料時間：<b>${t.slice(0,10).replace(/-/g,'/')} ${hm(t)}</b>　全臺灣這一刻總共發電約 <b>${fmt(T)}</b> 百萬瓦（MW）。`;
+  const L=CAT.map(c=>({...c,v:g[c.k]})).filter(c=>c.v>0).sort((a,b)=>b.v-a.v);
+  const ren=CAT.filter(c=>c.r).reduce((a,c)=>a+g[c.k],0),fos=CAT.filter(c=>c.f).reduce((a,c)=>a+g[c.k],0);
+  $('#headline').innerHTML=`現在臺灣的電，最多來自<b style="color:${L[0].c}">${L[0].n}</b>（${pct(L[0].v,T).toFixed(0)}%）。<br>燒燃料的火力發電約 <b>${pct(fos,T).toFixed(0)}%</b>，再生能源約 <b style="color:#3f8f3a">${pct(ren,T).toFixed(0)}%</b>。`;
+  $('#split').innerHTML=L.map(c=>`<i style="width:${pct(c.v,T)}%;background:${c.c}" title="${c.n}"></i>`).join('');
+  $('#splitLab').innerHTML=`<span>◀ 火力 ${pct(fos,T).toFixed(0)}%</span><span>再生能源 ${pct(ren,T).toFixed(0)}% ▶</span>`;
+  $('#mixList').innerHTML=L.map(c=>`<li><i style="background:${c.c}"></i><b>${c.n}</b><span class="p">${pct(c.v,T)<1?pct(c.v,T).toFixed(1):pct(c.v,T).toFixed(0)}%</span><span class="m">${fmt(c.v)} MW</span></li>`).join('')+(g.nuc>0?'':'<li class="nuc"><i style="background:#8e5bb5"></i><b>核能</b><span class="p">0%</span><span class="m">2025 年起沒有運轉</span></li>');
+  $('#stamp').textContent=`台電資料時間 ${hm(t)}，網頁每 5 分鐘自動更新`;
+  // donut
+  const svg=d3.select('#donut');svg.selectAll('*').remove();const R=200,g0=svg.append('g').attr('transform','translate(210,210)');
+  const arcs=d3.pie().sort(null).value(d=>d.v)(L);const A=d3.arc().innerRadius(118).outerRadius(R).padAngle(0.006);
+  g0.selectAll('path').data(arcs).join('path').attr('d',A).attr('fill',d=>d.data.c).attr('stroke','var(--surface)').attr('stroke-width',2).append('title').text(d=>`${d.data.n} ${fmt(d.data.v)} MW`);
+  const Lb=d3.arc().innerRadius(160).outerRadius(160);
+  g0.selectAll('text.dl').data(arcs.filter(a=>a.endAngle-a.startAngle>0.32)).join('text').attr('class','dl').attr('transform',d=>`translate(${Lb.centroid(d)})`).attr('text-anchor','middle').attr('dy',6).text(d=>d.data.n.replace(/（.*）/,''));
+  g0.append('text').attr('class','dc1').attr('text-anchor','middle').attr('y',-34).text('總發電量');
+  g0.append('text').attr('class','dc2').attr('text-anchor','middle').attr('y',18).text(fmt(T));
+  g0.append('text').attr('class','dc1').attr('text-anchor','middle').attr('y',48).text('百萬瓦（MW）');}
+/* ---------- wind ---------- */
+function turbine(sel,cf,stopped){const s=d3.select(sel);s.selectAll('*').remove();
+  s.append('rect').attr('width',300).attr('height',300).attr('rx',18).attr('fill',cf<0.03?'#dfe6ea':'#d9eef6');
+  s.append('path').attr('d','M0 250 Q150 230 300 250 V300 H0Z').attr('fill','#bcd9a3');
+  s.append('path').attr('d','M146 120 L140 262 H160 L154 120Z').attr('fill','#eef2f4').attr('stroke','#8a969c');
+  const b=s.append('g').attr('transform','translate(150,118)');const r=b.append('g').attr('class','blades');
+  [0,120,240].forEach(a=>r.append('path').attr('d','M0 0 C6 -20 6 -70 0 -100 C-4 -70 -5 -20 0 0Z').attr('fill','#fff').attr('stroke','#8a969c').attr('transform',`rotate(${a})`));
+  b.append('circle').attr('r',8).attr('fill','#eef2f4').attr('stroke','#8a969c');
+  const sp=cf<0.02?0:Math.max(0.5,4.5-4*cf);if(sp)r.style('animation',`spin ${sp}s linear infinite`);
+  if(cf>0.02)for(let i=0;i<3;i++)s.append('path').attr('class','gust').attr('d',`M${10+i*8} ${70+i*40} q30 -10 60 0 t60 0`).style('animation-duration',(2.4-cf*1.6)+'s').style('animation-delay',(i*0.4)+'s');}
+function drawWind(){const w=NOW.types['風力']||{mw:0,cap:0};const U=(NOW.units&&NOW.units['風力'])||[];
+  const cap=U.reduce((a,u)=>a+(u[2]||0),0)||w.cap,mw=w.mw,cf=cap?mw/cap:0;turbine('#turb',cf);
+  const T=Object.values(group(NOW.types)).reduce((a,b)=>a+b,0);
+  $('#windKpi').innerHTML=`<b>${fmt(mw)}</b> MW<small>占全臺灣發電的 ${pct(mw,T).toFixed(1)}%</small>`;
+  $('#windBar').style.width=Math.min(100,cf*100)+'%';
+  $('#windNote').innerHTML=`所有風機加起來最多約 ${fmt(cap)} MW，現在發揮了 <b>${(cf*100).toFixed(0)}%</b>。`+(cf<0.05?'<br>現在風力發電幾乎停了！可能是風太小，也可能是風太大、風機停下來保護自己。':cf>0.6?'<br>風很強，風機轉得很賣力！':'');
+  const F=U.filter(u=>u[2]>0).sort((a,b)=>b[2]-a[2]).slice(0,14),mx=d3.max(F,u=>u[2])||1;
+  $('#farms').innerHTML=F.map(u=>`<div class="farm"><span class="fn">${u[0].replace(/\(註\d+\)/,'')}</span><div class="fb"><i class="c" style="width:${u[2]/mx*100}%"></i><i class="m" style="width:${(u[1]||0)/mx*100}%"></i></div><span class="fv">${fmt(u[1]||0)}${u[3]?`<em>${u[3]}</em>`:''}</span></div>`).join('');}
+/* ---------- sun ---------- */
+function drawSun(){const s=NOW.types['太陽能']||{mw:0,cap:0},cf=s.cap?s.mw/s.cap:0,h=+NOW.t.slice(11,13);
+  const v=d3.select('#sunSvg');v.selectAll('*').remove();const night=h<6||h>=18;
+  v.append('rect').attr('width',300).attr('height',300).attr('rx',18).attr('fill',night?'#26344d':cf<0.1?'#cfd8de':'#d9eef6');
+  if(!night){v.append('circle').attr('cx',220).attr('cy',70).attr('r',34+cf*26).attr('fill','#ffd84d').attr('opacity',.35+cf*.65);
+    if(cf<0.25)[[170,80],[215,92],[250,78]].forEach(([x,y])=>v.append('ellipse').attr('cx',x).attr('cy',y).attr('rx',42).attr('ry',20).attr('fill','#eef2f4').attr('opacity',.95));}
+  else v.append('path').attr('d','M220 50a26 26 0 1 0 22 40a22 22 0 1 1 -22 -40z').attr('fill','#f7f1c8');
+  for(let i=0;i<3;i++){const g=v.append('g').attr('transform',`translate(${40+i*78},190) skewX(-18)`);for(let r=0;r<3;r++)for(let c=0;c<3;c++)g.append('rect').attr('x',c*20).attr('y',r*16).attr('width',19).attr('height',15).attr('fill',d3.interpolateRgb('#3a4a66','#4f8fd6')(night?0:cf)).attr('stroke','#cfd8de');
+    g.append('path').attr('d','M30 48v30').attr('stroke','#8a969c').attr('stroke-width',4);}
+  const T=Object.values(group(NOW.types)).reduce((a,b)=>a+b,0);
+  $('#sunKpi').innerHTML=`<b>${fmt(s.mw)}</b> MW<small>占全臺灣發電的 ${pct(s.mw,T).toFixed(1)}%</small>`;
+  $('#sunBar').style.width=Math.min(100,cf*100)+'%';
+  $('#sunNote').innerHTML=`全臺灣的太陽能板最多約 ${fmt(s.cap)} MW，現在發揮了 <b>${(cf*100).toFixed(0)}%</b>。`+(night?'<br>現在是晚上，太陽能板沒有陽光，所以幾乎不發電。':'');}
+/* ---------- today ---------- */
+const DL=d=>{const [y,m,dd]=d.split('-');return `${+m}/${+dd}`;};
+function tabs(){$('#dayTabs').innerHTML=DAYS.slice(-7).map(d=>`<button role="tab" data-d="${d}" aria-selected="${d===sel}">${DL(d)}${d===DAYS[DAYS.length-1]?'（今天）':''}</button>`).join('');}
+$('#dayTabs').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(b){sel=b.dataset.d;tabs();drawArea();}});
+const hours=s=>+s.slice(11,13)+(+s.slice(14,16))/60;
+function drawArea(){const S=SER[sel]||[];const svg=d3.select('#area');const W=900,H=340,M={l:64,r:30,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const keys=CAT.map(c=>c.k);const rows=S.map(([t,ty])=>({h:hours(t),...group(ty)}));
+  const x=d3.scaleLinear().domain([0,24]).range([M.l,W-M.r]);const st=d3.stack().keys(keys)(rows);const ymax=d3.max(rows,r=>keys.reduce((a,k)=>a+r[k],0))||40000;
+  const y=d3.scaleLinear().domain([0,ymax*1.08]).nice().range([H-M.b,M.t]);
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).tickValues([0,3,6,9,12,15,18,21,24]).tickFormat(d=>d+' 時'));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d?d/10000+' 萬':''));
+  svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('class','axl').text('MW');
+  if(rows.length<2){svg.append('text').attr('x',W/2).attr('y',H/2).attr('text-anchor','middle').attr('class','axl big').text(rows.length?`這一天目前只有 ${hm(S[0][0])} 一筆資料，之後會越來越多`:'還沒有資料');}
+  const ar=d3.area().x(d=>x(d.data.h)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveMonotoneX);
+  svg.selectAll('path.ar').data(st).join('path').attr('class','ar').attr('d',ar).attr('fill',d=>CAT.find(c=>c.k===d.key).c).attr('opacity',.92);
+  if(rows.length===1)st.forEach(s=>{const d=s[0];svg.append('rect').attr('x',x(d.data.h)-6).attr('width',12).attr('y',y(d[1])).attr('height',y(d[0])-y(d[1])).attr('fill',CAT.find(c=>c.k===s.key).c);});
+  $('#areaLeg').innerHTML=CAT.filter(c=>rows.some(r=>r[c.k]>0)).map(c=>`<span><i style="background:${c.c}"></i>${c.n}</span>`).join('');}
+function drawWindCmp(){const svg=d3.select('#windCmp');const W=900,H=280,M={l:64,r:30,t:16,b:34};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const ds=DAYS.slice(-7),C=d3.schemeTableau10;const lines=ds.map(d=>(SER[d]||[]).map(([t,ty])=>[hours(t),group(ty).wind]));
+  const x=d3.scaleLinear().domain([0,24]).range([M.l,W-M.r]),y=d3.scaleLinear().domain([0,Math.max(1000,d3.max(lines.flat(),p=>p[1])||0)*1.1]).nice().range([H-M.b,M.t]);
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).tickValues([0,3,6,9,12,15,18,21,24]).tickFormat(d=>d+' 時'));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>d?fmt(d):''));
+  svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('class','axl').text('MW');
+  lines.forEach((L,i)=>{const col=C[i%10];if(L.length>1)svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1])).curve(d3.curveMonotoneX)(L)).attr('fill','none').attr('stroke',col).attr('stroke-width',ds[i]===ds[ds.length-1]?4:2.5);
+    L.length&&svg.append('circle').attr('cx',x(L[L.length-1][0])).attr('cy',y(L[L.length-1][1])).attr('r',5).attr('fill',col);});
+  $('#windLeg').innerHTML=ds.map((d,i)=>`<span><i style="background:${C[i%10]}"></i>${DL(d)}</span>`).join('');}
+/* ---------- guess ---------- */
+const GK='hhl-energy-guess';let gv=null;try{gv=localStorage.getItem(GK);}catch(e){}
+const GT={up:'變多',down:'變少',same:'差不多'};
+function guessUI(){$$('#guess [data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===gv));$('#guessNote').textContent=gv?`你猜「${GT[gv]}」。颱風過後，到下面「風力發電比一比」看看答案！`:'';}
+$('#guess').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;gv=b.dataset.g;try{localStorage.setItem(GK,gv);}catch(e){}guessUI();});guessUI();
+// small turbine icons in the explainer
+$$('.why3 svg').forEach((s,i)=>{s.innerHTML='';const d=d3.select(s);d.append('path').attr('d','M40 40V76').attr('stroke','#8a969c').attr('stroke-width',4);
+  const b=d.append('g').attr('transform','translate(40,40)').append('g').attr('class','blades');[0,120,240].forEach(a=>b.append('path').attr('d','M0 0L0 -30').attr('stroke',i===2?'#d9462b':'#2fa6a0').attr('stroke-width',5).attr('stroke-linecap','round').attr('transform',`rotate(${a})`));
+  if(i===1)b.style('animation','spin 1.4s linear infinite');d.append('circle').attr('cx',40).attr('cy',40).attr('r',4).attr('fill','#8a969c');
+  if(i===0)d.append('text').attr('x',62).attr('y',20).attr('class','wz').text('…');if(i===2)d.append('text').attr('x',58).attr('y',20).attr('class','wz red').text('停');});
+$('#refresh').onclick=load;load();setInterval(load,5*60*1000);
+railSpy();document.body.dataset.ready='1';
+})();
+</script>
