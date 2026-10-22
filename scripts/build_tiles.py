@@ -66,7 +66,7 @@ def fabdem_tiles():
                 continue
             # e.g. N23E120_FABDEM_V1-2.tif
             lat, lon = int(b[1:3]), int(b[4:7])
-            if 21 <= lat <= 25 and 119 <= lon <= 121:
+            if 21 <= lat <= 25 and 119 <= lon <= 122:
                 p = f"{TMP}/{b}"
                 if not os.path.exists(p):
                     with zf.open(n) as src, open(p, "wb") as dst:
@@ -83,7 +83,7 @@ def cop_tile(lat, lon):
 
 def mosaic():
     fab = fabdem_tiles()
-    L0, L1, A0, A1 = 119, 122, 21, 26
+    L0, L1, A0, A1 = 119, 123, 21, 26
     big = np.zeros(((A1 - A0) * PER, (L1 - L0) * PER), dtype=np.float32)
     src = {}
     for lat in range(A0, A1):
