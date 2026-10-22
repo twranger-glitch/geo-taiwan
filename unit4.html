@@ -503,6 +503,100 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .dsurge2[hidden]{display:none}
 .dsurge2{display:inline-flex;gap:8px;align-items:center;margin-top:10px;font-weight:700;cursor:pointer}
 .dsurge2 input{width:18px;height:18px}
+
+/* navigator game */
+.lmbox{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+.lmbox svg{display:block;width:100%;height:auto}
+.lm-hud{position:absolute;left:10px;bottom:10px;display:flex;gap:8px;flex-wrap:wrap;pointer-events:none}
+.lm-hud span{background:#ffffffe8;color:#10313b;border-radius:8px;padding:2px 10px;font-weight:700;font-size:15px}
+.lm-hud span:first-child{font-family:var(--f-num);color:#2a6fb0;font-size:17px}
+.lm-hud span:empty{display:none}
+.lm-lab{font-size:15px;font-weight:700;fill:#10313b;paint-order:stroke;stroke:#ffffffcc;stroke-width:3.5px;stroke-linejoin:round}
+.lm-lab.sea{fill:#e9f6fb;stroke:none;font-style:italic;font-size:18px;font-weight:500}
+.lm-lab.sea2{fill:#2a6f8f;stroke:none;font-style:italic;font-size:20px}
+.lm-lab.land{fill:#4d6b3a;stroke:none}
+.lm-lab.sand{fill:#7a5c22;font-size:13.5px;stroke:#ecdca8}
+.lm-lab.ch{fill:#0d4f72;font-size:14px}
+.lm-lab.fort{font-size:15.5px}
+.lm-lab.small{font-size:13px;font-weight:500}
+.lm-trail{fill:none;stroke-width:3;stroke-dasharray:6 6;opacity:.7}
+.lm-ring{fill:none;stroke:#2a6fb0;stroke-width:4;stroke-dasharray:4 8;animation:lmspin 6s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes lmspin{to{transform:rotate(360deg)}}
+.lm-ship{pointer-events:none}
+.choice{display:grid;gap:8px;margin-top:10px}
+.choice button{text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.5}
+.choice button b{font-size:18px;color:var(--ink)}
+.choice button span{color:var(--muted);font-size:15px}
+.choice button:hover:not(:disabled){border-color:var(--ink)}
+.choice button:disabled{opacity:.5;cursor:default}
+.hintd{margin-top:10px;background:var(--surface-2);border-radius:12px;padding:8px 12px}
+.hintd summary{font-weight:700;cursor:pointer;color:#2a6fb0}
+.hintd p{margin-top:6px;font-size:15.5px}
+.lm-msg{margin-top:10px;font-size:16px;min-height:1.5em}
+.lm-score{display:flex;flex-direction:column;margin-top:10px;border:2px solid #2a6fb0;border-radius:14px;padding:8px 14px;background:color-mix(in srgb,#2a6fb0 8%,var(--surface))}
+.lm-score b{font-size:20px;color:#2a6fb0}
+.tidebox{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:var(--surface)}
+.tidebox[hidden]{display:none}
+.tidebox svg{display:block;width:100%;height:auto;margin-top:8px;border-radius:10px}
+.moons{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.moons button{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 6px;font-weight:700;font-size:15.5px}
+.moons button[aria-checked="true"]{border-color:#2a6fb0;background:color-mix(in srgb,#2a6fb0 12%,var(--surface))}
+.tide-ctl{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;margin-top:10px}
+.tide-ctl label{font-weight:700}
+.tide-ctl input{width:100%;accent-color:#2a6fb0;height:30px}
+.tide-ctl b{font-family:var(--f-num);min-width:6.5em}
+@media (max-width:520px){.tide-ctl{grid-template-columns:auto minmax(0,1fr)}.tide-ctl b{grid-column:1/-1;order:3}.tide-ctl .bigbtn{grid-column:1/-1;order:4;justify-content:center}}
+.lm-dim{stroke:#10313b;stroke-width:2;marker-start:none}
+.lm-dimt{font-size:17px;font-weight:700}
+.lm-dimt.small{font-size:14px}
+.lm-need{stroke:#d9462b;stroke-width:2.5;stroke-dasharray:7 5}
+.lm-big{font-size:20px;font-weight:700}
+.lm-night{fill:#22314a;opacity:.12}
+.lm-ax{font-family:var(--f-num);font-size:13px;fill:var(--muted)}
+@media (max-width:640px){.lm-lab{font-size:24px;stroke-width:5px}.lm-lab.sea{font-size:26px}.lm-lab.sea2{font-size:28px}.lm-lab.sand{font-size:21px}.lm-lab.ch{font-size:22px}.lm-lab.fort{font-size:24px}.lm-lab.small{font-size:20px}
+ .lm-dimt{font-size:26px}.lm-dimt.small{font-size:22px}.lm-big{font-size:28px}.lm-ax{font-size:21px}}
+/* legends */
+.lg-prog{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}
+.lg-prog button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:14.5px;font-weight:700;color:var(--muted)}
+.lg-prog button.on{outline:2px solid var(--ink)}
+.lg-prog button.f{background:#2a6fb0;color:#fff;border-color:#2a6fb0}
+.lg-prog button.l{background:#b5446e;color:#fff;border-color:#b5446e}
+.lg-prog span{font-size:14px;color:var(--muted);margin-left:4px}
+.lg-story{font-size:17px;background:var(--surface-2);border-radius:12px;padding:10px 12px;margin-top:8px}
+.lg-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.lg-v{font-size:19px;font-weight:700;margin-top:10px}
+.lg-end{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.lg-end ul{margin:6px 0 0 1.2em;padding:0}
+.lg-end li{margin-top:4px}
+.lg-route{fill:none;stroke:#2a6fb0;stroke-width:5;stroke-dasharray:10 8}
+.lg-area{fill:#2a6fb0;opacity:.22;stroke:#2a6fb0;stroke-width:3}
+.lg-rt{font-size:22px;font-weight:700;fill:#2a6fb0;paint-order:stroke;stroke:#fff;stroke-width:4px}
+/* deer game */
+.dg-dots{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.dg-dots i{font-style:normal;font-family:var(--f-num);font-size:12.5px;padding:1px 6px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.dg-dots i.done{background:color-mix(in srgb,var(--leaf) 30%,var(--surface));color:var(--ink)}
+.dg-dots i.on{background:var(--leaf);color:#fff}
+.dg-res{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;background:var(--surface-2);border-radius:12px;padding:8px 12px;margin-bottom:12px;font-size:15.5px}
+.dg-res>b{width:100%;font-size:14px;color:var(--muted)}
+#deerChart{margin-top:12px}
+.sim-leg[hidden],#deerChart[hidden]{display:none}
+.sim-leg{flex-wrap:wrap;margin-top:6px}
+/* names */
+.nm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.nm-chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 11px;font-size:15px;font-weight:700;color:var(--ink)}
+.nm-chips button:hover{border-color:var(--ink)}
+.nm-chips button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.nm-chips button.trap{border-style:dashed}
+.nm-chips button.ok{box-shadow:inset 0 -3px 0 var(--leaf)}
+.nm-chips button.bad{box-shadow:inset 0 -3px 0 var(--typhoon)}
+.nm-score{font-size:14px;color:var(--muted);font-weight:700;margin-left:4px}
+.nm-d{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.nm-guess{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.v{display:inline-block;border-radius:999px;padding:3px 12px;font-weight:700;font-size:15px;color:#fff;border:0}
+.v.doc{background:#1f7a3a}.v.leg{background:#c97a12}.v.no{background:#6b7c85}
+.nm-guess .v{padding:7px 16px;font-size:16px}
+.nm-key{display:flex;gap:6px;flex-wrap:wrap}
+.nm-verdict{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <header class="top">
@@ -510,7 +604,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
     <div>
       <div class="kicker">五年級社會 · 第四單元補充</div>
       <h1>大航海時代的<span class="accent">臺灣</span></h1>
-      <p class="lede">十七世紀，荷蘭人、西班牙人和鄭氏政權先後來到臺灣，臺灣成為世界貿易的據點。開船跟著他們走一趟，再拉動時間軸，看看誰在什麼時候經營臺灣。</p>
+      <p class="lede">十七世紀，荷蘭人、西班牙人和鄭氏政權先後來到臺灣，臺灣成為世界貿易的據點。開船跟著他們走一趟、當一次鄭成功的領航員、做一次部落獵人的決定，再去找找地名裡藏著的故事。</p>
     </div>
     <div class="links">
       <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/unit3.html">← 第三單元：尋根探源話臺灣</a>
@@ -525,8 +619,9 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
     <a href="#hub"><span class="dot" style="background:var(--plate)"></span>東亞十字路口</a>
     <a href="#rulers"><span class="dot" style="background:var(--typhoon)"></span>誰在經營臺灣</a>
     <a href="#taijiang"><span class="dot" style="background:var(--rain)"></span>台江內海</a>
-    <a href="#forts"><span class="dot" style="background:#9a6b43"></span>城堡名字誰取的</a>
-    <a href="#deer"><span class="dot" style="background:var(--leaf)"></span>梅花鹿去哪了</a>
+    <a href="#luermen"><span class="dot" style="background:#2a6fb0"></span>領航員挑戰</a>
+    <a href="#legend"><span class="dot" style="background:#b5446e"></span>鄭成功傳說</a>
+    <a href="#deer"><span class="dot" style="background:var(--leaf)"></span>部落獵人</a>
     <a href="#names"><span class="dot" style="background:#7a5cc0"></span>地名的祕密</a>
     <a href="#quiz"><span class="dot" style="background:var(--ink)"></span>小測驗</a>
   </div>
@@ -616,26 +711,43 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   </div>
 </section>
 
-<section class="unit" id="forts">
+<section class="unit" id="luermen">
   <div class="wrap">
     <div class="unit-head">
-      <div class="badge" style="background:#9a6b43">名</div>
-      <h2>城堡名字是誰取的？ <span class="page-ref">課本 p.108–113</span></h2>
-      <p class="sub">熱蘭遮城和聖多明哥城都換過好幾個名字。把每個名字拖到幫它取名的人身上（也可以先點名字，再點人）。放對了，時序圖就會自己長出來。卡不住的時候，按「線索」。</p>
+      <div class="badge" style="background:#2a6fb0">舵</div>
+      <h2>1661 年，你是鄭成功的領航員 <span class="page-ref">課本 p.90、93</span></h2>
+      <p class="sub">鄭成功的船隊要開進台江內海，打敗荷蘭人。走哪一條航道？什麼時候進去？先攻哪一座城？每一步都由你決定，選錯了會怎樣，試試看就知道。</p>
     </div>
-    <div class="tabs" id="fortTabs" role="tablist">
-      <button role="tab" data-f="z" aria-selected="true">熱蘭遮城（臺南安平）</button>
-      <button role="tab" data-f="s" aria-selected="false">聖多明哥城（新北淡水）</button>
+    <div class="duo">
+      <div>
+        <div class="lmbox" id="lmBox"><svg id="lmSvg" viewBox="0 0 720 480" role="img" aria-label="十七世紀台江內海示意圖與鄭成功船隊"></svg>
+          <div class="lm-hud"><span id="lmDate">1661 年 4 月</span><span id="lmTry"></span></div></div>
+        <div class="tidebox" id="lmTide" hidden>
+          <div class="label">選日子（農曆）</div>
+          <div class="moons" id="lmMoons" role="radiogroup" aria-label="農曆日期"></div>
+          <svg id="lmSec" viewBox="0 0 720 190" role="img" aria-label="鹿耳門水道的剖面：水深和船的吃水"></svg>
+          <svg id="lmCurve" viewBox="0 0 720 162" role="img" aria-label="這一天的潮汐變化"></svg>
+          <div class="tide-ctl"><label for="lmTime">時間</label><input type="range" id="lmTime" min="0" max="24" step="0.25" value="6"><b id="lmTimeV">06:00</b><button class="bigbtn" id="lmGo">出發！</button></div>
+        </div>
+      </div>
+      <div class="panel pad card" id="lmCard" aria-live="polite"></div>
     </div>
-    <div class="panel pad" style="margin-top:14px">
-      <div class="label">名字</div>
-      <div class="ntags" id="nTags"></div>
-      <div class="label" style="margin-top:14px">是誰取的？</div>
-      <div class="namers" id="namers"></div>
-      <p class="fort-msg" id="fortMsg" aria-live="polite"></p>
-      <svg id="fortSvg" viewBox="0 0 1000 200" role="img" aria-label="城堡名稱的時序圖"></svg>
-      <ol class="flist" id="fortList" aria-label="城堡名稱的時序"></ol>
-      <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;align-items:center"><button class="bigbtn alt" id="fortReset">再玩一次</button></div>
+  </div>
+</section>
+
+<section class="unit" id="legend">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#b5446e">傳</div>
+      <h2>鄭成功真的來過這裡嗎？ <span class="page-ref">課本 p.95</span></h2>
+      <p class="sub">臺灣各地流傳著很多鄭成功的故事。點地圖上的地方讀讀看，判斷它是「歷史事實」還是「傳說」。全部判斷完，地圖會告訴你鄭成功真正走過哪裡。</p>
+    </div>
+    <div class="duo">
+      <div><div class="mapbox" id="lgBox"><svg id="lgSvg" role="img" aria-label="鄭成功傳說地圖"></svg><div class="mhint">滾輪或兩指縮放 · 拖曳移動</div></div></div>
+      <div class="panel pad card">
+        <div class="lg-prog" id="lgProg"></div>
+        <div id="lgCard" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -644,19 +756,19 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   <div class="wrap">
     <div class="unit-head">
       <div class="badge" style="background:var(--leaf)">鹿</div>
-      <h2>臺灣的梅花鹿去哪了？ <span class="page-ref">課本 p.96、99</span></h2>
-      <p class="sub">數百年前，臺灣西部平原有成千上萬隻梅花鹿。按「播放」，看看從 1600 年到 1700 年，平原上發生了什麼事。也可以自己點下面的事件卡，一件一件加進去。</p>
+      <h2>你是部落的獵人：梅花鹿還在嗎？ <span class="page-ref">課本 p.96、99</span></h2>
+      <p class="sub">你是西拉雅部落的獵人首領，族人一直照規矩只在冬天打鹿。1624 年荷蘭商人來了，想用鹽、布和鐵器換鹿皮。每一回合決定這幾年要打多少鹿，看看到了 1680 年，你的子孫還有沒有鹿可以打。</p>
     </div>
     <div class="duo">
       <div class="panel pad">
         <div class="deerbox"><canvas id="deerCv" width="720" height="420" aria-label="西部平原上梅花鹿的動畫"></canvas>
-          <div class="deer-hud"><span id="deerYear">1600 年</span><span id="deerN"></span></div></div>
-        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="bigbtn" id="deerPlay">▶ 播放 100 年</button><button class="bigbtn alt" id="deerReset">重來</button></div>
+          <div class="deer-hud"><span id="deerYear">1624 年</span><span id="deerN"></span><span id="deerG"></span></div></div>
+        <svg id="deerChart" class="sim-chart" hidden role="img" aria-label="梅花鹿數量的變化"></svg>
+        <div class="sim-leg" id="deerLeg" hidden></div>
       </div>
       <div class="panel pad">
-        <div class="evcards" id="deerEv"></div>
-        <p class="big-say" id="deerSay" aria-live="polite"></p>
-        <p class="note" style="margin-top:6px">動畫是幫助理解的示意，鹿的數量不是真實的調查數字。近年梅花鹿在墾丁國家公園等地復育成功。</p>
+        <div class="dg-dots" id="dgDots" aria-hidden="true"></div>
+        <div id="dgCard" aria-live="polite"></div>
       </div>
     </div>
   </div>
@@ -666,18 +778,22 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   <div class="wrap">
     <div class="unit-head">
       <div class="badge" style="background:#7a5cc0">名</div>
-      <h2>地名和生活裡的歷史 <span class="page-ref">課本 p.96–98、101、104–107</span></h2>
-      <p class="sub">很多地名和東西，都藏著大航海時代留下的痕跡。選一個主題，點地圖上的地方看看。</p>
+      <h2>地名裡的大航海時代 <span class="page-ref">課本 p.96–98、101、104–107</span></h2>
+      <p class="sub">很多地名都藏著四百年前的故事。選一個主題，點地圖上的地名，或點地名按鈕，看看它是怎麼來的。</p>
     </div>
     <div class="tabs" id="nameTabs" role="tablist">
-      <button role="tab" data-n="ying" aria-selected="true">鄭氏軍隊屯墾的地名</button>
-      <button role="tab" data-n="red" aria-selected="false">和「紅毛」有關</button>
-      <button role="tab" data-n="spain" aria-selected="false">西班牙人的痕跡</button>
-      <button role="tab" data-n="bring" aria-selected="false">荷蘭人帶來的東西</button>
+      <button role="tab" data-n="ying" aria-selected="true">鄭氏軍隊屯墾</button>
+      <button role="tab" data-n="red" aria-selected="false">「紅毛」真的是荷蘭人嗎？</button>
+      <button role="tab" data-n="nl" aria-selected="false">荷蘭人留下的</button>
+      <button role="tab" data-n="es" aria-selected="false">西班牙人留下的</button>
     </div>
     <div class="duo" style="margin-top:14px">
       <div><div class="mapbox" id="nameBox"><svg id="nameSvg" role="img" aria-label="地名地圖"></svg><div class="mhint">滾輪或兩指縮放 · 拖曳移動</div></div></div>
-      <div class="panel pad card" id="nameCard" aria-live="polite"></div>
+      <div class="panel pad card">
+        <div id="nmIntro"></div>
+        <div class="nm-chips" id="nmChips"></div>
+        <div id="nmDetail" aria-live="polite"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -697,7 +813,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 
 <footer>
   <div class="wrap">
-    <p>資料來源：康軒版五上社會第四單元課本；內政部地名資訊服務網；臺灣地形底圖依歐洲太空總署 Copernicus GLO-30 數值地表模型繪製；世界地圖來自 Natural Earth。</p>
+    <p>資料來源：康軒版五上社會第四單元課本；內政部地名資訊服務網；各地方政府與地方文史資料；臺灣地形底圖依歐洲太空總署 Copernicus GLO-30 數值地表模型繪製；世界地圖來自 Natural Earth。</p>
     <p>航線、範圍與模擬都是教學用的簡化示意。</p>
     <p class="credit">海佃地圖 ｜ Haidian Hidden Library ｜ 2026</p>
   </div>
@@ -919,7 +1035,7 @@ drawYear(1624);
   const og=svg.append('g').attr('clip-path','url(#tjc)');og.append('rect').attr('width',W).attr('height',H).attr('fill','#9ccbdd');og.append('image').attr('href',Ro.src).attr('width',W).attr('height',H).attr('preserveAspectRatio','none');
   const PL=[['熱蘭遮城',120.1603,23.0016,'t','#e07a2f','今天的安平古堡。1624 年荷蘭人在這裡登陸，蓋了城堡。當時這裡是一個沙洲小島，叫做「大員」，熱蘭遮城就面對著台江內海。'],
     ['普羅民遮城',120.2025,22.9975,'r','#e07a2f','今天的赤崁樓。1653 年荷蘭人在台江內海的東岸興建。當時城堡就在海邊！'],
-    ['鹿耳門水道',120.128,23.055,'l','#2a6fb0','進出台江內海的水道。1661 年鄭成功的船隊就是趁著漲潮，從鹿耳門駛進台江內海。'],
+    ['鹿耳門水道',120.128,23.055,'l','#2a6fb0','進出台江內海的水道，水很淺、沙洲很多，荷蘭人以為大船開不進來。1661 年鄭成功的船隊是怎麼開進來的？到下一段當一次領航員就知道！'],
     ['海佃國小',120.2004,23.0277,'t','#d9462b','我們學校所在的安南區，400 年前還是一片內海。後來河流帶來的泥沙慢慢堆積，1823 年一場大風雨後，大片內海浮出成為陸地，才有今天的安南區。'],
     ['臺南孔廟',120.2045,22.9905,'b','#6b5ca5','鄭經和陳永華興建，是臺灣最早的孔子廟。']];
   const card=i=>{const p=PL[i];$('#tjCard').innerHTML=`<h3>${p[0]}</h3><p>${p[5]}</p><div class="qbox"><b>想一想</b>如果現在的安南區在 400 年前是海，那時候的人要怎麼從安平到赤崁？</div>`;svg.selectAll('.tjm').classed('sel',(d,k)=>k===i);};
@@ -939,140 +1055,363 @@ drawYear(1624);
   set(0.64);})();
 
 /* =========================================================
-   5. who named the castle?
+   5. 1661: be Koxinga's navigator
    ========================================================= */
-const FT={
- z:{name:'熱蘭遮城',who:[['nl','荷蘭人',NL],['zh','鄭成功',ZH],['now','後來的人們','#6b7c85']],
-  tags:[{n:'奧倫尼亞城',w:'nl',y:1624,yl:'1624',clue:'剛來臺灣的人蓋的第一座城。「奧倫尼亞（Oranje）」是荷蘭王室家族的名字。',why:'1624 年荷蘭人登陸後蓋的第一座城，用荷蘭王室「奧倫治家族」的名字命名。'},
-   {n:'熱蘭遮城',w:'nl',y:1627,yl:'1627',clue:'荷蘭有一個省叫做「澤蘭（Zeeland）」，這個名字的意思就是「澤蘭的城」。',why:'1627 年荷蘭人用磚石加強城牆，改名為熱蘭遮城（Zeelandia），名字來自荷蘭的澤蘭省。原來荷蘭人自己也改過名字！'},
-   {n:'安平鎮',w:'zh',y:1662,yl:'1662',clue:'這個人小時候住在福建一個叫「安平」的地方。',why:'1662 年鄭成功趕走荷蘭人，用他福建家鄉「安平」的名字，把這裡改稱安平鎮。今天臺南的「安平區」就是這樣來的。'},
-   {n:'安平古堡',w:'now',y:2026,yl:'現在',clue:'「古堡」是很久以前留下來的城堡，是誰會這樣稱呼它？',why:'經過好幾個統治者改建，現在大家把這整個區域叫做安平古堡，是重要的古蹟。'}]},
- s:{name:'聖多明哥城',who:[['es','西班牙人',ES],['nl','荷蘭人',NL],['han','漢人','#b5446e'],['uk','英國人','#3a6fd6']],
-  tags:[{n:'聖多明哥城',w:'es',y:1628,yl:'1628',clue:'「聖多明哥（Santo Domingo）」是天主教聖人的名字。最早在淡水蓋城、又信天主教的是誰？',why:'1628 年西班牙人在淡水河口北岸的山丘上蓋了聖多明哥城，用天主教聖人的名字命名。'},
-   {n:'聖安東尼奧城',w:'nl',y:1644,yl:'1644',clue:'把西班牙人趕走以後，新來的人重建城堡，也換了新名字。',why:'1642 年荷蘭人北上趕走西班牙人，1644 年重建城堡，取名聖安東尼奧城。'},
-   {n:'紅毛城',w:'han',y:1660,yl:'後來',clue:'有些人看到荷蘭人的頭髮是紅褐色，就幫他們取了外號……',why:'漢人把頭髮紅褐色的荷蘭人叫做「紅毛」，荷蘭人的城堡就被叫做紅毛城，這個名字一直用到今天。'},
-   {n:'英國領事館',w:'uk',y:1867,yl:'1867',clue:'1867 年起，有一個國家租下這裡，在這裡處理外交的事。',why:'1867 年英國政府開始租用紅毛城當作領事館，旁邊的紅磚建築就是英國人蓋的。1980 年才收歸中華民國政府所有。'}]}};
-let ft='z',placedF=[],selTag=null,miss={};
-const fx=y=>y<=1700?60+(y-1620)/80*560:700+(y-1840)/186*260;
-function fortTimeline(){const F=FT[ft],s=d3.select('#fortSvg');s.selectAll('*').remove();
-  s.append('line').attr('x1',40).attr('x2',650).attr('y1',100).attr('y2',100).attr('class','ft-axis');s.append('line').attr('x1',680).attr('x2',975).attr('y1',100).attr('y2',100).attr('class','ft-axis');
-  s.append('path').attr('d','M652 92l10 16M664 92l10 16').attr('class','ft-brk');
-  [1620,1640,1660,1680,1700].concat(ft==='s'?[1850,1900,1950,2000]:[1900,2000]).forEach(y=>{s.append('line').attr('x1',fx(y)).attr('x2',fx(y)).attr('y1',94).attr('y2',106).attr('class','ft-axis');s.append('text').attr('x',fx(y)).attr('y',126).attr('text-anchor','middle').attr('class','ft-y').text(y);});
-  s.append('text').attr('x',40).attr('y',20).attr('class','ft-t').text(placedF.length?`${F.name}的名字時序圖`:'名字放對了，就會出現在這條時間線上');
-  const order=F.tags.map((t,i)=>i).filter(i=>placedF.includes(i)).sort((a,b)=>F.tags[a].y-F.tags[b].y);
-  order.forEach((k,i)=>{const t=F.tags[k],x=fx(t.y),up=i%2===0,col=F.who.find(w=>w[0]===t.w)[2];
-    s.append('circle').attr('cx',x).attr('cy',100).attr('r',9).attr('fill',col).attr('stroke','#fff').attr('stroke-width',2);
-    s.append('line').attr('x1',x).attr('x2',x).attr('y1',up?90:110).attr('y2',up?52:150).attr('stroke',col).attr('stroke-width',2);
-    s.append('text').attr('x',x).attr('y',up?44:172).attr('text-anchor',x>880?'end':x<120?'start':'middle').attr('class','ft-l').attr('fill',col).text(`${t.yl}　${t.n}`);});
-  $('#fortList').innerHTML=order.map(k=>{const t=F.tags[k],w=F.who.find(x=>x[0]===t.w);return `<li style="--c:${w[2]}"><b>${t.yl}</b><span>${t.n}</span><small>${w[1]}取的名字</small></li>`;}).join('');}
-function drawFortGame(){const F=FT[ft];selTag=null;
-  $$('#fortTabs [data-f]').forEach(b=>b.setAttribute('aria-selected',b.dataset.f===ft));
-  const order=d3.shuffle(F.tags.map((t,i)=>i));
-  $('#nTags').innerHTML=order.filter(i=>!placedF.includes(i)).map(i=>`<div class="ntag" data-i="${i}" tabindex="0" role="button" aria-label="名字：${F.tags[i].n}"><b>${F.tags[i].n}</b><button class="clue" data-c="${i}">線索</button><span class="cluetxt" hidden>${F.tags[i].clue}</span></div>`).join('')||'<p class="note">全部放好了！</p>';
-  $('#namers').innerHTML=F.who.map(([k,n,c])=>`<div class="namer" data-w="${k}" style="--c:${c}" tabindex="0" role="button" aria-label="${n}"><div class="nm-h">${n}</div><div class="nm-got">${placedF.filter(i=>F.tags[i].w===k).map(i=>`<span>${F.tags[i].n}</span>`).join('')}</div></div>`).join('');
-  fortTimeline();}
-function tryPlace(i,w,el){const F=FT[ft],t=F.tags[i];
-  if(t.w===w){placedF.push(i);$('#fortMsg').innerHTML=`<b style="color:var(--leaf)">答對了！</b>${t.why}`;
-    if(placedF.length===F.tags.length)$('#fortMsg').innerHTML+=`<br><b>全部完成！</b>想一想：為什麼城堡常常換名字？新的統治者會取新名字，可是荷蘭人自己也改過名字，還有一些名字是別人幫它取的外號。`;
-    drawFortGame();}
-  else{miss[i]=(miss[i]||0)+1;const nm=F.who.find(x=>x[0]===w)[1];$('#fortMsg').innerHTML=`<b style="color:var(--typhoon)">不是${nm}喔。</b>${miss[i]>=2?'看看線索：'+t.clue:'再想想，或按「線索」。'}`;
-    if(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}}}
-// drag and drop (pointer) + tap to select
-(function(){let drag=null;
-  $('#nTags').addEventListener('click',e=>{const c=e.target.closest('.clue');if(c){e.stopPropagation();const t=c.parentNode.querySelector('.cluetxt');t.hidden=!t.hidden;return;}
-    const tag=e.target.closest('.ntag');if(!tag||tag.dataset.dragged)return;$$('#nTags .ntag').forEach(x=>x.classList.toggle('sel',x===tag));selTag=+tag.dataset.i;
-    if(selTag!=null)$('#fortMsg').textContent=`選好了「${FT[ft].tags[selTag].n}」，現在點一下取名字的人。`;});
-  $('#namers').addEventListener('click',e=>{const n=e.target.closest('.namer');if(!n||selTag==null)return;tryPlace(selTag,n.dataset.w,n);});
-  $('#namers').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&selTag!=null){const n=e.target.closest('.namer');if(n){e.preventDefault();tryPlace(selTag,n.dataset.w,n);}}});
-  $('#nTags').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const t=e.target.closest('.ntag');if(t){e.preventDefault();t.click();}}});
-  $('#nTags').addEventListener('pointerdown',e=>{const tag=e.target.closest('.ntag');if(!tag||e.target.closest('.clue'))return;drag={tag,x:e.clientX,y:e.clientY,moved:false,id:e.pointerId};});
-  addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<6)return;
-    if(!drag.moved){drag.moved=true;drag.tag.classList.add('dragging');drag.tag.setPointerCapture&&drag.tag.setPointerCapture(e.pointerId);}
-    drag.tag.style.transform=`translate(${dx}px,${dy}px)`;const over=document.elementsFromPoint(e.clientX,e.clientY).find(el=>el.classList&&el.classList.contains('namer'));$$('#namers .namer').forEach(n=>n.classList.toggle('over',n===over));});
-  addEventListener('pointerup',e=>{if(!drag||e.pointerId!==drag.id)return;const d=drag;drag=null;if(!d.moved)return;d.tag.dataset.dragged='1';setTimeout(()=>{delete d.tag.dataset.dragged;},50);
-    const over=document.elementsFromPoint(e.clientX,e.clientY).find(el=>el.classList&&el.classList.contains('namer'));$$('#namers .namer').forEach(n=>n.classList.remove('over'));
-    d.tag.style.transform='';d.tag.classList.remove('dragging');if(over)tryPlace(+d.tag.dataset.i,over.dataset.w,over);});})();
-$('#fortTabs').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(b){ft=b.dataset.f;placedF=[];miss={};$('#fortMsg').textContent='';drawFortGame();}});
-$('#fortReset').onclick=()=>{placedF=[];miss={};$('#fortMsg').textContent='';drawFortGame();};
-drawFortGame();
+(function(){
+const svg=d3.select('#lmSvg');const defs=svg.append('defs');
+const sg=defs.append('linearGradient').attr('id','lmSea').attr('x1',0).attr('x2',1);
+sg.append('stop').attr('offset',0).attr('stop-color','#4f9ec2');sg.append('stop').attr('offset',1).attr('stop-color','#79bad6');
+const wp=defs.append('pattern').attr('id','lmWave').attr('width',44).attr('height',24).attr('patternUnits','userSpaceOnUse');
+wp.append('path').attr('d','M2 13q9-7 18 0t18 0').attr('fill','none').attr('stroke','#ffffff50').attr('stroke-width',1.6);
+svg.append('rect').attr('width',720).attr('height',480).attr('fill','url(#lmSea)');
+svg.append('rect').attr('width',720).attr('height',480).attr('fill','url(#lmWave)');
+// inner sea
+svg.append('path').attr('fill','#a8d8e8').attr('d','M150 0 L566 0 Q600 80 586 150 Q608 210 590 262 Q602 330 556 382 Q520 440 476 480 L392 480 Q350 410 334 330 Q326 290 304 262 L296 230 Q250 180 205 140 Z');
+// shallow shoals near Luermen (underwater)
+[[205,132,26,12],[232,150,22,9],[180,118,16,8],[262,168,20,8],[218,112,14,7]].forEach(([x,y,rx,ry])=>svg.append('ellipse').attr('cx',x).attr('cy',y).attr('rx',rx).attr('ry',ry).attr('fill','#d9e8c9').attr('opacity',.75));
+// east land
+svg.append('path').attr('fill','#cfe3b0').attr('stroke','#9fbf82').attr('d','M566 0 L720 0 L720 480 L476 480 Q520 440 556 382 Q602 330 590 262 Q608 210 586 150 Q600 80 566 0 Z');
+// fields and villages on land
+[[640,90],[660,170],[628,330],[668,400],[690,250]].forEach(([x,y])=>{const g=svg.append('g').attr('transform',`translate(${x},${y})`);for(let i=0;i<3;i++)for(let j=0;j<2;j++)g.append('rect').attr('x',i*13).attr('y',j*10).attr('width',12).attr('height',9).attr('fill',(i+j)%2?'#b8d88a':'#c6e09b');});
+// sand barrier islands
+const SAND='#ecdca8',SANDL='#cdb877';
+svg.append('path').attr('fill',SAND).attr('stroke',SANDL).attr('d','M112 0 L146 0 Q174 58 192 108 Q188 118 180 114 Q156 58 112 0 Z');
+svg.append('path').attr('fill',SAND).attr('stroke',SANDL).attr('d','M214 142 Q248 168 282 204 Q279 213 270 211 Q236 182 207 150 Q205 142 214 142 Z');
+svg.append('path').attr('fill',SAND).attr('stroke',SANDL).attr('d','M300 246 Q326 242 336 262 Q346 300 354 340 Q368 400 394 480 L374 480 Q350 410 337 352 Q328 302 307 270 Q296 256 300 246 Z');
+// labels
+const lab=(x,y,t,c,o={})=>svg.append('text').attr('x',x).attr('y',y).attr('class','lm-lab'+(c?' '+c:'')).attr('text-anchor',o.a||'middle').attr('transform',o.r?`rotate(${o.r} ${x} ${y})`:null).text(t);
+lab(90,330,'臺灣海峽','sea');lab(450,150,'台江內海','sea2');lab(646,40,'臺灣本島','land');
+lab(238,172,'北線尾','sand',{r:42});lab(356,410,'七鯤身','sand',{r:70});lab(166,58,'加老灣','sand',{r:58});
+lab(150,150,'鹿耳門水道','ch',{a:'end'});lab(262,270,'大員港道','ch',{a:'end'});
+// forts
+function fort(x,y,name,side){const g=svg.append('g').attr('class','lm-fort').attr('transform',`translate(${x},${y})`);
+  g.append('path').attr('d','M-12 8V-6h4v-4h4v4h8v-4h4v4h4V8z').attr('fill','#8a5a33').attr('stroke','#fff').attr('stroke-width',1.5);
+  g.append('path').attr('d','M0 -10V-22l10 4-10 4').attr('fill','#e07a2f').attr('stroke','#5a3d22').attr('stroke-width',1);
+  g.append('text').attr('class','lm-lab fort').attr('x',side==='b'?0:side==='l'?-16:16).attr('y',side==='b'?30:6).attr('text-anchor',side==='b'?'middle':side==='l'?'end':'start').text(name);return g;}
+const fZ=fort(320,262,'熱蘭遮城','r'),fP=fort(612,262,'普羅民遮城','b');
+svg.append('text').attr('class','lm-lab small').attr('x',612).attr('y',316).attr('text-anchor','middle').text('（赤崁）');
+svg.append('g').attr('transform','translate(572,230)').call(g=>{g.append('circle').attr('r',4).attr('fill','#2a6fb0');g.append('text').attr('class','lm-lab small').attr('x',6).attr('y',-14).attr('text-anchor','start').text('禾寮港');});
+// Dutch ships guarding the main channel
+function junk(g,col,sail){g.append('path').attr('d','M-14 2h28l-6 8h-16z').attr('fill',col);g.append('path').attr('d','M-3 2V-16M6 2V-10').attr('stroke','#5a3d22').attr('stroke-width',1.5);
+  g.append('path').attr('d','M-3 -15q-9 7 0 15M6 -9q-6 5 0 10').attr('fill',sail).attr('stroke','#5a3d22').attr('stroke-width',.8);}
+function dship(x,y){const g=svg.append('g').attr('transform',`translate(${x},${y})`);g.append('path').attr('d','M-16 2h32l-6 9h-20z').attr('fill','#3a2c22');
+  g.append('path').attr('d','M0 2V-20').attr('stroke','#3a2c22').attr('stroke-width',1.6);g.append('rect').attr('x',-9).attr('y',-18).attr('width',18).attr('height',14).attr('fill','#fff').attr('stroke','#3a2c22').attr('stroke-width',.8);
+  [['#e07a2f',-20],['#fff',-17],['#2a6fb0',-14]].forEach(([c,yy])=>g.append('rect').attr('x',1).attr('y',yy-4).attr('width',10).attr('height',3).attr('fill',c));return g;}
+dship(288,232);dship(354,232);
+const fx=svg.append('g');// effects
+const routes=svg.append('g');
+// fleet
+const fleet=[0,1,2,3,4].map(i=>{const g=svg.append('g').attr('class','lm-ship');junk(g,'#7a4a22',i%2?'#d9462b':'#f0b23c');return g;});
+const RT={start:'M40 196 L60 200',A:'M60 200 C150 220 220 232 268 234',Aback:'M268 234 C220 232 140 220 60 200',
+  B1:'M60 200 C110 170 160 126 196 124',B2:'M196 124 C232 140 300 180 420 220 S530 248 556 246',
+  Bstuck:'M196 124 C206 128 212 132 218 136',Bback:'M196 124 C150 130 110 170 60 200',
+  Z:'M556 246 C500 250 420 254 360 256',Zback:'M360 256 C430 254 500 250 556 246'};
+const pathNode=d=>{const p=routes.append('path').attr('d',d).attr('fill','none').attr('stroke','none');return p.node();};
+let busy=false;
+function sail(key,ms,done,opt={}){const pn=pathNode(RT[key]),L=pn.getTotalLength(),gap=opt.gap??16;busy=true;
+  if(opt.trail)routes.append('path').attr('d',RT[key]).attr('class','lm-trail').attr('stroke',opt.trail);
+  const t=d3.timer(el=>{const f=Math.min(1,el/ms);fleet.forEach((g,i)=>{const d=Math.max(0,f*L-i*gap*(1-f*0.3)),p=pn.getPointAtLength(Math.min(L,d)),q=pn.getPointAtLength(Math.min(L,d+2));
+      const back=q.x<p.x-0.01;const off=[[0,0],[-4,-14],[-4,14],[-8,-26],[-8,26]][i];
+      g.attr('transform',`translate(${p.x+off[0]*0.6},${p.y+off[1]*0.55}) scale(${back?-1:1},1)${opt.tilt&&f>0.7?` rotate(${opt.tilt*(f-0.7)/0.3})`:''}`);});
+    if(f>=1){t.stop();busy=false;done&&done();}});}
+function placeAt(key){const pn=pathNode(RT[key]),L=pn.getTotalLength();fleet.forEach((g,i)=>{const p=pn.getPointAtLength(Math.max(0,L-i*16)),off=[[0,0],[-4,-14],[-4,14],[-8,-26],[-8,26]][i];g.attr('transform',`translate(${p.x+off[0]*0.6},${p.y+off[1]*0.55})`);});}
+function boom(x,y,n=6){for(let i=0;i<n;i++){const c=fx.append('circle').attr('cx',x+rnd(-18,18)).attr('cy',y+rnd(-12,12)).attr('r',2).attr('fill','#fff').attr('opacity',.95);
+  c.transition().delay(i*160).duration(700).attr('r',rnd(10,18)).attr('opacity',0).remove();
+  const s=fx.append('circle').attr('cx',x+rnd(-10,10)).attr('cy',y+rnd(-8,8)).attr('r',3).attr('fill','#ff9a3c');s.transition().delay(i*160).duration(300).attr('r',8).attr('opacity',0).remove();}}
+const rnd=(a,b)=>a+Math.random()*(b-a);
+// state
+let step='route',miss=0,moon=1,month='1661 年 4 月';
+const card=$('#lmCard'),tideBox=$('#lmTide');
+const setDate=t=>{$('#lmDate').textContent=t;};
+const setTry=()=>{$('#lmTry').textContent=miss?`選錯 ${miss} 次`:'';};
+function cardRoute(){step='route';card.innerHTML=`<span class="pill" style="background:#2a6fb0">第 1 關　選航道</span>
+  <h3 style="margin-top:8px">要從哪裡開進台江內海？</h3>
+  <p>1661 年 4 月，鄭成功帶著兩萬多名士兵、幾百艘船從金門出發，先攻取澎湖，現在來到台江內海外面。荷蘭人的熱蘭遮城就守在內海的入口。</p>
+  <div class="choice"><button data-c="A"><b>走大員港道</b><span>水比較深，大船好走。可是熱蘭遮城就在旁邊，城上有大砲，荷蘭戰船也守在這裡。</span></button>
+  <button data-c="B"><b>走鹿耳門水道</b><span>離熱蘭遮城比較遠，荷蘭人幾乎沒有防守。可是水很淺、沙洲很多，大船很容易卡住。</span></button></div>
+  <details class="hintd"><summary>問問何斌</summary><p>何斌以前替荷蘭人工作，後來跑到廈門投靠鄭成功，還帶去一張臺灣的地圖。他說：「鹿耳門雖然淺，可是漲潮的時候，船開得過去。」</p></details>`;}
+function cardTide(){step='tide';tideBox.hidden=false;card.innerHTML=`<span class="pill" style="background:#2a6fb0">第 2 關　等水漲</span>
+  <h3 style="margin-top:8px">水好淺！什麼時候才過得去？</h3>
+  <p>鹿耳門的沙洲很多，船底下要有大約 <b>1.8 公尺</b>深的水才不會卡住（示意）。海水每天漲潮、退潮兩次，而且每個月不同的日子，漲潮的高度也不一樣。</p>
+  <p>在地圖下方<b>選一個日子、拉動時間</b>，看看水有多深。覺得可以了，就按「出發！」</p>
+  <details class="hintd"><summary>小提示</summary><p>農曆初一（看不到月亮）和十五（滿月）前後，月亮和太陽一起拉動海水，漲潮特別高，叫做「大潮」。還有，晚上看不清楚沙洲喔。</p></details>
+  <p class="lm-msg" id="lmMsg"></p>`;drawTide();}
+function cardAttack(){step='attack';card.innerHTML=`<span class="pill" style="background:#2a6fb0">第 3 關　先攻哪裡？</span>
+  <h3 style="margin-top:8px">船隊在禾寮港登陸了</h3><p>內海裡有兩座荷蘭人的城堡，要先攻哪一座？</p>
+  <div class="choice"><button data-c="Z"><b>攻打熱蘭遮城</b><span>荷蘭人在臺灣最堅固的城，城牆又高又厚，有很多大砲。打下來，荷蘭人就輸了。</span></button>
+  <button data-c="P"><b>攻打普羅民遮城</b><span>就在赤崁，城比較小、守軍比較少，周圍是漢人的農田，有糧食。</span></button></div>`;}
+function cardSiege(){step='siege';card.innerHTML=`<span class="pill" style="background:#2a6fb0">第 4 關　最後一戰</span>
+  <h3 style="margin-top:8px">熱蘭遮城要怎麼拿下？</h3><p>荷蘭長官揆一帶著士兵躲在熱蘭遮城裡，不肯投降。</p>
+  <div class="choice"><button data-c="hit"><b>再強攻一次</b><span>集合所有士兵和大砲，一口氣衝進去。</span></button>
+  <button data-c="wait"><b>包圍起來，等他們投降</b><span>守住四周，不讓糧食和援兵進城，慢慢等。</span></button></div>`;}
+function bad(title,txt,again){miss++;setTry();card.innerHTML=`<span class="pill" style="background:var(--typhoon)">糟糕！</span><h3 style="margin-top:8px">${title}</h3>${txt}<button class="bigbtn" data-act="${again}">再選一次</button>`;}
+function title(){return miss===0?'神機妙算的領航員':miss<=2?'經驗豐富的領航員':'越挫越勇的領航員';}
+card.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||busy)return;const c=b.dataset.c,a=b.dataset.act;
+  if(a==='route'){placeAt('start');cardRoute();return;}
+  if(a==='attack'){placeAt('B2');cardAttack();return;}
+  if(a==='siege'){cardSiege();return;}
+  if(a==='next'){tideBox.hidden=true;cardAttack();return;}
+  if(a==='replay'){reset();return;}
+  if(c==='A'){sail('A',2200,()=>{boom(284,236,9);setTimeout(()=>sail('Aback',1800,()=>{}),900);
+      bad('砲火太猛了！','<p>船隊一靠近，熱蘭遮城的大砲和荷蘭戰船就一起開火，好幾艘船被打中，只好退回外海。</p><p class="note">荷蘭人最重視這條航道，把大砲和戰船都放在這裡。</p>','route');});}
+  if(c==='B'){sail('B1',2200,()=>cardTide());}
+  if(c==='Z'){sail('Z',1800,()=>{boom(328,258,10);setTimeout(()=>sail('Zback',1600),900);
+      bad('城牆太堅固了！','<p>士兵衝了好幾次都攻不上去，死傷很多，只好退回來。</p><p class="note">歷史上，鄭成功真的試過強攻熱蘭遮城，結果失敗，損失了好幾百名精兵。</p>','attack');});}
+  if(c==='P'){boom(612,258,4);fP.select('path:last-of-type').transition().duration(600).attr('fill','#2a6fb0');setDate('1661 年 5 月 4 日');
+    card.innerHTML=`<span class="pill" style="background:var(--leaf)">成功！</span><h3 style="margin-top:8px">普羅民遮城投降了</h3><p>普羅民遮城被團團圍住，只過了四天（5 月 4 日），城裡的荷蘭守軍就投降了。鄭成功拿到了糧食，也有了在臺灣的據點。</p><button class="bigbtn" data-act="siege">下一關</button>`;}
+  if(c==='hit'){sail('Z',1800,()=>{boom(328,258,10);setTimeout(()=>sail('Zback',1600),900);bad('還是攻不下來！','<p>熱蘭遮城的城牆和大砲太厲害了，硬打只會損失更多士兵。</p>','siege');});}
+  if(c==='wait')siege();});
+function siege(){busy=true;const ring=fx.append('circle').attr('cx',322).attr('cy',262).attr('r',40).attr('class','lm-ring');
+  const M=['1661 年 5 月','1661 年 6 月','1661 年 7 月','1661 年 8 月','1661 年 9 月','1661 年 10 月','1661 年 11 月','1661 年 12 月','1662 年 1 月','1662 年 2 月 1 日'];let i=0;
+  card.innerHTML=`<span class="pill" style="background:#2a6fb0">包圍中……</span><h3 style="margin-top:8px" id="lmSiegeT">${M[0]}</h3><p>城裡的糧食一天天變少，荷蘭人派來的援兵也打不進來。</p>`;
+  const t=setInterval(()=>{i++;setDate(M[i]);$('#lmSiegeT')&&($('#lmSiegeT').textContent=M[i]);if(i%3===0)boom(322,262,2);
+    if(i>=M.length-1){clearInterval(t);busy=false;fZ.select('path:last-of-type').transition().duration(600).attr('fill','#2a6fb0');ring.transition().duration(800).attr('opacity',0).remove();
+      card.innerHTML=`<span class="pill" style="background:var(--leaf)">勝利！</span><h3 style="margin-top:8px">1662 年 2 月 1 日，荷蘭人投降了</h3>
+       <p>熱蘭遮城被圍了大約九個月，荷蘭長官揆一終於投降。荷蘭人離開臺灣，結束了 38 年的經營。</p>
+       <p>鄭成功把熱蘭遮城改名為「<b>安平鎮</b>」（用他福建家鄉安平的名字），在赤崁設立<b>承天府</b>。</p>
+       <div class="lm-score"><b>${title()}</b><span>${miss?`一路上選錯 ${miss} 次。`:'一次都沒有選錯！'}</span></div>
+       <div class="qbox"><b>想一想</b>這場仗的輸贏，和台江內海的沙洲、潮汐有什麼關係？如果你是荷蘭人，會怎麼守？</div>
+       <button class="bigbtn alt" data-act="replay" style="margin-top:12px">再玩一次</button>`;}},420);}
+function reset(){fx.selectAll('*').remove();routes.selectAll('*').remove();miss=0;setTry();setDate('1661 年 4 月');tideBox.hidden=true;
+  [fZ,fP].forEach(f=>f.select('path:last-of-type').attr('fill','#e07a2f'));placeAt('start');cardRoute();}
+/* ---- tide panel ---- */
+const MOONS=[[1,'初一','大潮',1.0,10.6],[8,'初八','小潮',0.42,16.8],[15,'十五','大潮',0.95,10.2],[23,'廿三','小潮',0.45,4.4]];
+const depth=(t,m)=>{const M=MOONS.find(x=>x[0]===m);return 1.1+M[3]*Math.cos(2*Math.PI*(t-M[4])/12.42);};
+const NEED=1.8,isNight=t=>t<6||t>18.5;
+moon=8;
+$('#lmMoons').innerHTML=MOONS.map(([d,n])=>{const f={1:'M0 0',8:'',15:'',23:''};return `<button role="radio" data-m="${d}" aria-checked="${d===moon}"><svg viewBox="-12 -12 24 24" width="26" height="26" aria-hidden="true"><circle r="10" fill="${d===1?'#34495e':'#f7f1c8'}" stroke="#34495e" stroke-width="1.5"/>${d===8?'<path d="M0 -10A10 10 0 0 0 0 10Z" fill="#34495e"/>':d===23?'<path d="M0 -10A10 10 0 0 1 0 10Z" fill="#34495e"/>':''}</svg>${n}</button>`;}).join('');
+$('#lmMoons').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;moon=+b.dataset.m;$$('#lmMoons [data-m]').forEach(x=>x.setAttribute('aria-checked',+x.dataset.m===moon));drawTide();});
+$('#lmTime').addEventListener('input',drawTide);
+const sec=d3.select('#lmSec'),cur=d3.select('#lmCurve');
+const hh=t=>`${String(Math.floor(t)).padStart(2,'0')}:${String(Math.round((t%1)*60)).padStart(2,'0')}`;
+function drawTide(){const t=+$('#lmTime').value,d=depth(t,moon),night=isNight(t);$('#lmTimeV').textContent=hh(t)+(night?' 晚上':' 白天');
+  // cross-section
+  sec.selectAll('*').remove();const S=46,bed=172,surf=bed-d*S;
+  sec.append('rect').attr('width',720).attr('height',190).attr('fill',night?'#22314a':'#dff1f8');
+  if(night)[[80,30],[200,18],[520,26],[640,40],[380,14]].forEach(([x,y])=>sec.append('circle').attr('cx',x).attr('cy',y).attr('r',1.6).attr('fill','#fff'));
+  sec.append('rect').attr('x',0).attr('y',surf).attr('width',720).attr('height',190-surf).attr('fill',night?'#2f5f86':'#6fb5d3');
+  sec.append('path').attr('d',`M0 190 L0 ${bed-4} Q90 ${bed-12} 180 ${bed-2} T360 ${bed} T540 ${bed-6} T720 ${bed-2} L720 190Z`).attr('fill','#e6d39a').attr('stroke','#c4ad6c');
+  const keel=Math.min(surf+NEED*S,bed),stuck=surf+NEED*S>bed,shipY=keel-NEED*S;
+  const sh=sec.append('g').attr('transform',`translate(360,${shipY}) ${stuck?'rotate(-6)':''}`);
+  sh.append('path').attr('d',`M-110 0 L110 0 L84 ${NEED*S} L-84 ${NEED*S} Z`).attr('fill','#7a4a22').attr('stroke','#4a2c14').attr('stroke-width',2);
+  sh.append('path').attr('d','M-20 0V-70M40 0V-52').attr('stroke','#4a2c14').attr('stroke-width',4);
+  sh.append('path').attr('d','M-20 -68q-34 30 0 64M40 -50q-24 22 0 46').attr('fill','#f0b23c').attr('stroke','#4a2c14').attr('stroke-width',1.5);
+  sec.append('line').attr('x1',204).attr('x2',204).attr('y1',surf).attr('y2',bed).attr('class','lm-dim');
+  sec.append('text').attr('x',194).attr('y',(surf+bed)/2+8).attr('text-anchor','end').attr('class','lm-dimt').attr('fill',night?'#fff':'#10313b').text(`水深 ${d.toFixed(1)} 公尺`);
+  sec.append('line').attr('x1',470).attr('x2',690).attr('y1',surf+NEED*S).attr('y2',surf+NEED*S).attr('class','lm-need');
+  sec.append('text').attr('x',690).attr('y',surf+NEED*S-6).attr('text-anchor','end').attr('class','lm-dimt small').attr('fill',night?'#ffd7c2':'#b3361d').text('船底（吃水 1.8 公尺）');
+  sec.append('text').attr('x',708).attr('y',30).attr('text-anchor','end').attr('class','lm-big').attr('fill',stuck?'#d9462b':night?'#ffd23f':'#1f7a3a').text(stuck?'會卡在沙洲上！':night?'水夠深，可是天太黑了……':'水夠深，過得去！');
+  // curve
+  cur.selectAll('*').remove();const X=v=>40+v/24*660,Y=v=>132-v/2.4*118;
+  cur.append('rect').attr('x',X(0)).attr('width',X(6)-X(0)).attr('y',8).attr('height',124).attr('class','lm-night');cur.append('rect').attr('x',X(18.5)).attr('width',X(24)-X(18.5)).attr('y',8).attr('height',124).attr('class','lm-night');
+  cur.append('path').attr('d',d3.line()(d3.range(0,24.01,0.2).map(v=>[X(v),Y(depth(v,moon))]))).attr('fill','none').attr('stroke','#2a6fb0').attr('stroke-width',3);
+  cur.append('line').attr('x1',X(0)).attr('x2',X(24)).attr('y1',Y(NEED)).attr('y2',Y(NEED)).attr('class','lm-need');
+  const lt=cur.append('text').attr('x',708).attr('y',22).attr('text-anchor','end').attr('class','lm-dimt small').attr('fill','#b3361d').text('船需要的水深');const lw=lt.node().getComputedTextLength();cur.append('line').attr('x1',700-lw-36).attr('x2',700-lw-8).attr('y1',17).attr('y2',17).attr('class','lm-need');
+  [0,6,12,18,24].forEach(v=>cur.append('text').attr('x',X(v)).attr('y',154).attr('text-anchor',v===0?'start':v===24?'end':'middle').attr('class','lm-ax').text(v+' 時'));
+  cur.append('text').attr('x',X(0)+4).attr('y',22).attr('class','lm-ax').text('水深（公尺）');
+  cur.append('circle').attr('cx',X(t)).attr('cy',Y(d)).attr('r',7).attr('fill',d>=NEED&&!night?'#1f7a3a':'#d9462b').attr('stroke','#fff').attr('stroke-width',2);
+  cur.on('click',e=>{const [mx]=d3.pointer(e);$('#lmTime').value=clamp(Math.round((mx-40)/660*24*4)/4,0,24);drawTide();});}
+$('#lmGo').onclick=()=>{if(busy||step!=='tide')return;const t=+$('#lmTime').value,d=depth(t,moon),night=isNight(t),m=$('#lmMsg');
+  if(d<NEED){sail('Bstuck',900,()=>{miss++;setTry();m.innerHTML=`<b style="color:var(--typhoon)">擱淺了！</b>水深只有 ${d.toFixed(1)} 公尺，船底卡在沙洲上，好不容易才退出來。換個日子或時間再試試。`;setTimeout(()=>placeAt('B1'),300);},{tilt:14});return;}
+  if(night){sail('Bstuck',900,()=>{miss++;setTry();m.innerHTML='<b style="color:var(--typhoon)">撞上沙洲了！</b>水是夠深，可是天太黑，看不清楚水道，有幾艘船撞上了沙洲。白天再試試。';setTimeout(()=>placeAt('B1'),300);},{tilt:10});return;}
+  tideBox.hidden=true;setDate('1661 年 4 月 30 日');sail('B2',3200,()=>{
+    card.innerHTML=`<span class="pill" style="background:var(--leaf)">成功！</span><h3 style="margin-top:8px">船隊開進台江內海了！</h3>
+     <p>歷史上，鄭成功的船隊在 <b>1661 年 4 月 30 日</b>進入鹿耳門。那天正好是<b>農曆四月初一</b>，是大潮的日子。荷蘭人以為大船過不了鹿耳門，完全沒想到！</p>
+     <div class="qbox"><b>傳說和事實</b>傳說鄭成功向媽祖祈禱，海水就漲高了。從你剛剛的實驗來看，那天的海水為什麼特別高？</div>
+     <button class="bigbtn" data-act="next" style="margin-top:12px">下一關</button>`;},{trail:'#2a6fb0'});};
+reset();
+})();
 
 /* =========================================================
-   6. deer on the western plain (animation)
+   6. Koxinga legends: fact or legend?
+   ========================================================= */
+(function(){const lm=reliefMap('#lgSvg',{crop:[119.3,122.1,21.85,25.4],maxZoom:6});zoomButtons($('#lgBox'),lm);
+  const LG=[
+   {n:'臺南（鹿耳門、赤崁）',lo:120.19,la:23.02,s:'r',ans:'f',story:'1661 年，鄭成功的船隊從鹿耳門開進台江內海，打敗荷蘭人，在赤崁設立承天府。',why:'這是歷史事實。荷蘭人和鄭氏雙方都留下了紀錄。'},
+   {n:'澎湖',lo:119.6,la:23.57,s:'t',ans:'f',story:'鄭成功從金門出發，先攻取澎湖，再渡海進攻臺灣。',why:'這是歷史事實，課本 p.93 的地圖畫的就是這條路線。'},
+   {n:'龜山島（宜蘭）',lo:121.95,la:24.84,s:'l',ans:'l',story:'鄭成功的軍隊走到宜蘭海邊，一隻烏龜精對著岸邊吐霧氣，好像要吞掉士兵。鄭成功命人開大砲，烏龜精沉進海裡，再浮出來就變成了龜山島。',why:'這是傳說。根據記載，鄭成功從來沒有去過宜蘭。龜山島其實是一座火山島。'},
+   {n:'鶯歌石、鳶山（新北）',lo:121.36,la:24.95,s:'l',ans:'l',story:'大漢溪兩岸住著鶯哥鳥精和老鷹精，會吐出毒霧擋住軍隊。鄭成功開砲打斷了牠們的頭，就變成了今天的鶯歌石和鳶山。',why:'這是傳說。鄭成功沒有到過臺灣北部。鶯歌石和鳶山的樣子像鳥，人們就用故事來解釋它們的形狀。'},
+   {n:'劍潭（臺北）',lo:121.523,la:25.083,s:'t',ans:'l',story:'潭裡有妖怪興風作浪，鄭成功把寶劍投進潭裡鎮住牠，所以這裡叫做「劍潭」。',why:'這是傳說。另外還有一個說法，說是荷蘭人把劍插在潭邊的樹上。兩個故事都找不到可靠的紀錄。'},
+   {n:'鐵砧山（臺中大甲）',lo:120.637,la:24.358,s:'r',ans:'l',story:'軍隊走到山上找不到水，鄭成功把劍插進地裡，泉水就冒了出來。這口井叫做「國姓井」，也叫「劍井」。',why:'這是傳說。根據記載，鄭成功本人沒有到過大甲。把井叫做國姓井，是人們紀念他的方式。'}];
+  const got={};let cur=null;const C={f:'#2a6fb0',l:'#b5446e',q:'#8a969c'};
+  const ms=LG.map((p,i)=>marker(lm,p.lo,p.la,{label:p.n,color:C.q,r:8,side:p.s,onClick:()=>show(i)}));
+  const real=lm.g.insert('g','.zs').attr('class','lg-real').style('display','none');
+  function prog(){const n=Object.keys(got).length,ok=Object.values(got).filter(Boolean).length;
+    $('#lgProg').innerHTML=LG.map((p,i)=>`<button data-i="${i}" class="${i===cur?'on ':''}${i in got?(LG[i].ans==='f'?'f':'l'):''}">${p.n.replace(/（.*）/,'')}</button>`).join('')+`<span>${n<LG.length?`已判斷 ${n} / ${LG.length}`:`判斷對了 ${ok} / ${LG.length}`}</span>`;}
+  function show(i){cur=i;const p=LG[i];ms.forEach((m,k)=>m.classed('sel',k===i));
+    $('#lgCard').innerHTML=`<h3>${p.n}</h3><p class="lg-story">「${p.story}」</p>`+(i in got?verdict(i):`<p style="margin-top:10px;font-weight:700">你覺得這是？</p><div class="lg-btns"><button class="bigbtn" data-a="f" style="background:${C.f}">歷史事實</button><button class="bigbtn" data-a="l" style="background:${C.l}">傳說</button></div>`);prog();}
+  function verdict(i){const p=LG[i],ok=got[i];return `<p class="lg-v" style="color:${ok?'var(--leaf)':'var(--typhoon)'}">${ok?'答對了！':'不對喔！'}</p><p>${p.why}</p>`+(Object.keys(got).length===LG.length?'':'<p class="hint-line">點地圖上灰色的地方，繼續判斷。</p>');}
+  $('#lgCard').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||cur==null||cur in got)return;got[cur]=b.dataset.a===LG[cur].ans;
+    ms[cur].select('circle.dot').attr('fill',C[LG[cur].ans]);show(cur);if(Object.keys(got).length===LG.length)setTimeout(finish,700);});
+  $('#lgProg').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)show(+b.dataset.i);});
+  function finish(){real.style('display',null);lm.home();
+    $('#lgCard').innerHTML+=`<div class="lg-end"><h3>鄭成功真正走過的地方</h3><p>鄭成功 1661 年 4 月來到臺灣，隔年 6 月就病逝了，在臺灣只待了一年多，大部分時間都在<b>臺南一帶</b>（地圖上藍色的範圍）。那為什麼北部、中部也有他的傳說呢？可能是因為：</p>
+      <ul><li>人們很敬佩他，後來還把他當作神明，稱他「開臺聖王」。</li><li>用英雄的故事，來解釋長得很特別的石頭、山和島嶼。</li><li>鄭氏的部隊和後來的移民到各地開墾，把他的故事也帶了過去。</li></ul>
+      <div class="qbox"><b>想一想</b>傳說不是真的發生過，那它還有沒有價值？</div></div>`;}
+  // the area Koxinga really went (drawn when finished)
+  const a=lm.P(119.3,24.2),b=lm.P(119.6,23.57),c=lm.P(120.13,23.05);
+  real.append('path').attr('d',`M${a[0]},${a[1]} Q${(a[0]+b[0])/2+30},${(a[1]+b[1])/2} ${b[0]},${b[1]} Q${(b[0]+c[0])/2},${(b[1]+c[1])/2-20} ${c[0]},${c[1]}`).attr('class','lg-route');
+  const t=lm.P(120.25,23.05);real.append('ellipse').attr('cx',t[0]).attr('cy',t[1]).attr('rx',34).attr('ry',46).attr('class','lg-area');
+  const tl=lm.P(119.35,24.12);real.append('text').attr('x',tl[0]).attr('y',tl[1]).attr('class','lg-rt').text('從金門出發');
+  prog();$('#lgCard').innerHTML='<p class="hint-line" style="margin-top:0">先點地圖上任何一個灰色的地方開始。</p>';
+})();
+
+/* =========================================================
+   7. deer: you are the village hunter (turn-based)
    ========================================================= */
 (function(){const cv=$('#deerCv'),c=cv.getContext('2d'),W=720,H=420,PL=[50,520];
-  const EVS=[[1600,'trad','原住民只在冬季鹿群出現時捕鹿','照傳統的規矩，只在冬天打獵，鹿群可以一直維持下去。'],
-    [1624,'trade','荷蘭人用日常用品交換鹿皮，賣到日本','鹿皮在日本可以做盔甲內襯和衣服，荷蘭人大量收購。部分原住民為了換更多日常用品，不再遵守傳統的獵捕規定。'],
-    [1635,'trap','荷蘭人招募漢人用陷阱捕鹿','陷阱一次可以抓很多隻，鹿群減少得更快了。'],
-    [1662,'farm','漢人大量來臺開墾，草原變成農田','鄭氏政權招募漢人開墾，梅花鹿生活的草原一塊塊變成農田，鹿沒有地方住，只好往山裡逃。']];
-  let year=1600,N=150,on={trad:true},playing=false,last=0,deer=[],traps=[],hunters=[];
+  const RD=[{y:1624,t:'荷蘭商人來了！',d:'荷蘭商人說：「一張鹿皮可以換鹽、布或鐵器。」日本人很需要鹿皮，用來做盔甲的內襯和衣服。族人都很想要那些新東西。'},
+   {y:1632,t:'鄰近的部落也開始多打鹿',d:'鹿皮越來越值錢，附近的部落為了換更多日常用品，不再只在冬天打獵了。'},
+   {y:1640,t:'漢人帶著陷阱來了',d:'荷蘭人招募漢人來捕鹿。漢人用陷阱，一次可以抓好多隻。這不是你能決定的。'},
+   {y:1648,t:'平原上的陷阱越來越多',d:'到處都是陷阱，連小鹿也逃不掉。'},
+   {y:1656,t:'獵場越來越安靜了',d:null},
+   {y:1664,t:'鄭氏政權來了',d:'鄭氏軍隊在平原上屯墾，草原開始變成農田，鹿可以住的地方變少了。'},
+   {y:1672,t:'漢人移民越來越多',d:'越來越多漢人來臺灣開墾，農田一年比一年大。'}];
+  const CH={trad:['守規矩：只在冬天打獵',0.06,'鹿群可以慢慢長回來，但換到的東西比較少。'],more:['多打一些，換點東西',0.16,'一年四季都去打獵，換到更多鹽、布和鐵器。'],max:['能打多少就打多少',0.30,'把鹿皮全部拿去換，族人馬上就能過好日子。']};
+  const farmAt=y=>y<1662?0:Math.min(0.82,(y-1662)*0.045);
+  function simStep(st,ch,prev,y,dt){const K=150*(1-farmAt(y))+4,nb=y<1632?0:0.05+((prev==='max'||ch==='max')?0.04:0),tr=y<1640?0:y<1648?0.07:0.11,h=CH[ch][1];
+    st.g+=h*st.N*dt;st.N=Math.max(0,st.N+dt*(0.32*st.N*(1-st.N/K))-(h+nb+tr)*st.N*dt);}
+  function simAll(chs){const st={N:150,g:0},pts=[[1624,150]];let prev=null;RD.forEach((r,i)=>{for(let k=0;k<32;k++)simStep(st,chs[i],prev,r.y+k/4,0.25);prev=chs[i];pts.push([r.y+8,st.N]);});return {pts,g:Math.round(st.g/5),N:st.N};}
+  let st,ri,chs,hist,anim=null,year=1624,deer=[],traps=[],hunters=[],nh=1;
   const rnd=(a,b)=>a+Math.random()*(b-a);
-  const farmX=()=>PL[0]+(on.farm?Math.min(1,(year-1662)/38)*0.85:0)*(PL[1]-PL[0])+(year>1624?Math.min(1,(year-1624)/38)*0.12*(PL[1]-PL[0]):0);
-  function addDeer(n){for(let k=0;k<n;k++){const fx=farmX();deer.push({x:rnd(Math.max(fx+10,PL[0]+10),W-40),y:rnd(70,H-30),vx:rnd(-.3,.3),vy:rnd(-.3,.3),a:0});}}
-  function reset(){year=1600;N=150;on={trad:true};deer=[];traps=[];hunters=[];addDeer(150);playing=false;$('#deerPlay').textContent='▶ 播放 100 年';ev();say(EVS[0]);}
-  function ev(){$('#deerEv').innerHTML=EVS.map(([y,k,t])=>`<button class="evc${on[k]?' on':''}" data-k="${k}" data-y="${y}" ${k==='trad'?'disabled':''}><b>${y}</b>${t}</button>`).join('');}
-  function say(e){const st=N<15?`到了 ${Math.round(year)} 年，西部平原上幾乎看不到梅花鹿了。`:'';$('#deerSay').innerHTML=(e?`<b>${e[0]} 年</b>　${e[3]}`:'')+(st?`<br>${st}`:'');}
-  function stepYear(dt){if(on.trade)on.trad=false;
-    for(let left=dt;left>1e-6;left-=0.25){const s=Math.min(0.25,left);const K=150*(1-(farmX()-PL[0])/(PL[1]-PL[0])*0.88)+8;let h=on.trad?0.03:0.06;if(on.trade)h+=0.06;if(on.trap)h+=0.06;
-      N+=s*(0.2*N*(1-N/K)-h*N);N=Math.max(0,N);}
-    const want=Math.round(N);while(deer.length>want){const k=Math.floor(Math.random()*deer.length);deer.splice(k,1);}if(deer.length<want)addDeer(want-deer.length);
-    const nh=(on.trade?3:1)+(on.trap?2:0);while(hunters.length<nh)hunters.push({x:rnd(PL[0]+20,PL[1]),y:rnd(80,H-40),t:rnd(0,6)});while(hunters.length>nh)hunters.pop();
-    if(on.trap&&traps.length<14&&Math.random()<dt*6)traps.push({x:rnd(farmX()+10,PL[1]+40),y:rnd(80,H-30)});}
-  function draw(){c.clearRect(0,0,W,H);
-    c.fillStyle='#bfe0ea';c.fillRect(0,0,PL[0],H);c.fillStyle='#d6e8b5';c.fillRect(PL[0],0,W-PL[0],H);
-    // mountains
+  const farmX=()=>PL[0]+farmAt(year)*(PL[1]-PL[0]);
+  function addDeer(n){for(let k=0;k<n;k++){const fx=farmX();deer.push({x:rnd(Math.max(fx+10,PL[0]+30),W-40),y:rnd(70,H-30),vx:rnd(-.3,.3),vy:rnd(-.3,.3)});}}
+  function sync(){const want=Math.round(st.N);while(deer.length>want)deer.splice(Math.floor(Math.random()*deer.length),1);if(deer.length<want)addDeer(want-deer.length);
+    while(hunters.length<nh)hunters.push({x:rnd(PL[0]+30,PL[1]),y:rnd(80,H-60),t:rnd(0,6)});while(hunters.length>nh)hunters.pop();
+    const wantT=year<1640?0:year<1648?6:14;while(traps.length<wantT)traps.push({x:rnd(PL[0]+90,PL[1]+40),y:rnd(80,H-30)});
+    traps=traps.filter(t=>t.x>farmX()+6);}
+  function reset(){st={N:150,g:0};ri=0;chs=[];hist=[[1624,150]];year=1624;deer=[];traps=[];hunters=[];nh=1;addDeer(150);sync();
+    $('#deerChart').setAttribute('hidden','');$('#deerLeg').hidden=true;cardRound(null);}
+  function dots(){$('#dgDots').innerHTML=RD.map((r,i)=>`<i class="${i<ri?'done':i===ri?'on':''}">${r.y}</i>`).join('')+'<i class="'+(ri>=RD.length?'on':'')+'">1680</i>';}
+  function cardRound(res){dots();const r=RD[ri];
+    const dtxt=r.d||(st.N<40?'你出去打獵，走了好久都看不到鹿。族人開始擔心：以後要拿什麼去換東西？':'鹿還有一些，可是比以前難找了。');
+    $('#dgCard').innerHTML=(res||'')+`<span class="pill" style="background:var(--leaf)">第 ${ri+1} 回合，共 ${RD.length} 回合　${r.y}–${r.y+8} 年</span><h3 style="margin-top:8px">${r.t}</h3><p>${dtxt}</p>
+      <p style="font-weight:700;margin-top:10px">這 8 年，你要怎麼打獵？</p><div class="choice">${Object.entries(CH).map(([k,v])=>`<button data-c="${k}"><b>${v[0]}</b><span>${v[2]}</span></button>`).join('')}</div>`;}
+  $('#dgCard').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||anim)return;if(b.dataset.act==='again'){reset();return;}const ch=b.dataset.c;if(!ch)return;
+    chs.push(ch);nh=ch==='trad'?1:ch==='more'?3:5;const N0=st.N,g0=st.g,prev=chs[ri-1]||null,y0=RD[ri].y;let k=0;
+    $$('#dgCard button').forEach(x=>x.disabled=true);
+    anim=setInterval(()=>{simStep(st,ch,prev,y0+k/4,0.25);k++;year=y0+k/4;sync();
+      if(k>=32){clearInterval(anim);anim=null;hist.push([y0+8,st.N]);ri++;
+        const got=Math.round((st.g-g0)/5),res=`<div class="dg-res"><b>${y0}–${y0+8} 年的結果</b><span>鹿群：${Math.round(N0)} → <b style="color:${st.N<N0*0.6?'var(--typhoon)':'var(--leaf)'}">${Math.round(st.N)}</b> 隻</span><span>換到日常用品 <b>${got}</b> 件</span></div>`;
+        if(ri>=RD.length)end(res);else cardRound(res);}},90);});
+  function end(res){dots();const all=simAll(Array(7).fill('trad')),grd=simAll(Array(7).fill('max')),G=Math.round(st.g/5),N=st.N;
+    const v=N>=18?'1680 年，平原上還有一些梅花鹿，你的子孫還能打獵。不過你也發現了：就算你守規矩，陷阱和開墾還是讓鹿越來越少。':N>=5?'1680 年，平原上的梅花鹿已經很少了。族人很難再靠打鹿換東西，生活開始改變。':'1680 年，平原上幾乎看不到梅花鹿了。沒有鹿，就換不到東西，族人原本的生活方式也很難維持下去。';
+    $('#dgCard').innerHTML=res+`<span class="pill" style="background:var(--leaf)">遊戲結束</span><h3 style="margin-top:8px">60 年後的獵場</h3><p>${v}</p>
+      <p>你一共換到 <b>${G}</b> 件日常用品，平原上還有 <b>${Math.round(N)}</b> 隻鹿。如果一開始就拚命打，只能換到約 ${grd.g} 件，因為鹿很快就被打光了。</p>
+      <div class="qbox"><b>真實的歷史</b>荷蘭人經營臺灣時，每年都從臺灣運出大量鹿皮。加上陷阱捕鹿和開墾，西部平原的梅花鹿幾乎消失。後來臺灣野外的梅花鹿一度絕跡，墾丁國家公園從 1980 年代開始復育，再把梅花鹿放回野外。</div>
+      <div class="qbox"><b>想一想</b>梅花鹿變少，對靠打鹿生活的原住民有什麼影響？</div>
+      <button class="bigbtn alt" data-act="again" style="margin-top:12px">再玩一次，換個做法</button>`;
+    const sv=$('#deerChart');sv.removeAttribute('hidden');lineChart('#deerChart',[{pts:all.pts,color:'#8a969c',dash:'6 5'},{pts:grd.pts,color:'#d9462b',dash:'2 4'},{pts:hist,color:'#1f7a3a'}],{x:[1624,1680],y:[0,160],w:640,h:230,ylab:'梅花鹿（示意）',xt:7});
+    $('#deerLeg').hidden=false;$('#deerLeg').innerHTML='<span><i style="background:#1f7a3a"></i>你的選擇</span><span><i style="background:#8a969c"></i>每回合都守規矩</span><span><i style="background:#d9462b"></i>每回合都拚命打</span>';}
+  function draw(){c.clearRect(0,0,W,H);c.fillStyle='#bfe0ea';c.fillRect(0,0,PL[0],H);c.fillStyle='#d6e8b5';c.fillRect(PL[0],0,W-PL[0],H);
     c.fillStyle='#9fb57f';c.beginPath();c.moveTo(PL[1],H);for(let x=PL[1];x<=W;x+=30)c.lineTo(x,40+Math.abs(Math.sin(x*0.07))*60+(x-PL[1])*-0.15);c.lineTo(W,H);c.fill();
     c.fillStyle='#8aa36c';for(let x=PL[1]+20;x<W;x+=55){c.beginPath();c.moveTo(x,140);c.lineTo(x+30,60+(x%3)*10);c.lineTo(x+60,140);c.fill();}
-    // farmland
     const fx=farmX();for(let x=PL[0];x<fx;x+=26)for(let y=0;y<H;y+=22){c.fillStyle=((x/26+y/22)|0)%2?'#a9cf6b':'#c2dc86';c.fillRect(x,y,25,21);c.strokeStyle='#8cb354';c.strokeRect(x+.5,y+.5,24,20);}
     if(fx>PL[0]+5){c.fillStyle='#5d7a2e';c.font='bold 15px sans-serif';c.fillText('農田',Math.max(PL[0]+6,fx-46),24);}
     c.fillStyle='#2a6f8f';c.font='14px sans-serif';c.save();c.translate(22,H/2);c.rotate(-Math.PI/2);c.fillText('臺灣海峽',-28,0);c.restore();
-    c.fillStyle='#4d6b3a';c.font='bold 15px sans-serif';c.fillText('山區',W-60,24);c.fillText('西部平原',fx+8>PL[1]-70?PL[1]-80:fx+12,H-12);
+    c.fillStyle='#4d6b3a';c.font='bold 15px sans-serif';c.fillText('山區',W-60,24);
+    // village
+    const vx=fx+14,vy=H-58;c.fillStyle='#8a5a33';for(let i=0;i<3;i++){const x=vx+i*26;c.beginPath();c.moveTo(x,vy+18);c.lineTo(x+11,vy+4);c.lineTo(x+22,vy+18);c.fill();c.fillStyle='#c79a61';c.fillRect(x+3,vy+18,16,12);c.fillStyle='#8a5a33';}
+    c.fillStyle='#10313b';c.font='bold 14px sans-serif';c.fillText('你的部落',vx,vy-2);
+    const G=Math.min(40,Math.round(st.g/5));for(let i=0;i<G;i++){c.fillStyle=['#f4f4f4','#3a7bd5','#7f8c8d'][i%3];c.fillRect(vx+82+(i%10)*8,vy+24-Math.floor(i/10)*7,7,6);}
     traps.forEach(t=>{c.strokeStyle='#7a4a22';c.lineWidth=3;c.beginPath();c.moveTo(t.x-6,t.y-6);c.lineTo(t.x+6,t.y+6);c.moveTo(t.x+6,t.y-6);c.lineTo(t.x-6,t.y+6);c.stroke();});
     deer.forEach(d=>{c.fillStyle='#a8662f';c.beginPath();c.ellipse(d.x,d.y,8,4.5,0,0,7);c.fill();c.beginPath();c.arc(d.x+(d.vx>=0?8:-8),d.y-4,3,0,7);c.fill();
       c.strokeStyle='#7a4a22';c.lineWidth=1.4;c.beginPath();c.moveTo(d.x-5,d.y+3);c.lineTo(d.x-5,d.y+9);c.moveTo(d.x+5,d.y+3);c.lineTo(d.x+5,d.y+9);c.stroke();
       c.fillStyle='#fff';c.beginPath();c.arc(d.x-2,d.y-1,1,0,7);c.arc(d.x+2,d.y,1,0,7);c.fill();});
     hunters.forEach(h=>{c.fillStyle='#3a2c22';c.beginPath();c.arc(h.x,h.y-10,4,0,7);c.fill();c.fillRect(h.x-2.5,h.y-6,5,10);c.strokeStyle='#3a2c22';c.lineWidth=2;c.beginPath();c.moveTo(h.x+3,h.y-4);c.lineTo(h.x+12,h.y-12);c.stroke();});
-    $('#deerYear').textContent=Math.floor(year)+' 年';$('#deerN').textContent=`梅花鹿（示意）：${Math.round(N)} 隻`;}
-  function move(dt){const fx=farmX();deer.forEach(d=>{d.vx+=rnd(-.08,.08);d.vy+=rnd(-.08,.08);d.vx=clamp(d.vx,-.8,.8);d.vy=clamp(d.vy,-.6,.6);
-      if(d.x<fx+12)d.vx+=0.25;if(d.x>W-15)d.vx-=0.2;if(d.y<60)d.vy+=0.1;if(d.y>H-20)d.vy-=0.1;d.x+=d.vx*dt*60;d.y+=d.vy*dt*60;});
-    hunters.forEach(h=>{h.t+=dt;h.x+=Math.cos(h.t*0.7)*0.6;h.y+=Math.sin(h.t*0.5)*0.4;});}
-  function frame(t){const dt=Math.min(0.05,(t-(last||t))/1000);last=t;
-    if(playing){const yr=year;year=Math.min(1700,year+dt*4);EVS.forEach(e=>{if(yr<e[0]&&year>=e[0]){on[e[1]]=true;ev();say(e);}});stepYear(year-yr);if(year>=1700){playing=false;$('#deerPlay').textContent='▶ 再播一次';$('#deerSay').innerHTML=N<20?'<b>1700 年</b>　一百年過去，西部平原上的梅花鹿只剩下一點點，大部分的草原都變成了農田。想一想：梅花鹿變少，對靠打鹿生活的原住民有什麼影響？':'<b>1700 年</b>　梅花鹿還有不少，你沒有把所有事件都加進去喔。';}}
-    move(dt);draw();requestAnimationFrame(frame);}
-  $('#deerPlay').onclick=()=>{if(year>=1700)reset();playing=!playing;$('#deerPlay').textContent=playing?'❚❚ 暫停':'▶ 繼續播放';};
-  $('#deerReset').onclick=reset;
-  $('#deerEv').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b||b.disabled)return;const k=b.dataset.k,y=+b.dataset.y;
-    if(on[k])return;playing=false;$('#deerPlay').textContent='▶ 繼續播放';EVS.forEach(x=>{if(x[0]<=y){if(!on[x[1]]){const yr=year;year=Math.max(year,x[0]);on[x[1]]=true;stepYear(Math.max(0,year-yr));}}});
-    // fast-forward a little so the change shows
-    for(let i=0;i<10;i++){const yr=year;year=Math.min(1700,year+1);stepYear(year-yr);}ev();say(EVS.find(x=>x[1]===k));});
+    $('#deerYear').textContent=Math.floor(year)+' 年';$('#deerN').textContent=`梅花鹿（示意）：${Math.round(st.N)} 隻`;$('#deerG').textContent=`換到的東西：${Math.round(st.g/5)} 件`;}
+  let last=0;function frame(t){const dt=Math.min(0.05,(t-(last||t))/1000);last=t;const fx=farmX();
+    deer.forEach(d=>{d.vx+=rnd(-.08,.08);d.vy+=rnd(-.08,.08);d.vx=clamp(d.vx,-.8,.8);d.vy=clamp(d.vy,-.6,.6);if(d.x<fx+12)d.vx+=0.25;if(d.x>W-15)d.vx-=0.2;if(d.y<60)d.vy+=0.1;if(d.y>H-20)d.vy-=0.1;d.x+=d.vx*dt*60;d.y+=d.vy*dt*60;});
+    hunters.forEach(h=>{h.t+=dt;h.x=clamp(h.x+Math.cos(h.t*0.7)*0.6,fx+10,PL[1]+60);h.y+=Math.sin(h.t*0.5)*0.4;});draw();requestAnimationFrame(frame);}
   reset();requestAnimationFrame(frame);})();
 
 /* =========================================================
-   7. place names
+   8. place names
    ========================================================= */
-const nmMap=reliefMap('#nameSvg',{crop:[119.95,122.05,21.88,25.33]});zoomButtons($('#nameBox'),nmMap);
-const NM={
- ying:{fly:[120.35,23.0,2.6],pts:[['林鳳營',120.32,23.245,'r'],['左鎮',120.407,23.058,'r'],['左營',120.29,22.685,'l'],['前鎮',120.315,22.595,'r']],
-  card:`<h3>「營」和「鎮」都是軍隊的單位</h3><p>鄭氏軍隊來到臺灣時，臺灣種的糧食不夠吃。於是軍隊分散駐守各地，平時開墾種田，打仗時就回到戰場，叫做「屯墾」。鄭成功規定，官員和軍隊不能占用漢人和原住民已經有的土地。</p><p>現在臺南市的<b>林鳳營、左鎮</b>，高雄市的<b>左營、前鎮</b>，都是因為當時軍隊屯墾而得名。</p><div class="qbox"><b>找一找</b>臺南還有哪些帶「營」字的地名？它們可能和屯墾有關嗎？</div>`},
- red:{fly:[120.8,24.3,1.6],pts:[['紅毛井（嘉義市）',120.46,23.48,'r'],['紅毛路（雲林縣水林鄉）',120.24,23.57,'r'],['紅毛城（新北市淡水區）',121.433,25.175,'l']],
-  card:`<h3>為什麼叫「紅毛」？</h3><p>歐洲人的頭髮大多是紅褐色或金色，當時的漢人就用「紅毛」稱呼荷蘭人和相關的事物。</p><p><b>紅毛井</b>：相傳荷蘭人約 1637 年後來到諸羅山社，為了生活開挖的水井，後來改名為蘭井（嘉義市東區蘭井里）。<br><b>紅毛路</b>：傳說和荷蘭人在這裡進出有關，附近還有一口七角井（雲林縣水林鄉）。<br><b>紅毛城</b>：原本是西班牙人的聖多明哥城，荷蘭人重建後被稱為紅毛城。</p><p>水泥的閩南語叫「紅毛塗」、客家語叫「紅毛泥」，但水泥其實是十九世紀英國人發明的，只是以前的人把歐洲來的外國人通稱為「紅毛番」。</p><div class="qbox"><b>想一想</b>用「紅毛」命名的東西，一定和荷蘭人有關嗎？為什麼？</div>`},
- spain:{fly:[121.62,25.05,2.6],pts:[['諸聖教堂遺址（和平島）',121.765,25.16,'t'],['聖多明哥城（今紅毛城）',121.433,25.175,'b'],['三貂角',121.95,25.01,'b']],
-  card:`<h3>西班牙人留下的痕跡</h3><p>西班牙人在臺灣北部蓋城堡、做生意，也蓋教堂向北部原住民傳播天主教。</p><p><b>諸聖教堂</b>：在聖薩爾瓦多城附近，遺址在今基隆市和平島。<br><b>三貂角</b>：臺灣東北角的地名，是從西班牙語「Santiago」演變來的，是西班牙人來過的證據之一（新北市貢寮區）。</p><div class="qbox"><b>想一想</b>現在的臺灣北部，還看得到哪些西班牙人留下的痕跡？</div>`},
- bring:{fly:[120.2,23.0,2.6],pts:[['大員（今臺南安平）',120.1603,23.0016,'l']],
-  card:`<h3>荷蘭人帶來的動植物和文字</h3><div class="bring"><div><b>黃牛</b><span>增加農業產量，漢人用牛耕田、做粗重的工作。</span></div><div><b>豌豆（荷蘭豆）</b><span>由荷蘭人引進，所以叫荷蘭豆。</span></div><div><b>蓮霧、芒果</b><span>也是荷蘭人引進的農作物。</span></div><div><b>羅馬字</b><span>荷蘭人用羅馬字母拼寫原住民語言，把聖經翻譯成對照本；原住民後來也用這種文字和漢人簽土地契約，到清帝國時期都還在用。</span></div></div><div class="qbox"><b>想一想</b>荷蘭人引進新的物種、賣出大量鹿皮，對臺灣有什麼影響？</div>`}};
-let nmk='ying',nmM=[];
-function drawNames(){nmM.forEach(m=>m.remove());const N=NM[nmk];nmM=N.pts.map(p=>marker(nmMap,p[1],p[2],{label:p[0],color:'#7a5cc0',r:8,side:p[3]}));
-  $('#nameCard').innerHTML=N.card;$$('#nameTabs [data-n]').forEach(b=>b.setAttribute('aria-selected',b.dataset.n===nmk));nmMap.flyTo(...N.fly);}
-$('#nameTabs').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b){nmk=b.dataset.n;drawNames();}});drawNames();
+(function(){let declT=null;const nm=reliefMap('#nameSvg',{crop:[119.3,122.1,21.85,25.4],maxZoom:12,onZoom:()=>{cancelAnimationFrame(declT);declT=requestAnimationFrame(declutter);}});zoomButtons($('#nameBox'),nm);
+  const NM={
+   ying:{col:ZH,fly:[120.42,23.15,2.6],intro:`<h3>「營」「鎮」「協」都是軍隊的單位</h3><p>鄭氏軍隊來到臺灣時，糧食不夠吃。軍隊就分散到各地駐守，平時開墾種田，打仗時再回戰場，叫做「屯墾」。很多地方的名字，就是用當時部隊的名稱、將領的名字或營地的位置取的。</p>`,
+    pts:[['新營',120.317,23.307,'r','臺南市新營區','鄭氏軍隊新設的營地，所以叫「新營」。附近鹽水區還有一個「舊營」，一新一舊，是用營地的新舊來取名的。'],
+     ['舊營',120.283,23.296,'l','臺南市鹽水區舊營里','和「新營」相對，是比較早設立的營地。'],
+     ['柳營',120.311,23.278,'r','臺南市柳營區','以前叫「查畝營」。一種說法是負責清查田地的部隊駐紮在這裡。1920 年才改名為「柳營」。'],
+     ['五軍營',120.338,23.287,'r','臺南市柳營區大農里','「五軍」是鄭氏軍隊一支部隊的名稱，這支部隊在這裡屯墾。'],
+     ['果毅後',120.357,23.268,'r','臺南市柳營區果毅里','鄭氏軍隊「果毅後鎮」在這裡屯墾，地名留下了部隊的名字。'],
+     ['林鳳營',120.322,23.243,'r','臺南市六甲區','參軍「林鳳」帶兵在這裡開墾，就用將領的名字取名。沒錯，就是牛奶上看到的那個地名！'],
+     ['下營',120.264,23.235,'l','臺南市下營區','鄭氏軍隊的營地之一。附近還有「中營」，西港區還有「後營」，都是營地的名稱。'],
+     ['中營',120.283,23.226,'b','臺南市下營區中營里','和下營、後營一樣，是鄭氏軍隊營地的名稱。'],
+     ['後營',120.205,23.135,'l','臺南市西港區後營里','鄭氏軍隊的營地。營地常用「前、中、後」來區分。'],
+     ['中協',120.316,23.195,'r','臺南市官田區（中脇）','鄭氏「右先鋒鎮」底下的「中協」部隊在這裡開墾，後來寫成「中脇」。'],
+     ['二鎮',120.298,23.176,'l','臺南市官田區二鎮里','「鎮」是鄭氏軍隊的單位，「二鎮」就是一支部隊的名字。'],
+     ['大營',120.294,23.087,'l','臺南市新市區大營里','鄭氏軍隊在這裡設了營地。'],
+     ['左鎮',120.407,23.058,'r','臺南市左鎮區','鄭氏軍隊「左鎮」在這裡屯墾。課本 p.101 也有提到。'],
+     ['將軍',120.157,23.199,'l','臺南市將軍區','陷阱題！「將軍」不是鄭氏軍隊取的。清帝國的施琅將軍打敗鄭氏以後，得到這一帶的土地，所以叫「將軍」。',true],
+     ['營前、營後',120.262,22.85,'l','高雄市路竹區','用營地的方位取名：營地的前面叫「營前」，後面叫「營後」。'],
+     ['筆秀',120.300,22.760,'l','高雄市橋頭區筆秀里','鄭氏軍隊有用天上星宿取名的部隊。「畢宿鎮」在這裡屯墾，後來寫成「筆秀」。'],
+     ['燕巢、角宿',120.362,22.792,'r','高雄市燕巢區','燕巢的舊名是「援剿」，角宿是「角宿鎮」，都是鄭氏軍隊部隊的名稱。'],
+     ['仁武',120.350,22.700,'r','高雄市仁武區','鄭氏軍隊「仁武鎮」在這裡屯墾。'],
+     ['後勁',120.313,22.718,'r','高雄市楠梓區','鄭氏軍隊「後勁鎮」在這裡屯墾。'],
+     ['右昌',120.289,22.726,'l','高雄市楠梓區','鄭氏軍隊「右衝鎮」在這裡屯墾，後來寫成「右昌」。'],
+     ['左營',120.293,22.684,'l','高雄市左營區','鄭氏軍隊的「左營」在這裡駐守屯墾。課本 p.101 的小朋友家鄉就在這裡！'],
+     ['前鎮',120.315,22.595,'r','高雄市前鎮區','鄭氏軍隊「前鎮」在這裡屯墾。'],
+     ['林圮埔',120.672,23.757,'r','南投縣竹山鎮','參軍「林圮」帶兵深入山區開墾，這裡就叫「林圮埔」，是竹山的舊名。']]},
+   red:{col:'#c2185b',fly:null,quiz:true,intro:`<h3>「紅毛」真的是荷蘭人嗎？</h3><p>歐洲人的頭髮大多是紅褐色或金色，以前的漢人就叫他們「紅毛」。可是，名字裡有「紅毛」，就一定和荷蘭人有關嗎？每個地方先猜猜看：</p><p class="nm-key"><span class="v doc">有紀錄證明</span><span class="v leg">只是相傳</span><span class="v no">其實沒關係</span></p>`,
+    pts:[['紅毛城',121.433,25.175,'l','新北市淡水區','西班牙人 1628 年在這裡蓋了聖多明哥城。荷蘭人趕走西班牙人以後，1644 年重建，取名聖安東尼奧城，漢人就叫它紅毛城。1867 年起英國人租用這裡，旁邊的紅磚建築是英國人蓋的。','doc'],
+     ['赤崁樓（紅毛樓）',120.2025,22.9975,'r','臺南市中西區','赤崁樓的原址是荷蘭人 1653 年蓋的普羅民遮城，以前的人也叫它「紅毛樓」。現在還留著普羅民遮城的部分磚牆。','doc'],
+     ['風櫃尾紅毛城',119.555,23.540,'b','澎湖縣馬公市','1622 年荷蘭人第一次來到澎湖，在風櫃尾的蛇頭山蓋了城堡，被叫做紅毛城。1624 年被明帝國的軍隊趕走，荷蘭人才轉往臺灣。據說他們還把石材拆下來，運到大員蓋城。','doc'],
+     ['紅毛井（蘭井）',120.452,23.481,'t','嘉義市東區','相傳荷蘭人約 1637 年後來到諸羅山社，為了生活挖了這口井，漢人叫它紅毛井，後來改名「蘭井」。這是地方上流傳的說法，課本也用「相傳」來說明。','leg'],
+     ['紅毛埤（今蘭潭）',120.480,23.468,'r','嘉義市東區','地方上的說法是：荷蘭人在這裡築堤存水來灌溉，所以叫紅毛埤。日本時代的地圖上，這裡已經乾掉變成農田。1944 年在原址蓋了蘭潭水庫。','leg'],
+     ['紅毛路',120.240,23.570,'l','雲林縣水林鄉','傳說和荷蘭人在這裡進出有關。附近農田裡有一口七角井，推測是荷蘭時期挖的，到今天水還很清澈。','leg'],
+     ['紅毛港（高雄）',120.300,22.548,'r','高雄市小港區','一位法國領事在 1880 年寫的書裡說，荷蘭人曾經到過旗津一帶的潟湖。也有人說，荷蘭人被鄭成功打敗後，曾經退到這裡。說法很多，還不能確定。','leg'],
+     ['紅毛港（新竹）',120.975,24.905,'l','新竹縣新豐鄉','日本時代的《新竹廳志》說，荷蘭人和鄭氏的船曾經停在這裡補給。也有人說，最早是西班牙人在用這個港。這裡的「紅毛」到底是誰，說法不一樣。','leg'],
+     ['紅毛塗（水泥）',null,null,null,'不是地名，是生活用語','閩南語把水泥叫「紅毛塗」，客家語叫「紅毛泥」。可是水泥是十九世紀英國人發明的，荷蘭人在臺灣的時候，世界上還沒有水泥！以前的人把歐洲來的外國人都叫「紅毛番」，所以歐洲人做的水泥就叫紅毛塗。','no']]},
+   nl:{col:NL,fly:null,intro:`<h3>荷蘭人留下的</h3><p>荷蘭人在臺灣南部經營了 38 年，引進了動植物，也留下了城堡、文字和地名。</p><div class="bring"><div><b>黃牛</b><span>漢人用牛耕田、做粗重的工作。</span></div><div><b>豌豆（荷蘭豆）</b><span>荷蘭人引進，所以叫荷蘭豆。</span></div><div><b>蓮霧、芒果</b><span>也是荷蘭人引進的。</span></div><div><b>羅馬字</b><span>用羅馬字母拼寫原住民語言。</span></div></div>`,
+    pts:[['熱蘭遮城（安平古堡）',120.1603,23.0016,'l','臺南市安平區','1624 年荷蘭人登陸後蓋的第一座城叫奧倫尼亞城，1627 年改名熱蘭遮城。1662 年鄭成功改稱安平鎮，現在叫安平古堡，城裡還留著荷蘭時代的磚牆。'],
+     ['普羅民遮城（赤崁樓）',120.2025,22.9975,'r','臺南市中西區','郭懷一事件後，荷蘭人在 1653 年蓋了普羅民遮城。荷蘭人招募漢人在赤崁一帶種稻米和甘蔗，還引進黃牛來耕田。'],
+     ['新港社',120.290,23.068,'r','今臺南市新市區','荷蘭傳教士在西拉雅族的新港社蓋教堂和學校，用羅馬字母拼寫西拉雅語。後來原住民用這種文字和漢人簽土地契約，叫做「新港文書」，一直用到清帝國時期。'],
+     ['麻豆社',120.248,23.181,'l','今臺南市麻豆區','西拉雅族的大社之一。荷蘭人在這裡，以及附近的蕭壠社（今佳里）、目加溜灣社（今善化）設教堂和學校，傳播基督教。'],
+     ['富貴角',121.537,25.297,'r','新北市石門區','臺灣最北端的岬角。荷蘭人把這裡叫做「Hoek」（岬角的意思），閩南語唸起來像「富貴」，就變成了富貴角。']]},
+   es:{col:ES,fly:[121.62,25.1,4],intro:`<h3>西班牙人留下的</h3><p>西班牙人 1626 年到 1642 年在臺灣北部，蓋城堡、做生意，也蓋教堂傳播天主教。他們用西班牙語取的名字，有些一直留到今天。</p>`,
+    pts:[['三貂角',121.95,25.01,'b','新北市貢寮區','1626 年 5 月，西班牙艦隊第一次登陸臺灣就在這附近，取名「Santiago」（聖地牙哥）。漢人照著發音寫，就變成「三貂角」。'],
+     ['雞籠港（基隆）',121.742,25.13,'l','基隆市','西班牙人把雞籠港取名為「至聖三位一體」（Santísima Trinidad）。港灣又深又安全，他們就在這裡建立據點。'],
+     ['聖薩爾瓦多城',121.762,25.162,'t','基隆市和平島（以前叫社寮島）','1626 年西班牙人蓋的城堡，守著雞籠港的入口。1642 年荷蘭人北上攻下這裡，趕走了西班牙人。'],
+     ['諸聖教堂遺址',121.775,25.154,'r','基隆市和平島','西班牙人為了傳播天主教，在聖薩爾瓦多城附近蓋了諸聖教堂。考古學家在和平島找到了教堂的遺址。'],
+     ['聖多明哥城（紅毛城）',121.433,25.175,'b','新北市淡水區','1628 年西班牙人在淡水河口北岸的山丘上蓋的城堡。後來荷蘭人重建，改名聖安東尼奧城，漢人叫它紅毛城；1867 年英國人租用。一座城換了好多個名字！']]}};
+  const VL={doc:'有紀錄證明',leg:'只是相傳',no:'其實沒關係'};
+  let tab='ying',ms=[],sel=null;const ans={};
+  function declutter(){const boxes=[];const order=ms.map((m,i)=>i).filter(i=>ms[i]).sort((a,b)=>(b===sel)-(a===sel));
+    order.forEach(i=>{const t=ms[i].select('text');if(t.empty())return;t.style('display',null);const r=t.node().getBoundingClientRect(),d=ms[i].select('circle.dot').node().getBoundingClientRect();
+      const sb=nm.svg.node().getBoundingClientRect();if(!r.width)return;if(r.left<sb.left||r.right>sb.right||r.top<sb.top||r.bottom>sb.bottom){t.style('display','none');return;}const hit=boxes.some(b=>!(r.right<b.left||r.left>b.right||r.bottom<b.top||r.top>b.bottom));if(hit&&i!==sel)t.style('display','none');else boxes.push(r);boxes.push(d);});}
+  function draw(){ms.forEach(m=>m&&m.remove());const T=NM[tab];sel=null;
+    ms=T.pts.map((p,i)=>p[1]==null?null:marker(nm,p[1],p[2],{label:p[0],color:T.col,r:7,side:p[3],onClick:()=>pick(i,false)}));
+    $('#nmIntro').innerHTML=T.intro;chips();$('#nmDetail').innerHTML='<p class="hint-line">點地圖上的地名，或上面的按鈕。</p>';
+    $$('#nameTabs [data-n]').forEach(b=>b.setAttribute('aria-selected',b.dataset.n===tab));
+    if(T.fly)nm.flyTo(...T.fly);else nm.home();setTimeout(declutter,760);}
+  function chips(){const T=NM[tab];$('#nmChips').innerHTML=T.pts.map((p,i)=>{const a=ans[tab+i];return `<button data-i="${i}" class="${i===sel?'on ':''}${p[6]===true?'trap ':''}${a?(a.ok?'ok':'bad'):''}">${p[0]}</button>`;}).join('')+(T.quiz?`<span class="nm-score">${score()}</span>`:'');}
+  function score(){const T=NM[tab];const k=T.pts.map((p,i)=>ans[tab+i]).filter(Boolean);return k.length?`猜對 ${k.filter(x=>x.ok).length} / ${T.pts.length}`:'';}
+  function pick(i,fly){sel=i;const T=NM[tab],p=T.pts[i];ms.forEach((m,k)=>m&&m.classed('sel',k===i));chips();
+    let h=`<div class="nm-d"><h3>${p[0]}</h3><div class="meta">${p[4]}</div>`;
+    if(T.quiz&&!ans[tab+i])h+=`<p style="margin-top:10px;font-weight:700">你覺得這個「紅毛」和荷蘭人的關係是？</p><div class="nm-guess">${Object.entries(VL).map(([k,v])=>`<button class="v ${k}" data-v="${k}">${v}</button>`).join('')}</div>`;
+    else{if(T.quiz){const a=ans[tab+i];h+=`<p class="nm-verdict"><span class="v ${p[6]}">${VL[p[6]]}</span>${a.ok?'<b style="color:var(--leaf)">你猜對了！</b>':'<b style="color:var(--typhoon)">你猜的是「'+VL[a.v]+'」。</b>'}</p>`;}
+      h+=`<p>${p[5]}</p>`;if(p[6]===true)h+='<p class="note">地名裡有「營」「鎮」「將軍」這些字，不一定都是鄭氏軍隊留下的，要查資料才知道。</p>';}
+    $('#nmDetail').innerHTML=h+'</div>';
+    if(T.quiz&&T.pts.every((q,k)=>ans[tab+k]))$('#nmDetail').innerHTML+='<div class="qbox"><b>想一想</b>用「紅毛」命名的東西，一定和荷蘭人有關嗎？為什麼「相傳」的說法也要查證？</div>';
+    if(fly&&p[1]!=null)nm.flyTo(p[1],p[2],Math.max(nm.k(),tab==='es'?6:4.5));setTimeout(declutter,fly?760:0);}
+  $('#nmDetail').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b||sel==null)return;const p=NM[tab].pts[sel];ans[tab+sel]={v:b.dataset.v,ok:b.dataset.v===p[6]};
+    if(ms[sel])ms[sel].select('circle.dot').attr('fill',{doc:'#1f7a3a',leg:'#d9922b',no:'#8a969c'}[p[6]]);pick(sel,false);});
+  $('#nmChips').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)pick(+b.dataset.i,true);});
+  $('#nameTabs').addEventListener('click',e=>{const b=e.target.closest('[data-n]');if(b){tab=b.dataset.n;draw();}});
+  draw();})();
 
 /* =========================================================
-   8. quiz
+   9. quiz
    ========================================================= */
 const QZ=[
  {q:'大航海時代以前，歐洲人想要的亞洲商品為什麼很貴？',o:['走陸路運送，取得不易','亞洲人不願意賣','歐洲人不喜歡'],a:0,e:'瓷器、絲綢、香料大多經由陸路運送，取得不易，所以價格非常昂貴。'},
  {q:'荷蘭人在 1624 年從哪裡登陸臺灣？',o:['基隆和平島','臺南安平一帶','高雄左營'],a:1,e:'荷蘭人從今臺南安平一帶登陸，建立熱蘭遮城（今安平古堡區域內）。'},
  {q:'西班牙人在臺灣北部建立的城堡，後來成為今天的哪裡？',o:['赤崁樓','淡水紅毛城','安平古堡'],a:1,e:'西班牙人在淡水建立聖多明哥城，經過多次重建，成為今天的淡水紅毛城。'},
- {q:'1642 年發生了什麼事？',o:['鄭成功來臺','荷蘭人北上趕走西班牙人','清帝國統治臺灣'],a:1,e:'荷蘭人為了獨占臺灣的經濟利益派兵北上，趕走西班牙人。'},
+ {q:'鄭成功的船隊為什麼能通過很淺的鹿耳門水道？',o:['趁著大潮漲潮的時候進去','荷蘭人幫他們把水道挖深','船隊全都是小船'],a:0,e:'1661 年 4 月 30 日是農曆四月初一，是大潮的日子，鄭成功趁漲潮從鹿耳門開進台江內海。'},
+ {q:'下列哪一個是「傳說」，不是歷史事實？',o:['鄭成功在赤崁設立承天府','鄭成功用大砲打烏龜精，變成了龜山島','鄭成功先攻取澎湖，再進攻臺灣'],a:1,e:'根據記載，鄭成功沒有去過宜蘭，龜山島的故事是傳說。'},
+ {q:'水泥的閩南語叫「紅毛塗」，這是因為？',o:['荷蘭人把水泥帶來臺灣','以前的人把歐洲來的外國人叫做「紅毛番」','水泥是紅色的'],a:1,e:'水泥是十九世紀英國人發明的，和十七世紀的荷蘭人沒有關係。'},
  {q:'鄭氏政權為什麼要實行屯墾政策？',o:['解決軍隊糧食不足的問題','為了蓋城堡','為了捕鹿'],a:0,e:'鄭氏軍隊大量來臺，臺灣糧食不夠，軍隊平時開墾種田，獲取所需糧食。'},
  {q:'「左營」「前鎮」這些地名和什麼有關？',o:['荷蘭人的城堡','鄭氏軍隊屯墾','西班牙人的教堂'],a:1,e:'「營」「鎮」都是鄭氏軍隊的單位名稱。'},
  {q:'臺灣最早的孔子廟在哪裡？是誰興建的？',o:['臺南孔廟，鄭經與陳永華','臺北孔廟，荷蘭人','高雄孔廟，西班牙人'],a:0,e:'鄭經接受陳永華的建議，興建孔廟、設立學校，傳播漢人文化。'},
