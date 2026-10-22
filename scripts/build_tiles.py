@@ -212,6 +212,22 @@ def main():
             rgb[:hh, :ww, 2] = shade[y0:y0 + TS, x0:x0 + TS]
             Image.fromarray(rgb, "RGB").save(os.path.join(OUT, f"{tx}_{ty}.png"), optimize=True)
             tiles.append([tx, ty])
+    # coarse grids for the page's first view, from the same bare-earth data
+    def coarse(name, x0, y0, nx, ny, f, lon0, lon1, lat0, lat1):
+        e_ = e[y0:y0 + ny * f, x0:x0 + nx * f].reshape(ny, f, nx, f).transpose(0, 2, 1, 3).reshape(ny, nx, f * f)
+        l_ = land[y0:y0 + ny * f, x0:x0 + nx * f].reshape(ny, f, nx, f).mean(axis=(1, 3)) >= 0.5
+        em = np.median(e_, axis=2)
+        cc = np.where(em <= 100, 1 + np.clip(np.round(em * 2), 0, 200), 201 + np.clip(np.round((em - 100) / 75), 1, 54)).astype(np.uint8)
+        cc[~l_] = 0
+        base = os.path.join(os.path.dirname(__file__), "..", "data", "sealevel")
+        Image.fromarray(cc, "L").save(os.path.join(base, name + ".png"), optimize=True)
+        with open(os.path.join(base, name + ".json"), "w") as fh:
+            json.dump({"lon0": lon0, "lon1": lon1, "lat0": lat0, "lat1": lat1, "cell_deg": f / PER, "w": nx, "h": ny,
+                       "source": "FABDEM V1-2 (Copernicus GLO-30 where missing), median of %dx%d cells; coastline GSHHG" % (f, f),
+                       "encoding": "0 ocean; 1-201 land (c-1)/2 m; 202-255 land 100+(c-201)*75 m"}, fh)
+        print(name, cc.shape, flush=True)
+    coarse("tw", 0, 0, 840, 1065, 12, LON0, LON1, LAT0, LAT1)
+    coarse("tn", int(round((120.0 - LON0) * PER)), int(round((LAT1 - 23.45) * PER)), 960, 780, 3, 120.0, 120.8, 22.8, 23.45)
     meta = {"lon0": LON0, "lat1": LAT1, "cell_deg": 1 / PER, "tile": TS, "w": w, "h": h, "tiles": tiles, "sources": src,
             "shade": "B/255*0.8+0.4"}
     with open(os.path.join(OUT, "index.json"), "w") as f:
