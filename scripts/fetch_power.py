@@ -2,7 +2,7 @@
 輸出到目前目錄（data 分支的工作樹）：
   now.json            最新一筆：各機組類型的淨發電量與裝置容量，以及風力、太陽能機組明細
   day/YYYY-MM-DD.json 當天每 10 分鐘的各類型發電量
-  days.json           有資料的日期清單（最近 14 天）
+  days.json           有資料的日期清單（最多保留 400 天）
 """
 import json, os, sys, urllib.request, datetime, re, glob
 URL = 'https://service.taipower.com.tw/data/opendata/apply/file/d006001/001.json'
@@ -35,6 +35,6 @@ if not ser or ser[-1][0] != t:
     ser.sort(key=lambda s: s[0])
 json.dump(ser, open(p, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 files = sorted(glob.glob('day/*.json'))
-for f in files[:-14]: os.remove(f)
-json.dump([os.path.basename(f)[:-5] for f in files[-14:]], open('days.json', 'w'), separators=(',', ':'))
+for f in files[:-400]: os.remove(f)
+json.dump([os.path.basename(f)[:-5] for f in files[-400:]], open('days.json', 'w'), separators=(',', ':'))
 print(t, {k: v['mw'] for k, v in types.items()})
