@@ -421,7 +421,12 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .story-dots i.on{background:var(--ink)}
 </style>
 <style>
-#donut{display:block;width:100%;max-width:420px;margin:0 auto;height:auto}
+#donut{display:block;width:100%;max-width:360px;margin:0 auto;height:auto}
+.now-duo{align-items:stretch}
+.now-l .big-line{margin-top:12px;text-align:center}
+.now-r{display:flex;flex-direction:column}
+.now-r .mix{flex:1}
+.now-r .stamp{margin-top:auto;padding-top:12px}
 .dl{font-size:19px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#0005;stroke-width:3px}
 .dc1{font-size:17px;fill:var(--muted)}
 .dc2{font-family:var(--f-num);font-size:46px;font-weight:600;fill:var(--ink)}
@@ -539,16 +544,16 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <h2>這一刻，臺灣的電從哪裡來？</h2>
       <p class="sub" id="nowSub">正在向台電拿最新資料……</p>
     </div>
-    <div class="duo">
-      <div class="panel pad">
+    <div class="duo now-duo">
+      <div class="panel pad now-l">
         <svg id="donut" viewBox="0 0 420 420" role="img" aria-label="現在各種發電方式的比例"></svg>
-      </div>
-      <div class="panel pad">
         <p class="big-line" id="headline"></p>
         <div class="grp-t">把所有發電方式分成三大類：</div>
         <div class="grpbar" id="grp" role="img"></div>
         <div class="grp-note" id="grpNote"></div>
-        <div class="grp-t" style="margin-top:14px">每一種發電方式（點一下看它的發電紀錄）：</div>
+      </div>
+      <div class="panel pad now-r">
+        <div class="grp-t" style="margin-top:0">每一種發電方式（點一下看它的發電紀錄）：</div>
         <ul class="mix" id="mixList"></ul>
         <div class="stamp"><span id="stamp"></span><button class="bigbtn alt" id="refresh">重新整理</button></div>
       </div>
