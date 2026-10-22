@@ -1,0 +1,1 @@
+{"lon0": -180, "lon1": 180, "lat0": -90, "lat1": 90, "cell_deg": 0.3333333333333333, "source": "GMT earth_relief 10m (SRTM15+) and earth_mask 5m", "w": 1080, "h": 540, "encoding": "0 ocean; 1-201 land (c-1)/2 m; 202-255 land 100+(c-201)*75 m"}

@@ -1,0 +1,1 @@
+{"lon0": 120.0, "lon1": 120.8, "lat0": 22.8, "lat1": 23.45, "cell_deg": 0.0008333333333333334, "source": "Copernicus GLO-30 DEM, 3 arc-second cells, 25th percentile", "w": 960, "h": 780, "encoding": "0 ocean; 1-201 land (c-1)/2 m; 202-255 land 100+(c-201)*75 m"}
