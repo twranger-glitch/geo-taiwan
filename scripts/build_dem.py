@@ -3,7 +3,7 @@
 Sources (downloaded inside GitHub Actions):
   Taiwan  Copernicus GLO-30 DEM (ESA, 1 arc-second), reduced to coarser cells with a low
           percentile so that buildings and trees count less (the DEM is a surface model);
-          sea/land from the GSHHG full-resolution shoreline (Wessel & Smith, NOAA).
+          sea/land from the GSHHG full-resolution shoreline (Wessel & Smith) through GMT grdlandmask.
   World   GMT earth_relief 10 arc-minute (SRTM15+) and earth_mask 5 arc-minute.
 
 Each grid is written as an 8-bit grayscale PNG plus a JSON description:
@@ -58,32 +58,20 @@ def encode(elev, ocean):
 
 
 def coast_land(lon0, lon1, lat0, lat1, cell):
-    """Rasterise GSHHG full-resolution shoreline (level 1 = land/ocean boundary) onto the grid."""
-    import zipfile
-    import fiona
-    from rasterio import features
-    from rasterio.transform import from_origin
-    z = None
-    for url in ["https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip",
-                "https://www.soest.hawaii.edu/pwessel/gshhg/gshhg-shp-2.3.7.zip"]:
-        try:
-            z = download(url, f"{TMP}/gshhg.zip")
-            if z:
-                break
-        except Exception as e:
-            print("coastline download failed", url, e, flush=True)
-    if not z:
-        raise SystemExit("no coastline source reachable")
-    d = f"{TMP}/gshhg"
-    if not os.path.exists(d):
-        zipfile.ZipFile(z).extractall(d)
-    shp = [os.path.join(r, f) for r, _, fs in os.walk(d) for f in fs if f == "GSHHS_f_L1.shp"][0]
+    """Land mask from the GSHHG full-resolution shoreline, via GMT grdlandmask (apt: gmt gmt-gshhg-full)."""
+    import subprocess
+    sec = round(cell * 3600)
+    out = f"{TMP}/land_{lon0}_{lat0}_{sec}.nc"
+    subprocess.run(["gmt", "grdlandmask", f"-R{lon0}/{lon1}/{lat0}/{lat1}", f"-I{sec}s", "-r", "-Df", "-N0/1", f"-G{out}"], check=True)
+    with Dataset(out) as d:
+        z = np.array(d.variables["z"][:])
+        lat = np.array(d.variables["lat"][:])
+    if lat[0] < lat[-1]:
+        z = z[::-1]
     w, h = int(round((lon1 - lon0) / cell)), int(round((lat1 - lat0) / cell))
-    with fiona.open(shp) as src:
-        geoms = [f["geometry"] for f in src.filter(bbox=(lon0, lat0, lon1, lat1))]
-    print("coast polygons", len(geoms), flush=True)
-    return features.rasterize(((g, 1) for g in geoms), out_shape=(h, w),
-                              transform=from_origin(lon0, lat1, cell, cell), fill=0, dtype="uint8").astype(bool)
+    if z.shape != (h, w):
+        raise RuntimeError(f"land mask shape {z.shape} != {(h, w)}")
+    return z > 0.5
 
 
 def ocean_from_low(elev, thresh=0.3):
@@ -164,7 +152,7 @@ def main():
     for part in which:
         try:
             build(part)
-        except Exception:
+        except BaseException:
             import traceback
             traceback.print_exc()
             print("FAILED", part, flush=True)
