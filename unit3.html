@@ -421,7 +421,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .story-dots i.on{background:var(--ink)}
 </style>
 <style>
-#clockSvg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+#clockSvg{width:100%;max-width:600px;height:auto;display:block;margin:0 auto}
 .era-arc{cursor:pointer;transition:opacity .25s}
 .era-arc:focus-visible{outline:none;stroke:var(--ink);stroke-width:3}
 .clk-n{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
@@ -475,6 +475,10 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .pros,.cons{margin:4px 0 0;padding-left:1.2em}
 .pros li::marker{content:"✓ ";color:var(--leaf)}
 .cons li::marker{content:"✗ ";color:var(--typhoon)}
+.clk-call{font-family:var(--f-num);font-size:22px;font-weight:700;fill:var(--ink)}
+.clk-call2{font-family:var(--f-body);font-size:16px;font-weight:700;fill:var(--muted)}
+.era-arc{cursor:pointer;outline:none}
+.era-arc:focus-visible{stroke:var(--ink);stroke-width:4}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <header class="top">
@@ -485,8 +489,8 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <p class="lede">早在五萬年前，臺灣就有人類生活。跟著考古學家挖一挖、看一看，認識史前人類怎麼利用環境過生活，再看看原住民族流傳下來的生活智慧。</p>
     </div>
     <div class="links">
-      <a class="unit-link" href="https://geo.twranger.com/">第二單元：臺灣自然環境與生活 →</a>
-      <a class="unit-link" href="https://geo.twranger.com/unit4.html">第四單元：大航海時代的臺灣 →</a>
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/">第二單元：臺灣自然環境與生活 →</a>
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/unit4.html">第四單元：大航海時代的臺灣 →</a>
     </div>
   </div>
 </header>
@@ -514,7 +518,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
     </div>
     <div class="duo">
       <div class="panel pad">
-        <svg id="clockSvg" viewBox="0 0 520 520" role="img" aria-label="把五萬年縮成一天的時鐘"></svg>
+        <svg id="clockSvg" viewBox="-70 -10 660 540" role="img" aria-label="把五萬年縮成一天的時鐘"></svg>
         <svg id="lastHour" viewBox="0 0 530 74" role="img" aria-label="一天的最後一小時"></svg>
         <div class="tabs" id="eraTabs" role="tablist" style="margin-top:10px"></div>
       </div>
@@ -790,10 +794,13 @@ let era='old';
   ERAS.forEach((e,i)=>{const h0=toH(e.ago),h1=i<ERAS.length-1?toH(ERAS[i+1].ago):24;
     svg.append('path').attr('class','era-arc').attr('data-k',e.k).attr('transform',`translate(${cx},${cy})`).attr('d',arc({startAngle:ang(h0),endAngle:ang(h1)})).attr('fill',e.c).attr('tabindex',0).attr('role','button').attr('aria-label',e.n)
       .on('click',()=>pick(e.k)).on('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();pick(e.k);}});});
-  for(let h=0;h<24;h+=3){const a=ang(h)-Math.PI/2;svg.append('text').attr('x',cx+Math.cos(a)*(R-82)).attr('y',cy+Math.sin(a)*(R-82)+5).attr('text-anchor','middle').attr('class','clk-n').text(h+':00');}
+  // a real clock face: small tick every hour, numbers every 3 hours, outside the ring
+  for(let h=0;h<24;h++){const a=ang(h)-Math.PI/2,big=h%3===0;svg.append('line').attr('x1',cx+Math.cos(a)*(R+2)).attr('y1',cy+Math.sin(a)*(R+2)).attr('x2',cx+Math.cos(a)*(R+(big?12:7))).attr('y2',cy+Math.sin(a)*(R+(big?12:7))).attr('stroke','var(--muted)').attr('stroke-width',big?2:1);
+    if(big)svg.append('text').attr('x',cx+Math.cos(a)*(R+30)).attr('y',cy+Math.sin(a)*(R+30)+5).attr('text-anchor','middle').attr('class','clk-n hr').attr('data-h',h).text(h+' 時');}
+  svg.append('g').attr('id','clkCall');
   // markers
   const mk=(h,txt,col,out)=>{const a=ang(h)-Math.PI/2;svg.append('line').attr('x1',cx+Math.cos(a)*(R-62)).attr('y1',cy+Math.sin(a)*(R-62)).attr('x2',cx+Math.cos(a)*(R+18)).attr('y2',cy+Math.sin(a)*(R+18)).attr('stroke',col).attr('stroke-width',2.5);};
-  ERAS.forEach(e=>mk(toH(e.ago),'',e.c));mk(toH(400),'','var(--typhoon)');
+
   svg.append('text').attr('x',cx).attr('y',cy-18).attr('text-anchor','middle').attr('class','clk-big').attr('id','clkBig');
   svg.append('text').attr('x',cx).attr('y',cy+14).attr('text-anchor','middle').attr('class','clk-sub').attr('id','clkSub');
   svg.append('text').attr('x',cx).attr('y',cy+40).attr('text-anchor','middle').attr('class','clk-sub2').attr('id','clkSub2');
@@ -812,11 +819,17 @@ $('#eraTabs').addEventListener('click',e=>{const b=e.target.closest('[data-k]');
 function pick(k){era=k;const e=ERAS.find(x=>x.k===k);
   $$('#eraTabs [data-k]').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
   d3.selectAll('.era-arc').attr('opacity',function(){return this.dataset.k===k?1:0.35;});
-  $('#clkBig').textContent=e.n;$('#clkSub').textContent=`約 ${e.ago.toLocaleString()} 年前開始`;$('#clkSub2').textContent=`在「一天」裡是 ${hm(toH(e.ago))}`;
+  $('#clkBig').textContent=e.n;$('#clkSub').textContent=`約 ${e.ago.toLocaleString()} 年前開始`;$('#clkSub2').textContent=`在這個時鐘上，從 ${hm(toH(e.ago))} 開始`;
+  {const cx=260,cy=260,R=200,h=toH(e.ago),a=h/24*2*Math.PI-Math.PI/2,g=d3.select('#clkCall');g.selectAll('*').remove();
+   const x0=cx+Math.cos(a)*(R-62),y0=cy+Math.sin(a)*(R-62),x1=cx+Math.cos(a)*(R+46),y1=cy+Math.sin(a)*(R+46),left=Math.cos(a)<0;
+   g.append('line').attr('x1',x0).attr('y1',y0).attr('x2',x1).attr('y2',y1).attr('stroke','var(--ink)').attr('stroke-width',3);
+   g.append('circle').attr('cx',x1).attr('cy',y1).attr('r',4).attr('fill','var(--ink)');
+   d3.selectAll('#clockSvg .hr').style('display',function(){const dd=Math.abs(+this.dataset.h-h)%24;return Math.min(dd,24-dd)<0.9?'none':null;});const t=g.append('text').attr('x',x1+(left?-8:8)).attr('y',y1-4).attr('text-anchor',left?'end':'start').attr('class','clk-call');t.append('tspan').text(hm(h)+' 開始');
+   t.append('tspan').attr('x',x1+(left?-8:8)).attr('dy',20).attr('class','clk-call2').text(e.n);}
   $('#eraCard').innerHTML=`<span class="pill" style="background:${e.c}">約 ${e.ago.toLocaleString()} 年前</span><h3 style="margin-top:8px">${e.n}</h3><div class="meta">代表遺址：${e.site}</div>
    <span class="k">怎麼生活</span><p style="margin-top:2px">${e.life}</p><span class="k">會做什麼器物</span><p style="margin-top:2px">${e.tools}</p>
    <div class="qbox"><b>想一想</b>${e.q}</div>
-   <p class="note" style="margin-top:10px">把五萬年縮成一天，${e.n}從 ${hm(toH(e.ago))} 開始。大航海時代（約 400 年前）要到 23:48 才出現，只占一天最後的 12 分鐘！</p>`;
+   <p class="note" style="margin-top:10px">把五萬年縮成一天，${e.n}從 ${hm(toH(e.ago))} 開始（時鐘上黑色指針指的地方）。大航海時代（約 400 年前）要到 23:48 才出現，只占一天最後的 12 分鐘！</p>`;
   drawSkills();}
 // skills matrix
 const SK=[['使用火','old'],['採集','old'],['漁獵','old'],['打製石器','old'],['農耕','neo'],['畜養動物','neo'],['磨製石器','neo'],['製作陶罐','neo'],['對外貿易','neo'],['製作鐵器','iron']];
