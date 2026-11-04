@@ -331,6 +331,9 @@ footer p+p{margin-top:6px}
   .tslab{font-size:22px;stroke-width:4px}.tslab.big{font-size:27px}.tslab.sm{font-size:20px}.tslab.ts-sea-lab{font-size:22px}
   .ts-arrow text{font-size:21px}.ts-scale text{font-size:20px}.ts-badge text{font-size:22px}
 }
+.home-link{display:block;color:inherit;text-decoration:none;border-radius:12px}
+.home-link .kicker::before{content:"⌂ 海佃地圖首頁 › ";color:var(--ink);font-weight:700}
+.home-link:hover h1,.home-link:focus-visible h1{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 </style>
 <style>
 .top .unit-link{font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15.5px;white-space:nowrap}
@@ -353,7 +356,8 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .mapbox .zoomer button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:21px;font-weight:700;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .mapbox .zoomer button:hover{border-color:var(--ink)}
 .mapbox .mhint{position:absolute;left:10px;bottom:10px;font-size:13.5px;color:#10313b;background:#ffffffe0;border-radius:8px;padding:2px 8px;pointer-events:none}
-.mk{cursor:pointer}
+.mk{cursor:pointer;outline:none}
+.mk:focus-visible circle.dot{stroke:var(--ink);stroke-width:3.5}
 .mk circle.dot{stroke:#fff;stroke-width:2}
 .mk:hover circle.dot,.mk:focus-visible circle.dot{stroke:#10313b;stroke-width:3}
 .mk.sel circle.dot{stroke:#10313b;stroke-width:3.5}
@@ -520,8 +524,8 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <p class="lede">這一頁每隔幾分鐘就會去拿台電公布的最新資料，告訴你這一刻臺灣的電從哪裡來。颱風、季風、晴天和雨天，都會讓風力和太陽能發電的多少跟著改變。</p>
     </div>
     <div class="links">
-      <a class="unit-link" href="https://geo.twranger.com/#monsoon-sec">← 回到「季風與風力發電機」</a>
-      <a class="unit-link" href="https://geo.twranger.com/#typhoon">影響臺灣的颱風路徑 →</a>
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#monsoon-sec">← 回到「季風與風力發電機」</a>
+      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#typhoon">影響臺灣的颱風路徑 →</a>
     </div>
   </div>
 </header>
@@ -663,6 +667,8 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   </div>
 </footer>
 <script>
+(function(){const H='https://twranger-glitch.github.io/geo-taiwan/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
+  const a=document.createElement('a');a.href=H;a.className='home-link';a.setAttribute('aria-label','回到海佃地圖首頁：'+h.textContent);k.parentNode.insertBefore(a,k);a.appendChild(k);a.appendChild(h);})();
 /* shared helpers for the unit pages */
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
