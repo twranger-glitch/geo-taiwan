@@ -524,8 +524,8 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <p class="lede">這一頁每隔幾分鐘就會去拿台電公布的最新資料，告訴你這一刻臺灣的電從哪裡來。颱風、季風、晴天和雨天，都會讓風力和太陽能發電的多少跟著改變。</p>
     </div>
     <div class="links">
-      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#monsoon-sec">← 回到「季風與風力發電機」</a>
-      <a class="unit-link" href="https://twranger-glitch.github.io/geo-taiwan/#typhoon">影響臺灣的颱風路徑 →</a>
+      <a class="unit-link" href="https://geo.twranger.com/#monsoon-sec">← 回到「季風與風力發電機」</a>
+      <a class="unit-link" href="https://geo.twranger.com/#typhoon">影響臺灣的颱風路徑 →</a>
     </div>
   </div>
 </header>
@@ -667,7 +667,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
   </div>
 </footer>
 <script>
-(function(){const H='https://twranger-glitch.github.io/geo-taiwan/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
+(function(){const H='https://geo.twranger.com/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
   const a=document.createElement('a');a.href=H;a.className='home-link';a.setAttribute('aria-label','回到海佃地圖首頁：'+h.textContent);k.parentNode.insertBefore(a,k);a.appendChild(k);a.appendChild(h);})();
 /* shared helpers for the unit pages */
 const $=s=>document.querySelector(s);
@@ -750,7 +750,7 @@ function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w|
   return {x,y,svg};}
 
 (function(){
-const BASE='https://raw.githubusercontent.com/twranger-glitch/geo-taiwan/power-data/';
+const BASE='https://raw.githubusercontent.com/twranger/geo-taiwan/power-data/';
 /* colour-blind-friendly palette (Okabe–Ito) + a pattern per group so colour is never the only cue */
 const CAT=[
  {k:'gas',n:'天然氣',c:'#E69F00',t:['燃氣','民營電廠-燃氣'],g:'f'},
