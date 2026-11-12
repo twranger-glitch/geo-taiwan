@@ -18,6 +18,6 @@ def ov(q, name):
         b = get(h + '?data=' + urllib.parse.quote(q, safe=''), 320, 1)
         if b and len(b) > 600: open(O + name, 'wb').write(b); log.write(f'{name} {len(b)} from {h}\n'); log.flush(); return
     log.write(f'{name} FAILED\n')
-for nm, bb in [('kinmen.json', '24.36,118.12,24.54,118.52'), ('matsu.json', '25.92,119.85,26.42,120.56')]:
+for nm, bb in [('kinmen.json', '24.38,118.20,24.53,118.50')]:
     ov(f'[out:json][timeout:180];(way["power"~"line|cable|minor_line"]({bb});nwr["power"~"plant|generator"]({bb}););out geom tags;', nm)
 log.close()
