@@ -1,0 +1,733 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-05-31T22:37:44Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 5159887397,
+  "lat": 26.2770056,
+  "lon": 119.9851622,
+  "tags": {
+    "operator": "高登發電廠",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226210,
+  "lat": 26.3397267,
+  "lon": 119.8955064,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226212,
+  "lat": 26.3418792,
+  "lon": 119.9055233,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226213,
+  "lat": 26.3420715,
+  "lon": 119.9084630,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226214,
+  "lat": 26.3460712,
+  "lon": 119.9105229,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226215,
+  "lat": 26.3518017,
+  "lon": 119.9108058,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226216,
+  "lat": 26.3514351,
+  "lon": 119.9134838,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226217,
+  "lat": 26.3518048,
+  "lon": 119.9163912,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226218,
+  "lat": 26.3529472,
+  "lon": 119.9190649,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226219,
+  "lat": 26.3396168,
+  "lon": 119.9091470,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226220,
+  "lat": 26.3363804,
+  "lon": 119.8994536,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226221,
+  "lat": 26.3345343,
+  "lon": 119.8962993,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226222,
+  "lat": 26.3312697,
+  "lon": 119.8943967,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226223,
+  "lat": 26.3344143,
+  "lon": 119.8926146,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226224,
+  "lat": 26.3328706,
+  "lon": 119.8890293,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226225,
+  "lat": 26.3439085,
+  "lon": 119.8870903,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226226,
+  "lat": 26.3436799,
+  "lon": 119.8837475,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226227,
+  "lat": 26.3436684,
+  "lon": 119.8799581,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226228,
+  "lat": 26.3482419,
+  "lon": 119.8849086,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226229,
+  "lat": 26.3461038,
+  "lon": 119.8811064,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226230,
+  "lat": 26.3460466,
+  "lon": 119.8780954,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226231,
+  "lat": 26.3466992,
+  "lon": 119.8688015,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226232,
+  "lat": 26.3436864,
+  "lon": 119.8607550,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226233,
+  "lat": 26.3429102,
+  "lon": 119.8569117,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226234,
+  "lat": 26.3451417,
+  "lon": 119.8557389,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226244,
+  "lat": 26.3754088,
+  "lon": 119.8506679,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6522226246,
+  "lat": 26.3802132,
+  "lon": 119.8531528,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645425974,
+  "lat": 26.3428691,
+  "lon": 119.9174452,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645425986,
+  "lat": 26.3435662,
+  "lon": 119.9203795,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645425993,
+  "lat": 26.3428018,
+  "lon": 119.9226326,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645425994,
+  "lat": 26.3469842,
+  "lon": 119.9245906,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645426053,
+  "lat": 26.3516230,
+  "lon": 119.9328732,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645426054,
+  "lat": 26.3505174,
+  "lon": 119.9271119,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645426055,
+  "lat": 26.3506376,
+  "lon": 119.9292844,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 6645426056,
+  "lat": 26.3478254,
+  "lon": 119.9280614,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7846325938,
+  "lat": 26.3793079,
+  "lon": 119.8602337,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290951,
+  "lat": 26.3394643,
+  "lon": 119.8989322,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290952,
+  "lat": 26.3404196,
+  "lon": 119.9017509,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290957,
+  "lat": 26.3507192,
+  "lon": 119.8923944,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290958,
+  "lat": 26.3519666,
+  "lon": 119.8874081,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290959,
+  "lat": 26.3533691,
+  "lon": 119.8915057,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290960,
+  "lat": 26.3554692,
+  "lon": 119.8895001,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 7853290961,
+  "lat": 26.3492904,
+  "lon": 119.8529111,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 9221729266,
+  "lat": 26.3506696,
+  "lon": 119.8717011,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "node",
+  "id": 9221729315,
+  "lat": 26.3420971,
+  "lon": 119.9144586,
+  "tags": {
+    "generator:method": "wind_turbine",
+    "generator:source": "wind",
+    "power": "generator"
+  }
+},
+{
+  "type": "way",
+  "id": 249855731,
+  "bounds": {
+    "minlat": 26.1543900,
+    "minlon": 119.9339400,
+    "maxlat": 26.1583801,
+    "maxlon": 119.9354229
+  },
+  "geometry": [
+    { "lat": 26.1583801, "lon": 119.9339825 },
+    { "lat": 26.1583292, "lon": 119.9352071 },
+    { "lat": 26.1583133, "lon": 119.9352911 },
+    { "lat": 26.1582784, "lon": 119.9353415 },
+    { "lat": 26.1582096, "lon": 119.9353625 },
+    { "lat": 26.1581259, "lon": 119.9353628 },
+    { "lat": 26.1575747, "lon": 119.9353377 },
+    { "lat": 26.1575705, "lon": 119.9354229 },
+    { "lat": 26.1573207, "lon": 119.9354197 },
+    { "lat": 26.1573219, "lon": 119.9353302 },
+    { "lat": 26.1554003, "lon": 119.9352849 },
+    { "lat": 26.1543900, "lon": 119.9353027 },
+    { "lat": 26.1545044, "lon": 119.9351292 },
+    { "lat": 26.1547204, "lon": 119.9347824 },
+    { "lat": 26.1549238, "lon": 119.9344638 },
+    { "lat": 26.1551017, "lon": 119.9342232 },
+    { "lat": 26.1552541, "lon": 119.9341099 },
+    { "lat": 26.1555083, "lon": 119.9340179 },
+    { "lat": 26.1559086, "lon": 119.9339400 },
+    { "lat": 26.1569315, "lon": 119.9339400 },
+    { "lat": 26.1583801, "lon": 119.9339825 }
+  ],
+  "tags": {
+    "addr:city": "連江縣",
+    "addr:country": "TW",
+    "addr:district": "南竿鄉",
+    "addr:full": "連江縣南竿鄉清水村99之9號",
+    "addr:housenumber": "99之9",
+    "addr:place": "清水村",
+    "addr:province": "福建省",
+    "barrier": "wall",
+    "full_name": "台灣電力公司協和發電廠珠山分廠",
+    "landuse": "industrial",
+    "name": "珠山發電廠",
+    "name:en": "Zhushan Power Plant",
+    "name:zh": "珠山發電廠",
+    "official_name": "協和發電廠珠山分廠",
+    "official_name:zh": "協和發電廠珠山分廠",
+    "operator": "台灣電力公司",
+    "plant:method": "combustion",
+    "plant:source": "diesel",
+    "power": "plant",
+    "wikidata": "Q24837780",
+    "wikipedia": "zh:協和發電廠珠山分廠"
+  }
+},
+{
+  "type": "way",
+  "id": 521676227,
+  "bounds": {
+    "minlat": 26.1557319,
+    "minlon": 119.9346555,
+    "maxlat": 26.1568681,
+    "maxlon": 119.9350944
+  },
+  "geometry": [
+    { "lat": 26.1557357, "lon": 119.9346555 },
+    { "lat": 26.1557319, "lon": 119.9350818 },
+    { "lat": 26.1568643, "lon": 119.9350944 },
+    { "lat": 26.1568681, "lon": 119.9346681 },
+    { "lat": 26.1557357, "lon": 119.9346555 }
+  ],
+  "tags": {
+    "building": "yes",
+    "power": "generator"
+  }
+},
+{
+  "type": "way",
+  "id": 529638244,
+  "bounds": {
+    "minlat": 26.3682384,
+    "minlon": 120.4972629,
+    "maxlat": 26.3688873,
+    "maxlon": 120.4978086
+  },
+  "geometry": [
+    { "lat": 26.3688873, "lon": 120.4975887 },
+    { "lat": 26.3687781, "lon": 120.4978086 },
+    { "lat": 26.3682384, "lon": 120.4974470 },
+    { "lat": 26.3683278, "lon": 120.4972629 },
+    { "lat": 26.3685976, "lon": 120.4973945 },
+    { "lat": 26.3686931, "lon": 120.4972981 },
+    { "lat": 26.3688603, "lon": 120.4974958 },
+    { "lat": 26.3688873, "lon": 120.4975887 }
+  ],
+  "tags": {
+    "landuse": "industrial",
+    "name": "東引發電三廠",
+    "operator": "台灣電力公司",
+    "operator:en": "Taiwan Power Company",
+    "operator:wikidata": "Q711691",
+    "operator:zh": "台灣電力公司",
+    "plant:method": "combustion",
+    "plant:output:electricity": "6.4 MW",
+    "plant:source": "diesel",
+    "power": "plant",
+    "start_date": "1971"
+  }
+},
+{
+  "type": "way",
+  "id": 531426594,
+  "bounds": {
+    "minlat": 26.3695856,
+    "minlon": 120.5011584,
+    "maxlat": 26.3700095,
+    "maxlon": 120.5018060
+  },
+  "geometry": [
+    { "lat": 26.3695856, "lon": 120.5012229 },
+    { "lat": 26.3699153, "lon": 120.5011584 },
+    { "lat": 26.3700095, "lon": 120.5017486 },
+    { "lat": 26.3696755, "lon": 120.5018060 },
+    { "lat": 26.3696213, "lon": 120.5014909 },
+    { "lat": 26.3695935, "lon": 120.5013858 },
+    { "lat": 26.3695856, "lon": 120.5012229 }
+  ],
+  "tags": {
+    "alt_name": "東引發電2廠",
+    "landuse": "industrial",
+    "name": "東引發電二廠",
+    "operator": "台灣電力公司",
+    "operator:en": "Taiwan Power Company",
+    "operator:wikidata": "Q711691",
+    "operator:zh": "台灣電力公司",
+    "power": "plant"
+  }
+},
+{
+  "type": "way",
+  "id": 1358113163,
+  "bounds": {
+    "minlat": 26.1620472,
+    "minlon": 119.9584000,
+    "maxlat": 26.1629944,
+    "maxlon": 119.9590250
+  },
+  "geometry": [
+    { "lat": 26.1629944, "lon": 119.9590250 },
+    { "lat": 26.1625333, "lon": 119.9586806 },
+    { "lat": 26.1620472, "lon": 119.9584000 }
+  ],
+  "tags": {
+    "operator": "台灣電力公司",
+    "operator:wikidata": "Q711691",
+    "power": "minor_line"
+  }
+},
+{
+  "type": "way",
+  "id": 1362560858,
+  "bounds": {
+    "minlat": 26.3655922,
+    "minlon": 120.4952143,
+    "maxlat": 26.3661912,
+    "maxlon": 120.4955626
+  },
+  "geometry": [
+    { "lat": 26.3661912, "lon": 120.4952412 },
+    { "lat": 26.3661772, "lon": 120.4954188 },
+    { "lat": 26.3659100, "lon": 120.4955494 },
+    { "lat": 26.3655995, "lon": 120.4955626 },
+    { "lat": 26.3655951, "lon": 120.4954333 },
+    { "lat": 26.3655922, "lon": 120.4953468 },
+    { "lat": 26.3658404, "lon": 120.4952143 },
+    { "lat": 26.3661912, "lon": 120.4952412 }
+  ],
+  "tags": {
+    "addr:city": "連江縣",
+    "addr:country": "TW",
+    "addr:district": "東引鄉",
+    "addr:full": "212041連江縣東引鄉樂華村165號",
+    "addr:housenumber": "165",
+    "addr:place": "樂華村",
+    "addr:postcode": "212041",
+    "addr:province": "福建省",
+    "landuse": "industrial",
+    "name": "東引發電一廠",
+    "operator": "台灣電力公司",
+    "operator:en": "Taiwan Power Company",
+    "operator:wikidata": "Q711691",
+    "operator:zh": "台灣電力公司",
+    "power": "plant"
+  }
+},
+{
+  "type": "relation",
+  "id": 19803538,
+  "bounds": {
+    "minlat": 26.2191226,
+    "minlon": 119.9894813,
+    "maxlat": 26.2196815,
+    "maxlon": 119.9905216
+  },
+  "tags": {
+    "addr:city": "連江縣",
+    "addr:country": "TW",
+    "addr:district": "北竿鄉",
+    "addr:full": "連江縣北竿鄉塘岐村22號",
+    "addr:housenumber": "22",
+    "addr:province": "福建省",
+    "addr:street": "塘岐村",
+    "full_name:en": "台灣電力公司馬祖區營業處北竿發電廠",
+    "landuse": "industrial",
+    "name": "臺電北竿服務所",
+    "name:en": "Beigan Power Plant",
+    "name:zh": "臺電北竿服務所",
+    "operator": "台灣電力公司",
+    "operator:en": "Taiwan Power Company",
+    "operator:wikidata": "Q711691",
+    "operator:zh": "台灣電力公司",
+    "power": "plant",
+    "short_name": "北竿發電廠",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}
