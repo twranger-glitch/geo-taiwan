@@ -1140,7 +1140,7 @@ function initMap(){
     .bindTooltip(`<b>${s[3]||'變電所'}</b><span>${s[2]===4?'345 千伏':s[2]===3?'161 千伏':''}變電所：把電壓升高或降低，再分送出去</span>`,{sticky:true,direction:'top',offset:[0,-8],className:'pw-tt'}).addTo(subs);});
   const fac={};MCAT.forEach(c=>fac[c.k]=L.layerGroup());
   PW.fac.forEach(f=>{const wt=f[2]==='wt',k=wt?'wind':f[2];const m=new SymMarker([f[1],f[0]],{renderer:RFac,k:wt?'wt':k,radius:wt?3:6});
-    m.bindTooltip(wt?'<b>一座風力發電機</b>':`<b>${f[3]||({solar:'太陽能發電場',wind:'風力發電場'}[k]||MC(k).n+'發電設施')}</b><span>${MC(k).n}${f[4]?`・最多約 ${fmt(f[4])} 百萬瓦`:''}</span>`,{sticky:true,direction:'top',offset:[0,-8],className:'pw-tt'});(fac[k]||fac.unk).addLayer(m);});
+    m.bindTooltip(wt?`<b>${f[3]||'風力發電機'}</b><span>一座風力發電機</span>`:`<b>${f[3]||({solar:'太陽能發電場',wind:'風力發電場'}[k]||MC(k).n+'發電設施')}</b><span>${MC(k).n}${f[4]?`・最多約 ${fmt(f[4])} 百萬瓦`:''}</span>`,{sticky:true,direction:'top',offset:[0,-8],className:'pw-tt'});(fac[k]||fac.unk).addLayer(m);});
   PW.labels.forEach(([n,lo,la])=>L.marker([la,lo],{pane:'labP',interactive:false,keyboard:false,icon:L.divIcon({className:'pw-place'+(/澎湖|金門|馬祖|綠島|蘭嶼/.test(n)?' isl':''),html:n,iconSize:null})}).addTo(map));
   const T=[[21.85,119.95],[25.35,122.05]];const pad=()=>{const pn=$('#pwCard');const w=pn&&getComputedStyle(pn).position==='absolute'?pn.offsetWidth+20:6;return {paddingTopLeft:[6,6],paddingBottomRight:[w,6]};};map.fitBounds(T,pad());
   const zoomCls=()=>{const z=map.getZoom();map.getContainer().classList.toggle('z-lo',z<8.25);(z>=10.5?ol.addTo(map):ol.remove());(z>=8?subs.addTo(map):subs.remove());};
@@ -1160,7 +1160,7 @@ function initMap(){
 const siteScale=()=>{const z=PWM?PWM.map.getZoom():7.5;return Math.max(.45,Math.min(1.3,Math.pow(2,(z-7.6)*.85)));};
 function rescaleSites(){const f=siteScale();PWM.sites.eachLayer(g=>g.eachLayer(l=>l.setRadius(l.options.R0*f)));}
 async function drawMap(){
-  try{if(!PMP)PMP=fetch(PMAP+'pmap.json?v=4').then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});PW=await PMP;}
+  try{if(!PMP)PMP=fetch(PMAP+'pmap.json?v=5').then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});PW=await PMP;}
   catch(e){$('#pwCard').innerHTML='<p>地圖資料暫時載入失敗，請重新整理網頁。</p>';console.warn(e);return;}
   if(!PWM){initMap();PWM.first=1;}
   const Lv=siteLive();PWM.L=Lv;PWM.sites.clearLayers();PWM.labels.clearLayers();
