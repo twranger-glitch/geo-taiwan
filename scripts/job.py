@@ -1,25 +1,21 @@
-"""One-off data job run by .github/workflows/job.yml (outputs go to data/_job/)."""
-import urllib.request, urllib.parse, json, math, io, os, time
-import numpy as np
-from PIL import Image
-O = 'data/_job/'; os.makedirs(O, exist_ok=True)
-UA = {'User-Agent': 'geo-taiwan-classroom/1.0 (+https://geo.twranger.com/)', 'Accept': '*/*'}
-log = open(O + 'log.txt', 'w')
-def get(u, t=300, tries=3):
-    for k in range(tries):
-        try: return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
-        except Exception as e: log.write(f'retry {k} {u[:90]} {e}\n'); log.flush(); time.sleep(5 + 10 * k)
-    return None
-def shade(*a): pass
-# 3. OSM: plant outlines for all of Taiwan; lines and plants for Kinmen / Matsu
-OV = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
-def ov(q, name):
-    for h in OV:
-        b = get(h + '?data=' + urllib.parse.quote(q, safe=''), 320, 1)
-        if b and len(b) > 600: open(O + name, 'wb').write(b); log.write(f'{name} {len(b)} from {h}\n'); log.flush(); return
-    log.write(f'{name} FAILED\n')
-A = 'area["ISO3166-1"="TW"][admin_level=2]->.a;'
-ov('[out:json][timeout:250];' + A + 'nwr["power"="substation"](area.a);out tags bb center;', 'subs_all.json')
-ov('[out:json][timeout:250];' + A + 'way["power"~"line|cable"](area.a);rel(bw)["voltage"];out body;', 'line_rels.json')
-ov('[out:json][timeout:250];' + A + 'node["power"~"tower|pole"](area.a);out skel qt;', 'towers.json')
+"""One-off: inspect the 2010-2024 Taiwan continuous GNSS dataset (Zenodo 23551543, CC-BY 4.0)."""
+import urllib.request, zipfile, os, io
+O = 'data/_job/'; os.makedirs(O, exist_ok=True); log = open(O + 'log.txt', 'w')
+U = 'https://zenodo.org/api/records/23551543/files/continuous_GNSS_Taiwan.zip/content'
+p = '/tmp/gnss.zip'
+urllib.request.urlretrieve(U, p)
+z = zipfile.ZipFile(p); names = z.namelist()
+log.write(f'{len(names)} files\n')
+ext = {}
+for n in names: ext.setdefault(os.path.splitext(n)[1], []).append(n)
+for e, v in ext.items(): log.write(f'{e or "(dir)"}: {len(v)} e.g. {v[:4]}\n')
+for n in names:
+    low = n.lower()
+    if n.endswith('/'): continue
+    if any(k in low for k in ('readme', 'metadata', 'offset', 'quality', 'equipment', 'station', 'log')) and z.getinfo(n).file_size < 3_000_000:
+        log.write(f'\n===== {n} ({z.getinfo(n).file_size} bytes)\n'); log.write(z.read(n).decode('utf-8', 'replace')[:6000])
+ts = [n for n in names if not n.endswith('/') and not any(k in n.lower() for k in ('readme', 'metadata', 'offset', 'quality', 'equipment'))]
+for n in ts[:3]:
+    log.write(f'\n===== SAMPLE {n} ({z.getinfo(n).file_size} bytes)\n'); t = z.read(n).decode('utf-8', 'replace').splitlines()
+    log.write('\n'.join(t[:40]) + '\n...\n' + '\n'.join(t[-5:]) + '\n')
 log.close()
