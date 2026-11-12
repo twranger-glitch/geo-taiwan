@@ -4,6 +4,9 @@ on:
     inputs:
       urls:
         description: "空白分隔的網址"
+  push:
+    branches: [main]
+    paths: [scripts/probe_urls.txt]
 permissions:
   contents: write
 jobs:
@@ -11,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python scripts/probe.py ${{ inputs.urls }}
+      - run: |
+          if [ -n "${{ inputs.urls }}" ]; then python scripts/probe.py ${{ inputs.urls }}; else python scripts/probe.py $(cat scripts/probe_urls.txt); fi
       - run: |
           git config user.name "probe-bot"; git config user.email "probe-bot@users.noreply.github.com"
           git add data/_probe; git commit -qm "probe" && git pull -q --rebase origin main && git push -q
