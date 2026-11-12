@@ -18,6 +18,8 @@ def ov(q, name):
         b = get(h + '?data=' + urllib.parse.quote(q, safe=''), 320, 1)
         if b and len(b) > 600: open(O + name, 'wb').write(b); log.write(f'{name} {len(b)} from {h}\n'); log.flush(); return
     log.write(f'{name} FAILED\n')
-for nm, bb in [('kinmen.json', '24.38,118.20,24.53,118.50')]:
-    ov(f'[out:json][timeout:180];(way["power"~"line|cable|minor_line"]({bb});nwr["power"~"plant|generator"]({bb}););out geom tags;', nm)
+A = 'area["ISO3166-1"="TW"][admin_level=2]->.a;'
+ov('[out:json][timeout:250];' + A + 'nwr["power"="substation"](area.a);out tags bb center;', 'subs_all.json')
+ov('[out:json][timeout:250];' + A + 'way["power"~"line|cable"](area.a);rel(bw)["voltage"];out body;', 'line_rels.json')
+ov('[out:json][timeout:250];' + A + 'node["power"~"tower|pole"](area.a);out skel qt;', 'towers.json')
 log.close()
