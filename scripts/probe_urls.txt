@@ -1,1 +1,1 @@
-https://geodesy.unr.edu/velocities/midas.IGS20.txt https://geodesy.unr.edu/velocities/midas.IGS14.txt https://tgm.earth.sinica.edu.tw/ https://tgm.earth.sinica.edu.tw/product https://tgm.earth.sinica.edu.tw/about https://geodesy.unr.edu/NGLStationPages/stations/S01R.sta
+https://zenodo.org/api/records/23551543 https://tgm.earth.sinica.edu.tw/interseis https://tgm.earth.sinica.edu.tw/download/ https://tgm.earth.sinica.edu.tw/map/ https://www.nature.com/articles/s41597-026-07876-y
