@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="RqTKNPuaeoInQpWM4Gr3K5Pyg36okDrAkgjn2xld">
+
+    <title>TGM Taiwan Geodetic Model</title>
+
+    <!-- Scripts -->
+    <script src="https://tgm.earth.sinica.edu.tw/js/app.js" defer></script>
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	
+    <!-- Styles -->
+	<!--Bootstrap CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://tgm.earth.sinica.edu.tw/css/app.css" rel="stylesheet">
+    <script src="https://tgm.earth.sinica.edu.tw/js/citation.js" defer></script>
+	<!-- Datatables -->
+	<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" ></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js" ></script>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-X8TGC615DP"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-X8TGC615DP');
+	</script>
+	
+	<style>
+		body{
+			font-size:1.2em;
+		}
+		.navbar{
+			background-color:#394b81;
+		}
+		.navbar-nav > .nav-item{
+			
+			padding:0 10px 0 10px;
+			border-left: 2px solid #999;
+		}
+		.navbar-nav > .nav-item > .nav-link{
+			padding:1px;
+		}
+		footer{
+			background-color:#bbc8e6;
+			color:#000;
+		}
+	</style>
+	
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js" ></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" ></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<meta name="csrf-token" content="RqTKNPuaeoInQpWM4Gr3K5Pyg36okDrAkgjn2xld">
+
+<style>
+	.news{
+		padding: 4rem 2rem;
+		
+	}
+	.news-container{
+		margin-top: 2rem;
+
+	}
+	.news-row{
+		border-bottom: 1px solid;
+		border-color:#bbb;
+	}
+	.news-date {
+		text-align: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-left: 15px;
+		padding-right: 15px;
+		border-left: solid 5px #53727d;
+		border-right: solid 5px #53727d;
+	}
+	.news-title{
+		
+		text-align:right;
+		padding:5px;
+	}
+	.news-title > a {
+		color:#426579;
+	}
+	.news-title > a:hover{
+		color:#6c2c2f;
+		
+	}
+
+	@media (min-width: 768px) {
+		.news-title {
+			padding-right:2rem;
+			text-align:center;
+		}
+	}
+</style>
+</head>
+<body>
+    <div id="app">
+		        <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="https://tgm.earth.sinica.edu.tw">
+                    TGM
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
+						
+						<li class="nav-item"><a class="nav-link" href="/about/">About TGM</a></li>
+						<li class="nav-item"><a class="nav-link"  href="/map/">Station</a></li>
+						<li class="nav-item"><a class="nav-link" href="/download/">Data Download</a></li>
+						<li class="nav-item"><a class="nav-link" href="/interseis">Velocity Field</a></li>
+						<li class="nav-item"><a class="nav-link" href="/TseriesList">Time Series</a></li>
+						<!--li class="nav-item"><a class="nav-link disabled">Help</a></li-->
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                                                                                    <li class="nav-item">
+                                    <a class="nav-link" href="https://tgm.earth.sinica.edu.tw/login">Login</a>
+                                </li>
+                            
+                                                            <li class="nav-item">
+                                    <a class="nav-link" href="https://tgm.earth.sinica.edu.tw/register">Register</a>
+                                </li>
+                                                                        </ul>
+                </div>
+            </div>
+        </nav>
+
+                <main class="py-4">
+            <div class="container">
+		<h2 class="mb-3 pb-2 border-bottom">About TGM</h2>
+	<p class="p-3">
+		Since the Institute of Earth Sciences, Academia Sinica (IES) established its first continuous Global Navigation Satellite System (GNSS) station, S01R, in Baisha, Penghu Island, more than 400 continuous GNSS stations have been set up by several institutes and universities operating daily until now. Data from these stations have been used to produce high-precision, three-component velocity fields as well as position time series that track time-varying crustal deformation from small interesting area to the entire Island of Taiwan. In order to keep receiving as well as analyzing these valuable and enormous data, a huge investment of manpower and material resources is required from fields to laboratories. Since the field conditions are controlled by the installation agency, careful handling of the data collected from all corporate partners is even more important. To achieve the goal of providing a fast service of data collecting and coordinate positioning for earth sciences research. The Taiwan Geodetic Model (TGM) platform originated by IES aims to increase the quantity and availability of the data and to deliver products based on the raw data. High quality computed products such as stations positions, time series, velocities and strain rate fields provide researchers in Earth Science with relevant information for finding new data patterns, making new discoveries and even creating new science.
+	</p>
+	<h3 >TGM platform framework</h3>
+	<p class="p-3">
+		The TGM is an open source platform with web interface to capture data from a variety of continuous GNSS stations operating in Taiwan encompassing several key elements : (1) the metadata of continuous GNSS stations, which includes the supervising institute or organization responsible for operating the station, the location of the station, maintenance records for the station's instruments and equipment and raw data availability; (2) the data download portal, which provides downloads of standard RINEX (Receiver Independent Exchange Format) data files older than six months for all continuous GNSS stations maintained by IES in both single or batch download job; (3) the time series interactive viewer, which exhibits complete time series of all the continuous GNSS stations after installation. In addition to the original raw time series, functional choices are provided to fit time series data with coseismic offsets and postseismic deformation associated with moderate to large earthquakes or/and seasonality variations due to annual water storage change, the long-term linear velocity etc; (4) the product portal, which provides latest velocity and strain rate visualization maps, as well as coseismic displacement data, for inland earthquakes with a magnitude larger than 6.0.
+	</p>
+</div>
+	
+	
+        </main>
+		
+        <!-- Footer: contact and institutions alongside the full citation references. -->
+        <footer class="site-footer">
+            <div class="container py-4 py-md-5">
+                <div class="row g-4 g-lg-5">
+                    <div class="col-lg-4">
+                        <h2 class="footer-heading">Contact</h2>
+                        <div class="d-flex align-items-center mb-2">
+							<div class="btn-square flex-shrink-0 me-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+								  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+								  <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+								</svg>
+							</div>
+							<span>128, Sec. 2, Academia Road, Nangang, Taipei 11529, Taiwan</span>
+						</div>
+						<div class="d-flex align-items-center mb-2">
+							<div class="btn-square flex-shrink-0 me-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+								  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+								</svg>
+							</div>
+							<span>+886-2-2783-9910 ext. 2715</span>
+						</div>
+						<div class="d-flex align-items-center mb-2">
+							<div class="btn-square flex-shrink-0 me-3">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+								  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+								</svg>
+							</div>
+							<a href="mailto:cuzn@earth.sinica.edu.tw">cuzn@earth.sinica.edu.tw</a>
+						</div>
+                        <div class="footer-logos mt-4" aria-label="Partner institutions">
+                            <a href="https://www.earth.sinica.edu.tw/" target="_blank" rel="noopener noreferrer" class="footer-logo-ies">
+                                <img src="https://www.earth.sinica.edu.tw/img/logo.svg" alt="Institute of Earth Sciences, Academia Sinica" loading="lazy">
+                            </a>
+                            <a href="https://tec.earth.sinica.edu.tw/" target="_blank" rel="noopener noreferrer">
+                                <img src="/img/TEClogo.png" alt="Taiwan Earthquake Research Center" loading="lazy">
+                            </a>
+                            <a href="https://www.sinica.edu.tw/" target="_blank" rel="noopener noreferrer">
+                                <img src="/img/ASlogo-05.png" alt="Academia Sinica" loading="lazy">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                    <section class="footer-citation" aria-labelledby="footerCitationLabel">
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+                            <h2 class="footer-heading mb-0" id="footerCitationLabel">Citation</h2>
+                        </div>
+                        <p>If you use data from TGM in your research or publications, please acknowledge the data source by citing the following references.</p>
+                        <section class="mt-3" aria-labelledby="footerPublicationLabel">
+                            <h3 class="footer-subheading" id="footerPublicationLabel">Publication</h3>
+                            <p class="mb-1">Tung, H., Hsu, Y.-J., Chen, H.-Y., &amp; Liang, W.-T. (2026). A 2010–2024 continuous GNSS dataset for Taiwan. <em>Scientific Data.</em></p>
+                            <a href="https://doi.org/10.1038/s41597-026-07876-y" target="_blank" rel="noopener noreferrer">https://doi.org/10.1038/s41597-026-07876-y</a>
+                        </section>
+                        <section class="mt-3" aria-labelledby="footerDatasetLabel">
+                            <h3 class="footer-subheading" id="footerDatasetLabel">Dataset</h3>
+                            <p class="mb-1">Tung, H., Hsu, Y.-J., Chen, H.-Y., &amp; Liang, W.-T. (2026). A 2010–2024 continuous GNSS dataset for Taiwan (Version 2) [Data set]. Zenodo.</p>
+                            <a href="https://doi.org/10.5281/zenodo.23551543" target="_blank" rel="noopener noreferrer">https://doi.org/10.5281/zenodo.23551543</a>
+                        </section>
+                    </section>
+                    </div>
+                </div>
+                <div class="footer-bottom mt-4 pt-3 d-flex flex-column flex-xl-row justify-content-between gap-2">
+                    <p class="mb-0">Copyright © 2023 Institute of Earth Sciences, Academia Sinica, All Rights Reserved.</p>
+                    <a href="/使用者條款、資訊安全與隱私權政策.pdf" target="_blank" rel="noopener noreferrer" data-i18n="privacy_policy">Terms of Use, Information Security and Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div class="modal fade" id="citationModal" tabindex="-1" aria-labelledby="citationModalLabel" aria-describedby="citationModalDescription" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h2 class="modal-title" id="citationModalLabel">Citation</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close citation"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="citationModalDescription">If you use data from TGM in your research or publications, please acknowledge the data source by citing the following references.</p>
+
+                    <section class="citation-reference mt-3" aria-labelledby="citationPublicationLabel">
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                            <h3 class="mb-0" id="citationPublicationLabel">Publication</h3>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill citation-copy" data-citation-target="citationPublication" aria-label="Copy publication citation">Copy</button>
+                        </div>
+                        <div id="citationPublication">
+                            <p class="mb-1">Tung, H., Hsu, Y.-J., Chen, H.-Y., &amp; Liang, W.-T. (2026). A 2010–2024 continuous GNSS dataset for Taiwan. <em>Scientific Data.</em></p>
+                            <a href="https://doi.org/10.1038/s41597-026-07876-y" target="_blank" rel="noopener noreferrer">https://doi.org/10.1038/s41597-026-07876-y</a>
+                        </div>
+                    </section>
+
+                    <section class="citation-reference mt-3" aria-labelledby="citationDatasetLabel">
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-1">
+                            <h3 class="mb-0" id="citationDatasetLabel">Dataset</h3>
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill citation-copy" data-citation-target="citationDataset" aria-label="Copy dataset citation">Copy</button>
+                        </div>
+                        <div id="citationDataset">
+                            <p class="mb-1">Tung, H., Hsu, Y.-J., Chen, H.-Y., &amp; Liang, W.-T. (2026). A 2010–2024 continuous GNSS dataset for Taiwan (Version 2) [Data set]. Zenodo.</p>
+                            <a href="https://doi.org/10.5281/zenodo.23551543" target="_blank" rel="noopener noreferrer">https://doi.org/10.5281/zenodo.23551543</a>
+                        </div>
+                    </section>
+                    <p class="visually-hidden" id="citationCopyStatus" role="status" aria-live="polite"></p>
+                    <div class="border-top pt-3 mt-4 text-center text-muted small">Taiwan Geodetic Model (TGM) | Institute of Earth Sciences, Academia Sinica</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+ </html>
