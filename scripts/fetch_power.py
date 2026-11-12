@@ -1,6 +1,6 @@
 """抓台電「各機組發電量」開放資料（每 10 分鐘更新），整理成網頁用的小檔案。
 輸出到目前目錄（data 分支的工作樹）：
-  now.json            最新一筆：各機組類型的淨發電量與裝置容量，以及風力、太陽能機組明細
+  now.json            最新一筆：各機組類型的淨發電量與裝置容量，以及每一部機組的明細（地圖用）
   day/YYYY-MM-DD.json 當天每 10 分鐘的各類型發電量
   days.json           有資料的日期清單（最多保留 400 天）
 """
@@ -23,7 +23,7 @@ for r in rows:
     if mw is not None: a['mw'] += mw
     if cap is not None: a['cap'] += cap
     a['n'] += 1
-    if ty in ('風力', '太陽能'):
+    if '負載' not in ty:  # 每一部機組都留下，地圖要用
         units.setdefault(ty, []).append([nm, mw, cap, (r.get('備註') or '').strip()])
 for a in types.values(): a['mw'] = round(a['mw'], 1); a['cap'] = round(a['cap'], 1)
 now = {'t': t, 'types': types, 'units': units, 'src': URL}
