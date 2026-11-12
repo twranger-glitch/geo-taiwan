@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<title>臺灣每年都在移動｜海佃地圖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a field-survey notebook — sticky unit rail on top, each unit a full-width band with a map/instrument on one side and a reading card on the other */
+:root{
+  --paper:#e9f0ef; --surface:#ffffff; --surface-2:#f4f8f7;
+  --ink:#10313b; --muted:#557079; --line:#cad8d8;
+  --sea:#cfe4e7; --sea-deep:#0f3644; --land:#b8c79f; --land-ink:#7d9468;
+  --typhoon:#d9462b; --plate:#d8901a; --wind:#2a86b8; --rain:#3a9fb5; --leaf:#4f8a4a;
+  --cat1:#3B8EDB; --cat2:#E69F00; --cat3:#B2182B;
+  --conv:#D55E00; --div:#0098A6; --trans:#C79100;
+  --shadow:0 1px 2px rgba(16,49,59,.06),0 8px 24px rgba(16,49,59,.07);
+  --f-display:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--wind);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+
+/* Header */
+header.top{padding-block:28px 18px;position:relative;overflow:hidden}
+.top .wrap{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+.kicker{font-size:15.5px;letter-spacing:.12em;color:var(--muted);font-weight:500}
+h1{font-size:clamp(30px,5vw,48px);margin-top:4px}
+h1 .accent{color:var(--typhoon)}
+.lede{max-width:40em;color:var(--muted);margin-top:8px}
+.coord{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:right;line-height:1.6;white-space:nowrap}
+.contour{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.contour path{fill:none;stroke:var(--line);stroke-width:1}
+
+/* Rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center;transition:background .2s,border-color .2s}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:8px;height:8px;border-radius:50%}
+
+/* Sections */
+section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
+.unit-head{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:start;margin-bottom:24px}
+.badge{grid-row:span 2;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-size:26px}
+.unit-head h2{font-size:clamp(24px,3.4vw,32px)}
+.unit-head .sub{color:var(--muted);max-width:46em}
+.page-ref{display:inline-block;font-family:var(--f-num);font-size:14.5px;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:8px;color:var(--muted);vertical-align:middle;letter-spacing:.02em}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.grid2.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+@media (max-width:860px){.grid2,.grid2.rev{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);min-width:0}
+.panel.pad{padding:20px 22px}
+.stage{position:relative;min-width:0}
+.card h3{font-size:22px}
+.card .meta{font-size:15.5px;color:var(--muted);margin-top:2px}
+.card p+p{margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:17px;display:inline-flex;gap:6px;align-items:center;transition:all .15s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+.chip[data-l="div"] .sw{background:repeating-linear-gradient(90deg,var(--div) 0 6px,transparent 6px 9px) !important;width:22px}
+.chip[data-l="trans"] .sw{background:repeating-linear-gradient(90deg,var(--trans) 0 2px,transparent 2px 6px) !important;width:22px}
+.chip[data-l="conv"] .sw{width:22px;height:5px}
+.label{font-size:14.5px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.think{border-left:4px solid var(--plate);background:var(--surface-2);padding:12px 16px;border-radius:0 12px 12px 0;font-size:18px}
+.think b{font-family:var(--f-display);font-weight:400;color:var(--plate)}
+.note{font-size:15px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.stat{background:var(--surface-2);border-radius:12px;padding:10px 12px;min-width:0}
+.stat .k{font-size:14.5px;color:var(--muted)}
+.stat .v{font-weight:700;font-size:18px;line-height:1.45}
+.tag{display:inline-block;font-size:14.5px;font-weight:700;border-radius:6px;padding:1px 8px;color:#fff}
+
+/* Globe */
+.globe-box{background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--sea-deep) 40%,var(--paper)) 0%,var(--paper) 70%);border-radius:24px;padding:8px;position:relative}
+#globe{width:100%;height:auto;display:block;touch-action:none;cursor:grab;max-width:640px;margin:0 auto}
+#globe:active{cursor:grabbing}
+.g-sea{fill:var(--sea-deep)}
+.g-grat{fill:none;stroke:#ffffff;stroke-opacity:.08;stroke-width:.6}
+.g-land{fill:#7fa27c;stroke:#c9dcc0;stroke-width:.5;stroke-opacity:.7}
+.g-lake{fill:#0f3644}
+.g-b{cursor:pointer}
+.g-tw{fill:#e7c66d;stroke:#fff;stroke-width:.6}
+.g-b{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.g-b.conv{stroke:#ff6a4d;stroke-width:2.6}
+.g-poly{fill-opacity:.34;stroke:#ffffff;stroke-opacity:.45;stroke-width:.8}
+.g-b.hand{opacity:.5}
+.g-b.div{stroke:#4fe0d6;stroke-width:2.2;stroke-dasharray:6 4}
+.g-b.trans{stroke:#ffc23d;stroke-width:2.2;stroke-dasharray:1 5}
+.g-b.hl{stroke-width:5}
+.g-plate{font-family:var(--f-display);font-size:18px;fill:#ffffff;fill-opacity:.85;paint-order:stroke;stroke:#0a2630;stroke-width:3px;cursor:pointer;text-anchor:middle}
+.g-plate:hover{fill:#ffd36b;fill-opacity:1}
+.g-eq{fill:#ff5a3c;fill-opacity:.75;stroke:#fff;stroke-width:1;cursor:pointer}
+.g-eq.sel{fill:#ffd23d;fill-opacity:1;stroke-width:2}
+.g-eq-pulse{fill:none;stroke:#ffd23d;stroke-width:2;pointer-events:none}
+.g-mt{fill:#ffd36b;stroke:#3b2a05;stroke-width:1;cursor:pointer}
+.g-mt.sel{fill:#fff}
+.g-halo{fill:url(#halo);pointer-events:none}
+.globe-tools{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px}
+.icon-btn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:18px;line-height:1;box-shadow:var(--shadow)}
+.icon-btn svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2}
+.globe-hint{position:absolute;left:16px;bottom:12px;font-size:14.5px;color:var(--muted);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:2px 10px;border-radius:999px}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mag-scale{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--muted)}
+
+/* Profile */
+#profile{width:100%;height:auto;display:block}
+.pf-zone{cursor:pointer}
+.pf-zone .hit{fill:transparent}
+.pf-zone:hover .hit,.pf-zone.on .hit{fill:var(--ink);fill-opacity:.06}
+.pf-zone text{font-family:var(--f-display);font-size:18px;fill:var(--ink);text-anchor:middle}
+.pf-zone.on text{fill:var(--typhoon)}
+.pf-ground{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.pf-sea{fill:var(--sea)}
+.pf-plate-eu{fill:color-mix(in srgb,var(--plate) 30%,var(--surface))}
+.pf-plate-ph{fill:color-mix(in srgb,var(--typhoon) 22%,var(--surface))}
+.pf-txt{font-size:15.5px;fill:var(--muted)}
+.pf-txt.b{fill:var(--ink);font-weight:700}
+
+/* Typhoon */
+.ty-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:960px){.ty-layout{grid-template-columns:minmax(0,1fr)}}
+.map-box{background:var(--sea);border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
+#tymap{width:100%;height:auto;display:block}
+.m-land{fill:var(--land);stroke:var(--land-ink);stroke-width:.5}
+.m-tw{fill:color-mix(in srgb,var(--land) 70%,var(--plate));stroke:var(--land-ink);stroke-width:.8}
+.m-grid{stroke:var(--ink);stroke-opacity:.08;fill:none}
+.m-grid-t{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.m-trop{stroke:#9b59b6;stroke-dasharray:6 4;stroke-width:1.2;fill:none}
+.m-trop-t{font-size:14px;fill:#9b59b6}
+.trk{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6;stroke-opacity:.55;transition:opacity .25s}
+.trk[data-c="1"]{stroke-width:1.1}.trk[data-c="2"]{stroke-width:2}.trk[data-c="3"]{stroke-width:3;stroke-opacity:.7}
+.trk-g{cursor:pointer;transition:opacity .25s}
+.trk-g.dim{opacity:.08}
+.trk-g.sel .trk{stroke-opacity:1;stroke-width:3.4}
+.trk-g .hit{stroke:transparent;stroke-width:12;fill:none}
+.tdt{font-family:var(--f-num);font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px}
+.tnm{font-size:15px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ty-legend{position:absolute;left:12px;top:12px;background:color-mix(in srgb,var(--surface) 88%,transparent);border-radius:12px;padding:8px 12px;font-size:14.5px;display:flex;flex-direction:column;gap:3px}
+.ty-legend span{display:flex;align-items:center;gap:6px}
+.ty-legend i{width:22px;height:3px;border-radius:2px;display:inline-block}
+.ty-legend span:nth-child(1) i{height:5px}.ty-legend span:nth-child(3) i{height:2px}
+.ty-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.ty-item{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;display:grid;grid-template-columns:auto 1fr;gap:0 10px;align-items:center;transition:all .15s;min-width:0}
+.ty-item:hover{border-color:var(--ink)}
+.ty-item[aria-pressed="true"]{border-color:var(--typhoon);box-shadow:0 0 0 2px color-mix(in srgb,var(--typhoon) 30%,transparent)}
+.ty-item .yr{font-family:var(--f-num);font-size:14.5px;color:var(--muted);grid-column:2}
+.ty-item .nm{font-weight:700;grid-column:2;line-height:1.3}
+.ty-item .cat{grid-row:1/3;width:10px;height:30px;border-radius:4px}
+.spiral{width:42px;height:42px;flex:none}
+.spiral.spin{animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(-360deg)}}
+.ty-card-head{display:flex;gap:12px;align-items:center}
+.res-bars{display:grid;gap:6px;margin-top:8px}
+.res-row{display:grid;grid-template-columns:56px 1fr 52px;gap:8px;align-items:center;font-size:15.5px}
+.res-bar{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.res-bar i{display:block;height:100%;background:var(--rain);border-radius:5px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:7px 16px;border-radius:999px;font-size:17px;display:inline-flex;gap:6px;align-items:center}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+
+.ty-tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.ty-tools select,.ty-tools input{font:inherit;font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.ty-tools input{flex:1;min-width:180px}
+.g-cty{font-family:var(--f-body);font-size:14px;fill:#f2f7f4;fill-opacity:.9;paint-order:stroke;stroke:#0a2630;stroke-width:2.6px;text-anchor:middle;pointer-events:none}
+.g-ocn{font-family:var(--f-display);font-size:17px;fill:#bfe3ea;fill-opacity:.6;font-style:italic;text-anchor:middle;pointer-events:none}
+.m-cty{font-family:var(--f-body);font-size:14px;fill:var(--ink);fill-opacity:.7;text-anchor:middle;paint-order:stroke;stroke:var(--sea);stroke-width:2.5px}
+.m-ocn{font-family:var(--f-display);font-size:17px;fill:var(--muted);font-style:italic;text-anchor:middle}
+
+/* Monsoon */
+#monsoon{width:100%;height:auto;display:block}
+.ms-sea{fill:var(--sea)}
+.ms-tw{fill:var(--land);stroke:var(--land-ink);stroke-width:1.2}
+.ms-mt{fill:color-mix(in srgb,var(--plate) 65%,var(--land));stroke:var(--land-ink);stroke-width:.6}
+.ms-wind{fill:none;stroke:var(--wind);stroke-width:3;stroke-linecap:round;stroke-dasharray:14 12;animation:flow 1.2s linear infinite}
+.ms-wind.summer{stroke:var(--typhoon)}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.ms-head{fill:var(--wind)}
+.ms-head.summer{fill:var(--typhoon)}
+.ms-cloud{fill:var(--surface);stroke:var(--muted);stroke-width:1}
+.ms-drop{stroke:var(--rain);stroke-width:2;stroke-linecap:round}
+.ms-txt{font-family:var(--f-display);font-size:16px;fill:var(--ink)}
+.ms-sm{font-size:14.5px;fill:var(--muted)}
+.season-toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.season-toggle button{border:0;background:transparent;padding:6px 16px;border-radius:999px;font-size:18px}
+.season-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.turbine-card{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+#compass{width:120px;height:120px}
+.cmp-ring{fill:var(--surface-2);stroke:var(--line)}
+.cmp-t{font-family:var(--f-num);font-size:14px;fill:var(--muted);text-anchor:middle}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.qopt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 14px;font-size:18px}
+.qopt.right{background:color-mix(in srgb,var(--leaf) 20%,var(--surface));border-color:var(--leaf)}
+.qopt.wrong{background:color-mix(in srgb,var(--typhoon) 15%,var(--surface));border-color:var(--typhoon)}
+.qopt.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qopt.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qopt.wrong{border-style:dashed}
+.qfb{margin-top:10px;font-size:18px;min-height:1.5em}
+@media (prefers-reduced-motion:reduce){.ms-wind,.spiral.spin{animation:none}}
+
+/* Charts */
+.chart{width:100%;height:auto;display:block}
+.ax text{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.ax line,.ax path{stroke:var(--line)}
+.gridl{stroke:var(--line);stroke-dasharray:2 4}
+.bar-tw{fill:var(--rain);fill-opacity:.45}
+.bar-tn{fill:var(--typhoon)}
+.band{fill:var(--plate);fill-opacity:.13}
+.band-t{font-family:var(--f-display);font-size:15.5px;fill:var(--plate)}
+.val{font-family:var(--f-num);font-size:14px;fill:var(--ink);text-anchor:middle}
+.ln{fill:none;stroke-width:2.5}
+.ln-dot{stroke:var(--surface);stroke-width:1.5}
+.cmp-bars{display:grid;gap:8px;margin-top:6px}
+.cmp-row{display:grid;grid-template-columns:96px 1fr 80px;gap:10px;align-items:center;font-size:17px}
+.cmp-row .tr{height:16px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.cmp-row .tr i{display:block;height:100%;border-radius:8px}
+
+/* Elevation */
+#mtn{width:100%;height:auto;display:block}
+.mt-sky{fill:var(--surface-2)}
+.mt-body{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.mt-snow{fill:var(--surface);opacity:.9}
+.mt-line{stroke:var(--typhoon);stroke-width:1.5;stroke-dasharray:5 4}
+.mt-pin{fill:var(--typhoon);stroke:var(--surface);stroke-width:2}
+.mt-ref{font-size:14.5px;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px}
+.mt-refdot{fill:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--typhoon)}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.big{font-family:var(--f-num);font-size:30px;font-weight:600;line-height:1.1}
+.crop{display:flex;gap:12px;align-items:center;margin-top:12px;background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.crop-ico{width:46px;height:46px;flex:none;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-size:20px;color:#fff}
+
+/* Calendar */
+.cal{overflow-x:auto}
+.cal-grid{display:grid;grid-template-columns:110px repeat(12,minmax(44px,1fr));min-width:700px;gap:0}
+.cal-h{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:center;padding:4px 0}
+.cal-rain{grid-column:2/-1;display:grid;grid-template-columns:repeat(12,1fr);align-items:end;height:70px;gap:6px;padding:0 6px;border-bottom:1px solid var(--line)}
+.cal-rain i{display:block;background:var(--rain);opacity:.4;border-radius:4px 4px 0 0}
+.cal-row{display:contents}
+.cal-name{font-size:17px;font-weight:700;padding:8px 8px 8px 0;display:flex;align-items:center;border-bottom:1px dashed var(--line)}
+.cal-track{grid-column:2/-1;position:relative;border-bottom:1px dashed var(--line);height:44px}
+.cal-bar{position:absolute;top:9px;height:26px;border-radius:13px;border:0;color:#fff;font-size:15.5px;padding:0 10px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-bar[aria-pressed="true"]{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.cal-detail{margin-top:18px}
+
+/* Quiz */
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.qcard .qn{font-family:var(--f-num);font-size:14.5px;color:var(--muted)}
+.qcard h3{font-size:18px;margin-top:2px}
+.score{font-family:var(--f-display);font-size:20px}
+footer{padding-block:32px 48px;color:var(--muted);font-size:15.5px}
+footer p+p{margin-top:6px}
+.tooltip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:14.5px;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:5}
+.credit{margin-top:14px;text-align:right;font-size:12px;letter-spacing:.04em;opacity:.55}
+.ext-link{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ext-link a{font-weight:700;color:var(--typhoon);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.ext-link a:hover{opacity:.8}
+.ext-link span{font-size:14px;color:var(--muted)}
+/* plate time machine */
+.g-tw-cr{fill:#f0a35e}
+.g-poly.sim{fill-opacity:0;stroke-opacity:.3;stroke-width:.7}
+.sim-badge{position:absolute;left:16px;top:12px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 14px;font-size:15px;display:flex;gap:10px;align-items:center;max-width:calc(100% - 90px);flex-wrap:wrap}
+.sim-badge[hidden]{display:none}
+.sim-badge button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:2px 12px;font-size:14.5px}
+.sim-box{margin-top:36px}
+.sim-head h3{font-size:clamp(21px,2.6vw,26px)}
+.sim-head .sub{color:var(--muted);margin-top:4px;max-width:46em}
+.sim-ctl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 4px}
+.sim-ctl input{flex:1;min-width:200px}
+.sim-ctl output{font-weight:700;font-size:20px;min-width:6.5em}
+.sim-ticks{display:flex;justify-content:space-between;gap:2px 6px;flex-wrap:wrap;margin-bottom:16px}
+.sim-ticks button{border:0;background:none;color:var(--muted);font-size:14.5px;padding:2px 2px}
+.sim-ticks button:hover{color:var(--ink);text-decoration:underline}
+.sim-delta{font-size:14.5px;color:var(--muted);font-weight:400}
+.sim-faq{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.sim-faq summary{cursor:pointer;font-weight:700}
+.sim-faq p{margin-top:6px}
+#twsim{width:100%;height:auto;display:block}
+.ts-sea{fill:var(--sea)}
+.ts-ghost path{fill:none;stroke:var(--ink);stroke-opacity:.4;stroke-width:1;stroke-dasharray:3 3}
+.ts-cr{fill:var(--plate);stroke:var(--land-ink);stroke-width:.8}
+.ts-valley{fill:none;stroke:var(--typhoon);stroke-width:2.2;stroke-dasharray:6 4}
+.ts-valley.moved{stroke-opacity:.55}
+.tslab{font-size:15px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px;pointer-events:none}
+.tslab.big{font-size:20px;font-weight:700}
+.tslab.cr{font-weight:700}
+.tslab.sm{font-size:14px}
+.tslab.ts-sea-lab{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:17px}
+.ts-arrow line,.ts-arrow path{stroke:var(--typhoon);stroke-width:3;fill:none;stroke-linecap:round}
+.ts-arrow text{font-size:14.5px;fill:var(--typhoon);font-weight:700;paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ts-scale path{fill:none;stroke:var(--ink);stroke-width:1.5}
+.ts-scale text{font-size:14px;fill:var(--ink)}
+.ts-badge rect{fill:var(--surface);stroke:var(--line)}
+.ts-badge text{font-size:16px;font-weight:700;fill:var(--ink)}
+.sim-tabs{display:flex;gap:8px;margin-bottom:10px}
+.sim-tabs .chip[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#worldsim{width:100%;height:auto;display:block}
+.ws-bg{fill:var(--surface-2)}
+.ws-sphere{fill:var(--sea);stroke:var(--line)}
+.wslab{font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px;pointer-events:none}
+.wslab.ocn{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:16px}
+@media (max-width:640px){.wslab{font-size:20px;stroke-width:4px}.wslab.ocn{font-size:22px}}
+@media (max-width:640px){
+  .tslab{font-size:22px;stroke-width:4px}.tslab.big{font-size:27px}.tslab.sm{font-size:20px}.tslab.ts-sea-lab{font-size:22px}
+  .ts-arrow text{font-size:21px}.ts-scale text{font-size:20px}.ts-badge text{font-size:22px}
+}
+.home-link{display:block;color:inherit;text-decoration:none;border-radius:12px}
+.home-link .kicker::before{content:"⌂ 海佃地圖首頁 › ";color:var(--ink);font-weight:700}
+.home-link:hover h1,.home-link:focus-visible h1{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+</style>
+<style>
+.top .unit-link{font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15.5px;white-space:nowrap}
+.top .unit-link:hover{border-color:var(--ink)}
+.top .links{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.top .unit-link{white-space:normal}.top .links{align-items:flex-start}}
+/* rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:16.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+/* maps */
+.mapbox{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--sea);touch-action:none}
+.mapbox svg{display:block;width:100%;height:auto;max-height:80vh;cursor:grab}
+.mapbox svg:active{cursor:grabbing}
+.mapbox .zoomer{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
+.mapbox .zoomer button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:21px;font-weight:700;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.mapbox .zoomer button:hover{border-color:var(--ink)}
+.mapbox .mhint{position:absolute;left:10px;bottom:10px;font-size:13.5px;color:#10313b;background:#ffffffe0;border-radius:8px;padding:2px 8px;pointer-events:none}
+.mk{cursor:pointer;outline:none}
+.mk:focus-visible circle.dot{stroke:var(--ink);stroke-width:3.5}
+.mk circle.dot{stroke:#fff;stroke-width:2}
+.mk:hover circle.dot,.mk:focus-visible circle.dot{stroke:#10313b;stroke-width:3}
+.mk.sel circle.dot{stroke:#10313b;stroke-width:3.5}
+.mk .ring{fill:none;stroke:#ffd23f;stroke-width:4;opacity:0}
+.mk.sel .ring{opacity:1}
+.mk text,.mlabel{font-size:16px;font-weight:700;fill:#10313b;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.mlabel.soft{font-weight:500;fill:#3d5560;font-size:14px}
+.mlabel.sea{fill:#2a6f8f;font-style:italic;font-weight:500}
+.land{fill:var(--land);stroke:var(--land-ink);stroke-width:.6}
+.land.plain{stroke:none}
+.route{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.route.dash{stroke-dasharray:8 6}
+/* cards and layout */
+.duo{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.duo{grid-template-columns:minmax(0,1fr)}}
+.card h3{font-size:24px}
+.card .meta{font-size:15px;color:var(--muted);margin-top:2px}
+.card p{margin-top:8px}
+.card .k{display:block;font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:12px}
+.pill{display:inline-block;font-size:14px;font-weight:700;border-radius:999px;padding:1px 10px;color:#fff}
+.qbox{margin-top:12px;border-radius:12px;background:color-mix(in srgb,var(--plate) 14%,var(--surface));padding:10px 14px}
+.qbox b{display:block;font-size:14px;color:var(--muted);letter-spacing:.06em}
+.tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+.tabs button{border:0;background:none;font-weight:700;font-size:16px;padding:6px 14px;border-radius:999px;color:var(--muted)}
+.tabs button[aria-selected="true"],.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.bigbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:9px 18px;font-weight:700;font-size:16.5px;background:var(--ink);color:var(--paper)}
+.bigbtn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.bigbtn:disabled{opacity:.45;cursor:default}
+.hint-line{font-size:15px;color:var(--muted);margin-top:8px}
+/* quiz */
+.quiz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.qcard .qn{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.08em}
+.qcard h3{font-size:20px;margin-top:4px}
+.qopts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.qo{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-size:17px}
+.qo:hover:not(:disabled){border-color:var(--ink)}
+.qo.right{background:color-mix(in srgb,var(--leaf) 22%,var(--surface));border-color:var(--leaf)}
+.qo.wrong{background:color-mix(in srgb,var(--typhoon) 16%,var(--surface));border-color:var(--typhoon)}
+.qo.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qo.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qo.wrong{border-style:dashed}
+.qo:disabled{cursor:default}
+.qfb{margin-top:8px;font-size:16px}
+.qscore{font-family:var(--f-num);font-weight:600;margin-left:8px}
+/* timeline slider with visual */
+.tl{position:relative;margin-top:10px}
+.tl input[type=range]{width:100%;accent-color:var(--plate);height:30px}
+.sim-chart{width:100%;height:auto;display:block}
+.sim-chart .ax text{font-family:var(--f-num);font-size:13px;fill:var(--muted)}
+.sim-chart .ax line,.sim-chart .ax path{stroke:var(--line)}
+.toggles{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.toggles label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;cursor:pointer}
+.toggles input{width:20px;height:20px;margin-top:4px;flex:none}
+.toggles small{display:block;color:var(--muted);font-size:14px}
+.rangebox{margin-top:12px}
+.rangebox label{font-weight:700}
+.rangebox input{width:100%;height:30px}
+.rangebox .rv{font-family:var(--f-num);font-weight:600}
+.story{position:relative}
+.story-panel{min-height:9em}
+.story-nav{display:flex;gap:10px;align-items:center;margin-top:12px}
+.story-dots{display:flex;gap:6px}
+.story-dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.story-dots i.on{background:var(--ink)}
+</style>
+<style>
+#donut{display:block;width:100%;max-width:360px;margin:0 auto;height:auto}
+.now-duo{align-items:stretch}
+.now-l .big-line{margin-top:12px;text-align:center}
+.now-r{display:flex;flex-direction:column}
+.now-r .mix{flex:1}
+.now-r .stamp{margin-top:auto;padding-top:12px}
+.dl{font-size:19px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#0005;stroke-width:3px}
+.dc1{font-size:17px;fill:var(--muted)}
+.dc2{font-family:var(--f-num);font-size:46px;font-weight:600;fill:var(--ink)}
+.big-line{font-size:20px;line-height:1.6}
+.mix{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.mix .p{font-family:var(--f-num);font-weight:600;font-size:20px}
+.mix .m{font-family:var(--f-num);color:var(--muted);font-size:14.5px;text-align:right}
+.mix li.nuc{opacity:.6}
+.mix li.nuc .m{font-family:var(--f-body)}
+.stamp{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:14.5px;color:var(--muted)}
+.turb-row{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:16px;align-items:center}
+.turb-row svg{width:100%;height:auto;display:block}
+@media (max-width:520px){.turb-row{grid-template-columns:minmax(0,1fr)}.turb-row svg{max-width:240px;margin:0 auto}}
+.blades{transform-box:view-box}
+#turb .blades,#sunSvg .blades{transform-origin:0 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.why3 .blades{transform-origin:0 0}
+.gust{fill:none;stroke:#ffffffcc;stroke-width:3;stroke-linecap:round;stroke-dasharray:30 200;animation:gust 2s linear infinite}
+@keyframes gust{from{stroke-dashoffset:230}to{stroke-dashoffset:0}}
+.kpi b{font-family:var(--f-num);font-size:46px;font-weight:600;line-height:1}
+.kpi{font-size:18px}
+.kpi small{display:block;color:var(--muted);font-size:15px;margin-top:4px}
+.meter{height:14px;border-radius:7px;background:var(--surface-2);overflow:hidden;margin-top:10px}
+.meter i{display:block;height:100%;background:#009E73;border-radius:7px;transition:width .6s}
+.meter.sun i{background:#B8860B}
+.farms{display:grid;gap:5px;margin-top:8px}
+.farm{display:grid;grid-template-columns:7.5em minmax(0,1fr) 6.2em;gap:8px;align-items:center;font-size:14.5px}
+.fn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb{position:relative;height:12px}
+.fb i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.fb i.c{background:color-mix(in srgb,#009E73 22%,var(--surface))}
+.fb i.m{background:#009E73}
+.fv{font-family:var(--f-num);text-align:right;line-height:1.1}
+.fv em{display:block;font-style:normal;font-family:var(--f-body);font-size:11.5px;color:var(--typhoon)}
+.guess{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.guess button{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 18px;font-weight:700;font-size:17px}
+.guess button[aria-pressed="true"]{background:#009E73;color:#fff;border-color:#009E73}
+.why3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.why3>div{background:var(--surface-2);border-radius:12px;padding:8px;text-align:center}
+.why3 svg{width:64px;height:64px;display:block;margin:0 auto}
+.why3 b{display:block;margin-top:2px}
+.why3 span{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+.wz{font-size:16px;font-weight:700;fill:var(--muted)}.wz.red{fill:#d9462b}
+@media (max-width:520px){.why3{grid-template-columns:minmax(0,1fr)}}
+.axl{font-size:13px;fill:var(--muted)}.axl.big{font-size:18px}
+#area,#windCmp{margin-top:6px}
+.sim-leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:8px;font-size:15px;color:var(--muted)}
+.sim-leg span{display:inline-flex;align-items:center;gap:6px}
+.sim-leg i{display:inline-block}
+.sim-leg i{height:10px !important;width:16px !important;border-radius:3px}
+
+.grp-t{font-size:15px;font-weight:700;color:var(--muted);margin-top:12px}
+.grpbar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin-top:6px;background:var(--surface-2)}
+.gseg{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;min-width:3px}
+.g-f{background-image:repeating-linear-gradient(45deg,#ffffff22 0 4px,transparent 4px 9px)}
+.g-s{background-image:radial-gradient(#0005 1.4px,transparent 1.6px);background-size:7px 7px}
+.grp-note{display:flex;flex-direction:column;gap:2px;margin-top:6px;font-size:15.5px}
+.grp-note span{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.grp-note small{color:var(--muted);font-size:13.5px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px;flex:none;box-shadow:inset 0 0 0 1px #0003}
+.sw.dash{background:none !important;box-shadow:none;border-top:3px solid;height:0;width:18px;border-radius:0;vertical-align:4px}
+.mix li{list-style:none}
+.mix li>button,.mix li>div{width:100%;display:grid;grid-template-columns:20px minmax(0,1fr) auto 7.5em 14px;gap:8px;align-items:center;font-size:17px;padding:6px 4px;border:0;border-bottom:1px dashed var(--line);background:none;text-align:left;color:var(--ink);border-radius:8px}
+.mix li>button:hover,.mix li>button:focus-visible{background:var(--surface-2)}
+.mix .go{color:var(--muted);font-weight:700}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chipset button{display:inline-flex;align-items:center;border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-weight:700;font-size:15.5px;color:var(--ink)}
+.chipset button[aria-selected="true"]{border-color:var(--ink);background:var(--surface-2);box-shadow:inset 0 -3px 0 var(--ink)}
+.hist-stat{font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.chartbox{position:relative}
+.tip{position:fixed;z-index:60;max-width:300px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.18);pointer-events:none}
+.tip[hidden]{display:none}
+.tip table{border-collapse:collapse;margin-top:4px;font-size:14.5px}
+.tip td{padding:1px 6px 1px 0;white-space:nowrap}
+.tip td:nth-child(n+2){text-align:right;font-family:var(--f-num)}
+.tip small{color:var(--muted)}
+.seg{cursor:pointer;outline:none}
+.seg:focus-visible .fill{stroke:var(--ink);stroke-width:4}
+.dlab{font-size:14px;font-weight:700;fill:var(--ink)}
+.tz{font-size:17px;font-weight:700;fill:#10313b}
+#areaLeg button{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;font-size:14.5px;color:var(--ink)}
+#areaLeg button:hover{border-color:var(--ink)}
+.fv small{color:var(--muted);font-size:11.5px}
+.pwl{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.pwl.v4{opacity:1}
+.pwf{cursor:default}
+.pws{cursor:pointer}
+.pws:hover .cap,.pws:focus-visible .cap,.pws.on .cap{stroke:#1b1b1b !important;stroke-width:3.5px;stroke-dasharray:none}
+.pws:focus{outline:none}
+.pwn{font-size:13px;font-weight:700;fill:#1b1b1b;paint-order:stroke;stroke:#ffffffe6;stroke-width:3.5px;stroke-linejoin:round;pointer-events:none}
+.num{font-family:var(--f-num)}
+.pw-q{display:grid;gap:10px;margin-top:8px}
+.pwq{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center}
+.pwq .pwa{grid-column:1/-1;margin:2px 0 0;line-height:1.6}
+@media (max-width:560px){.pwq{grid-template-columns:minmax(0,1fr)}}
+#pwMap,#pwMap.leaflet-container{height:min(82vh,780px);min-height:440px;background:#0c1822;font:inherit}
+@media (max-width:560px){#pwMap{height:72vh;min-height:380px}}
+.pw-place{color:#b8c6d0;font-size:13px;font-weight:700;letter-spacing:.18em;white-space:nowrap;text-shadow:0 0 3px #0c1822,0 0 6px #0c1822;transform:translate(-50%,-50%);opacity:.85}
+.z-lo .pw-place:not(.isl){display:none}
+.pw-lab{position:relative}
+.pw-lab span{position:absolute;white-space:nowrap;color:#f3f6f8;font-size:12.5px;font-weight:700;text-shadow:0 0 3px #0c1822,0 0 3px #0c1822,0 0 6px #0c1822}
+.z-lo .pw-lab span{font-size:11px}
+.pw-ttl{background:#0c1822d9;color:#e9eef2;border:1px solid #2c3f4d;border-radius:12px;padding:6px 12px;display:flex;flex-direction:column;line-height:1.3}
+.pw-ttl b{font-size:16px;letter-spacing:.06em}.pw-ttl span{font-size:13px;color:#9fb4c4;font-family:var(--f-num)}
+.pw-isl{display:flex;flex-wrap:wrap;gap:6px}
+.pw-isl button{background:#0c1822e6;color:#e9eef2;border:1px solid #3a5163;border-radius:999px;padding:5px 12px;font-weight:700;font-size:14px;cursor:pointer}
+.pw-isl button:hover,.pw-isl button:focus-visible{border-color:#F2C14E;color:#fff}
+.pw-box .leaflet-bar a{background:#0c1822e6;color:#e9eef2;border-color:#3a5163;width:36px;height:36px;line-height:34px;font-size:20px}
+.pw-box .leaflet-bar a:hover{background:#1d3140}
+.pw-box .leaflet-control-attribution{background:#0c1822cc;color:#9fb4c4;font-size:11px}
+.pw-box .leaflet-control-attribution a{color:#cfe0ea}
+.pw-site{cursor:pointer}
+.pw-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:10px}
+.pw-bar .chipset button{gap:6px;padding:4px 11px;font-size:15px}
+.pw-bar .chipset button svg{background:#14232e;border-radius:4px}
+.pw-bar .chipset button[aria-pressed="false"]{opacity:.45}
+.pw-bar .chipset button[aria-pressed="false"] svg{filter:grayscale(1)}
+.pw-tog{display:flex;flex-wrap:wrap;gap:6px}
+.pw-tog label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:15px;font-weight:700;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 8px}
+.pw-tog input{width:17px;height:17px;accent-color:#0c1822;margin:0}
+.pw-box{position:relative;border-radius:18px 18px 0 0;overflow:hidden;background:#0c1822;box-shadow:0 10px 30px rgba(8,20,30,.22)}
+#pwMap,#pwMap.leaflet-container{height:min(80vh,760px);min-height:520px;background:#0c1822;font:inherit}
+/* the info panel */
+.pw-panel{--pt:#e9eef2;--pm:#9fb4c4;--pl:#24394a;color:var(--pt);background:#0f1e29f2;font-size:15px;line-height:1.5}
+@media (min-width:980px){.pw-panel{position:absolute;z-index:800;top:12px;right:12px;bottom:28px;width:360px;overflow:auto;border:1px solid #2c4253;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.4);backdrop-filter:blur(6px);scrollbar-width:thin;scrollbar-color:#35506a transparent}}
+@media (max-width:979.98px){.pw-panel{border-top:1px solid #2c4253}#pwMap,#pwMap.leaflet-container{height:62vh;min-height:400px}}
+.pp-pad{padding:16px 18px 18px}
+.pp-eye{font-family:var(--f-num);font-size:13px;color:#F2C14E;letter-spacing:.08em}
+.pp-h{font-size:20px;line-height:1.35;margin:2px 0 12px;color:var(--pt)}
+.pp-stats{display:grid;grid-template-columns:1.25fr 1fr;gap:8px}
+.pp-stats div{background:#162a38;border-radius:12px;padding:8px 12px}
+.pp-stats b{display:block;font-size:28px;font-weight:600;line-height:1.1;color:#fff}
+.pp-stats b small{font-size:16px;margin-left:2px}
+.pp-stats span{font-size:12.5px;color:var(--pm)}
+.pp-wait{background:#1d3140;border-left:3px solid #F2C14E;border-radius:8px;padding:6px 10px;margin:12px 0 0;font-size:14px;color:#d7e2ea}
+.pp-sec{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:16px 0 6px;padding-top:12px;border-top:1px solid var(--pl)}
+.pp-sec span{font-weight:700;font-size:15px}
+.pp-sec small{font-size:12.5px;color:var(--pm)}
+.pp-rank{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.pp-rank[hidden]{display:none}
+.pp-rank button{width:100%;display:grid;grid-template-columns:18px minmax(0,1fr) auto;grid-template-areas:"s n v" ". b b";gap:3px 8px;align-items:center;background:none;border:0;border-radius:10px;padding:6px 8px;color:var(--pt);text-align:left;cursor:pointer;font:inherit}
+.pp-rank button:hover,.pp-rank button:focus-visible{background:#1a2f3e;outline:none}
+.pp-rank button:focus-visible{box-shadow:0 0 0 2px #F2C14E}
+.pp-rank svg{grid-area:s}.pp-rank .nm{grid-area:n;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}
+.pp-rank .v{grid-area:v;font-size:15px;font-weight:600}.pp-rank .bar{grid-area:b}
+.pw-panel .bar{display:block;height:6px;border-radius:3px;background:var(--pl);overflow:hidden}
+.pw-panel .bar b{display:block;height:100%;border-radius:3px}
+.pp-more{display:block;width:100%;margin-top:4px;background:#162a38;border:1px solid var(--pl);color:var(--pt);border-radius:10px;padding:6px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.pp-more:hover{border-color:#F2C14E}
+.pp-loose{margin-top:14px;border-top:1px solid var(--pl);padding-top:10px}
+.pp-loose summary{display:flex;justify-content:space-between;cursor:pointer;font-weight:700;list-style:none}
+.pp-loose summary::-webkit-details-marker{display:none}
+.pp-loose summary span::before{content:'▸ ';color:var(--pm)}
+.pp-loose[open] summary span::before{content:'▾ '}
+.pp-loose p{font-size:13.5px;color:var(--pm);margin:6px 0}
+.pp-loose .pl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;font-size:14px;margin-top:6px}
+.pp-loose .pl .bar{grid-column:1/-1}
+.pp-unit{font-size:12.5px;color:var(--pm);margin:14px 0 0}
+.pp-top{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#0f1e29;border-bottom:1px solid var(--pl)}
+.pp-back,.pp-x{background:#162a38;border:1px solid var(--pl);color:var(--pt);border-radius:999px;padding:5px 12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.pp-x{width:34px;height:34px;padding:0;font-size:15px}
+.pp-back:hover,.pp-x:hover{border-color:#F2C14E}
+.pp-tags{display:flex;flex-wrap:wrap;gap:6px}
+.pp-tag{display:inline-flex;align-items:center;gap:5px;background:#162a38;border-radius:999px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700}
+.pp-tag.ghost{background:none;border:1px dashed #5f7a8e;color:var(--pm);padding-left:10px}
+.pp-name{font-size:24px;line-height:1.25;margin:8px 0 4px;color:#fff}
+.pp-desc{font-size:14px;color:#c3d1db;margin:0}
+.pp-g{position:relative;margin:12px auto 0;max-width:250px}
+.pw-gauge{display:block;width:100%;height:auto}
+.pp-gv{position:absolute;left:0;right:0;bottom:2px;text-align:center}
+.pp-gv b{display:block;font-size:36px;font-weight:600;line-height:1;color:#fff}
+.pp-gv span{font-size:12.5px;color:var(--pm)}
+.pp-gl{display:flex;justify-content:space-between;align-items:baseline;max-width:270px;margin:2px auto 0;font-size:12px;color:var(--pm)}
+.pp-gl .mid{font-size:13.5px;color:#d7e2ea;text-align:center}
+.pp-eq{text-align:center;font-size:14px;color:#d7e2ea;background:#162a38;border-radius:10px;padding:6px 10px;margin:10px 0 0}
+.pp-sum{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.st{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:1px 9px 1px 5px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.st i{font-style:normal;display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;font-size:9.5px;background:#0006}
+.st.run{background:#0b5e48;color:#e6fff7}.st.idle{background:#33495a;color:#dfe8ee}.st.fix{background:#7a5200;color:#fff4dd}
+.st.cut{background:#1f4f78;color:#e5f2ff}.st.bad{background:#8a2d12;color:#ffe9e2}.st.test{background:#5b2f63;color:#fbe9ff}
+.pp-units{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.pp-units li{display:grid;gap:4px}
+.pp-units .ur{display:grid;grid-template-columns:minmax(0,1fr) auto 7.2em;align-items:center;gap:8px}
+.pp-units .un{font-weight:700;font-size:14.5px}
+.pp-units .uv{text-align:right;font-size:14px;font-weight:600}
+.pp-units .uv small{color:var(--pm);font-weight:400;font-size:12px}
+.pp-units .ux{color:var(--pm);font-size:12.5px;line-height:1.4}
+.pp-units .un{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-one{display:flex;gap:8px;align-items:center;margin:12px 0 0;font-size:14px;color:#c3d1db}
+/* hover labels */
+.leaflet-tooltip.pw-tt{width:max-content;max-width:230px;white-space:normal;background:#0f1e29f2;color:#e9eef2;border:1px solid #35506a;border-radius:10px;padding:6px 10px;font-size:14px;line-height:1.45;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.leaflet-tooltip.pw-tt b{display:block;font-size:14.5px}
+.leaflet-tooltip.pw-tt span{display:block;color:#b8c8d4;font-size:13px}
+.leaflet-tooltip.pw-tt span b{display:inline;color:#fff}
+.leaflet-tooltip-top.pw-tt::before{border-top-color:#35506a}
+/* legend strip under the map */
+.pw-leg{background:#0f1e29;color:#d7e2ea;border-radius:0 0 18px 18px;border-top:1px solid #2c4253;padding:12px 16px 14px;display:grid;grid-template-columns:1.1fr 1.6fr 1fr;gap:10px 22px;font-size:13.5px}
+.pw-leg .lg-grp{display:flex;flex-wrap:wrap;gap:4px 12px;align-content:flex-start}
+.pw-leg .lg-grp b{flex-basis:100%;font-size:12.5px;color:#9fb4c4;letter-spacing:.06em}
+.pw-leg .li{display:inline-flex;align-items:center;gap:6px}
+.pw-leg .lg-note{grid-column:1/-1;margin:0;font-size:12.5px;color:#9fb4c4}
+@media (max-width:820px){.pw-leg{grid-template-columns:minmax(0,1fr)}}
+.pw-site{cursor:pointer}
+.pp-fuel{display:flex;align-items:center;gap:6px;margin:14px 0 8px;padding:5px 10px;background:#162a38;border-radius:10px;font-size:14px}
+.pp-fuel b{font-size:14.5px}.pp-fuel span{margin-left:auto;color:var(--pm);font-size:12.5px}.pp-fuel span b{color:#fff;font-size:13.5px}
+.pp-units .un svg{vertical-align:-1px;margin-right:5px}
+.pw-panel{overflow-x:hidden;min-width:0;max-width:100%}
+.pp-units .ur>*{min-width:0}
+@media (max-width:420px){.pp-units .ur{grid-template-columns:minmax(0,1fr) auto 6.4em}.pp-units .uv{font-size:13px}.st{font-size:12px;padding-right:7px}}
+.pp-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.pp-split div{border-radius:12px;padding:6px 12px;display:flex;align-items:baseline;gap:6px}
+.pp-split .on{background:#0b5e48}.pp-split .off{background:#22333f;color:#c3d1db}
+.pp-split b{font-size:24px;font-weight:600;color:#fff}.pp-split span{font-size:13px}
+.pp-grp{margin-top:12px}.pp-grp:first-of-type{margin-top:10px}
+.pp-grp .pp-fuel{margin:0 0 8px}
+.pp-grp.zero .pp-fuel{background:none;border:1px dashed var(--pl);color:#c3d1db}
+.pp-offs{margin-top:8px;display:grid;gap:5px;padding:8px 10px;border-radius:10px;background:#0b1721;border:1px solid #1d3140}
+.pp-grp.zero .pp-offs{margin-top:0}
+.pp-offh{font-size:12.5px;color:var(--pm)}
+.pp-off{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:baseline;font-size:13.5px;color:#c3d1db}
+.pp-off .st{justify-self:start}.pp-off .ns{line-height:1.5}
+.pp-notes{margin:14px 0 0;padding:10px 12px;border-radius:10px;background:#162a38;display:grid;gap:6px}
+.pp-notes div{display:grid;gap:0}
+.pp-notes dt{font-weight:700;font-size:13.5px;color:#fff}.pp-notes dd{margin:0;font-size:13px;color:#c3d1db;line-height:1.45}
+.pp-units .ur{grid-template-columns:minmax(0,1fr) auto auto}
+.pp-offh{font-size:12.5px;color:var(--pm);margin-bottom:2px}
+.pp-offr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;border-top:1px dashed #1d3140;font-size:14px;color:#c3d1db}
+.pp-offh+.pp-offr{border-top:0}
+.pp-offr .un{font-weight:700;color:#dfe8ee}
+.pp-loc{font-size:14px;color:#c3d1db;margin:0 0 4px}
+.pp-cap{margin-top:12px;background:#162a38;border-radius:12px;padding:10px 14px;display:flex;align-items:baseline;gap:8px}
+.pp-cap b{font-size:32px;font-weight:600;color:#fff;line-height:1}.pp-cap span{font-size:13px;color:var(--pm)}
+.pp-dim{font-size:13.5px;color:var(--pm);margin:12px 0 0}
+.pp-how{margin-top:14px;padding:12px 14px;border-radius:12px;background:#0b1721;border:1px solid #1d3140}
+.pp-how b{font-size:15px;color:#fff}.pp-how p{margin:6px 0 0;font-size:14px;color:#c3d1db;line-height:1.6}
+.pp-link{display:grid;gap:2px;width:100%;margin-top:12px;text-align:left;background:#0b5e48;border:0;border-radius:12px;padding:10px 14px;color:#e6fff7;font:inherit;cursor:pointer}
+.pp-link span{font-size:12.5px;opacity:.85}.pp-link>b{font-size:17px}.pp-link em{font-style:normal;font-size:13.5px}.pp-link em b{font-size:15px}
+.pp-link:hover,.pp-link:focus-visible{outline:2px solid #F2C14E}
+
+</style>
+<style>
+.gn-bar{margin-bottom:10px}
+.gn-bar .tabs button{font-size:15.5px}
+.gn-box{position:relative;border-radius:18px 18px 0 0;overflow:hidden;background:#0c1822;box-shadow:0 10px 30px rgba(8,20,30,.22)}
+#gnMap,#gnMap.leaflet-container{height:min(80vh,760px);min-height:520px;background:#0c1822;font:inherit}
+.gn-cv{position:absolute;top:0;left:0;pointer-events:none}
+.gn-box .leaflet-bar a{background:#0c1822e6;color:#e9eef2;border-color:#3a5163;width:36px;height:36px;line-height:34px;font-size:20px}
+.gn-box .leaflet-control-attribution{background:#0c1822cc;color:#9fb4c4;font-size:11px}
+@media (min-width:980px){.gn-panel{position:absolute;z-index:800;top:12px;right:12px;bottom:28px;width:350px;overflow:auto;border:1px solid #2c4253;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.4)}}
+@media (max-width:979.98px){#gnMap,#gnMap.leaflet-container{height:62vh;min-height:400px}.gn-panel{border-top:1px solid #2c4253}}
+.gn-play{position:absolute;z-index:810;left:12px;bottom:28px;display:flex;align-items:center;gap:12px;background:#0c1822e6;border:1px solid #2c4253;border-radius:14px;padding:8px 14px;color:#e9eef2;width:min(520px,calc(100% - 24px))}
+@media (min-width:980px){.gn-play{width:min(520px,calc(100% - 400px))}}
+@media (max-width:979.98px){.gn-play{bottom:auto;top:auto;position:absolute;bottom:12px}}
+.gp-btn{width:44px;height:44px;border-radius:50%;border:0;background:#F2C14E;color:#0c1822;font-size:18px;font-weight:700;cursor:pointer;flex:none}
+.gp-t{flex:1;display:grid;gap:2px;min-width:0}.gp-t b{font-size:17px}
+.gp-t input{width:100%;accent-color:#F2C14E}
+.gp-x{font-size:13px;display:grid;gap:2px;color:#9fb4c4}.gp-x select{font:inherit;font-size:14px;background:#162a38;color:#e9eef2;border:1px solid #3a5163;border-radius:8px;padding:3px 4px}
+.gn-flash{position:absolute;z-index:820;left:50%;top:14px;transform:translateX(-50%);background:#F4F7FA;color:#0c1822;border-radius:999px;padding:6px 16px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.4);white-space:nowrap;max-width:calc(100% - 140px);overflow:hidden;text-overflow:ellipsis}
+@media (min-width:980px){.gn-flash{left:calc(50% - 180px)}}
+.gc{width:40px;height:40px;flex:none}
+.gn-reg button{grid-template-columns:40px minmax(0,1fr) auto;grid-template-areas:"s n v"}
+.gn-reg .bar{display:none}
+.gn-sp{display:flex;align-items:center;gap:14px;margin-top:12px;background:#162a38;border-radius:12px;padding:10px 14px}
+.gn-sp .gc{width:64px;height:64px}
+.gn-sp b{font-size:36px;font-weight:600;color:#fff;line-height:1}.gn-sp span{font-size:13px;color:#9fb4c4;margin-left:4px}
+.gn-sp em{display:block;font-style:normal;font-size:16px;font-weight:700;color:#F2C14E;margin-top:2px}
+.gn-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.gn-two div{background:#0b1721;border:1px solid #1d3140;border-radius:10px;padding:6px 10px}
+.gn-two span{display:block;font-size:12px;color:#9fb4c4}.gn-two b{font-size:14px;color:#e9eef2}
+.gn-ch{width:100%;height:auto;display:block;color:#9fb4c4}
+.gn-ch .ax text{fill:#9fb4c4;font-size:10px}.gn-ch .ax path,.gn-ch .ax line{stroke:#35506a}
+.gn-evs{display:grid;gap:6px;margin-top:8px}
+.gn-evs div{background:#0b1721;border-left:3px solid #F2C14E;border-radius:6px;padding:5px 10px;font-size:13px}
+.gn-evs span{display:block;color:#9fb4c4}.gn-evs b{color:#fff}
+.gn-pb{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.gn-pb .bigbtn{font-size:14px;padding:6px 12px}
+.gq{font-size:15px;grid-area:s}
+.gq-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.gq-b{display:grid;text-align:left;background:#162a38;border:1px solid #2c4253;border-radius:10px;padding:6px 10px;color:#9fb4c4;font:inherit;font-size:12px;cursor:pointer}
+.gq-b b{color:#e9eef2;font-size:14px}.gq-b small{color:#F2C14E;font-size:12px}
+.gq-b[aria-pressed="true"]{border-color:#F2C14E;background:#22384a}
+.gn-leg{grid-template-columns:1.4fr 1fr}
+@media (max-width:820px){.gn-leg{grid-template-columns:minmax(0,1fr)}}
+.gn-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.gn-how{grid-template-columns:minmax(0,1fr)}}
+.gh{position:relative}.gh svg{width:100%;max-width:220px;height:auto;display:block;margin:4px auto 6px}
+.gh h3{font-size:18px;margin:4px 0}.gh p{margin:0;line-height:1.65}
+.gh-n{position:absolute;top:12px;left:12px;width:30px;height:30px;border-radius:50%;background:#0072B2;color:#fff;display:grid;place-items:center;font-weight:700}
+.gn-read{margin-top:14px}.gn-read h3{margin:0 0 6px;font-size:19px}
+.gn-read2{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;align-items:center}
+.gn-read2 svg{width:100%;height:auto;background:#14232e;border-radius:12px}
+.gn-read2 ul{margin:0;padding-left:20px;line-height:1.8}
+@media (max-width:600px){.gn-read2{grid-template-columns:minmax(0,1fr)}}
+.gn-pair{margin-top:12px;align-items:start}
+.gp-sel{display:flex;flex-wrap:wrap;align-items:end;gap:10px}
+.gp-sel label{display:grid;gap:4px;font-weight:700;font-size:14px;flex:1;min-width:150px}
+.gp-sel select{font:inherit;font-size:15.5px;padding:7px 8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.gp-sel>span{font-size:22px;padding-bottom:6px}
+.gp-big{margin:14px 0 8px;border-radius:14px;padding:12px 16px;display:grid;gap:2px}
+.gp-big span{font-size:14px}.gp-big b{font-size:28px;line-height:1.2}
+.gp-big.cl{background:#E6F4EF;color:#00573F}.gp-big.fa{background:#FDF0E2;color:#8A4B00}
+#pairPre button{font-size:15px}
+#pairChart{color:var(--ink)}
+.pw-place{color:#b8c6d0;font-size:13px;font-weight:700;letter-spacing:.18em;white-space:nowrap;text-shadow:0 0 3px #0c1822,0 0 6px #0c1822;transform:translate(-50%,-50%);opacity:.85}
+.gn-play[hidden],.gn-flash[hidden]{display:none}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<header class="top">
+  <div class="wrap">
+    <div>
+      <div class="kicker">五年級社會 · 第二單元補充 · 真實觀測資料</div>
+      <h1>臺灣每年都在<span class="accent">移動</span>！</h1>
+      <p class="lede">臺灣各地有 300 多個衛星定位（GNSS）測站，每天量一次自己在哪裡。把 15 年的紀錄排在一起，就能看到菲律賓海板塊怎麼推著臺灣跑，也能看到大地震那一瞬間，地面一下子跳了多遠。</p>
+    </div>
+    <div class="links">
+      <a class="unit-link" href="https://geo.twranger.com/#plates">← 回到「全球板塊與地震」</a>
+      <a class="unit-link" href="https://geo.twranger.com/#landform">臺灣島的五大地形 →</a>
+    </div>
+  </div>
+</header>
+
+<nav class="rail" aria-label="段落">
+  <div class="wrap" id="rail">
+    <a href="#move"><span class="dot" style="background:#E69F00"></span>臺灣往哪裡移動</a>
+    <a href="#how"><span class="dot" style="background:#0072B2"></span>怎麼量出來的</a>
+    <a href="#pair"><span class="dot" style="background:#009E73"></span>兩地越來越近</a>
+    <a href="#ask"><span class="dot" style="background:#CC79A7"></span>看地圖，找答案</a>
+  </div>
+</nav>
+
+<main>
+<section class="unit" id="move">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#B86E00">動</div>
+      <h2>臺灣各地往哪裡移動？ <span class="page-ref">課本 p.42</span></h2>
+      <p class="sub">每一個點都是一個測站。以<b>澎湖白沙</b>的測站當作「不動的參考點」，看看臺灣其他地方一年移動多少、往哪個方向。點一下測站，可以看它 15 年來的移動紀錄。</p>
+    </div>
+    <div class="gn-bar">
+      <div class="tabs" id="gnMode" role="tablist" aria-label="地圖要看什麼">
+        <button role="tab" data-m="h" aria-selected="true">➜ 往哪裡移動</button>
+        <button role="tab" data-m="v" aria-selected="false">▲▼ 上升或下沉</button>
+        <button role="tab" data-m="a" aria-selected="false">▶ 15 年快轉</button>
+        <button role="tab" data-m="q" aria-selected="false">⚡ 地震瞬間</button>
+      </div>
+    </div>
+    <div class="gn-box" id="gnBox">
+      <div id="gnMap" role="region" aria-label="臺灣 GNSS 測站移動地圖（可以拖曳、縮放）"></div>
+      <div class="gn-play" id="gnPlay" hidden>
+        <button class="gp-btn" id="gpBtn" aria-label="播放">▶</button>
+        <div class="gp-t"><b id="gpYear" class="num">2010</b><input type="range" id="gpRange" min="0" max="179" value="0" aria-label="年份"></div>
+        <label class="gp-x">放大<select id="gpX"><option value="10000">1 萬倍</option><option value="20000" selected>2 萬倍</option><option value="40000">4 萬倍</option></select></label>
+      </div>
+      <div class="gn-flash" id="gnFlash" hidden></div>
+      <aside class="pw-panel gn-panel" id="gnCard" aria-live="polite" aria-label="測站資訊"></aside>
+    </div>
+    <div class="pw-leg gn-leg" id="gnLeg"></div>
+  </div>
+</section>
+
+<section class="unit" id="how">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#0072B2">量</div>
+      <h2>一年只動幾公分，怎麼量得出來？</h2>
+      <p class="sub">就像量一個人走了多遠：先記下他一開始站在哪裡，過一段時間再看他在哪裡，兩個位置相減就知道了。</p>
+    </div>
+    <div class="gn-how">
+      <div class="panel pad gh"><div class="gh-n">1</div><svg viewBox="0 0 160 110" aria-hidden="true"><circle cx="30" cy="22" r="9" fill="#56B4E9"/><circle cx="80" cy="12" r="9" fill="#56B4E9"/><circle cx="130" cy="22" r="9" fill="#56B4E9"/><path d="M30 31 L80 92 M80 21 L80 92 M130 31 L80 92" stroke="#56B4E9" stroke-dasharray="4 4" stroke-width="2"/><path d="M68 92 h24 l-4 -12 h-16z" fill="#5E5E5E"/><path d="M80 80 v-10" stroke="#5E5E5E" stroke-width="3"/><circle cx="80" cy="68" r="5" fill="#E69F00"/></svg>
+        <h3>接收很多顆衛星的訊號</h3><p>測站的天線同時收到好幾顆衛星的訊號，算出每顆衛星離它多遠，就能知道自己的位置。</p></div>
+      <div class="panel pad gh"><div class="gh-n">2</div><svg viewBox="0 0 160 110" aria-hidden="true"><rect x="10" y="20" width="140" height="70" rx="8" fill="#f3efe6" stroke="#cfc6b4"/><g fill="#0072B2"><circle cx="30" cy="70" r="3"/><circle cx="42" cy="66" r="3"/><circle cx="54" cy="63" r="3"/><circle cx="66" cy="60" r="3"/><circle cx="78" cy="55" r="3"/><circle cx="90" cy="52" r="3"/><circle cx="102" cy="48" r="3"/><circle cx="114" cy="44" r="3"/><circle cx="126" cy="40" r="3"/><circle cx="138" cy="36" r="3"/></g></svg>
+        <h3>每天量一次，量好多年</h3><p>一天之內的誤差大約幾毫米。每天都量，連續量好幾年，就能看出位置慢慢地、穩穩地往同一個方向移。</p></div>
+      <div class="panel pad gh"><div class="gh-n">3</div><svg viewBox="0 0 160 110" aria-hidden="true"><circle cx="34" cy="60" r="10" fill="#fff" stroke="#5E5E5E" stroke-width="3"/><text x="34" y="92" text-anchor="middle" font-size="12" fill="#5E5E5E">澎湖</text><circle cx="126" cy="60" r="10" fill="#E69F00"/><path d="M118 52 L92 30" stroke="#D55E00" stroke-width="5" stroke-linecap="round"/><path d="M86 25 l12 2 l-6 10z" fill="#D55E00"/><text x="126" y="92" text-anchor="middle" font-size="12" fill="#5E5E5E">蘭嶼</text></svg>
+        <h3>和參考點比一比</h3><p>整個地球的板塊都在動，所以要選一個點當基準。澎湖在歐亞板塊比較穩定的地方，科學家常用澎湖白沙的測站當作「不動的點」。</p></div>
+    </div>
+    <div class="panel pad gn-read">
+      <h3>怎麼看箭頭？</h3>
+      <div class="gn-read2"><svg viewBox="0 0 220 70" aria-hidden="true"><circle cx="190" cy="40" r="6" fill="#fff" stroke="#14232e" stroke-width="2"/><path d="M190 40 L60 20" stroke="#D55E00" stroke-width="4"/><path d="M48 18 l16 -6 l-2 14z" fill="#D55E00"/></svg>
+        <ul><li><b>箭頭的尾巴</b>是測站的位置。</li><li><b>箭頭指的方向</b>是它每年移動的方向。</li><li><b>箭頭越長</b>，代表一年移動得越多。地圖右下角有比例尺。</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="pair">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#007A5A">近</div>
+      <h2>兩個地方越來越近，還是越來越遠？</h2>
+      <p class="sub">板塊互相推擠，兩地之間的距離就會改變。選兩個測站，看看它們每年靠近（或遠離）多少。也可以在上面的地圖點測站，再按卡片上的「拿來比一比」。</p>
+    </div>
+    <div class="chipset" id="pairPre" aria-label="常用的兩個地點"></div>
+    <div class="duo gn-pair">
+      <div class="panel pad">
+        <div class="gp-sel"><label>測站 A<select id="pairA"></select></label><span aria-hidden="true">↔</span><label>測站 B<select id="pairB"></select></label></div>
+        <div id="pairOut" aria-live="polite"></div>
+      </div>
+      <div class="panel pad"><h3 style="font-size:18px;margin:0 0 6px">兩地的距離，15 年來怎麼變？</h3><div class="chartbox"><svg id="pairChart" class="sim-chart" role="img" aria-label="兩個測站之間距離的變化"></svg></div><p class="note" id="pairNote"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="ask">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#A2507F">問</div>
+      <h2>看地圖，找答案</h2>
+      <p class="sub">先自己在地圖上找找看，再按「在地圖上看答案」。</p>
+    </div>
+    <div class="panel pad"><div class="pw-q" id="gnQ"></div></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>資料來源：Tung, H. 等人（中央研究院地球科學研究所），〈A 2010–2024 continuous GNSS dataset for Taiwan〉，<i>Scientific Data</i>（2026），<a href="https://doi.org/10.1038/s41597-026-07876-y">doi:10.1038/s41597-026-07876-y</a>；資料檔：<a href="https://doi.org/10.5281/zenodo.23551543">Zenodo 23551543</a>，以 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh-hant">CC BY 4.0</a> 授權。測站由中央氣象署、內政部、經濟部水利署、中研院地球所等單位設置。</p>
+    <p>本頁的計算方式：用每個測站扣掉儀器更換跳動後的每日位置，以「直線＋每年季節變化」求出每年的移動速度，再減去澎湖白沙 S01R 測站的速度。地震瞬間的跳動，是用原始資料和修正後資料的差，在資料集列出的地震日期前後比較求得，和政府單位公布的數值可能有一到兩成的差異（例如池上地震的跳動也包含前一天關山地震）。地圖上的動畫把移動距離放大了上萬倍，真實的移動用眼睛看不出來。</p>
+    <p>縣市界線：內政部（taiwan-atlas 整理）；地形陰影：AWS 開放資料 Terrain Tiles。</p>
+    <p class="credit">海佃地圖 ｜ Haidian Hidden Library ｜ 2026</p>
+  </div>
+</footer>
+<div class="tip" id="tip" role="status" aria-live="polite" hidden></div>
+<script>
+(function(){const H='https://geo.twranger.com/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
+  const a=document.createElement('a');a.href=H;a.className='home-link';a.setAttribute('aria-label','回到海佃地圖首頁：'+h.textContent);k.parentNode.insertBefore(a,k);a.appendChild(k);a.appendChild(h);})();
+/* shared helpers for the unit pages */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* Taiwan relief map in an SVG. opts.crop=[lon0,lon1,lat0,lat1] picks the visible area.
+   Returns {svg,g,P,k} where P(lon,lat)->[x,y] in map units and k() is the current zoom. */
+function reliefMap(svgSel,opts={}){
+  const R=opts.relief||RELIEF.tw,kx=Math.cos(23.6*Math.PI/180),cell=(R.lon1-R.lon0)/R.w;
+  const P=(lon,lat)=>[(lon-R.lon0)/cell*kx,(R.lat1-lat)/cell];
+  const c=opts.crop||[R.lon0,R.lon1,R.lat0,R.lat1];const a=P(c[0],c[3]),b=P(c[1],c[2]);
+  const VW=b[0]-a[0],VH=b[1]-a[1];
+  const svg=d3.select(svgSel).attr('viewBox',`0 0 ${VW} ${VH}`);
+  svg.append('rect').attr('width',VW).attr('height',VH).attr('fill','var(--sea)');
+  const g=svg.append('g'),inner=g.append('g').attr('transform',`translate(${-a[0]},${-a[1]})`);
+  const img=inner.append('image').attr('href',opts.src||R.src).attr('x',0).attr('y',0).attr('width',R.w*kx).attr('height',R.h).attr('preserveAspectRatio','none');
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||8]).translateExtent([[0,0],[VW,VH]]).extent([[0,0],[VW,VH]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();opts.onZoom&&opts.onZoom(K);});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/VW,r.height/VH);upd();opts.onZoom&&opts.onZoom(K);}}).observe(svg.node());
+  const api={svg,g:inner,P,k:()=>K,s:()=>S,VW,VH,img,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),
+    home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    flyTo:(lon,lat,k)=>{const p=P(lon,lat);svg.transition().duration(700).call(z.transform,d3.zoomIdentity.translate(VW/2,VH/2).scale(k).translate(-(p[0]-a[0]),-(p[1]-a[1])));},
+    // a group that stays the same size on screen while zooming
+    pin:(lon,lat)=>{const p=P(lon,lat);return inner.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);}};
+  return api;}
+function zoomButtons(box,api){const z=document.createElement('div');z.className='zoomer';
+  z.innerHTML='<button aria-label="放大">＋</button><button aria-label="縮小">－</button><button aria-label="回到整張地圖">⤢</button>';
+  const [i,o,h]=z.querySelectorAll('button');i.onclick=api.zoomIn;o.onclick=api.zoomOut;h.onclick=api.home;box.appendChild(z);}
+
+/* flat map (world or East Asia) with land shapes from LANDS */
+function flatMap(svgSel,feats,proj,opts={}){
+  const svg=d3.select(svgSel);const W=+svg.attr('data-w'),H=+svg.attr('data-h');svg.attr('viewBox',`0 0 ${W} ${H}`);
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','var(--sea)');
+  const g=svg.append('g');const path=d3.geoPath(proj);
+  g.append('g').selectAll('path').data(feats).join('path').attr('class','land plain').attr('d',path);
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||6]).translateExtent([[0,0],[W,H]]).extent([[0,0],[W,H]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/W,r.height/H);upd();}}).observe(svg.node());
+  return {svg,g,path,proj,W,H,k:()=>K,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    pin:(lon,lat)=>{const p=proj([lon,lat]);return g.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);},sc:()=>K*S/Math.min(1,Math.max(S,0.72))};}
+
+/* map marker: coloured dot + label that stays readable when zoomed */
+function marker(api,lon,lat,o){const m=api.pin(lon,lat).attr('class','zs mk').attr('tabindex',0).attr('role','button').attr('aria-label',o.label);
+  m.append('circle').attr('class','ring').attr('r',(o.r||9)+5);
+  m.append('circle').attr('class','dot').attr('r',o.r||9).attr('fill',o.color||'var(--typhoon)');
+  if(o.text!==false){const t=m.append('text').text(o.label).attr('dy',5);
+    if(o.side==='l')t.attr('x',-(o.r||9)-6).attr('text-anchor','end');else if(o.side==='t')t.attr('y',-(o.r||9)-8).attr('dy',0).attr('text-anchor','middle');else if(o.side==='b')t.attr('y',(o.r||9)+18).attr('dy',0).attr('text-anchor','middle');else t.attr('x',(o.r||9)+6);}
+  if(o.onClick){m.on('click',o.onClick);m.on('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();o.onClick(e);}});}
+  return m;}
+
+/* quiz */
+function quiz(box,scoreEl,QZ){const st={};
+  const draw=()=>{box.innerHTML=QZ.map((z,i)=>`<div class="panel pad qcard" data-q="${i}"><div class="qn">第 ${i+1} 題</div><h3>${z.q}</h3><div class="qopts">${z.o.map((o,j)=>`<button class="qo" data-j="${j}">${o}</button>`).join('')}</div><div class="qfb"></div></div>`).join('');score();};
+  const score=()=>{const n=Object.keys(st).length,c=Object.values(st).filter(Boolean).length;scoreEl.textContent=n?`答對 ${c} / ${QZ.length}`:'';};
+  box.addEventListener('click',e=>{const b=e.target.closest('.qo');if(!b)return;const card=b.closest('.qcard'),i=+card.dataset.q;if(i in st)return;const j=+b.dataset.j,ok=j===QZ[i].a;st[i]=ok;
+    card.querySelectorAll('.qo').forEach((x,k)=>{if(k===QZ[i].a)x.classList.add('right');else if(k===j)x.classList.add('wrong');x.disabled=true;});
+    card.querySelector('.qfb').innerHTML=(ok?'<b style="color:var(--leaf)">答對了！</b> ':'<b style="color:var(--typhoon)">再想想。</b> ')+QZ[i].e;score();});
+  draw();return ()=>{for(const k in st)delete st[k];draw();};}
+
+/* rail highlight */
+function railSpy(){const links=$$('#rail a'),secs=$$('section.unit');
+  const set=()=>{const mid=innerHeight*0.35;let cur=null;secs.forEach(x=>{const r=x.getBoundingClientRect();if(r.top<=mid&&r.bottom>mid)cur=x;});links.forEach(a=>a.classList.toggle('on',!!cur&&a.getAttribute('href')==='#'+cur.id));};
+  addEventListener('scroll',()=>requestAnimationFrame(set),{passive:true});set();}
+
+/* small line chart for simulations */
+function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w||640,H=opt.h||260,M={l:46,r:30,t:18,b:30};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const x=d3.scaleLinear().domain(opt.x).range([M.l,W-M.r]),y=d3.scaleLinear().domain(opt.y).range([H-M.b,M.t]);
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).ticks(opt.xt||6).tickFormat(opt.xf||(d=>d)));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5));
+  series.forEach(s=>{svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1]))(s.pts)).attr('fill','none').attr('stroke',s.color).attr('stroke-width',3).attr('stroke-dasharray',s.dash||null);
+    if(s.label){const l=s.pts[s.pts.length-1];svg.append('text').attr('x',x(l[0])-4).attr('y',y(l[1])-8).attr('text-anchor','end').attr('font-size',14).attr('font-weight',700).attr('fill',s.color).text(s.label);}});
+  if(opt.ylab)svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('font-size',13).attr('fill','var(--muted)').text(opt.ylab);
+  return {x,y,svg};}
+
+(()=>{
+const DATA='https://geo.twranger.com/data/gnss/gnss.json?v=1',HSB='https://geo.twranger.com/data/pmap/';
+const fmt=(v,d=0)=>(+v).toLocaleString('zh-TW',{maximumFractionDigits:d,minimumFractionDigits:d});
+const cm=mm=>fmt(Math.abs(mm)/10,Math.abs(mm)<100?1:0);
+const DIR8=['北','東北','東','東南','南','西南','西','西北'];
+const DIR16=['北','北北東','東北','東北東','東','東南東','東南','南南東','南','南南西','西南','西南西','西','西北西','西北','北北西'];
+const dirOf=az=>DIR16[Math.round(az/22.5)%16];
+const SPD=[[10,'#56B4E9','不到 1 公分'],[25,'#F0E442','1～2.5 公分'],[45,'#E69F00','2.5～4.5 公分'],[1e9,'#D55E00','4.5 公分以上']];
+const spdCol=s=>SPD.find(x=>s<x[0])[1];
+const UPC='#56B4E9',DNC='#E69F00';
+let D,ST=[],BY={},map,mode='h',sel=null,frame=179,X=20000,timer=null,eqSel=null,flashUntil=0,pairA='LANY',pairB='S01R';
+const T0=2010,NM=180;
+
+/* ---------- data ---------- */
+function prep(d){D=d;
+  ST=d.st.map(r=>{const [c,lon,lat,town,ag,de,dn,du,se,sn,su,t0,t1,h]=r;const s={c,lon,lat,town,ag,de,dn,du,se,sn,su,t0,t1,h};
+    s.sp=Math.hypot(de,dn);s.az=(Math.atan2(de,dn)*180/Math.PI+360)%360;
+    const z=d.ser[c];if(z){const [m0,vals,gaps]=z;const g=new Set(gaps);const out=[];let last=null;
+      vals.forEach((v,i)=>{if(!g.has(i))last=v;out.push(last||v);});s.m0=m0;s.pos=out;s.m1=m0+out.length-1;}
+    BY[c]=s;return s;});
+  d.eq.forEach(e=>{e.f=Math.floor((e.t-T0)*12);e.max=e.o.reduce((a,o)=>Math.max(a,Math.hypot(o[1],o[2])),0);e.maxU=e.o.reduce((a,o)=>Math.max(a,Math.abs(o[3])),0);e.by={};e.o.forEach(o=>e.by[o[0]]=o);});}
+const posAt=(s,f)=>{if(!s.pos||f<s.m0)return null;return s.pos[Math.min(f,s.m1)-s.m0];};
+
+/* ---------- map ---------- */
+const pairs=a=>{const o=[];for(let i=0;i<a.length;i+=2)o.push([a[i+1],a[i]]);return o;};
+const ArrowLayer=L.Layer.extend({
+  onAdd(m){this._c=L.DomUtil.create('canvas','gn-cv leaflet-zoom-hide');m.getPanes().overlayPane.appendChild(this._c);m.on('moveend zoomend resize viewreset',this.draw,this);this.draw();},
+  onRemove(m){this._c.remove();m.off('moveend zoomend resize viewreset',this.draw,this);},
+  draw(){const m=this._map;if(!m)return;const s=m.getSize(),c=this._c,r=Math.min(2,devicePixelRatio||1);
+    if(c.width!==s.x*r||c.height!==s.y*r){c.width=s.x*r;c.height=s.y*r;c.style.width=s.x+'px';c.style.height=s.y+'px';}
+    L.DomUtil.setPosition(c,m.containerPointToLayerPoint([0,0]));const g=c.getContext('2d');g.setTransform(r,0,0,r,0,0);g.clearRect(0,0,s.x,s.y);paint(g,m);}});
+let AL;
+function arrow(g,x,y,dx,dy,col,w){const L2=Math.hypot(dx,dy);if(L2<2.5){g.fillStyle=col;g.beginPath();g.arc(x,y,2.2,0,7);g.fill();return;}
+  const ux=dx/L2,uy=dy/L2,hl=Math.min(9,3+L2*.35),hw=hl*.62,ex=x+dx-ux*hl*.8,ey=y+dy-uy*hl*.8;
+  g.strokeStyle='#0c1822';g.lineWidth=w+2.4;g.lineCap='round';g.beginPath();g.moveTo(x,y);g.lineTo(ex,ey);g.stroke();
+  g.strokeStyle=col;g.lineWidth=w;g.beginPath();g.moveTo(x,y);g.lineTo(ex,ey);g.stroke();
+  g.fillStyle=col;g.strokeStyle='#0c1822';g.lineWidth=1.2;g.beginPath();g.moveTo(x+dx,y+dy);g.lineTo(ex-uy*hw,ey+ux*hw);g.lineTo(ex+uy*hw,ey-ux*hw);g.closePath();g.fill();g.stroke();
+  g.fillStyle='#fff';g.beginPath();g.arc(x,y,2,0,7);g.fill();}
+const zk=m=>Math.pow(2,m.getZoom()-7.75);
+const ppm=(m,lat)=>256*Math.pow(2,m.getZoom())/(40075016.686*Math.cos(lat*Math.PI/180));
+function tri(g,x,y,up,sz,col){g.fillStyle=col;g.strokeStyle='#0c1822';g.lineWidth=1.3;g.beginPath();
+  if(up){g.moveTo(x,y-sz);g.lineTo(x+sz*.9,y+sz*.6);g.lineTo(x-sz*.9,y+sz*.6);}else{g.moveTo(x,y+sz);g.lineTo(x+sz*.9,y-sz*.6);g.lineTo(x-sz*.9,y-sz*.6);}g.closePath();g.fill();g.stroke();}
+function paint(g,m){const k=zk(m),now=performance.now();
+  const P=s=>m.latLngToContainerPoint([s.lat,s.lon]);
+  if(mode==='h'){const sc=1.5*k;ST.slice().sort((a,b)=>a.sp-b.sp).forEach(s=>{const p=P(s);arrow(g,p.x,p.y,s.de*sc,-s.dn*sc,spdCol(s.sp),Math.max(1.6,Math.min(3,1.2+k*.9)));});}
+  else if(mode==='v'){ST.slice().sort((a,b)=>Math.abs(a.du)-Math.abs(b.du)).forEach(s=>{const p=P(s),a=Math.abs(s.du);
+    if(a<1.5){g.fillStyle='#9fb4c4';g.beginPath();g.arc(p.x,p.y,2.4,0,7);g.fill();return;}
+    tri(g,p.x,p.y,s.du>0,(2.6+Math.sqrt(a)*1.45)*Math.max(.8,Math.min(1.6,k)),s.du>0?UPC:DNC);});}
+  else if(mode==='a'){
+    ST.forEach(s=>{if(!s.pos||frame<s.m0)return;const b=P(s),q=ppm(m,s.lat)*X/1000;g.strokeStyle=spdCol(s.sp)+'88';g.lineWidth=1.4;g.beginPath();
+      const f1=Math.min(frame,s.m1);for(let f=s.m0;f<=f1;f+=1){const v=s.pos[f-s.m0];const x=b.x+v[0]*q,y=b.y-v[1]*q;f===s.m0?g.moveTo(x,y):g.lineTo(x,y);}g.stroke();});
+    const ev=D.eq.filter(e=>frame>=e.f&&frame<e.f+5);
+    ST.forEach(s=>{if(!s.pos||frame<s.m0)return;const b=P(s),q=ppm(m,s.lat)*X/1000,v=posAt(s,frame);const x=b.x+v[0]*q,y=b.y-v[1]*q;
+      g.fillStyle='#ffffff55';g.beginPath();g.arc(b.x,b.y,1.6,0,7);g.fill();
+      g.fillStyle=spdCol(s.sp);g.strokeStyle='#0c1822';g.lineWidth=1.2;g.beginPath();g.arc(x,y,3.6,0,7);g.fill();g.stroke();
+      if(ev.some(e=>e.by[s.c]&&Math.hypot(e.by[s.c][1],e.by[s.c][2])>=20)){g.strokeStyle='#F4F7FA';g.lineWidth=2;g.beginPath();g.arc(x,y,9+(frame-ev[0].f)*2,0,7);g.stroke();}});}
+  else if(mode==='q'&&eqSel){const e=eqSel,sc=.14*k;e.o.slice().sort((a,b)=>Math.hypot(a[1],a[2])-Math.hypot(b[1],b[2])).forEach(o=>{const s=BY[o[0]];if(!s)return;const p=P(s);
+      const col=o[3]>=10?UPC:o[3]<=-10?DNC:'#F4F7FA';arrow(g,p.x,p.y,o[1]*sc,-o[2]*sc,col,Math.max(1.8,Math.min(3.2,1.3+k)));});}
+  if(sel){const p=P(sel);g.strokeStyle='#F2C14E';g.lineWidth=3;g.beginPath();g.arc(p.x,p.y,11,0,7);g.stroke();}
+  if(mode==='h'||mode==='q')scaleBar(g,m,k);}
+function scaleBar(g,m,k){const s=m.getSize(),x=s.x-(panelW()+150),y=s.y-34;if(x<10)return;
+  const len=mode==='h'?50*1.5*k:500*.14*k;const lab=mode==='h'?'每年 5 公分':'50 公分（地震瞬間）';
+  g.font='bold 13px system-ui, sans-serif';g.fillStyle='#0c1822cc';g.fillRect(x-8,y-22,len+16+g.measureText(lab).width+20,36);
+  arrow(g,x,y,len,0,'#F4F7FA',2.4);g.fillStyle='#e9eef2';g.font='bold 13px system-ui, sans-serif';g.fillText(lab,x+len+10,y+4);}
+function panelW(){const p=$('#gnCard');return p&&getComputedStyle(p).position==='absolute'?p.offsetWidth+12:0;}
+
+function initMap(){
+  map=L.map('gnMap',{zoomSnap:.25,zoomDelta:.5,minZoom:6.25,maxZoom:13,zoomControl:false,maxBounds:[[19.8,115.5],[28.2,126.5]],maxBoundsViscosity:.8});
+  map.attributionControl.setPrefix(false).addAttribution('GNSS：中研院地球所（CC BY 4.0）　縣市界：內政部　地形：Terrain Tiles（AWS）');
+  [['landP',205],['hsP',210],['bdP',215],['labP',650]].forEach(([n,z])=>{map.createPane(n).style.zIndex=z;map.getPane(n).style.pointerEvents='none';});
+  const cv=n=>L.canvas({pane:n,padding:.4});
+  L.polygon(D.land.map(pairs),{renderer:cv('landP'),stroke:false,fillColor:'#22333f',fillOpacity:1,interactive:false}).addTo(map);
+  Object.entries(D.hs||{}).forEach(([n,b])=>L.imageOverlay(HSB+n+'_hs.webp',b,{pane:'hsP',interactive:false}).addTo(map));
+  L.polyline(D.border.map(pairs),{renderer:cv('bdP'),color:'#6f8494',weight:.8,opacity:.75,dashArray:'3 3',interactive:false}).addTo(map);
+  D.labels.forEach(([n,lo,la])=>L.marker([la,lo],{pane:'labP',interactive:false,keyboard:false,icon:L.divIcon({className:'pw-place'+(/澎湖|金門|馬祖|綠島|蘭嶼/.test(n)?' isl':''),html:n,iconSize:null})}).addTo(map));
+  const ttl=L.control({position:'topleft'});ttl.onAdd=()=>{const d=L.DomUtil.create('div','pw-ttl');d.innerHTML='<b>臺灣地表移動</b><span id="gnTtl">每年往哪裡移動</span>';return d;};ttl.addTo(map);
+  L.control.zoom({position:'topleft',zoomInTitle:'放大',zoomOutTitle:'縮小'}).addTo(map);
+  AL=new ArrowLayer().addTo(map);
+  const R=L.canvas({padding:.4});
+  ST.forEach(s=>{const mk=L.circleMarker([s.lat,s.lon],{renderer:R,radius:8,stroke:false,fillOpacity:0,fillColor:'#000'}).addTo(map);
+    mk.bindTooltip(()=>tip(s),{sticky:true,direction:'top',offset:[0,-8],className:'pw-tt'});mk.on('click',()=>pick(s));});
+  map.on('zoomstart',()=>{});fit();new ResizeObserver(()=>{map.invalidateSize({pan:false});AL.draw();}).observe($('#gnMap'));}
+const TW=[[21.85,119.45],[25.35,122.05]];
+function fit(anim){const w=panelW();map.fitBounds(TW,{paddingTopLeft:[6,44],paddingBottomRight:[w+6,mode==='a'?80:30],animate:!!anim});}
+function tip(s){
+  if(mode==='v')return `<b>${s.town}（${s.c}）</b><span>${Math.abs(s.du)<1.5?'幾乎不上不下':s.du>0?`每年上升 <b>${cm(s.du)}</b> 公分`:`每年下沉 <b>${cm(s.du)}</b> 公分`}</span>`;
+  if(mode==='q'&&eqSel){const o=eqSel.by[s.c];return `<b>${s.town}（${s.c}）</b><span>${o?`地震瞬間往${dirOf((Math.atan2(o[1],o[2])*180/Math.PI+360)%360)}跳了 <b>${cm(Math.hypot(o[1],o[2]))}</b> 公分`:'這次地震沒有明顯跳動'}</span>`;}
+  return `<b>${s.town}（${s.c}）</b><span>${s.sp<1.5?'幾乎不動':`每年往${dirOf(s.az)} <b>${cm(s.sp)}</b> 公分`}</span>`;}
+function redraw(){if(AL)AL.draw();}
+
+/* ---------- modes ---------- */
+function setMode(m){mode=m;stop();$$('#gnMode button').forEach(b=>b.setAttribute('aria-selected',b.dataset.m===m));
+  $('#gnPlay').hidden=m!=='a';$('#gnTtl').textContent={h:'每年往哪裡移動',v:'每年上升或下沉',a:'15 年快轉',q:'地震瞬間的跳動'}[m];
+  if(m==='a'){frame=0;$('#gpRange').value=0;updYear();}else $('#gnFlash').hidden=true;
+  if(m==='q'&&!eqSel)eqSel=D.eq.find(e=>e.d==='2024-04-03');
+  legend();redraw();card();}
+function legend(){const L1=SPD.map(x=>`<span class="li"><svg width="30" height="12" aria-hidden="true"><line x1="2" y1="6" x2="22" y2="6" stroke="${x[1]}" stroke-width="3"/><path d="M28 6 l-8 -4 v8z" fill="${x[1]}"/></svg>${x[2]}</span>`).join('');
+  const tr=(up,c)=>`<svg width="18" height="16" viewBox="-9 -8 18 16" aria-hidden="true"><path d="${up?'M0 -7 L7 5 L-7 5Z':'M0 7 L7 -5 L-7 -5Z'}" fill="${c}" stroke="#0c1822"/></svg>`;
+  $('#gnLeg').innerHTML=mode==='h'?`<div class="lg-grp"><b>每年移動多少（箭頭越長越多）</b>${L1}</div><div class="lg-grp"><b>怎麼看</b><span class="li">箭頭尾巴＝測站位置，箭頭方向＝每年移動的方向。參考點：澎湖白沙（S01R）。</span></div>`
+    :mode==='v'?`<div class="lg-grp"><b>上升或下沉（圖示越大越多）</b><span class="li">${tr(1,UPC)}上升</span><span class="li">${tr(0,DNC)}下沉</span><span class="li"><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="3" fill="#9fb4c4"/></svg>每年不到 0.15 公分</span></div><div class="lg-grp"><b>為什麼會上下移動？</b><span class="li">山區被板塊擠壓往上推；平原的地面可能因為抽地下水而下陷。</span></div>`
+    :mode==='a'?`<div class="lg-grp"><b>小圓點（顏色＝移動速度）</b>${L1.replace(/<svg[^>]*>.*?<\/svg>/g,m=>m)}</div><div class="lg-grp"><b>怎麼看</b><span class="li">淡淡的白點是 2010 年的位置，線是一路走過的路。白色圓圈閃一下，代表那裡剛發生大地震、地面瞬間跳了一下。距離放大了上萬倍。</span></div>`
+    :`<div class="lg-grp"><b>地震瞬間的水平跳動</b><span class="li"><svg width="30" height="12" aria-hidden="true"><line x1="2" y1="6" x2="22" y2="6" stroke="#F4F7FA" stroke-width="3"/><path d="M28 6 l-8 -4 v8z" fill="#F4F7FA"/></svg>箭頭越長跳得越遠</span></div><div class="lg-grp"><b>箭頭顏色＝上下</b><span class="li"><svg width="16" height="10"><rect width="16" height="10" rx="2" fill="${UPC}"/></svg>同時往上抬升 1 公分以上</span><span class="li"><svg width="16" height="10"><rect width="16" height="10" rx="2" fill="${DNC}"/></svg>同時往下沉 1 公分以上</span><span class="li"><svg width="16" height="10"><rect width="16" height="10" rx="2" fill="#F4F7FA"/></svg>上下變化不大</span></div>`;}
+/* animation */
+function updYear(){const y=T0+Math.floor(frame/12),mo=frame%12+1;$('#gpYear').textContent=`${y} 年 ${mo} 月`;
+  const e=D.eq.find(e=>frame>=e.f&&frame<e.f+4);const fl=$('#gnFlash');
+  if(e&&e.o.length>=8){fl.hidden=false;fl.innerHTML=`⚡ <b>${e.d}　${e.n}</b>　規模 ${e.m}`;}else fl.hidden=true;}
+function play(){if(timer){stop();return;}if(frame>=NM-1)frame=0;$('#gpBtn').textContent='❚❚';$('#gpBtn').setAttribute('aria-label','暫停');
+  timer=setInterval(()=>{frame++;if(frame>=NM-1){frame=NM-1;stop();}$('#gpRange').value=frame;updYear();redraw();},matchMedia('(prefers-reduced-motion: reduce)').matches?160:70);}
+function stop(){clearInterval(timer);timer=null;const b=$('#gpBtn');if(b){b.textContent='▶';b.setAttribute('aria-label','播放');}}
+
+/* ---------- cards ---------- */
+const inC=(...a)=>s=>a.some(x=>s.town.startsWith(x));
+const REG=[['北部',inC('臺北','新北','基隆','桃園','新竹')],['宜蘭',inC('宜蘭')],['中部',inC('苗栗','臺中','彰化','南投','雲林')],['南部',inC('嘉義','臺南','高雄','屏東')],['花蓮、臺東',s=>/^(花蓮|臺東)/.test(s.town)&&!/蘭嶼|綠島/.test(s.town)],['蘭嶼、綠島',inC('臺東縣蘭嶼','臺東縣綠島')]];
+function regionStats(){return REG.map(([n,f])=>{const a=ST.filter(f);const de=a.reduce((x,s)=>x+s.de,0)/a.length,dn=a.reduce((x,s)=>x+s.dn,0)/a.length;return {n,cnt:a.length,sp:Math.hypot(de,dn),az:(Math.atan2(de,dn)*180/Math.PI+360)%360,a};});}
+function compass(az,col){const r=az*Math.PI/180,x=Math.sin(r)*15,y=-Math.cos(r)*15;
+  return `<svg class="gc" viewBox="-22 -22 44 44" aria-hidden="true"><circle r="20" fill="#162a38" stroke="#2c4253"/><text y="-12" text-anchor="middle" font-size="7" fill="#9fb4c4">北</text><line x1="${-x*.6}" y1="${-y*.6}" x2="${x}" y2="${y}" stroke="${col}" stroke-width="3.2" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="3.2" fill="${col}"/></svg>`;}
+function card(){const box=$('#gnCard');if(!D)return;
+  if(sel){stationCard(box,sel);return;}
+  let h='';
+  if(mode==='h'){const R=regionStats(),fast=ST.slice().sort((a,b)=>b.sp-a.sp)[0];
+    h=`<div class="pp-eye">以澎湖白沙為參考點</div><h3 class="pp-h">臺灣各地每年往哪裡移動？</h3>
+      <div class="pp-stats"><div><b class="num">${cm(fast.sp)}<small>公分</small></b><span>最快：${fast.town}，往${dirOf(fast.az)}</span></div><div><b class="num">${ST.length}</b><span>個測站</span></div></div>
+      <div class="pp-sec"><span>各地區平均</span><small>點一下移到那裡</small></div>
+      <ol class="pp-rank gn-reg">${R.map((r,i)=>`<li><button data-i="${i}">${compass(r.az,spdCol(r.sp))}<span class="nm">${r.n}</span><span class="v num">往${dirOf(r.az)} ${cm(r.sp)} 公分</span></button></li>`).join('')}</ol>
+      <p class="pp-unit">越往東南邊，箭頭越長；越往西、往北，箭頭越短。臺北一帶幾乎不動，宜蘭反而往東南東移動。點地圖上的測站，可以看它 15 年的紀錄。</p>`;}
+  else if(mode==='v'){const up=ST.slice().sort((a,b)=>b.du-a.du).slice(0,4),dn=ST.slice().sort((a,b)=>a.du-b.du).slice(0,4);
+    const row=s=>`<li><button data-c="${s.c}">${s.du>0?'▲':'▼'}<span class="nm">${s.town}</span><span class="v num">${s.du>0?'+':'−'}${cm(s.du)} 公分</span></button></li>`;
+    h=`<div class="pp-eye">每年上升或下沉</div><h3 class="pp-h">地面也會上上下下</h3>
+      <div class="pp-sec"><span>▼ 下沉最多</span><small>每年</small></div><ol class="pp-rank">${dn.map(row).join('')}</ol>
+      <div class="pp-how"><b>為什麼雲林一直往下沉？</b><p>雲林、彰化沿海抽了很多地下水來養魚、灌溉。地下的水被抽走，土層就像被擠掉水的海綿一樣被壓扁，地面跟著下沉，叫做「地層下陷」。這和板塊沒有關係，是人造成的。</p></div>
+      <div class="pp-sec"><span>▲ 上升最多</span><small>每年</small></div><ol class="pp-rank">${up.map(row).join('')}</ol>
+      <div class="pp-how"><b>為什麼山區會上升？</b><p>板塊一直推擠，把地層往上擠，所以中央山脈和海岸山脈的一些地方每年還在長高。不過雨水和河流也一直在把山侵蝕削低。</p></div>`;}
+  else if(mode==='a'){h=`<div class="pp-eye">2010 → 2024</div><h3 class="pp-h">15 年快轉</h3>
+      <p class="pp-desc">按下地圖下方的 ▶，看看 15 年來每個測站怎麼走。真實的移動只有幾公分到一公尺多，這裡放大了上萬倍。</p>
+      <div class="pp-sec"><span>跳到這些大地震</span><small>點一下</small></div>
+      <ol class="pp-rank">${D.eq.filter(e=>e.o.length>=8).map(e=>`<li><button data-f="${e.f}"><span class="gq">⚡</span><span class="nm">${e.d.slice(0,7)} ${e.n}</span><span class="v num">M${e.m}</span></button></li>`).join('')}</ol>
+      <p class="pp-unit">看到了嗎？平常每個點都慢慢、穩穩地往同一個方向走；大地震時，附近的點會一下子跳一大段。</p>`;}
+  else{const e=eqSel;const top=e.o.slice().sort((a,b)=>Math.hypot(b[1],b[2])-Math.hypot(a[1],a[2]))[0];const ts=BY[top[0]];
+    h=`<div class="pp-eye">地震瞬間</div><h3 class="pp-h">選一個地震</h3>
+      <div class="gq-list">${D.eq.filter(x=>x.o.length>=8).map(x=>`<button class="gq-b" data-d="${x.d}" aria-pressed="${x===e}">${x.d.slice(0,4)}<b>${x.n.replace(/（.*?）/,'')}</b><small>M${x.m}</small></button>`).join('')}</div>
+      <div class="pp-stats" style="margin-top:12px"><div><b class="num">${cm(e.max)}<small>公分</small></b><span>水平跳最遠：${ts?ts.town:top[0]}</span></div><div><b class="num">${e.o.length}</b><span>個測站有明顯跳動</span></div></div>
+      ${e.maxU>=100?`<p class="pp-eq">有測站在一瞬間被抬高或壓低了 ${cm(e.maxU)} 公分</p>`:''}
+      <p class="pp-unit">平常一年才移動幾公分，大地震卻能在幾秒鐘內讓地面跳幾十公分。這些跳動，也是板塊長年推擠累積的力量，一下子釋放出來的結果。</p>`;}
+  box.innerHTML=`<div class="pp-pad">${h}</div>`;
+  box.querySelectorAll('.gn-reg button').forEach(b=>b.onclick=()=>{const r=regionStats()[+b.dataset.i];map.flyToBounds(L.latLngBounds(r.a.map(s=>[s.lat,s.lon])).pad(.15),{paddingBottomRight:[panelW()+6,6],duration:.8});});
+  box.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{const s=BY[b.dataset.c];pick(s);fly(s);});
+  box.querySelectorAll('button[data-f]').forEach(b=>b.onclick=()=>{stop();frame=Math.min(NM-1,+b.dataset.f+2);$('#gpRange').value=frame;updYear();redraw();});
+  box.querySelectorAll('.gq-b').forEach(b=>b.onclick=()=>{eqSel=D.eq.find(x=>x.d===b.dataset.d);card();redraw();const pts=eqSel.o.filter(o=>Math.hypot(o[1],o[2])>=30).map(o=>BY[o[0]]).filter(Boolean);if(pts.length)map.flyToBounds(L.latLngBounds(pts.map(s=>[s.lat,s.lon])).pad(.4),{paddingBottomRight:[panelW()+6,6],maxZoom:9.5,duration:.8});});}
+function fly(s){const z=Math.max(map.getZoom(),9);let ll=L.latLng(s.lat,s.lon);const w=panelW();if(w){ll=map.unproject(map.project(ll,z).add([w/2,0]),z);}map.flyTo(ll,z,{duration:.8});}
+function pick(s){sel=s;redraw();card();if(!panelW())$('#gnCard').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function unpick(){sel=null;redraw();card();}
+function stationCard(box,s){
+  const tot=s.pos?s.pos[s.pos.length-1]:null,yrs=s.pos?(s.m1-s.m0+1)/12:0,mv=tot?Math.hypot(tot[0],tot[1]):0;
+  const evs=D.eq.filter(e=>e.by[s.c]&&Math.hypot(e.by[s.c][1],e.by[s.c][2])>=10);
+  box.innerHTML=`<div class="pp-top"><button class="pp-back">← 全部測站</button><button class="pp-x" aria-label="關閉">✕</button></div>
+  <div class="pp-pad"><div class="pp-tags"><span class="pp-tag">測站 ${s.c}</span><span class="pp-tag ghost">${s.ag}</span></div>
+    <h3 class="pp-name">${s.town}</h3><p class="pp-desc">海拔約 ${fmt(s.h)} 公尺・資料 ${Math.floor(s.t0)}–${Math.floor(s.t1)} 年</p>
+    <div class="gn-sp">${compass(s.az,spdCol(s.sp))}<div><b class="num">${cm(s.sp)}</b><span>公分 / 年</span><em>${s.sp<1.5?'幾乎不動':'往'+dirOf(s.az)+'移動'}</em></div></div>
+    <div class="gn-two"><div><span>上下</span><b>${Math.abs(s.du)<1.5?'幾乎不變':(s.du>0?'▲ 每年上升 ':'▼ 每年下沉 ')+cm(s.du)+' 公分'}</b></div>
+      <div><span>15 年來累積</span><b>${tot?`水平 ${cm(mv)} 公分`:'—'}</b></div></div>
+    <p class="pp-eq">${s.sp>=1.5?`照這個速度，100 年後會移動 ${fmt(s.sp*100/1000,1)} 公尺；100 萬年後是 ${fmt(s.sp,0)} 公里！`:'它和澎湖幾乎一起移動。'}</p>
+    <div class="pp-sec"><span>15 年來的移動紀錄</span><small>單位：公分</small></div>
+    <svg class="gn-ch" id="gnCh" role="img" aria-label="測站移動紀錄圖"></svg>
+    ${evs.length?`<div class="gn-evs">${evs.map(e=>{const o=e.by[s.c];return `<div><span>⚡ ${e.d} ${e.n}</span><b>跳了 ${cm(Math.hypot(o[1],o[2]))} 公分${Math.abs(o[3])>=10?`，${o[3]>0?'抬升':'下沉'} ${cm(o[3])} 公分`:''}</b></div>`;}).join('')}</div>`:''}
+    <div class="gn-pb"><button class="bigbtn alt" data-ab="A">拿來比一比：設成 A</button><button class="bigbtn alt" data-ab="B">設成 B</button></div>
+  </div>`;
+  box.querySelector('.pp-back').onclick=unpick;box.querySelector('.pp-x').onclick=unpick;
+  box.querySelectorAll('[data-ab]').forEach(b=>b.onclick=()=>{if(b.dataset.ab==='A')pairA=s.c;else pairB=s.c;pairUI();$('#pair').scrollIntoView({behavior:'smooth'});});
+  chart(s);box.scrollTop=0;}
+function chart(s){const svg=d3.select('#gnCh');if(!s.pos){svg.remove();return;}
+  const W=320,H=190,m={l:34,r:8,t:10,b:22};svg.attr('viewBox',`0 0 ${W} ${H}`);
+  const r=s.az*Math.PI/180,ux=Math.sin(r),uy=Math.cos(r);
+  const rows=s.pos.map((v,i)=>({t:T0+(s.m0+i+.5)/12,a:(v[0]*ux+v[1]*uy)/10,u:v[2]/10}));
+  const x=d3.scaleLinear([T0,2025],[m.l,W-m.r]);const ext=d3.extent(rows.flatMap(d=>[d.a,d.u]).concat([0]));const y=d3.scaleLinear(ext,[H-m.b,m.t]).nice();
+  svg.append('g').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).tickValues([2010,2015,2020,2025]).tickFormat(d3.format('d'))).attr('class','ax');
+  svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5)).attr('class','ax');
+  svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#5f7a8e').attr('stroke-dasharray','2 3');
+  D.eq.filter(e=>e.by[s.c]&&Math.hypot(e.by[s.c][1],e.by[s.c][2])>=10).forEach(e=>svg.append('line').attr('x1',x(e.t)).attr('x2',x(e.t)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','#F2C14E').attr('stroke-dasharray','3 3'));
+  const ln=k=>d3.line().x(d=>x(d.t)).y(d=>y(d[k]));
+  svg.append('path').datum(rows).attr('d',ln('a')).attr('fill','none').attr('stroke',spdCol(Math.max(s.sp,10)));svg.select('path:last-child').attr('stroke-width',2.4);
+  svg.append('path').datum(rows).attr('d',ln('u')).attr('fill','none').attr('stroke','#cfd8de').attr('stroke-width',1.6).attr('stroke-dasharray','5 3');
+  const L2=svg.append('g').attr('font-size',11);
+  L2.append('text').attr('x',m.l+6).attr('y',m.t+10).attr('fill',spdCol(Math.max(s.sp,10))).text(`━ 往${dirOf(s.az)}移動的距離`);
+  L2.append('text').attr('x',m.l+6).attr('y',m.t+24).attr('fill','#cfd8de').text('╍ 上升（＋）或下沉（－）');}
+
+/* ---------- pair ---------- */
+function geoDist(a,b){const R=6371008.8,f1=a.lat*Math.PI/180,f2=b.lat*Math.PI/180,dl=(b.lon-a.lon)*Math.PI/180,df=f2-f1;
+  const h=Math.sin(df/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function pairUI(){const A=BY[pairA],B=BY[pairB];$('#pairA').value=pairA;$('#pairB').value=pairB;if(!A||!B||A===B){$('#pairOut').innerHTML='<p>請選兩個不同的測站。</p>';return;}
+  const d=geoDist(A,B),lat=(A.lat+B.lat)/2,k=Math.cos(lat*Math.PI/180);
+  const ex=(A.lon-B.lon)*k,ny=(A.lat-B.lat),n=Math.hypot(ex,ny),ux=ex/n,uy=ny/n;
+  const rate=(A.de-B.de)*ux+(A.dn-B.dn)*uy; // mm/yr, positive = farther apart
+  const close=rate<0,r=Math.abs(rate);
+  const yrs=close&&r>.5?d*1000/r:0;
+  const nail=r>=25&&r<=45?'差不多就是你的指甲一年長的長度（大約 3～4 公分）！':r>45?'比你的指甲一年長的長度（大約 3～4 公分）還要多！':r>=5?'比你的指甲一年長得還少一點（指甲一年大約長 3～4 公分）。':'非常非常小，幾乎量不出來。';
+  $('#pairOut').innerHTML=`<div class="gp-big ${close?'cl':'fa'}"><span>${A.town} 和 ${B.town}</span><b class="num">${r<.5?'幾乎不變':(close?'每年靠近 ':'每年遠離 ')+cm(r)+' 公分'}</b></div>
+    <p>兩地現在相距約 <b class="num">${fmt(d/1000,1)}</b> 公里。每年的變化 ${nail}</p>
+    ${yrs?`<p>如果一直用這個速度靠近，大約要 <b class="num">${yrs>=1e8?fmt(yrs/1e8,1)+' 億':fmt(Math.round(yrs/1e4))+' 萬'}</b> 年才會碰在一起。（實際上兩地中間的地層會被擠壓、隆起成山，不會真的撞在一起。）</p>`:''}`;
+  pairChart(A,B,ux,uy);}
+function pairChart(A,B,ux,uy){const svg=d3.select('#pairChart');svg.selectAll('*').remove();const W=560,H=240,m={l:44,r:10,t:12,b:26};svg.attr('viewBox',`0 0 ${W} ${H}`);
+  if(!A.pos||!B.pos)return;const rows=[];
+  for(let f=Math.max(A.m0,B.m0);f<=Math.min(A.m1,B.m1);f++){const a=posAt(A,f),b=posAt(B,f);rows.push({t:T0+(f+.5)/12,v:((a[0]-b[0])*ux+(a[1]-b[1])*uy)/10});}
+  if(rows.length<2)return;const b0=rows[0].v;rows.forEach(r=>r.v-=b0);
+  const x=d3.scaleLinear([T0,2025],[m.l,W-m.r]),y=d3.scaleLinear(d3.extent(rows.map(r=>r.v).concat([0])),[H-m.b,m.t]).nice();
+  svg.append('g').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).tickValues([2010,2012,2014,2016,2018,2020,2022,2024]).tickFormat(d3.format('d')));
+  svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
+  svg.append('text').attr('x',m.l+4).attr('y',m.t+4).attr('font-size',12).attr('fill','currentColor').text('距離的變化（公分；往下＝越來越近）');
+  svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y(0)).attr('y2',y(0)).attr('stroke','#999').attr('stroke-dasharray','2 3');
+  svg.append('path').datum(rows).attr('d',d3.line().x(d=>x(d.t)).y(d=>y(d.v))).attr('fill','none').attr('stroke','#009E73').attr('stroke-width',2.6);
+  const last=rows[rows.length-1];$('#pairNote').textContent=`2010 到 2024 年，兩地距離一共${last.v<0?'縮短':'增加'}了約 ${fmt(Math.abs(last.v),1)} 公分（實際測量，包含地震造成的跳動）。`;}
+function initPair(){const opts=ST.slice().sort((a,b)=>a.town.localeCompare(b.town,'zh-Hant')).map(s=>`<option value="${s.c}">${s.town}（${s.c}）</option>`).join('');
+  $('#pairA').innerHTML=opts;$('#pairB').innerHTML=opts;
+  const find=t=>{const s=ST.find(s=>s.town.startsWith(t));return s&&s.c;};
+  const PRE=[['蘭嶼 ↔ 澎湖','LANY','S01R'],['花東縱谷兩側：成功 ↔ 池上',find('臺東縣成功'),find('臺東縣池上')||find('臺東縣關山')],['墾丁 ↔ 臺北',find('屏東縣恆春'),find('臺北市')],['花蓮 ↔ 臺中',find('花蓮縣花蓮'),find('臺中市')]].filter(p=>p[1]&&p[2]);
+  $('#pairPre').innerHTML=PRE.map((p,i)=>`<button data-i="${i}">${p[0]}</button>`).join('');
+  $('#pairPre').onclick=e=>{const b=e.target.closest('button');if(!b)return;const p=PRE[+b.dataset.i];pairA=p[1];pairB=p[2];pairUI();};
+  $('#pairA').onchange=e=>{pairA=e.target.value;pairUI();};$('#pairB').onchange=e=>{pairB=e.target.value;pairUI();};pairUI();}
+
+/* ---------- questions ---------- */
+function questions(){const fastest=ST.slice().sort((a,b)=>b.sp-a.sp)[0],e24=D.eq.find(e=>e.d==='2024-04-03'),t24=e24&&BY[e24.o.slice().sort((a,b)=>Math.hypot(b[1],b[2])-Math.hypot(a[1],a[2]))[0][0]];
+  const sinks=ST.filter(s=>s.du<=-20);
+  const Q=[
+   {q:'臺灣哪裡移動得最快？往哪個方向？',m:'h',v:[121.3,22.6,8.25],a:`最快的是${fastest.town}，每年往${dirOf(fastest.az)}移動約 ${cm(fastest.sp)} 公分。蘭嶼、綠島和臺東海岸山脈都在<b>菲律賓海板塊</b>上，直接被板塊推著往西北走。`},
+   {q:'越往西邊、北邊，箭頭變長還是變短？為什麼？',m:'h',v:null,a:'越來越<b>短</b>。菲律賓海板塊從東南邊推過來，推擠的力量在花東縱谷、中央山脈一路被吸收（地層被擠壓、隆起成山），傳到西部和北部就變小了，臺北一帶幾乎不動。宜蘭卻每年往東南東移動約 1 公分，因為東北方的沖繩海槽正在張裂，把宜蘭平原往外拉開。'},
+   {q:'哪裡的地面在往下沉？是板塊造成的嗎？',m:'v',v:[120.35,23.7,9.5],a:`雲林、彰化沿海有 ${sinks.length} 個測站每年下沉 2 公分以上。這<b>不是</b>板塊造成的，而是長期抽地下水，土層被壓扁造成的「地層下陷」。高鐵就從這附近經過，所以政府一直在想辦法減少抽地下水。`},
+   {q:'2024 年 4 月 3 日花蓮地震時，地面一瞬間跳了多遠？',m:'q',eq:'2024-04-03',v:[121.55,24.0,9],a:e24?`水平跳最遠的是${t24?t24.town:''}，大約 <b>${cm(e24.max)} 公分</b>，有 ${e24.o.length} 個測站有明顯跳動。平常一年只移動幾公分，大地震卻在幾秒內讓地面跳了幾十公分。`:''},
+   {q:'中央山脈還在長高嗎？',m:'v',v:[121.0,23.6,8.75],a:'很多山區的測站每年<b>上升</b>幾毫米到一公分多，因為板塊擠壓把地層往上推，臺灣的山還在長高。不過颱風大雨和河流也一直在侵蝕山坡，所以山不會無限長高。'}];
+  $('#gnQ').innerHTML=Q.map((z,i)=>`<div class="pwq"><b>${i+1}. ${z.q}</b><button class="bigbtn alt" data-i="${i}">在地圖上看答案</button><p class="pwa" hidden>${z.a}</p></div>`).join('');
+  $('#gnQ').onclick=e=>{const b=e.target.closest('button[data-i]');if(!b)return;const z=Q[+b.dataset.i];b.nextElementSibling.hidden=false;sel=null;
+    if(z.eq)eqSel=D.eq.find(x=>x.d===z.eq);setMode(z.m);$('#move').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(()=>{if(z.v){let ll=L.latLng(z.v[1],z.v[0]);const w=panelW();if(w)ll=map.unproject(map.project(ll,z.v[2]).add([w/2,0]),z.v[2]);map.flyTo(ll,z.v[2],{duration:.9});}else fit(true);},400);};}
+
+/* ---------- start ---------- */
+$$('#gnMode button').forEach(b=>b.onclick=()=>{sel=null;setMode(b.dataset.m);});
+$('#gpBtn').onclick=play;$('#gpRange').oninput=e=>{stop();frame=+e.target.value;updYear();redraw();};$('#gpX').onchange=e=>{X=+e.target.value;redraw();};
+fetch(DATA).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(d=>{prep(d);initMap();legend();card();initPair();questions();document.body.dataset.ready='1';})
+  .catch(e=>{console.warn(e);$('#gnCard').innerHTML='<div class="pp-pad"><p>資料載入失敗，請重新整理網頁。</p></div>';document.body.dataset.ready='1';});
+})();
+</script>
