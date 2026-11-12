@@ -50,6 +50,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Header */
 header.top{padding-block:28px 18px;position:relative;overflow:hidden}
 .top .wrap{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}}
 .kicker{font-size:15.5px;letter-spacing:.12em;color:var(--muted);font-weight:500}
 h1{font-size:clamp(30px,5vw,48px);margin-top:4px}
 h1 .accent{color:var(--typhoon)}
