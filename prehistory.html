@@ -642,9 +642,9 @@ function scatter(n,fn,ok){let k=0,guard=0;while(k<n&&guard++<n*40){const x=rnd(-
 const far=(x,z,d)=>spots.every(s=>Math.hypot(s.x-x,s.z-z)>d);
 /* ---- the three worlds ---- */
 const BUILD={
- museum(){const st='#d9d2c4';const disc=mesh(new T.CylinderGeometry(35.5,36,.5,48),M(st,{flatShading:false}),0,1.45,0);disc.castShadow=false;scene.add(disc);const ringM=mesh(new T.TorusGeometry(35.6,.35,6,60),M('#b9b0a0'),0,1.72,0);ringM.rotation.x=Math.PI/2;scene.add(ringM);
+ museum(){const st='#d9d2c4';const disc=mesh(new T.CylinderGeometry(35.8,36.6,1.2,56),M(st,{flatShading:false}),0,1.1,0);disc.castShadow=false;scene.add(disc);const ringM=mesh(new T.TorusGeometry(35.6,.35,6,60),M('#b9b0a0'),0,1.6,0);ringM.rotation.x=Math.PI/2;scene.add(ringM);
   ['old','neo','iron'].forEach((e,k)=>{const cx=(k-1)*19,cz=-4.5,col=ECOL[e];[[-7.5,-4.5],[7.5,-4.5],[-7.5,3.5],[7.5,3.5]].forEach(([x,z])=>put(part('cyl',M('#8a6a44'),.28,5,.28,0,2.5,0),cx+x,cz+z));const roof=part('pyr',M(col),1,2.4,1,0,0,0);roof.rotation.y=Math.PI/4;roof.scale.set(12,2.4,6.6);put(roof,cx,cz-.5,6.2);
-   const s=sign(['舊石器時代','新石器時代','金屬器時代'][k],col,7);s.position.set(cx,1.7+4.4,cz+3.6);scene.add(s);const f=mesh(new T.CylinderGeometry(8.2,8.2,.08,28),M(col,{flatShading:false}),cx,1.74,cz);f.scale.z=.55;f.castShadow=false;scene.add(f);});
+   const s=sign(['舊石器時代','新石器時代','金屬器時代'][k],col,7);s.position.set(cx,1.7+4.4,cz+3.6);scene.add(s);const f=mesh(new T.CylinderGeometry(8.2,8.2,.12,28),M(col,{flatShading:false}),cx,1.75,cz);f.scale.z=.55;f.castShadow=false;scene.add(f);});
   spots.forEach((s,i)=>{const ped=part('cyl',M('#f1ece1'),.95,1.25,.95,0,.62,0);put(ped,s.x,s.z);if(s.done){const m=ART[s.id]();m.scale.setScalar(1.25);put(m,s.x,s.z,1.25);upd.push(dt=>m.rotation.y+=dt*.5);const L=new T.PointLight(0xfff0d0,.5,7,2);L.position.set(s.x,5,s.z);scene.add(L);}else{const q=sign('？','#6b7c85',1.6);q.geometry=new T.PlaneGeometry(1,1);q.material.map.repeat.set(.25,1);q.material.map.offset.set(.375,0);put(q,s.x,s.z,1.9);upd.push(dt=>q.rotation.y+=dt);}});
   const w=sign('我的史前博物館','#882255',12);w.position.set(0,1.7+3.4,17);scene.add(w);[[-6,17],[6,17]].forEach(([x,z])=>put(part('cyl',M('#8a6a44'),.2,5,.2,0,2.5,0),x,z));
   [[-11,12],[11,12]].forEach(([x,z])=>fire(x,z,1));scatter(60,()=>tree(Math.random()<.4?'pine':'leaf'),(x,z,h)=>Math.hypot(x,z)>42&&h<16);scatter(20,()=>rock(rnd(.4,1)),(x,z,h)=>Math.hypot(x,z)>38);birds(4,0,0,20);deer(52,10,8);
@@ -733,7 +733,7 @@ function start(e,tasks,done,callbacks){if(!R)init();cancelAnimationFrame(raf);di
   sunBall=new T.Mesh(GEO.sph,new T.MeshBasicMaterial({fog:false}));scene.add(sunBall);
   amb=new T.AmbientLight(0xffffff,.3);hemi=new T.HemisphereLight(0xffffff,0x6b7a4a,.5);sun=new T.DirectionalLight(0xffffff,1);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);const sc=sun.shadow.camera;sc.left=sc.bottom=-46;sc.right=sc.top=46;sc.near=1;sc.far=260;sun.shadow.bias=-.0006;sun.shadow.normalBias=.04;scene.add(amb,hemi,sun,sun.target);
   // terrain
-  let g=new T.PlaneGeometry(260,260,104,104);g.rotateX(-Math.PI/2);const p=g.attributes.position;for(let i=0;i<p.count;i++)p.setY(i,Hf(p.getX(i),p.getZ(i)));g=g.toNonIndexed();const q=g.attributes.position,col=new Float32Array(q.count*3),c=new T.Color();
+  let g=new T.PlaneGeometry(260,260,104,104);g.rotateX(-Math.PI/2);const p=g.attributes.position;for(let i=0;i<p.count;i++){const X=p.getX(i),Z=p.getZ(i);p.setY(i,e==='museum'&&Math.hypot(X,Z)<34?.9:Hf(X,Z));}g=g.toNonIndexed();const q=g.attributes.position,col=new Float32Array(q.count*3),c=new T.Color();
   const pal=e==='museum'?['#93bf6c','#84b45f']:e==='old'?['#93bf6c','#7fb05c']:e==='neo'?['#9cc56f','#86b660']:['#a3c774','#8dba63'];
   for(let i=0;i<q.count;i+=3){const y=(q.getY(i)+q.getY(i+1)+q.getY(i+2))/3,x=q.getX(i),z=q.getZ(i),sl=Math.max(q.getY(i),q.getY(i+1),q.getY(i+2))-Math.min(q.getY(i),q.getY(i+1),q.getY(i+2));const n=hash(x*.7,z*.7);
    if(y<-.2)c.set('#b9ab7c');else if(y<.75)c.set(n>.5?'#ead9a6':'#e2cf98');else if(sl>2.3||y>15)c.set(n>.5?'#8b8478':'#7b756a');else c.set(pal[n>.5?0:1]).offsetHSL(0,0,(n-.5)*.05);
@@ -816,7 +816,7 @@ G.knap=(A,fin)=>{const {scene,cam,hud,sfx}=A;ground(A,'#d8c8a0');cam.position.se
   A.tap=strike;A.key=(k,d,rep)=>{if(k===' '&&d&&!rep)strike();};hud.msg('石槌移到黃色箭頭正上方時，點一下！');
   A.upd.push(dt=>{t+=dt;drop=Math.max(0,drop-dt);ham.position.x=hx();ham.position.y=drop>0?2.2:3.5;arrow.visible=ring.visible=!end;arrow.position.set(tg.x,2.75+Math.sin(t*6)*.12,.75);ring.position.set(tg.x,2.05,.78);cam.position.x=Math.sin(t*.3)*.5;cam.lookAt(0,1.1,0);hud.bar(hits/5,`敲出缺口 ${hits} / 5`,'#B86E00');hud.info(`敲歪 ${miss} 次`);});};
 /* 2 fire */
-G.fire=(A,fin)=>{const {scene,cam,hud,sfx}=A;ground(A,'#4d3d32');cam.position.set(0,3,6.4);cam.lookAt(0,1.2,0);for(let i=0;i<12;i++){const a=i/12*6.28;scene.add(P('ico',mat('#3b2f28'),rnd(1.5,3),rnd(2,5),rnd(1.5,3),Math.cos(a)*9,1,Math.sin(a)*7-3));}
+G.fire=(A,fin)=>{const {scene,cam,hud,sfx}=A;ground(A,'#4d3d32');cam.position.set(0,3,6.4);cam.lookAt(0,1.2,0);for(let i=0;i<=12;i++){const a=Math.PI+i/12*Math.PI;scene.add(P('ico',mat(i%2?'#3b2f28':'#463830'),rnd(1.6,2.6),rnd(2.5,4.5),rnd(1.6,2.6),Math.cos(a)*8.5,1.2,Math.sin(a)*6-2.5));}scene.background=new T.Color('#1d1612');
   scene.add(P('box',mat('#a47444'),3.6,.28,.9,0,.14,0));const sp=P('cyl',mat('#d8b98a'),.07,2.6,.07,0,1.5,0);scene.add(sp);const bow=new T.Group();bow.add(P('box',mat('#8a5a2b'),3.6,.1,.1,0,0,0));const str=P('box',mat('#efe6cf'),3.5,.03,.03,0,-.25,0);bow.add(str);bow.position.set(0,1.9,.2);scene.add(bow);
   const top=P('ico',mat('#77706a'),.35,.22,.35,0,2.9,0);scene.add(top);const ember=new T.PointLight(0xff7a2e,0,12,2);ember.position.set(0,.6,.4);scene.add(ember);const fl=flames(3,1.1);fl.visible=false;fl.position.set(0,.2,0);scene.add(fl);
   const sm=[];for(let i=0;i<8;i++){const p=P('sph',bas('#d9d9d9',{transparent:true,opacity:0,depthWrite:false}),.2,.2,.2);p.castShadow=false;scene.add(p);sm.push([p,i/8]);}
