@@ -634,6 +634,12 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .pw-leg .lg-note{grid-column:1/-1;margin:0;font-size:12.5px;color:#9fb4c4}
 @media (max-width:820px){.pw-leg{grid-template-columns:minmax(0,1fr)}}
 .pw-site{cursor:pointer}
+.pp-fuel{display:flex;align-items:center;gap:6px;margin:14px 0 8px;padding:5px 10px;background:#162a38;border-radius:10px;font-size:14px}
+.pp-fuel b{font-size:14.5px}.pp-fuel span{margin-left:auto;color:var(--pm);font-size:12.5px}.pp-fuel span b{color:#fff;font-size:13.5px}
+.pp-units .un svg{vertical-align:-1px;margin-right:5px}
+.pw-panel{overflow-x:hidden;min-width:0;max-width:100%}
+.pp-units .ur>*{min-width:0}
+@media (max-width:420px){.pp-units .ur{grid-template-columns:minmax(0,1fr) auto 6.4em}.pp-units .uv{font-size:13px}.st{font-size:12px;padding-right:7px}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -1245,10 +1251,12 @@ function card(){const box=$('#pwCard');
       :'<p class="pp-wait">這座發電廠每一部機組的即時資料正在開始收集，幾個小時內就會出現。</p>'}
       ${s.us.length&&!one?`<div class="pp-sec"><span>${s.us.length} 部機組現在在做什麼？</span></div>
       <div class="pp-sum">${Object.values(states).map(([n,st])=>`<span class="st ${st[2]}"><i>${st[0]}</i>${st[1]} ${n}</span>`).join('')}</div>
-      <ul class="pp-units">${s.us.map(u=>{const st=unitState(u),nt=u.note.trim(),ex=NOTE[nt],mw=Math.max(0,u.mw||0),cp=u.cap||0;
-        return `<li><div class="ur"><span class="un">${clean(u.n)}</span><span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span><span class="uv num">${fmt(mw)}${cp?`<small> / ${fmt(cp)}</small>`:''}</span></div>
-          <i class="bar"><b style="width:${cp?Math.min(100,mw/cp*100):mw>0?100:0}%;background:${col}"></b></i>
-          ${nt&&ex?`<small class="ux">${nt}：${ex}</small>`:cp?'':'<small class="ux">新機組，還沒有公布最多能發多少</small>'}</li>`;}).join('')}</ul>
+      ${(kinds.length>1?kinds:[null]).map(kk=>{const us=kk?s.us.filter(u=>u.k===kk):s.us;const gm=us.reduce((x,u)=>x+Math.max(0,u.mw||0),0);
+        return `${kk?`<div class="pp-fuel">${symSvg(kk,16)}<b>${MC(kk).n}機組</b><span>${us.length} 部・現在共 <b class="num">${fmt(gm)}</b></span></div>`:''}
+      <ul class="pp-units">${us.map(u=>{const st=unitState(u),nt=u.note.trim(),ex=NOTE[nt],mw=Math.max(0,u.mw||0),cp=u.cap||0;
+        return `<li><div class="ur"><span class="un">${kk?symSvg(u.k,13):''}${clean(u.n)}</span><span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span><span class="uv num">${fmt(mw)}${cp?`<small> / ${fmt(cp)}</small>`:''}</span></div>
+          <i class="bar"><b style="width:${cp?Math.min(100,mw/cp*100):mw>0?100:0}%;background:${onDark(u.k)}"></b></i>
+          ${nt&&ex?`<small class="ux">${nt}：${ex}</small>`:cp?'':'<small class="ux">新機組，還沒有公布最多能發多少</small>'}</li>`;}).join('')}</ul>`;}).join('')}
       <p class="pp-unit">數字：現在發的電 / 最多能發的電（百萬瓦）</p>`
       :one&&s.us[0].note.trim()?(()=>{const u=s.us[0],st=unitState(u),nt=u.note.trim();return `<p class="pp-one"><span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span>${NOTE[nt]||nt}</p>`;})():''}
     </div>`;
