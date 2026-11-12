@@ -1,4 +1,7 @@
+<!doctype html>
+<html lang="zh-Hant">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>臺灣即時發電｜海佃地圖</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -640,6 +643,22 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .pw-panel{overflow-x:hidden;min-width:0;max-width:100%}
 .pp-units .ur>*{min-width:0}
 @media (max-width:420px){.pp-units .ur{grid-template-columns:minmax(0,1fr) auto 6.4em}.pp-units .uv{font-size:13px}.st{font-size:12px;padding-right:7px}}
+.pp-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.pp-split div{border-radius:12px;padding:6px 12px;display:flex;align-items:baseline;gap:6px}
+.pp-split .on{background:#0b5e48}.pp-split .off{background:#22333f;color:#c3d1db}
+.pp-split b{font-size:24px;font-weight:600;color:#fff}.pp-split span{font-size:13px}
+.pp-grp{margin-top:12px}.pp-grp:first-of-type{margin-top:10px}
+.pp-grp .pp-fuel{margin:0 0 8px}
+.pp-grp.zero .pp-fuel{background:none;border:1px dashed var(--pl);color:#c3d1db}
+.pp-offs{margin-top:8px;display:grid;gap:5px;padding:8px 10px;border-radius:10px;background:#0b1721;border:1px solid #1d3140}
+.pp-grp.zero .pp-offs{margin-top:0}
+.pp-offh{font-size:12.5px;color:var(--pm)}
+.pp-off{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:baseline;font-size:13.5px;color:#c3d1db}
+.pp-off .st{justify-self:start}.pp-off .ns{line-height:1.5}
+.pp-notes{margin:14px 0 0;padding:10px 12px;border-radius:10px;background:#162a38;display:grid;gap:6px}
+.pp-notes div{display:grid;gap:0}
+.pp-notes dt{font-weight:700;font-size:13.5px;color:#fff}.pp-notes dd{margin:0;font-size:13px;color:#c3d1db;line-height:1.45}
+.pp-units .ur{grid-template-columns:minmax(0,1fr) auto auto}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -1249,15 +1268,23 @@ function card(){const box=$('#pwCard');
       <div class="pp-gl"><span>0</span><span class="mid">最多能發 <b class="num">${fmt(s.cap)}</b>，現在用了 <b class="num">${pf(p*100)}%</b></span><span class="num">${fmt(s.cap)}</span></div>
       <p class="pp-eq">≈ 大約可以讓 <b class="num">${s.mw*1000>=1e4?fmt(s.mw/10)+'</b> 萬':fmt(Math.round(s.mw*10)*100)+'</b>'} 台冷氣同時運轉</p>`
       :'<p class="pp-wait">這座發電廠每一部機組的即時資料正在開始收集，幾個小時內就會出現。</p>'}
-      ${s.us.length&&!one?`<div class="pp-sec"><span>${s.us.length} 部機組現在在做什麼？</span></div>
-      <div class="pp-sum">${Object.values(states).map(([n,st])=>`<span class="st ${st[2]}"><i>${st[0]}</i>${st[1]} ${n}</span>`).join('')}</div>
-      ${(kinds.length>1?kinds:[null]).map(kk=>{const us=kk?s.us.filter(u=>u.k===kk):s.us;const gm=us.reduce((x,u)=>x+Math.max(0,u.mw||0),0);
-        return `${kk?`<div class="pp-fuel">${symSvg(kk,16)}<b>${MC(kk).n}機組</b><span>${us.length} 部・現在共 <b class="num">${fmt(gm)}</b></span></div>`:''}
-      <ul class="pp-units">${us.map(u=>{const st=unitState(u),nt=u.note.trim(),ex=NOTE[nt],mw=Math.max(0,u.mw||0),cp=u.cap||0;
-        return `<li><div class="ur"><span class="un">${kk?symSvg(u.k,13):''}${clean(u.n)}</span><span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span><span class="uv num">${fmt(mw)}${cp?`<small> / ${fmt(cp)}</small>`:''}</span></div>
-          <i class="bar"><b style="width:${cp?Math.min(100,mw/cp*100):mw>0?100:0}%;background:${onDark(u.k)}"></b></i>
-          ${nt&&ex?`<small class="ux">${nt}：${ex}</small>`:cp?'':'<small class="ux">新機組，還沒有公布最多能發多少</small>'}</li>`;}).join('')}</ul>`;}).join('')}
-      <p class="pp-unit">數字：現在發的電 / 最多能發的電（百萬瓦）</p>`
+      ${s.us.length&&!one?(()=>{
+        const mwOf=u=>Math.max(0,u.mw||0),on=s.us.filter(u=>mwOf(u)>0),off=s.us.filter(u=>mwOf(u)<=0);
+        const notes=[...new Set(s.us.map(u=>u.note.trim()).filter(n=>n&&NOTE[n]))];
+        const groups=(kinds.length>1?kinds:[null]).map(kk=>{const us=kk?s.us.filter(u=>u.k===kk):s.us;return {kk,us,gm:us.reduce((x,u)=>x+mwOf(u),0)};}).sort((a,b)=>b.gm-a.gm);
+        const row=(u,kk)=>{const st=unitState(u),mw=mwOf(u),cp=u.cap||0;
+          return `<li><div class="ur"><span class="un">${clean(u.n)}</span>${st[2]==='run'?'':`<span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span>`}<span class="uv num">${fmt(mw)}${cp?`<small> / ${fmt(cp)}</small>`:'<small> / 未公布</small>'}</span></div>
+            <i class="bar"><b style="width:${cp?Math.min(100,mw/cp*100):100}%;background:${onDark(u.k)}"></b></i></li>`;};
+        const offRows=us=>{const by={};us.forEach(u=>{const st=unitState(u);(by[st[1]]=by[st[1]]||{st,ns:[]}).ns.push(clean(u.n).replace(new RegExp('^'+s.n.slice(0,2)),''));});
+          return Object.values(by).map(o=>`<div class="pp-off"><span class="st ${o.st[2]}"><i>${o.st[0]}</i>${o.st[1]}</span><span class="ns">${o.ns.join('、')}</span></div>`).join('');};
+        return `<div class="pp-sec"><span>${s.us.length} 部機組現在在做什麼？</span></div>
+      <div class="pp-split"><div class="on"><b class="num">${on.length}</b><span>部正在發電</span></div><div class="off"><b class="num">${off.length}</b><span>部沒有發電</span></div></div>
+      ${groups.map(({kk,us,gm})=>{const g1=us.filter(u=>mwOf(u)>0).sort((a,b)=>mwOf(b)-mwOf(a)),g0=us.filter(u=>mwOf(u)<=0);
+        return `<section class="pp-grp${gm>0?'':' zero'}">${kk?`<div class="pp-fuel">${symSvg(kk,16)}<b>${MC(kk).n}機組</b><span>${gm>0?`${g1.length} 部發電中・共 <b class="num">${fmt(gm)}</b>`:'現在沒有發電'}</span></div>`:''}
+        ${g1.length?`<ul class="pp-units">${g1.map(u=>row(u,kk)).join('')}</ul>`:''}
+        ${g0.length?`<div class="pp-offs">${kk||!g1.length?'':'<div class="pp-offh">沒有發電的機組</div>'}${offRows(g0)}</div>`:''}</section>`;}).join('')}
+      ${notes.length?`<dl class="pp-notes">${notes.map(n=>`<div><dt>${n}</dt><dd>${NOTE[n]}</dd></div>`).join('')}</dl>`:''}
+      <p class="pp-unit">數字：現在發的電 / 最多能發的電（百萬瓦）。長條越滿，代表越接近全力發電。</p>`;})()
       :one&&s.us[0].note.trim()?(()=>{const u=s.us[0],st=unitState(u),nt=u.note.trim();return `<p class="pp-one"><span class="st ${st[2]}"><i>${st[0]}</i>${st[1]}</span>${NOTE[nt]||nt}</p>`;})():''}
     </div>`;
   box.querySelector('.pp-back').onclick=unpick;box.querySelector('.pp-x').onclick=unpick;box.scrollTop=0;}
