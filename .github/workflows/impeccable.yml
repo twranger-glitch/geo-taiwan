@@ -47,8 +47,10 @@ jobs:
           for e in out/live_*.err; do
             grep -q "timeout" "$e" || continue
             n=$(basename "$e" .err); n=${n#live_}; f=$n.html
-            npx -y impeccable@latest detect --json "http://localhost:8080/$f" > "out/live_$n.json" 2> "out/live_$n.local.err" || true
-            echo "scanned from local checkout" >> "out/live_$n.err"
+            npx -y impeccable@latest detect --json "http://localhost:8080/$f" > "out/live_$n.json" 2> "out/live_$n.local.err" && { echo "scanned from local checkout" >> "out/live_$n.err"; continue; }
+            # Still slow: try once more without the web-font request (Noto Sans TC loads in many slices)
+            sed 's#<link rel="stylesheet" href="https://fonts.googleapis.com[^>]*>##' "$f" > "_nofont_$f"
+            npx -y impeccable@latest detect --json "http://localhost:8080/_nofont_$f" > "out/live_$n.json" 2> "out/live_$n.nofont.err" && echo "scanned from local checkout without web fonts" >> "out/live_$n.err"
           done
       - name: Publish results to the audit branch
         run: |

@@ -63,3 +63,43 @@ summary{min-height:32px}
 /* Faded rows and off-state chips: show state with muted text, not transparency (contrast) */
 .mix li.nuc{opacity:1}.mix li.nuc *{color:var(--muted)!important}
 .pw-bar .chipset button[aria-pressed="false"]{opacity:1;color:var(--muted);background:transparent}
+
+/* Dark mode: coloured text keeps the page's light dark-mode shades (the darker shades above are for light panels) */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .ext-link a,:root:not([data-theme="light"]) .risk a,:root:not([data-theme="light"]) .linkbtn,:root:not([data-theme="light"]) .fv em,:root:not([data-theme="light"]) .sh-f.prob span,:root:not([data-theme="light"]) .think b{--conv:inherit;--div:inherit;--trans:inherit;--leaf:inherit;--wind:inherit;--rain:inherit;--typhoon:inherit;--plate:inherit;--land-ink:inherit;--water:inherit;--flood:inherit}
+:root:not([data-theme="light"]) .pastcards .when{color:var(--plate)}
+:root:not([data-theme="light"]) .pastcards b,:root:not([data-theme="light"]) .missions b,:root:not([data-theme="light"]) .result .big b{color:var(--flood)}
+:root:not([data-theme="light"]) .sg-h{color:var(--c)}
+:root:not([data-theme="light"]) .dbtn{color:#10313b}
+}
+:root[data-theme="dark"] .ext-link a,:root[data-theme="dark"] .risk a,:root[data-theme="dark"] .linkbtn,:root[data-theme="dark"] .fv em,:root[data-theme="dark"] .sh-f.prob span,:root[data-theme="dark"] .think b{--conv:inherit;--div:inherit;--trans:inherit;--leaf:inherit;--wind:inherit;--rain:inherit;--typhoon:inherit;--plate:inherit;--land-ink:inherit;--water:inherit;--flood:inherit}
+:root[data-theme="dark"] .pastcards .when{color:var(--plate)}
+:root[data-theme="dark"] .pastcards b,:root[data-theme="dark"] .missions b,:root[data-theme="dark"] .result .big b{color:var(--flood)}
+:root[data-theme="dark"] .sg-h{color:var(--c)}
+:root[data-theme="dark"] .dbtn{color:#10313b}
+
+/* Dark mode: fixes that were already off in dark mode before (chips, badges, story text) */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .sg-h{color:color-mix(in srgb,var(--c) 55%,#fff)}
+:root:not([data-theme="light"]) .cat{color:#10313b}
+:root:not([data-theme="light"]) .badge[style*="--ink"],:root:not([data-theme="light"]) .g-thumb span{color:var(--paper)!important}
+:root:not([data-theme="light"]) .st-n,:root:not([data-theme="light"]) .st-p b{color:#b9a6e8}
+:root:not([data-theme="light"]) [style*="#8A5A00"]{color:#e0b260!important}
+:root:not([data-theme="light"]) [style*="#A33F00"]{color:#ff9a66!important}
+:root:not([data-theme="light"]) .hintd summary{color:#7fb6ea}
+}
+:root[data-theme="dark"] .sg-h{color:color-mix(in srgb,var(--c) 55%,#fff)}
+:root[data-theme="dark"] .cat{color:#10313b}
+:root[data-theme="dark"] .badge[style*="--ink"],:root[data-theme="dark"] .g-thumb span{color:var(--paper)!important}
+:root[data-theme="dark"] .st-n,:root[data-theme="dark"] .st-p b{color:#b9a6e8}
+:root[data-theme="dark"] [style*="#8A5A00"]{color:#e0b260!important}
+:root[data-theme="dark"] [style*="#A33F00"]{color:#ff9a66!important}
+:root[data-theme="dark"] .hintd summary{color:#7fb6ea}
+
+/* Map HUDs stay light in both themes */
+.lm-hud span,.lm-hud span:first-child{color:#1f5a91}
+.deer-hud span:first-child{--typhoon:#a8361f}
+.legend-in .lg-small{color:#3f5a63}
+
+/* Form placeholders readable on the tinted fields */
+textarea::placeholder,input::placeholder{color:var(--muted);opacity:1}
