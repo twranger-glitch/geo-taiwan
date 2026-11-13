@@ -1,0 +1,214 @@
+== https://gdmsn.cwa.gov.tw/eqconditionPage.php ERR <urlopen error [Errno -2] Name or service not known>
+== https://gdmsn.cwa.gov.tw/catalogDownloadPage.php ERR <urlopen error [Errno -2] Name or service not known>
+== https://scweb.cwa.gov.tw/zh-tw/earthquake/data/ 200 CT=text/html; charset=utf-8 len=60588
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>地震活動彙整 - 中央氣象署地震測報中心</title>
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css?7">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    
+    
+        <link rel="stylesheet" href="/css/style.min.css?7&amp;v=FsoIO6XXAQCEZvrOZXLTs5K-mMFtc_SnQNZzY0Bi5-k">
+    
+    
+    
+        <link rel="stylesheet" href="/css/style_mob.min.css?v=vJxtFCrGD0OPK502civXSRIZVaX0HY52wyLjZK1m8HE">
+    
+    <link rel="stylesheet" type="text/css" href="/css/flatmenu.css?v=9GxncA0whfM3dbvT7kGzOYKM3Ksf-IDzRehvvmIsFmQ" media="all" />
+    <link rel="stylesheet" type="text/css" href="/css/slideMenu.css?181205" />
+    <link rel="stylesheet" type="text/css" href="/css/component.css?181205" />
+    <link rel="stylesheet" type="text/css" href="/css/slideImg.css?181205" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker3-1.9.0.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style_upd.css?251029&amp;v=egkzN4kOhRoNFHBnMswWGU6Q7U4LnoDgMBf1r-gXGd0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1G5BB60EVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-1G5BB60EVZ');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "r3sm4d3wm3");
+    </script>
+</head>
+<body class="cbp-spmenu-push" data-lang="zh">
+    <div class="mobileSetContent">
+        <div class="wrapperBarBg clear">
+            <a href="#C" id="gotocenter" title="跳到主要內容區塊" tabindex="1" class="sr-only sr-only-focusable">跳到主要內容區塊</a>
+            <h1>
+                    <a href="/" class="logo BaSet">
+                        <img src="/images/wrapperLogo_2.png" alt="中央氣象署地震測報中心 LOGO">
+                    </a>
+            </h1>
+            <div class="right">
+                <div id="dialogBulletin" title="網站公告" style="display:none;">
+                    親愛的使用者您好:
+                    <br /><br />
+                    因應中央氣象局改制為中央氣象署，本網站網址自112年9月15日起調整為
+                    <a href="https://scweb.cwa.gov.tw/">https://scweb.cwa.gov.tw/</a> ，舊網域 https://scweb.cwb.gov.tw/ 後續將停止使用；敬請替換為新網址使用
+                    <br /><br />
+                    造成不便敬請見諒。
+                    <br /><br />
+                    <div align="center">
+                        <i class="ace-icon fa fa-spinner fa-spin orange bigger-125"></i>
+                    </div>
+                    <br />
+                    <div align="center">
+                        <span id="timer">
+                            will close in <span id="time"><strong>15</strong></span> seconds.
+                        </span>
+                    </div>
+                </div>
+                <ul class="optionList">
+                    <li><a href="#U" id="AU" name="U" title="右上方功能區塊" accesskey="U">:::</a></li>
+                        <li id="sitemap"><a class="BaSet" href="/zh-tw/page/sitemap">網站導覽</a></li>
+                        <li><a href="/en-US" class="BaSet">English</a></li>
+                        <li><a href="https://www.facebook.com/cwa.seismology" class="BaSet" target="_blank" title="另開新視窗 - Facebook">Facebook</a></li>
+                </ul>
+                <div class="BsearchBtnBg searchBtnBg">
+                    <input type="text" class="keyin" id="keyin" accesskey="s" title="請輸入關鍵字">
+                    <input type="button" title="搜尋" class="searchBtn" value="搜尋">
+                </div>
+                    <noscript>
+                        <br />『您的瀏覽器不支援JavaScript功能，若網頁功能無法正常使用時，請開啟瀏覽器JavaScript狀態』
+                    </noscript>
+                </div>
+            <a href="javascript:" class="menuMobBtn" id="showLeftPush" aria-expanded="false" aria-controls="cbp-spmenu-s1" aria-label="手機導覽" role="button">
+                    <img src="/images/mob_wrapperMenuBtn.svg" alt="">
+                </a>
+            </div>
+
+            
+
+<nav class="wrapperMenuBg cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <div class="green-black">
+        <div class="mobHead">
+            <div class="mobHeadBtnBg clear">
+                    <a href="/en-US" class="mobEn BaSet">English</a>
+                <a href="javascript:" class="mobSearch BaSet"><img src="/images/mobHeadBtnSearch.png" alt="搜尋"></a>
+            </div>
+            <div class="search clear">
+                <label for="keyin_m" style="display:none;">請輸入關鍵字</label>
+                <input type="text" class="form-control keyin" id="keyin_m" aria-describedby="emailHelp" placehol
+
+== https://earthquake.usgs.gov/fdsnws/event/1/count?minlatitude=20.5&maxlatitude=26.5&minlongitude=118.5&maxlongitude=123.5&starttime=1973-01-01&minmagnitude=3 200 CT=text/plain;charset=UTF-8 len=4
+7314
+
+== https://bats.earth.sinica.edu.tw/ 200 CT=text/html len=967
+<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="favicon.ico"/><title>BATS</title><script src="assets/js/jquery-3.7.1.min.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-6LVNJLMHFC"></script><script>window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-6LVNJLMHFC');</script><script defer="defer" src="js/981.6ea606ff.js"></script><script defer="defer" src="js/app.34ed89f1.js"></script><link href="css/981.6d44ab52.css" rel="stylesheet"><link href="css/app.9e286088.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but vue_test doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+
+== https://www.sciencebase.gov/catalog/item/5aa1b00ee4b0b1c392e86467?format=json 200 CT=application/json;charset=UTF-8 len=17963
+{"link":{"rel":"self","url":"https://www.sciencebase.gov/catalog/item/5aa1b00ee4b0b1c392e86467"},"relatedItems":{"link":{"url":"https://www.sciencebase.gov/catalog/itemLinks?itemId=5aa1b00ee4b0b1c392e86467","rel":"related"}},"id":"5aa1b00ee4b0b1c392e86467","identifiers":[{"type":"DOI","scheme":"https://www.sciencebase.gov/vocab/category/item/identifier","key":"doi:10.5066/F7PV6JNV"}],"title":"Slab2 - A Comprehensive Subduction Zone Geometry Model","summary":"Subduction zones are home to the most seismically active faults on the planet. The shallow megathrust interface of subduction zones host our largest earthquakes, and are the only faults capable of M9+ ruptures. Despite these facts, our knowledge of subduction zone geometry - which likely plays a key role in determining the spatial extent and ultimately the size of subduction zone earthquakes - is incomplete. Here we calculate the three- dimensional geometries of all active global subduction zones. The resulting model - Slab2 - provides for the first time a comprehensive geometrical analysis of all known slabs in unprecedented detail.  ##### This distribution includes models of three-dimensional slab geometry under the banner of the [...]","body":"Subduction zones are home to the most seismically active faults on the planet. The shallow megathrust interface of subduction zones host our largest earthquakes, and are the only faults capable of M9+ ruptures. Despite these facts, our knowledge of subduction zone geometry - which likely plays a key role in determining the spatial extent and ultimately the size of subduction zone earthquakes - is incomplete. Here we calculate the three- dimensional geometries of all active global subduction zones. The resulting model - Slab2 - provides for the first time a comprehensive geometrical analysis of all known slabs in unprecedented detail.\n<p><br>\n#####<br>\nThis distribution includes models of three-dimensional slab geometry under the banner of the U.S. Geological Survey Slab2 project.<br>\n#####<br>\nPlease refer to the paper: \"Slab2 - A Comprehensive Subduction Zone Geometry Model\", by Hayes, G.P., et al., submitted to Science, March 2018.<br>\n#####<\/p>\n\n<p>Description of Files:<br>\n1) *slab2_dep*.grd = NetCDF formatted grid file of slab depth<br>\n2) *slab2_str*.grd = NetCDF formatted grid file of slab strike<br>\n3) *slab2_dip*.grd = NetCDF formatted grid file of slab dip<br>\n4) *slab2_thk*.grd = NetCDF formatted grid file of slab thickness<br>\n5) *slab2_unc*.grd = NetCDF formatted grid file of slab depth uncertainty<br>\n<br>\nAll grid files can be plotted with with GMT grdimage (http://gmt.soest.hawaii.edu/)<br>\n<br>\nFor information on the grid, use:<br>\n&gt;gmt grdinfo sum_slab1.0_clip.grd<br>\n<br>\nAll supplied models are sampled every&nbsp;0.05 degrees in both the X (longitude) and Y (latitude) directions.<br>\n#####<br>\nClipping Masks:<br>\nLabeled *clp*.csv&nbsp;describe comma-delimited files of the clipping mask (polygon) for each slab model. Outside of the polygon described by the clipping mask, slab models should not be used. Slab node values outside of the clipping mask are equal to NaN.<br>\n#####<br>\nSupplementary Files:<br>\nLabeled *sup*.csv. Four slab models (Izu-Bonin - izu; Kermadec - ker; Manila - man; and Solomon Islands - sol) include areas where the slab overturns (dip&gt;90º) with depth. In such instances, the slab cannot be described by a continuous surface, and is instead provided as a series of discrete (lon,lat,depth,strike,dip,dz1,dz2,dz3,thickness) nodes, where dz1-3 describe various measures of uncertainty (dz1 corresponds to the PDF standard deviation uncertainty used for unc grids, above; dz2 = interpolated shift magnitude uncertainty; dz3 = smoothing-related uncertainty).<br>\n#####<br>\nContour Files:<br>\nLabeled *contours.in. Contours for depth, strike, and dip, generated from the grid files described above.<br>\n#####<br>\nText Files:<br>\nLabeled *.xyz. Text files corresponding to each of the grids described above.<br>\n#####<br>\nPerl script \"slabquery.pl\" uses GMT to query slab database for slab, and geomertical parameters (depth, strike, dip, thickness, uncertainty). Script takes {lon, lat} location at command line.<\/p>\n","citation":"Hayes, G., 2018, Slab2 - A Comprehensive Subduction Zone Geometry Model: U.S. Geological Survey data release, https://doi.org/10.5066/F7PV6JNV.","purpose":"Description of the three dimensional geometries of global subducted slabs.","provenance":{"dateCreated":"2018-03-08T21:50:06Z","lastUpdated":"2020-08-18T17:30:36Z"},"maintenanceUpdateFrequency":"None planned","hasChildren":true,"parentId":"5474ec49e4b04d7459a7eab2","contacts":[{"name":"Gavin Hayes","oldPartyId":4354,"type":"Point of Contact","contactType":"person","email":"ghayes@usgs.gov","active":true,"jobTitle":"Research Geophysicist","firstName":"Gavin","lastName":"Hayes","cellPhone":"3033744449","organization":{"displayText":"Geologic Hazards Team"},"primaryLocation":{"name":"Gavin Hayes/GD/CONT/USGS/DOI - Primary Location","building":"1711 Illinois St","buildingCode":"KCI","officePhone":"3032738421","faxPhone":"3032738600","streetAddress":{"line1":"1711 Illinois St","city":"Golden","state":"CO","zip":"80401"},"mailAddress":{"line1":"P.O. Box 25046, Mail Stop 966","mailStopCode":"966","city":"Denver","state":"CO","zip":"80225-0046","country":"USA"}},"orcId":"0000-0003-3323-0112"},{"name":"U.S. Geological Survey, Earthquake Hazards Program","type":"Point of Contact","contactType":"organization","email":"ghayes@usgs.gov","organization":{},"primaryLocation":{"officePhone":"303-273-8421","streetAddress":{},"mailAddress":{"line1":"1711 Illinois St MS 966","city":"Golden","state":"CO","zip":"80401","country":"USA"}}},{"name":"Gavin Hayes","oldPartyId":4354,"type":"Originator","contactType":"person","email":"ghayes@usgs.gov","active":true,"jobTitle":"Research Geophysicist","firstName":"Gavin","lastName":"Hayes","cellPhone":"3033744449","organization"
+
+== https://studio-101.github.io/taiwan-earthquake-site/data/earthquakes.csv 200 CT=text/csv; charset=utf-8 len=4777533
+Year,OriginTime,EpicenterLongitude,EpicenterLatitude,FocalDepth,LocalMagnitude,Quality,ReviewStatus,InFileRegion
+1990,1990-01-01T21:47:59+08:00,121.812,24.317,2.0,3.3,C,N,true
+1990,1990-01-02T06:58:12+08:00,120.980,23.786,18.7,3.4,A,N,true
+1990,1990-01-02T09:22:20+08:00,122.537,24.807,124.0,3.5,D,N,true
+1990,1990-01-02T14:26:53+08:00,121.386,23.067,10.7,4.0,C,N,true
+1990,1990-01-02T18:43:28+08:00,122.117,24.222,28.8,3.4,D,N,true
+1990,1990-01-02T18:43:34+08:00,120.918,23.662,10.0,3.1,C,N,true
+1990,1990-01-02T21:09:06+08:00,121.321,22.980,0.8,3.5,B,N,true
+1990,1990-01-02T21:24:24+08:00,122.380,24.144,22.3,3.8,C,N,true
+1990,1990-01-02T23:16:25+08:00,122.379,24.798,2.2,3.2,C,N,true
+1990,1990-01-03T04:29:43+08:00,122.298,23.685,16.7,3.5,C,N,true
+1990,1990-01-03T22:13:25+08:00,120.805,22.692,27.5,3.4,B,N,true
+1990,1990-01-04T00:53:03+08:00,121.856,24.422,1.0,3.5,C,N,true
+1990,1990-01-04T02:49:06+08:00,121.666,23.925,21.1,3.3,C,N,true
+1990,1990-01-04T12:53:06+08:00,121.739,24.022,20.4,3.6,C,N,true
+1990,1990-01-04T18:39:40+08:00,121.094,22.822,10.8,3.4,B,N,true
+1990,1990-01-04T21:05:02+08:00,121.830,24.183,8.9,4.5,C,N,true
+1990,1990-01-05T02:09:01+08:00,121.644,23.561,27.9,4.0,C,N,true
+1990,1990-01-06T00:19:40+08:00,121.498,23.636,7.3,3.1,C,N,true
+1990,1990-01-06T05:11:13+08:00,122.291,24.644,68.8,3.0,C,N,true
+1990,1990-01-08T00:43:28+08:00,121.186,22.141,42.0,4.6,C,N,true
+1990,1990-01-08T01:25:14+08:00,120.705,23.841,11.4,3.3,B,N,true
+1990,1990-01-08T11:42:20+08:00,122.502,24.595,77.2,3.5,C,N,true
+1990,1990-01-10T05:32:34+08:00,121.740,23.952,26.0,3.0,C,N,true
+1990,1990-01-10T09:18:28+08:00,120.882,24.261,27.4,3.2,A,N,true
+1990,1990-01-10T16:04:29+08:00,121.146,22.620,18.1,3.3,C,N,true
+1990,1990-01-11T00:37:47+08:00,121.806,24.488,18.5,3.1,C,N,true
+1990,1990-01-11T19:19:36+08:00,121.025,22.297,1.5,4.1,C,N,true
+1990,1990-01-12T05:50:38+08:00,122.416,24.185,32.8,3.5,C,N,true
+1990,1990-01-13T14:15:21+08:00,120.801,23.091,2.4,3.2,B,N,true
+1990,1990-01-13T22:23:05+08:00,122.364,24.145,10.3,3.4,C,N,true
+1990,1990-01-14T18:18:43+08:00,121.900,24.701,54.1,3.5,C,N,true
+1990,1990-01-14T19:08:12+08:00,121.999,24.172,30.1,3.0,C,N,true
+1990,1990-01-14T22:49:29+08:00,122.483,24.836,107.2,3.3,C,N,true
+1990,1990-01-15T13:04:49+08:00,121.696,24.036,8.8,3.0,C,N,true
+1990,1990-01-15T20:42:30+08:00,121.932,24.360,20.1,5.2,C,N,true
+1990,1990-01-16T00:02:01+08:00,121.981,24.335,27.2,3.1,C,N,true
+1990,1990-01-16T00:10:28+08:00,121.985,24.352,24.3,3.2,C,N,true
+1990,1990-01-16T02:14:08+08:00,121.972,24.352,25.3,3.6,C,N,true
+1990,1990-01-16T04:36:34+08:00,121.987,24.350,27.3,3.0,C,N,true
+1990,1990-01-16T07:53:21+08:00,121.081,22.037,49.0,4.1,C,N,true
+1990,1990-01-16T15:18:32+08:00,121.951,24.371,26.6,3.3,C,N,true
+1990,1990-01-17T01:17:48+08:00,122.383,24.674,66.9,3.6,C,N,true
+1990,1990-01-17T16:17:37+08:00,121.900,24.371,16.6,3.3,C,N,true
+1990,1990-01-17T21:46:18+08:00,121.995,24.369,25.9,3.2,C,N,true
+1990,1990-01-17T23:25:37+08:00,121.955,23.568,19.5,3.4,C,N,true
+1990,1990-01-18T00:20:40+08:00,121.993,24.611,36.5,3.0,C,N,true
+1990,1990-01-18T00:22:32+08:00,121.954,24.378,26.4,3.2,C,N,true
+1990,1990-01-18T16:49:45+08:00,121.973,24.390,13.9,4.0,C,N,true
+1990,1990-01-18T18:04:13+08:00,122.276,24.756,87.1,3.4,C,N,true
+1990,1990-01-18T18:16:32+08:00,122.397,24.382,36.5,3.4,D,N,true
+1990,1990-01-19T10:07:56+08:00,121.552,24.129,20.2,3.5,B,N,true
+1990,1990-01-19T13:54:22+08:00,122.343,24.845,6.0,3.8,C,N,true
+1990,1990-01-19T14:10:56+08:00,122.385,24.833,2.7,3.1,C,N,true
+1990,1990-01-19T17:42:18+08:00,122.407,24.843,3.3,3.1,C,N,true
+1990,1990-01-19T23:35:11+08:00,120.920,22.660,16.0,3.1,C,N,true
+1990,1990-01-20T10:11:34+08:00,122.312,24.573,0.8,4.6,C,N,true
+1990,1990-01-20T13:37:00+08:00,122.399,24.598,1.7,3.1,C,N,true
+1990,1990-01-20T15:02:40+08:00,121.090,22.807,0.1,4.0,B,N,true
+1990,1990-01-20T15:31:24+08:00,122.252,24.526,7.1,3.9,C,N,true
+1990,1990-01-20T22:24:34+08:00,121.875,24.436,1.9,3.2,D,N,true
+1990,1990-01-21T13:22:06+08:00,121.981,24.183,17.5,3.1,D,N,true
+1990,1990-01-21T15:04:40+08:00,120.626,23.148,4.8,3.3,C,N,true
+1990,1990-01-21T16:12:09+08:00,121.340,22.642,21.6,4.2,B,N,true
+1990,1990-01-21T16:34:33+08:00,122.262,24.354,30.0,3.3,C,N,true
+1990,1990-01-21T17:49:20+08:00,121.624,23.622,27.5,4.0,C,N,true
+1990,1990-01-22T03:38:10+08:00,122.653,24.101,16.3,3.5,C,N,true
+1990,1990-01-22T13:43:57+08:00,122.219,24.186,26.8,3.4,C,N,true
+1990,1990-01-22T19:04:04+08:00,122.424,24.839,12.4,3.3,C,N,true
+1990,1990-01-23T11:15:42+08:00,122.496,24.659,96.0,4.6,C,N,true
+1990,1990-01-23T15:39:33+08:00,120.880,23.692,0.4,4.0,C,N,true
+1990,1990-01-23T15:49:18+08:00,120.878,23.640,5.3,3.2,B,N,true
+1990,1990-01-23T22:06:01+08:00,121.882,24.906,100.5,3.6,C,N,true
+1990,1990-01-24T01:29:00+08:00,120.887,22.672,0.5,4.1,B,N,true
+1990,1990-01-24T13:22:37+08:00,122.359,24.500,9.1,3.0,C,N,true
+1990,1990-01-24T14:55:34+08:00,121.650,23.354,35.4,3.3,C,N,true
+1990,1990-01-25T00:18:41+08:00,121.613,24.041,41.5,3.2,C,N,true
+1990,1990-01-25T00:36:27+08:00,122.057,24.150,2.2,3.2,C,N,true
+1990,1990-01-25T08:07:45+08:00,120.316,24.575,14.2,3.1,C,N,true
+1990,1990-01-25T14:28:50+08:00,122.160,24.168,3.2,3.3,C,N,true
+1990,1990-01-26T05:35:00+08:00,121.169,21.998,31.3,4.9,C,N,true
+1990,1990-01-26T17:19:17+08:00,122.092,24.851,82.6,3.3,C,N,true
+1990,1990-01-28T03:22:53+08:00,120.717,22.808,16.8,3.2,B,N,true
+1990,1990-01-28T05:22:07+08:00,122.733,24.433,13.4,3.4,D,N,true
+1990,1990-01-28T06:23:38+08:00,122.117,24.693,66.9,3.3,C,N,true
+1990,1990-01-28T10:17:40+08:00,121.828,24.248,33.1,3.0,C,N,true
+1990,1990-01-28T11:00:10+08:00,121.721,24.131,47.9,3.4,C,N,true
+1990,1990-01-28T20:08:07+08:00,120.840,22.261,33.9,3.4,C,N,true
+1990,1990-01-28T22:05:33+08:00,120.916,23.262,0.3,3.5,B,N,true
+1990,1990-01-29T06:37:14+08:00,120.936,23.559,5.9,3.3,C,N,true
+1990,1990-01-29T13:18:49+08:00,120.928,23.559,9.3,3.8,C,N,true
+1990,1990-01-29T13:28:14+08:00,120.937,23.572,9.3,3.9,C,N,tr
+
