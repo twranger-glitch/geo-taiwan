@@ -1,0 +1,41 @@
+/* 海佃地圖 site navigation (DESIGN.md › Navigation) */
+html,body{margin:0}
+.gnav{position:relative;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);font-family:var(--f-body)}
+.gn-in{max-width:1180px;margin:0 auto;padding:0 16px;height:60px;display:flex;align-items:center;gap:16px}
+.gn-i{width:16px;height:16px;flex:none}
+.gn-brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--f-display);font-size:20px;flex:none;min-height:44px}
+.gn-brand svg{width:32px;height:32px}
+.gn-where{display:none;min-width:0;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gn-where span{margin:0 6px}
+.gn-tabs{list-style:none;margin:0 0 0 auto;padding:0;display:flex;gap:2px;height:100%}
+.gn-tabs li{position:relative;display:flex}
+.gn-tab{display:flex;align-items:center;gap:4px;height:100%;padding:0 12px;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;font-weight:500;cursor:pointer;position:relative}
+.gn-tab:hover{background:var(--surface-2)}
+.gn-tab[data-cur]{font-weight:700}
+.gn-tab[data-cur]::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--ink)}
+.gn-tab[aria-expanded="true"] .gn-i{transform:rotate(180deg)}
+.gn-tab:focus-visible,.gn-menu:focus-visible,.gn-brand:focus-visible,.gn-pg:focus-visible,.gn-close:focus-visible{outline:3px solid #0072B2;outline-offset:-3px}
+.gn-pop{position:absolute;top:100%;right:0;width:340px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(16,49,59,.16);padding:8px;margin-top:6px}
+.gn-tabs li:first-child .gn-pop,.gn-tabs li:nth-child(2) .gn-pop{right:auto;left:0}
+.gn-ph{padding:8px 12px 10px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--line);margin-bottom:6px}
+.gn-ph b{display:block;font-size:16px;color:var(--ink)}
+.gn-pg{display:grid;gap:2px;padding:10px 12px;border-radius:6px;text-decoration:none;color:var(--ink);min-height:44px}
+.gn-pg:hover{background:var(--surface-2)}
+.gn-pn{display:flex;align-items:center;gap:6px;font-weight:700;font-size:16px}
+.gn-pn .gn-i{width:10px;height:10px;color:#0072B2}
+.gn-pd{font-size:14px;color:var(--muted);line-height:1.45}
+.gn-pg[aria-current="page"]{background:var(--surface-2)}
+.gn-menu{display:none;margin-left:auto;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.gn-sheet{position:fixed;inset:0;z-index:100;background:var(--surface);overflow:auto;padding:0 16px 32px}
+.gn-sh{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;height:60px;background:var(--surface);border-bottom:1px solid var(--line);margin:0 -16px 8px;padding:0 16px;font-size:18px}
+.gn-close{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer}
+.gn-close .gn-i{width:20px;height:20px}
+.gn-sg{padding:12px 0;border-bottom:1px solid var(--line)}
+.gn-sg h2{font-size:14px;color:var(--muted);margin:0 0 4px;font-weight:700;display:flex;gap:8px;align-items:baseline}
+.gn-sg h2 span{font-weight:400}
+.gn-sg.cur h2{color:var(--ink)}
+.gn-sg .gn-pg{padding:12px 4px}
+html.gn-lock{overflow:hidden}
+@media (max-width:899.98px){.gn-tabs{display:none}.gn-menu{display:inline-flex}.gn-where{display:block;flex:1}.gn-brand span{font-size:18px}}
+@media (max-width:420px){.gn-brand span{display:none}}
+@media (prefers-reduced-motion:no-preference){.gn-tab .gn-i{transition:transform .15s ease-out}}

@@ -341,8 +341,8 @@ footer p+p{margin-top:6px}
 <style>
 .top .unit-link{font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15.5px;white-space:nowrap}
 .top .unit-link:hover{border-color:var(--ink)}
-.top .links{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.top .unit-link{white-space:normal}.top .links{align-items:flex-start}}
+.top .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.top .unit-link{white-space:normal}.top .links{justify-content:flex-start}}
 /* rail */
 nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
@@ -492,17 +492,14 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .amk .dot{cursor:pointer}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<link rel="stylesheet" href="assets/site-nav.css?v=1">
+<nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
+<script src="assets/site-nav.js?v=1" defer></script>
 <header class="top">
   <div class="wrap">
     <div>
-      <div class="kicker">五年級社會 · 第三單元補充</div>
       <h1>尋根探源話<span class="accent">臺灣</span></h1>
       <p class="lede">早在五萬年前，臺灣就有人類生活。跟著考古學家挖一挖、看一看，認識史前人類怎麼利用環境過生活，再看看原住民族流傳下來的生活智慧。</p>
-    </div>
-    <div class="links">
-      <a class="unit-link" href="https://geo.twranger.com/prehistory.html" style="background:var(--ink);color:var(--paper)">玩遊戲：史前生存大冒險 →</a>
-      <a class="unit-link" href="https://geo.twranger.com/">第二單元：臺灣自然環境與生活 →</a>
-      <a class="unit-link" href="https://geo.twranger.com/unit4.html">第四單元：大航海時代的臺灣 →</a>
     </div>
   </div>
 </header>
