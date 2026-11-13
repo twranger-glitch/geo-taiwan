@@ -42,3 +42,12 @@ menu.addEventListener('click',()=>setSheet(true));sheet.querySelector('.gn-close
 document.addEventListener('click',e=>{if(!nav.contains(e.target))closeAll();});
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const t=tabs.find(t=>t.getAttribute('aria-expanded')==='true');if(t){closeAll();t.focus();}if(!sheet.hidden)setSheet(false);});
 })();
+/* Small SVG map targets (labels, island dots): add an invisible hit area so each is at least 28px tall on screen. */
+(()=>{const MIN=28,NS='http://www.w3.org/2000/svg';let t=0;
+const run=()=>{document.querySelectorAll('svg g[role="button"]').forEach(g=>{if(g.querySelector(':scope>rect.hit'))return;let b;try{b=g.getBBox();}catch(e){return;}
+  const m=g.getScreenCTM();if(!m||!b.width)return;const k=Math.hypot(m.a,m.b)||1;const h=b.height*k,w=b.width*k;if(h>=24)return;
+  const H=MIN/k,W=Math.max(b.width,MIN/k);const r=document.createElementNS(NS,'rect');r.setAttribute('class','hit');
+  r.setAttribute('x',b.x+b.width/2-W/2);r.setAttribute('y',b.y+b.height/2-H/2);r.setAttribute('width',W);r.setAttribute('height',H);
+  r.setAttribute('fill','transparent');r.style.pointerEvents='all';g.insertBefore(r,g.firstChild);});};
+const sch=()=>{if(t)return;t=setTimeout(()=>{t=0;run();},300);};
+new MutationObserver(sch).observe(document.body,{childList:true,subtree:true});addEventListener('load',sch);addEventListener('resize',()=>{document.querySelectorAll('rect.hit').forEach(r=>r.remove());sch();});sch();})();

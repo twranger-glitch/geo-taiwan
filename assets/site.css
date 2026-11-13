@@ -1,0 +1,52 @@
+/* 海佃地圖 shared fixes that apply on top of each page's own styles (DESIGN.md §3–§8).
+   Loaded after the page <style>, so equal-specificity rules here win. */
+
+/* §3.2 Contrast — white text on light data colours: switch to ink text */
+.unit-head .badge[style*="--plate"],.unit-head .badge[style*="#e0a800"],
+.tag[style*="--trans"],.dbtn,.temps button[style]{color:var(--ink)!important}
+.dbtn.playing{color:#fff!important}
+/* white text on mid-tone chips: shade the chip so white text reaches 4.5:1 */
+.tag[style*="--conv"],.tag[style*="--div"],.cat.c1,.cal-bar,.crop-ico,.pill,.dg-dots i.on{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28)}
+/* coloured words on light panels: same hue, darker */
+.think b,.pastcards .when{color:#8a5a0c}
+.pastcards b,.missions b{color:#0b7d93}
+.sg-h{filter:brightness(.72)}
+.ext-link a,.risk a,.linkbtn,.fv em,.sh-f.prob span,.deer-hud span:first-child{filter:brightness(.8)}
+
+/* §8 Emphasis blocks: tinted panel with a title, no thick side border (Impeccable: side-tab) */
+.think{border-left:0!important;border-radius:10px!important;background:color-mix(in srgb,var(--plate) 9%,var(--surface))!important}
+
+/* §4 Line length: CJK paragraphs ≤ 40 characters */
+.lede,.unit-head p.sub,.sub,.panel p,.note,.src,footer p,.wrap>p,.lg-note{max-width:40em}
+
+/* §6 Icons: one SVG set (1.8px strokes, round joins), coloured by currentColor */
+.ic{display:inline-block;width:1em;height:1em;vertical-align:-.14em;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat;flex:none}
+.ic-play,.ic-bolt{margin-right:.3em}
+#gpBtn .ic,#rulPlay .ic,.gq .ic,.ico .ic,.cmp-handle .ic{margin:0}
+.ic-play{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 3.2v9.6l7.6-4.8z' stroke='%23000' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ic-pause{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3.5' y='3' width='3' height='10' rx='1'/%3E%3Crect x='9.5' y='3' width='3' height='10' rx='1'/%3E%3C/svg%3E")}
+.ic-bolt{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M9.2 1.5L3.6 9.2h4.1l-.9 5.3 5.6-7.7H8.3z' stroke='%23000' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ic-left{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M10 3.5L5.5 8l4.5 4.5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.ic-right{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3.5L10.5 8 6 12.5' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+
+/* Map attribution on the dark maps: readable size and contrast */
+.leaflet-container .leaflet-control-attribution{font-size:12px;color:#c9d6df;background:#0c1822e6}
+.leaflet-container .leaflet-control-attribution a{color:#e9eef2}
+
+/* Data-coloured chips that already set their own dark text keep their original colour */
+.pill[style*="color:"]{box-shadow:none}
+.yb-row i{filter:none}
+.yb-row i[style*="color:#fff"]{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28)}
+.yb-row i[style*="#1b1b1b"]{color:#000!important}
+
+/* Small labels: no wide letter-spacing (Impeccable: eyebrow) */
+.pp-eye{letter-spacing:0}
+
+.cal-bar[aria-pressed="true"]{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28),0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.temps button[style]{color:#140a04!important}
+.res-legend span{color:var(--ink)}
+
+/* Touch targets (WCAG 2.5.8, ≥24px) */
+input[type=checkbox],input[type=radio]{width:24px;height:24px;flex:none}
+input[type=range]{min-height:28px}
+summary{min-height:32px}

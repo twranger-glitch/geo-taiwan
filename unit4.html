@@ -625,6 +625,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <link rel="stylesheet" href="assets/site-nav.css?v=1">
+<link rel="stylesheet" href="assets/site.css?v=1">
 <nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
 <script src="assets/site-nav.js?v=1" defer></script>
 <header class="top">
@@ -699,7 +700,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <div class="panel pad">
         <div class="mapbox" id="rulBox" style="border:0"><svg id="rulSvg" role="img" aria-label="臺灣經營者變化地圖"></svg></div>
         <div class="yearbar">
-          <button class="bigbtn" id="rulPlay" aria-label="播放">▶</button>
+          <button class="bigbtn" id="rulPlay" aria-label="播放"><i class="ic ic-play" aria-hidden="true"></i></button>
           <div class="yb-track">
             <input type="range" id="rulYear" min="1620" max="1690" step="1" value="1624" aria-label="年份">
             <div class="yb-eras" id="rulEras" aria-hidden="true"></div>
@@ -723,7 +724,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <div>
         <div class="cmpbox" id="tjBox">
           <svg id="tjSvg" role="img" aria-label="台江內海今昔比較"></svg>
-          <div class="cmp-handle" id="tjHandle" role="slider" tabindex="0" aria-label="拖曳比較 400 年前與現在" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span>◀ ▶</span></div>
+          <div class="cmp-handle" id="tjHandle" role="slider" tabindex="0" aria-label="拖曳比較 400 年前與現在" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span><i class="ic ic-left" aria-hidden="true"></i><i class="ic ic-right" aria-hidden="true"></i></span></div>
           <div class="cmp-lab l">約 400 年前（示意）</div><div class="cmp-lab r">現在</div><div class="tj-credit" id="tjCredit" hidden>街道地圖：內政部國土測繪中心</div>
         </div>
         <label class="dsurge2" id="tjEmapLab" hidden><input type="checkbox" id="tjEmap"> 在「現在」那一邊疊上今天的街道地圖</label>
@@ -1037,8 +1038,8 @@ function drawYear(y){const s=who(y,'s'),n=who(y,'n');
    ${y>=1624&&y<1662?'<p class="note" style="margin-top:8px">荷蘭人從中國招募漢人來臺開墾，種稻米和甘蔗，輸出蔗糖賺錢。</p>':''}`;
   $('#rulYear').setAttribute('aria-valuetext',y+' 年');}
 $('#rulYear').addEventListener('input',e=>{stopRul();drawYear(+e.target.value);});
-let rulT=null;function stopRul(){if(rulT){clearInterval(rulT);rulT=null;$('#rulPlay').textContent='▶';}}
-$('#rulPlay').onclick=()=>{if(rulT){stopRul();return;}const r=$('#rulYear');if(+r.value>=1690)r.value=1620;$('#rulPlay').textContent='❚❚';
+let rulT=null;function stopRul(){if(rulT){clearInterval(rulT);rulT=null;$('#rulPlay').innerHTML='<i class="ic ic-play" aria-hidden="true"></i>';}}
+$('#rulPlay').onclick=()=>{if(rulT){stopRul();return;}const r=$('#rulYear');if(+r.value>=1690)r.value=1620;$('#rulPlay').innerHTML='<i class="ic ic-pause" aria-hidden="true"></i>';
   rulT=setInterval(()=>{let v=+r.value+1;if(v>1690){stopRul();return;}r.value=v;drawYear(v);},260);};
 drawYear(1624);
 

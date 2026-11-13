@@ -746,6 +746,7 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <link rel="stylesheet" href="assets/site-nav.css?v=1">
+<link rel="stylesheet" href="assets/site.css?v=1">
 <nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
 <script src="assets/site-nav.js?v=1" defer></script>
 <header class="top">
@@ -778,14 +779,14 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
       <div class="tabs" id="gnMode" role="tablist" aria-label="地圖要看什麼">
         <button role="tab" data-m="h" aria-selected="true">➜ 往哪裡移動</button>
         <button role="tab" data-m="v" aria-selected="false">▲▼ 上升或下沉</button>
-        <button role="tab" data-m="a" aria-selected="false">▶ 15 年快轉</button>
-        <button role="tab" data-m="q" aria-selected="false">⚡ 地震瞬間</button>
+        <button role="tab" data-m="a" aria-selected="false"><i class="ic ic-play" aria-hidden="true"></i>15 年快轉</button>
+        <button role="tab" data-m="q" aria-selected="false"><i class="ic ic-bolt" aria-hidden="true"></i>地震瞬間</button>
       </div>
     </div>
     <div class="gn-box" id="gnBox">
       <div id="gnMap" role="region" aria-label="臺灣 GNSS 測站移動地圖（可以拖曳、縮放）"></div>
       <div class="gn-play" id="gnPlay" hidden>
-        <button class="gp-btn" id="gpBtn" aria-label="播放">▶</button>
+        <button class="gp-btn" id="gpBtn" aria-label="播放"><i class="ic ic-play" aria-hidden="true"></i></button>
         <div class="gp-t"><b id="gpYear" class="num">2010</b><input type="range" id="gpRange" min="0" max="179" value="0" aria-label="年份"></div>
         <label class="gp-x">放大<select id="gpX"><option value="10000">1 萬倍</option><option value="20000" selected>2 萬倍</option><option value="40000">4 萬倍</option></select></label>
       </div>
@@ -1046,10 +1047,10 @@ function legend(){const L1=SPD.map(x=>`<span class="li"><svg width="30" height="
 /* animation */
 function updYear(){const y=T0+Math.floor(frame/12),mo=frame%12+1;$('#gpYear').textContent=`${y} 年 ${mo} 月`;
   const e=D.eq.find(e=>frame>=e.f&&frame<e.f+4);const fl=$('#gnFlash');
-  if(e&&e.o.length>=8){fl.hidden=false;fl.innerHTML=`⚡ <b>${e.d}　${e.n}</b>　規模 ${e.m}`;}else fl.hidden=true;}
-function play(){if(timer){stop();return;}if(frame>=NM-1)frame=0;$('#gpBtn').textContent='❚❚';$('#gpBtn').setAttribute('aria-label','暫停');
+  if(e&&e.o.length>=8){fl.hidden=false;fl.innerHTML=`<i class="ic ic-bolt" aria-hidden="true"></i> <b>${e.d}　${e.n}</b>　規模 ${e.m}`;}else fl.hidden=true;}
+function play(){if(timer){stop();return;}if(frame>=NM-1)frame=0;$('#gpBtn').innerHTML='<i class="ic ic-pause" aria-hidden="true"></i>';$('#gpBtn').setAttribute('aria-label','暫停');
   timer=setInterval(()=>{frame++;if(frame>=NM-1){frame=NM-1;stop();}$('#gpRange').value=frame;updYear();redraw();},matchMedia('(prefers-reduced-motion: reduce)').matches?160:70);}
-function stop(){clearInterval(timer);timer=null;const b=$('#gpBtn');if(b){b.textContent='▶';b.setAttribute('aria-label','播放');}}
+function stop(){clearInterval(timer);timer=null;const b=$('#gpBtn');if(b){b.innerHTML='<i class="ic ic-play" aria-hidden="true"></i>';b.setAttribute('aria-label','播放');}}
 
 /* ---------- cards ---------- */
 const inC=(...a)=>s=>a.some(x=>s.town.startsWith(x));
@@ -1074,9 +1075,9 @@ function card(){const box=$('#gnCard');if(!D)return;
       <div class="pp-sec"><span>▲ 上升最多</span><small>每年</small></div><ol class="pp-rank">${up.map(row).join('')}</ol>
       <div class="pp-how"><b>為什麼山區會上升？</b><p>板塊一直推擠，把地層往上擠，所以中央山脈和海岸山脈的一些地方每年還在長高。不過雨水和河流也一直在把山侵蝕削低。</p></div>`;}
   else if(mode==='a'){h=`<div class="pp-eye">2010 → 2024</div><h3 class="pp-h">15 年快轉</h3>
-      <p class="pp-desc">按下地圖下方的 ▶，看看 15 年來每個測站怎麼走。真實的移動只有幾公分到一公尺多，這裡放大了上萬倍。</p>
+      <p class="pp-desc">按下地圖下方的播放鍵，看看 15 年來每個測站怎麼走。真實的移動只有幾公分到一公尺多，這裡放大了上萬倍。</p>
       <div class="pp-sec"><span>跳到這些大地震</span><small>點一下</small></div>
-      <ol class="pp-rank">${D.eq.filter(e=>e.o.length>=8).map(e=>`<li><button data-f="${e.f}"><span class="gq">⚡</span><span class="nm">${e.d.slice(0,7)} ${e.n}</span><span class="v num">M${e.m}</span></button></li>`).join('')}</ol>
+      <ol class="pp-rank">${D.eq.filter(e=>e.o.length>=8).map(e=>`<li><button data-f="${e.f}"><span class="gq"><i class="ic ic-bolt" aria-hidden="true"></i></span><span class="nm">${e.d.slice(0,7)} ${e.n}</span><span class="v num">M${e.m}</span></button></li>`).join('')}</ol>
       <p class="pp-unit">看到了嗎？平常每個點都慢慢、穩穩地往同一個方向走；大地震時，附近的點會一下子跳一大段。</p>`;}
   else{const e=eqSel;const top=e.o.slice().sort((a,b)=>Math.hypot(b[1],b[2])-Math.hypot(a[1],a[2]))[0];const ts=BY[top[0]];
     h=`<div class="pp-eye">地震瞬間</div><h3 class="pp-h">選一個地震</h3>
@@ -1104,7 +1105,7 @@ function stationCard(box,s){
     <p class="pp-eq">${s.sp>=1.5?`照這個速度，100 年後會移動 ${fmt(s.sp*100/1000,1)} 公尺；100 萬年後是 ${fmt(s.sp,0)} 公里！`:'它和澎湖幾乎一起移動。'}</p>
     <div class="pp-sec"><span>15 年來的移動紀錄</span><small>單位：公分</small></div>
     <svg class="gn-ch" id="gnCh" role="img" aria-label="測站移動紀錄圖"></svg>
-    ${evs.length?`<div class="gn-evs">${evs.map(e=>{const o=e.by[s.c];return `<div><span>⚡ ${e.d} ${e.n}</span><b>跳了 ${cm(Math.hypot(o[1],o[2]))} 公分${Math.abs(o[3])>=10?`，${o[3]>0?'抬升':'下沉'} ${cm(o[3])} 公分`:''}</b></div>`;}).join('')}</div>`:''}
+    ${evs.length?`<div class="gn-evs">${evs.map(e=>{const o=e.by[s.c];return `<div><span><i class="ic ic-bolt" aria-hidden="true"></i> ${e.d} ${e.n}</span><b>跳了 ${cm(Math.hypot(o[1],o[2]))} 公分${Math.abs(o[3])>=10?`，${o[3]>0?'抬升':'下沉'} ${cm(o[3])} 公分`:''}</b></div>`;}).join('')}</div>`:''}
     <div class="gn-pb"><button class="bigbtn alt" data-ab="A">拿來比一比：設成 A</button><button class="bigbtn alt" data-ab="B">設成 B</button></div>
   </div>`;
   box.querySelector('.pp-back').onclick=unpick;box.querySelector('.pp-x').onclick=unpick;

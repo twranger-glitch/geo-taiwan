@@ -376,7 +376,7 @@ footer p+p{margin-top:6px}
 .res-all{margin-top:14px}
 .res-all summary{cursor:pointer;font-weight:700;color:var(--water)}
 .res-grp{margin-top:10px}
-.res-grp h4{font-size:15px;color:var(--muted);letter-spacing:.08em}
+.res-grp h3{font-family:var(--f-body);font-weight:700;font-size:14px;color:var(--muted);margin:0 0 4px}
 .res-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 14px;font-size:15.5px}
 .res-mini span{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line)}
 .res-mini em{font-style:normal;font-family:var(--f-num)}
@@ -401,6 +401,7 @@ footer p+p{margin-top:6px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 
 <link rel="stylesheet" href="assets/site-nav.css?v=1">
+<link rel="stylesheet" href="assets/site.css?v=1">
 <nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
 <script src="assets/site-nav.js?v=1" defer></script>
 <header class="top">
@@ -474,7 +475,7 @@ footer p+p{margin-top:6px}
         <p class="sub">拉動時間，看板塊照現在的速度一直走下去，臺灣和全世界會變成什麼樣子。上面的地球儀也會一起變化。</p>
       </div>
       <div class="sim-ctl">
-        <button class="btn" id="simPlay" type="button" aria-pressed="false"><span class="ico" aria-hidden="true">▶</span><span class="txt">播放</span></button>
+        <button class="btn" id="simPlay" type="button" aria-pressed="false"><span class="ico" aria-hidden="true"><i class="ic ic-play" aria-hidden="true"></i></span><span class="txt">播放</span></button>
         <input type="range" id="simT" min="0" max="7" step="1" value="0" aria-label="模擬時間">
         <output id="simLab" for="simT">現在</output>
       </div>
@@ -1300,10 +1301,10 @@ function goSim(i,animate){
     .on('end',()=>{simAnim=null;applySim(t1,i);res();}).on('interrupt',res);});
 }
 simSlider.addEventListener('input',()=>{stopSimPlay();goSim(+simSlider.value,true);});
-function stopSimPlay(){simPlaying=false;simPlay.setAttribute('aria-pressed','false');simPlay.querySelector('.ico').textContent='▶';simPlay.querySelector('.txt').textContent='播放';}
+function stopSimPlay(){simPlaying=false;simPlay.setAttribute('aria-pressed','false');simPlay.querySelector('.ico').innerHTML='<i class="ic ic-play" aria-hidden="true"></i>';simPlay.querySelector('.txt').textContent='播放';}
 simPlay.addEventListener('click',async()=>{
   if(simPlaying){stopSimPlay();return;}
-  simPlaying=true;simPlay.setAttribute('aria-pressed','true');simPlay.querySelector('.ico').textContent='❚❚';simPlay.querySelector('.txt').textContent='暫停';
+  simPlaying=true;simPlay.setAttribute('aria-pressed','true');simPlay.querySelector('.ico').innerHTML='<i class="ic ic-pause" aria-hidden="true"></i>';simPlay.querySelector('.txt').textContent='暫停';
   let i=simIdx>=SIM_PRESETS.length-1?0:simIdx;
   if(i===0){await goSim(0,false);}
   while(simPlaying&&i<SIM_PRESETS.length-1){i++;await goSim(i,true);if(!simPlaying)break;await new Promise(r=>setTimeout(r,1400));}
@@ -1482,7 +1483,7 @@ function tyCardHtml(d){
     <div class="stat" style="grid-column:span 2"><div class="k">登陸臺灣</div><div class="v">${d.lf?'是'+(d.lfd?'（'+d.lfd+'）':''):'否'}</div></div>
   </div>
   ${d.note?`<p class="note" style="margin-top:12px">${d.note}</p>`:''}
-  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn" data-act="play">▶ 播放路徑</button><button class="btn ghost" data-act="all">回到全部</button></div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn" data-act="play"><i class="ic ic-play" aria-hidden="true"></i>播放路徑</button><button class="btn ghost" data-act="all">回到全部</button></div>
   <p class="note" style="margin-top:10px">${d.src||'資料來源：國際颱風最佳路徑資料庫（IBTrACS），風速為 10 分鐘平均。'}</p>`;
 }
 function showCard(){tyCard.innerHTML=tySel?tyCardHtml(tySel):tyDefaultHtml();}
@@ -1847,7 +1848,7 @@ function rsRenderAll(anim=true){
   $('#resStory').innerHTML=RS_STORY[rsMode];
   // all reservoirs
   const byReg={};rsLive.reservoirs.forEach(r=>(byReg[r[2]]=byReg[r[2]]||[]).push(r));
-  $('#resAllBody').innerHTML=RS_REG.filter(g=>byReg[g]).map(g=>`<div class="res-grp"><h4>${g}</h4><div class="res-mini">${byReg[g].sort((a,b)=>b[3]-a[3]).map(r=>`<span>${rsShort(r[1])}<em>${r[6]?'※':''}${rsFmt(r[4])}</em></span>`).join('')}</div></div>`).join('')
+  $('#resAllBody').innerHTML=RS_REG.filter(g=>byReg[g]).map(g=>`<div class="res-grp"><h3>${g}</h3><div class="res-mini">${byReg[g].sort((a,b)=>b[3]-a[3]).map(r=>`<span>${rsShort(r[1])}<em>${r[6]?'※':''}${rsFmt(r[4])}</em></span>`).join('')}</div></div>`).join('')
     +`<p class="note" style="margin-top:8px">資料時間：${rsTime(rsLive.generated_at)}。※ 數字明顯超過 100%，可能是測量或資料誤差。</p>`;
   rsDrawChart();
 }
