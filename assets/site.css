@@ -59,3 +59,7 @@
 input[type=checkbox],input[type=radio]{width:24px;height:24px;flex:none}
 input[type=range]{min-height:28px}
 summary{min-height:32px}
+
+/* Faded rows and off-state chips: show state with muted text, not transparency (contrast) */
+.mix li.nuc{opacity:1}.mix li.nuc *{color:var(--muted)!important}
+.pw-bar .chipset button[aria-pressed="false"]{opacity:1;color:var(--muted);background:transparent}

@@ -41,6 +41,15 @@ jobs:
               grep -q "timeout" "out/live_$n.err" || break
             done
           done
+          # Fallback: if a live page timed out, scan the same file served from this checkout
+          python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2
+          for e in out/live_*.err; do
+            grep -q "timeout" "$e" || continue
+            n=$(basename "$e" .err); n=${n#live_}; f=$n.html
+            npx -y impeccable@latest detect --json "http://localhost:8080/$f" > "out/live_$n.json" 2> "out/live_$n.local.err" || true
+            echo "scanned from local checkout" >> "out/live_$n.err"
+          done
       - name: Publish results to the audit branch
         run: |
           git config user.name "audit-bot"; git config user.email "audit-bot@users.noreply.github.com"
