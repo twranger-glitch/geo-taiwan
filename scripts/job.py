@@ -1,27 +1,22 @@
-"""One-off: extract metadata + weekly-median time series from the Taiwan continuous GNSS dataset
-(Zenodo record 23551543, CC-BY 4.0, Institute of Earth Sciences, Academia Sinica)."""
-import urllib.request, zipfile, os, json, statistics
-O = 'data/_job/'; os.makedirs(O, exist_ok=True)
-U = 'https://zenodo.org/api/records/23551543/files/continuous_GNSS_Taiwan.zip/content'
-p = '/tmp/gnss.zip'; urllib.request.urlretrieve(U, p)
-z = zipfile.ZipFile(p); names = z.namelist()
-enu = sorted(n for n in names if n.endswith('.series'))
-open(O + 'enu_files.txt', 'w').write('\n'.join(f'{n}\t{z.getinfo(n).file_size}' for n in enu))
-out = {}
-for n in enu:
-    key = n.split('time_series/')[1]
-    wk = {}
-    for line in z.read(n).decode('utf-8', 'replace').splitlines():
-        a = line.split()
-        if len(a) < 5: continue
-        try: t, e, nn, u = float(a[0]), float(a[1]) * 1000, float(a[2]) * 1000, float(a[3]) * 1000
-        except ValueError: continue
-        w = int((t - 2010) * 52.1775)
-        wk.setdefault(w, []).append((t, e, nn, u))
-    rows = []
-    for w in sorted(wk):
-        v = wk[w]
-        rows.append([round(statistics.median(x[0] for x in v), 4)] + [round(statistics.median(x[i] for x in v), 1) for i in (1, 2, 3)] + [len(v)])
-    out[key] = rows
-json.dump(out, open(O + 'weekly_raw.json', 'w'), separators=(',', ':'))
-print(len(out), os.path.getsize(O + 'weekly_raw.json'))
+# One-off: find the CWA earthquake catalog files (data.gov.tw dataset 97095) and record what they contain.
+import urllib.request,os,json,zipfile,io
+os.makedirs('data/_job',exist_ok=True);log=open('data/_job/log.txt','w')
+K='rdec-key-123-45678-011121314';UA={'User-Agent':'geo-taiwan-classroom/1.0 (+https://geo.twranger.com/)'}
+def get(u,t=300):
+    r=urllib.request.urlopen(urllib.request.Request(u,headers=UA),timeout=t);return r.status,r.headers.get('Content-Type'),r.read()
+for code in ['E-A0073-001','E-A0073-002','E-A0073-004','E-A0073-005']:
+    for fmt in ['JSON','ZIP','XML']:
+        u=f'https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/{code}?Authorization={K}&downloadType=WEB&format={fmt}'
+        try:
+            st,ct,b=get(u);log.write(f'== {code} {fmt} {st} {ct} len={len(b)}\n')
+            if b[:2]==b'PK':
+                z=zipfile.ZipFile(io.BytesIO(b));names=z.namelist();log.write(f'  zip {len(names)} files: {names[:5]} ... {names[-3:]}\n')
+                open(f'data/_job/{code}.zip','wb').write(b) if len(b)<90e6 else None
+                n=names[0];log.write(z.read(n)[:3000].decode('utf-8','replace')+'\n')
+            else:
+                log.write(b[:2500].decode('utf-8','replace')+'\n')
+            if fmt=='JSON' and st==200: break
+        except Exception as e: log.write(f'== {code} {fmt} ERR {e}\n')
+for u in ['https://opendata.cwa.gov.tw/dataset/earthquake/E-A0073-002','https://opendata.cwa.gov.tw/dataset/earthquake/E-A0073-001']:
+    try:st,ct,b=get(u,60);s=b.decode('utf-8','replace');i=s.find('E-A0073');log.write(f'== {u} {st}\n{s[i-1500:i+2500]}\n')
+    except Exception as e: log.write(f'== {u} ERR {e}\n')
