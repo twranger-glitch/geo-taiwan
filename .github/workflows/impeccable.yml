@@ -1,0 +1,45 @@
+name: Impeccable 設計檢查
+# Runs the official Impeccable detector (62 rules) on every page change.
+# Results go to the `audit` branch (impeccable/*.json) so main stays clean.
+on:
+  push:
+    branches: [main]
+    paths: ['*.html', 'assets/**', '.github/workflows/impeccable.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: impeccable
+  cancel-in-progress: true
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Static scan (HTML + CSS source)
+        run: |
+          mkdir -p out
+          npx -y impeccable@latest --version > out/version.txt 2>&1 || true
+          npx -y impeccable@latest detect --json *.html assets/ > out/static.json 2> out/static.err || true
+      - name: Wait for GitHub Pages to publish this commit
+        run: sleep 90
+      - name: Rendered scan (live pages, headless Chrome)
+        env:
+          IMPECCABLE_BROWSER: /usr/bin/google-chrome
+        run: |
+          for p in "" unit1.html sealevel.html unit3.html unit4.html explore.html energy.html gnss.html prehistory.html; do
+            n=${p%.html}; n=${n:-index}
+            npx -y impeccable@latest detect --json "https://geo.twranger.com/$p" > "out/live_$n.json" 2> "out/live_$n.err" || true
+          done
+      - name: Publish results to the audit branch
+        run: |
+          git config user.name "audit-bot"; git config user.email "audit-bot@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > out/commit.txt
+          git fetch -q origin audit || true
+          git worktree add -q ../audit origin/audit 2>/dev/null || { git worktree add -q --detach ../audit && (cd ../audit && git checkout -q --orphan audit && git rm -rqf . || true); }
+          mkdir -p ../audit/impeccable && rm -f ../audit/impeccable/* && cp out/* ../audit/impeccable/
+          cd ../audit && git add impeccable && git commit -qm "Impeccable scan of ${GITHUB_SHA::7}" && git push -q origin HEAD:audit
