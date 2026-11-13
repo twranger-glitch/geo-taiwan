@@ -1,0 +1,30 @@
+name: 地震目錄每月更新
+# CWA earthquake catalog (data.gov.tw 97095): history ZIP + current-year JSON -> data/eq/eq.bin, eq.json
+on:
+  schedule:
+    - cron: '17 3 6 * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [scripts/fetch_eq.py]
+permissions:
+  contents: write
+concurrency:
+  group: eq-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q numpy
+      - run: python scripts/fetch_eq.py
+      - run: |
+          git config user.name "eq-bot"; git config user.email "eq-bot@users.noreply.github.com"
+          git add data/eq/eq.bin data/eq/eq.json
+          git diff --cached --quiet -- data/eq/eq.bin && { echo "no new earthquakes"; exit 0; }
+          git commit -qm "地震目錄更新 $(date -u +%Y-%m-%d)" && git pull -q --rebase origin main && git push -q

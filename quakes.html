@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<title>臺灣底下的地震｜海佃地圖</title>
+<meta name="description" content="中央氣象署 1990 年至今 7 萬多個地震的 3D 模型：掀開地表、切開剖面，看見臺灣底下的板塊。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: a field-survey notebook — sticky unit rail on top, each unit a full-width band with a map/instrument on one side and a reading card on the other */
+:root{
+  --paper:#e9f0ef; --surface:#ffffff; --surface-2:#f4f8f7;
+  --ink:#10313b; --muted:#557079; --line:#cad8d8;
+  --sea:#cfe4e7; --sea-deep:#0f3644; --land:#b8c79f; --land-ink:#7d9468;
+  --typhoon:#d9462b; --plate:#d8901a; --wind:#2a86b8; --rain:#3a9fb5; --leaf:#4f8a4a;
+  --cat1:#3B8EDB; --cat2:#E69F00; --cat3:#B2182B;
+  --conv:#D55E00; --div:#0098A6; --trans:#C79100;
+  --shadow:0 1px 2px rgba(16,49,59,.06),0 8px 24px rgba(16,49,59,.07);
+  --f-display:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b191e; --surface:#11252c; --surface-2:#0e2026;
+  --ink:#e2eef0; --muted:#8ca6ad; --line:#24414a;
+  --sea:#123542; --sea-deep:#0a2630; --land:#3d5a45; --land-ink:#6f9174;
+  --typhoon:#ff7155; --plate:#f2b042; --wind:#5cb6e6; --rain:#5cc3d6; --leaf:#7cc070;
+  --cat1:#7CC0FF; --cat2:#F2B942; --cat3:#FF6B81;
+  --conv:#ff7155; --div:#3fd0c8; --trans:#f2b942;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--wind);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+
+/* Header */
+header.top{padding-block:28px 18px;position:relative;overflow:hidden}
+.top .wrap{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+.kicker{font-size:15.5px;letter-spacing:.12em;color:var(--muted);font-weight:500}
+h1{font-size:clamp(30px,5vw,48px);margin-top:4px}
+h1 .accent{color:var(--typhoon)}
+.lede{max-width:40em;color:var(--muted);margin-top:8px}
+.coord{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:right;line-height:1.6;white-space:nowrap}
+.contour{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.contour path{fill:none;stroke:var(--line);stroke-width:1}
+
+/* Rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center;transition:background .2s,border-color .2s}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:8px;height:8px;border-radius:50%}
+
+/* Sections */
+section.unit{padding-block:56px 36px;border-bottom:1px solid var(--line);scroll-margin-top:60px}
+.unit-head{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:start;margin-bottom:24px}
+.badge{grid-row:span 2;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-size:26px}
+.unit-head h2{font-size:clamp(24px,3.4vw,32px)}
+.unit-head .sub{color:var(--muted);max-width:46em}
+.page-ref{display:inline-block;font-family:var(--f-num);font-size:14.5px;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:8px;color:var(--muted);vertical-align:middle;letter-spacing:.02em}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.grid2.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+@media (max-width:860px){.grid2,.grid2.rev{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);min-width:0}
+.panel.pad{padding:20px 22px}
+.stage{position:relative;min-width:0}
+.card h3{font-size:22px}
+.card .meta{font-size:15.5px;color:var(--muted);margin-top:2px}
+.card p+p{margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:17px;display:inline-flex;gap:6px;align-items:center;transition:all .15s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+.chip[data-l="div"] .sw{background:repeating-linear-gradient(90deg,var(--div) 0 6px,transparent 6px 9px) !important;width:22px}
+.chip[data-l="trans"] .sw{background:repeating-linear-gradient(90deg,var(--trans) 0 2px,transparent 2px 6px) !important;width:22px}
+.chip[data-l="conv"] .sw{width:22px;height:5px}
+.label{font-size:14.5px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.think{border-left:4px solid var(--plate);background:var(--surface-2);padding:12px 16px;border-radius:0 12px 12px 0;font-size:18px}
+.think b{font-family:var(--f-display);font-weight:400;color:var(--plate)}
+.note{font-size:15px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.stat{background:var(--surface-2);border-radius:12px;padding:10px 12px;min-width:0}
+.stat .k{font-size:14.5px;color:var(--muted)}
+.stat .v{font-weight:700;font-size:18px;line-height:1.45}
+.tag{display:inline-block;font-size:14.5px;font-weight:700;border-radius:6px;padding:1px 8px;color:#fff}
+
+/* Globe */
+.globe-box{background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--sea-deep) 40%,var(--paper)) 0%,var(--paper) 70%);border-radius:24px;padding:8px;position:relative}
+#globe{width:100%;height:auto;display:block;touch-action:none;cursor:grab;max-width:640px;margin:0 auto}
+#globe:active{cursor:grabbing}
+.g-sea{fill:var(--sea-deep)}
+.g-grat{fill:none;stroke:#ffffff;stroke-opacity:.08;stroke-width:.6}
+.g-land{fill:#7fa27c;stroke:#c9dcc0;stroke-width:.5;stroke-opacity:.7}
+.g-lake{fill:#0f3644}
+.g-b{cursor:pointer}
+.g-tw{fill:#e7c66d;stroke:#fff;stroke-width:.6}
+.g-b{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.g-b.conv{stroke:#ff6a4d;stroke-width:2.6}
+.g-poly{fill-opacity:.34;stroke:#ffffff;stroke-opacity:.45;stroke-width:.8}
+.g-b.hand{opacity:.5}
+.g-b.div{stroke:#4fe0d6;stroke-width:2.2;stroke-dasharray:6 4}
+.g-b.trans{stroke:#ffc23d;stroke-width:2.2;stroke-dasharray:1 5}
+.g-b.hl{stroke-width:5}
+.g-plate{font-family:var(--f-display);font-size:18px;fill:#ffffff;fill-opacity:.85;paint-order:stroke;stroke:#0a2630;stroke-width:3px;cursor:pointer;text-anchor:middle}
+.g-plate:hover{fill:#ffd36b;fill-opacity:1}
+.g-eq{fill:#ff5a3c;fill-opacity:.75;stroke:#fff;stroke-width:1;cursor:pointer}
+.g-eq.sel{fill:#ffd23d;fill-opacity:1;stroke-width:2}
+.g-eq-pulse{fill:none;stroke:#ffd23d;stroke-width:2;pointer-events:none}
+.g-mt{fill:#ffd36b;stroke:#3b2a05;stroke-width:1;cursor:pointer}
+.g-mt.sel{fill:#fff}
+.g-halo{fill:url(#halo);pointer-events:none}
+.globe-tools{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px}
+.icon-btn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:18px;line-height:1;box-shadow:var(--shadow)}
+.icon-btn svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2}
+.globe-hint{position:absolute;left:16px;bottom:12px;font-size:14.5px;color:var(--muted);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:2px 10px;border-radius:999px}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mag-scale{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--muted)}
+
+/* Profile */
+#profile{width:100%;height:auto;display:block}
+.pf-zone{cursor:pointer}
+.pf-zone .hit{fill:transparent}
+.pf-zone:hover .hit,.pf-zone.on .hit{fill:var(--ink);fill-opacity:.06}
+.pf-zone text{font-family:var(--f-display);font-size:18px;fill:var(--ink);text-anchor:middle}
+.pf-zone.on text{fill:var(--typhoon)}
+.pf-ground{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.pf-sea{fill:var(--sea)}
+.pf-plate-eu{fill:color-mix(in srgb,var(--plate) 30%,var(--surface))}
+.pf-plate-ph{fill:color-mix(in srgb,var(--typhoon) 22%,var(--surface))}
+.pf-txt{font-size:15.5px;fill:var(--muted)}
+.pf-txt.b{fill:var(--ink);font-weight:700}
+
+/* Typhoon */
+.ty-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:960px){.ty-layout{grid-template-columns:minmax(0,1fr)}}
+.map-box{background:var(--sea);border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative}
+#tymap{width:100%;height:auto;display:block}
+.m-land{fill:var(--land);stroke:var(--land-ink);stroke-width:.5}
+.m-tw{fill:color-mix(in srgb,var(--land) 70%,var(--plate));stroke:var(--land-ink);stroke-width:.8}
+.m-grid{stroke:var(--ink);stroke-opacity:.08;fill:none}
+.m-grid-t{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.m-trop{stroke:#9b59b6;stroke-dasharray:6 4;stroke-width:1.2;fill:none}
+.m-trop-t{font-size:14px;fill:#9b59b6}
+.trk{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.6;stroke-opacity:.55;transition:opacity .25s}
+.trk[data-c="1"]{stroke-width:1.1}.trk[data-c="2"]{stroke-width:2}.trk[data-c="3"]{stroke-width:3;stroke-opacity:.7}
+.trk-g{cursor:pointer;transition:opacity .25s}
+.trk-g.dim{opacity:.08}
+.trk-g.sel .trk{stroke-opacity:1;stroke-width:3.4}
+.trk-g .hit{stroke:transparent;stroke-width:12;fill:none}
+.tdt{font-family:var(--f-num);font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px}
+.tnm{font-size:15px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ty-legend{position:absolute;left:12px;top:12px;background:color-mix(in srgb,var(--surface) 88%,transparent);border-radius:12px;padding:8px 12px;font-size:14.5px;display:flex;flex-direction:column;gap:3px}
+.ty-legend span{display:flex;align-items:center;gap:6px}
+.ty-legend i{width:22px;height:3px;border-radius:2px;display:inline-block}
+.ty-legend span:nth-child(1) i{height:5px}.ty-legend span:nth-child(3) i{height:2px}
+.ty-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.ty-item{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;display:grid;grid-template-columns:auto 1fr;gap:0 10px;align-items:center;transition:all .15s;min-width:0}
+.ty-item:hover{border-color:var(--ink)}
+.ty-item[aria-pressed="true"]{border-color:var(--typhoon);box-shadow:0 0 0 2px color-mix(in srgb,var(--typhoon) 30%,transparent)}
+.ty-item .yr{font-family:var(--f-num);font-size:14.5px;color:var(--muted);grid-column:2}
+.ty-item .nm{font-weight:700;grid-column:2;line-height:1.3}
+.ty-item .cat{grid-row:1/3;width:10px;height:30px;border-radius:4px}
+.spiral{width:42px;height:42px;flex:none}
+.spiral.spin{animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(-360deg)}}
+.ty-card-head{display:flex;gap:12px;align-items:center}
+.res-bars{display:grid;gap:6px;margin-top:8px}
+.res-row{display:grid;grid-template-columns:56px 1fr 52px;gap:8px;align-items:center;font-size:15.5px}
+.res-bar{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.res-bar i{display:block;height:100%;background:var(--rain);border-radius:5px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:7px 16px;border-radius:999px;font-size:17px;display:inline-flex;gap:6px;align-items:center}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:default}
+
+.ty-tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.ty-tools select,.ty-tools input{font:inherit;font-size:17px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0}
+.ty-tools input{flex:1;min-width:180px}
+.g-cty{font-family:var(--f-body);font-size:14px;fill:#f2f7f4;fill-opacity:.9;paint-order:stroke;stroke:#0a2630;stroke-width:2.6px;text-anchor:middle;pointer-events:none}
+.g-ocn{font-family:var(--f-display);font-size:17px;fill:#bfe3ea;fill-opacity:.6;font-style:italic;text-anchor:middle;pointer-events:none}
+.m-cty{font-family:var(--f-body);font-size:14px;fill:var(--ink);fill-opacity:.7;text-anchor:middle;paint-order:stroke;stroke:var(--sea);stroke-width:2.5px}
+.m-ocn{font-family:var(--f-display);font-size:17px;fill:var(--muted);font-style:italic;text-anchor:middle}
+
+/* Monsoon */
+#monsoon{width:100%;height:auto;display:block}
+.ms-sea{fill:var(--sea)}
+.ms-tw{fill:var(--land);stroke:var(--land-ink);stroke-width:1.2}
+.ms-mt{fill:color-mix(in srgb,var(--plate) 65%,var(--land));stroke:var(--land-ink);stroke-width:.6}
+.ms-wind{fill:none;stroke:var(--wind);stroke-width:3;stroke-linecap:round;stroke-dasharray:14 12;animation:flow 1.2s linear infinite}
+.ms-wind.summer{stroke:var(--typhoon)}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.ms-head{fill:var(--wind)}
+.ms-head.summer{fill:var(--typhoon)}
+.ms-cloud{fill:var(--surface);stroke:var(--muted);stroke-width:1}
+.ms-drop{stroke:var(--rain);stroke-width:2;stroke-linecap:round}
+.ms-txt{font-family:var(--f-display);font-size:16px;fill:var(--ink)}
+.ms-sm{font-size:14.5px;fill:var(--muted)}
+.season-toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.season-toggle button{border:0;background:transparent;padding:6px 16px;border-radius:999px;font-size:18px}
+.season-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.turbine-card{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+#compass{width:120px;height:120px}
+.cmp-ring{fill:var(--surface-2);stroke:var(--line)}
+.cmp-t{font-family:var(--f-num);font-size:14px;fill:var(--muted);text-anchor:middle}
+.quiz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.qopt{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 14px;font-size:18px}
+.qopt.right{background:color-mix(in srgb,var(--leaf) 20%,var(--surface));border-color:var(--leaf)}
+.qopt.wrong{background:color-mix(in srgb,var(--typhoon) 15%,var(--surface));border-color:var(--typhoon)}
+.qopt.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qopt.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qopt.wrong{border-style:dashed}
+.qfb{margin-top:10px;font-size:18px;min-height:1.5em}
+@media (prefers-reduced-motion:reduce){.ms-wind,.spiral.spin{animation:none}}
+
+/* Charts */
+.chart{width:100%;height:auto;display:block}
+.ax text{font-family:var(--f-num);font-size:14px;fill:var(--muted)}
+.ax line,.ax path{stroke:var(--line)}
+.gridl{stroke:var(--line);stroke-dasharray:2 4}
+.bar-tw{fill:var(--rain);fill-opacity:.45}
+.bar-tn{fill:var(--typhoon)}
+.band{fill:var(--plate);fill-opacity:.13}
+.band-t{font-family:var(--f-display);font-size:15.5px;fill:var(--plate)}
+.val{font-family:var(--f-num);font-size:14px;fill:var(--ink);text-anchor:middle}
+.ln{fill:none;stroke-width:2.5}
+.ln-dot{stroke:var(--surface);stroke-width:1.5}
+.cmp-bars{display:grid;gap:8px;margin-top:6px}
+.cmp-row{display:grid;grid-template-columns:96px 1fr 80px;gap:10px;align-items:center;font-size:17px}
+.cmp-row .tr{height:16px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.cmp-row .tr i{display:block;height:100%;border-radius:8px}
+
+/* Elevation */
+#mtn{width:100%;height:auto;display:block}
+.mt-sky{fill:var(--surface-2)}
+.mt-body{fill:var(--land);stroke:var(--land-ink);stroke-width:1.5}
+.mt-snow{fill:var(--surface);opacity:.9}
+.mt-line{stroke:var(--typhoon);stroke-width:1.5;stroke-dasharray:5 4}
+.mt-pin{fill:var(--typhoon);stroke:var(--surface);stroke-width:2}
+.mt-ref{font-size:14.5px;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px}
+.mt-refdot{fill:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--typhoon)}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.big{font-family:var(--f-num);font-size:30px;font-weight:600;line-height:1.1}
+.crop{display:flex;gap:12px;align-items:center;margin-top:12px;background:var(--surface-2);border-radius:14px;padding:12px 14px}
+.crop-ico{width:46px;height:46px;flex:none;border-radius:12px;display:grid;place-items:center;font-family:var(--f-display);font-size:20px;color:#fff}
+
+/* Calendar */
+.cal{overflow-x:auto}
+.cal-grid{display:grid;grid-template-columns:110px repeat(12,minmax(44px,1fr));min-width:700px;gap:0}
+.cal-h{font-family:var(--f-num);font-size:14.5px;color:var(--muted);text-align:center;padding:4px 0}
+.cal-rain{grid-column:2/-1;display:grid;grid-template-columns:repeat(12,1fr);align-items:end;height:70px;gap:6px;padding:0 6px;border-bottom:1px solid var(--line)}
+.cal-rain i{display:block;background:var(--rain);opacity:.4;border-radius:4px 4px 0 0}
+.cal-row{display:contents}
+.cal-name{font-size:17px;font-weight:700;padding:8px 8px 8px 0;display:flex;align-items:center;border-bottom:1px dashed var(--line)}
+.cal-track{grid-column:2/-1;position:relative;border-bottom:1px dashed var(--line);height:44px}
+.cal-bar{position:absolute;top:9px;height:26px;border-radius:13px;border:0;color:#fff;font-size:15.5px;padding:0 10px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-bar[aria-pressed="true"]{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
+.cal-detail{margin-top:18px}
+
+/* Quiz */
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.qcard .qn{font-family:var(--f-num);font-size:14.5px;color:var(--muted)}
+.qcard h3{font-size:18px;margin-top:2px}
+.score{font-family:var(--f-display);font-size:20px}
+footer{padding-block:32px 48px;color:var(--muted);font-size:15.5px}
+footer p+p{margin-top:6px}
+.tooltip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:14.5px;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:5}
+.credit{margin-top:14px;text-align:right;font-size:12px;letter-spacing:.04em;opacity:.55}
+.ext-link{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ext-link a{font-weight:700;color:var(--typhoon);text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.ext-link a:hover{opacity:.8}
+.ext-link span{font-size:14px;color:var(--muted)}
+/* plate time machine */
+.g-tw-cr{fill:#f0a35e}
+.g-poly.sim{fill-opacity:0;stroke-opacity:.3;stroke-width:.7}
+.sim-badge{position:absolute;left:16px;top:12px;background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 14px;font-size:15px;display:flex;gap:10px;align-items:center;max-width:calc(100% - 90px);flex-wrap:wrap}
+.sim-badge[hidden]{display:none}
+.sim-badge button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:2px 12px;font-size:14.5px}
+.sim-box{margin-top:36px}
+.sim-head h3{font-size:clamp(21px,2.6vw,26px)}
+.sim-head .sub{color:var(--muted);margin-top:4px;max-width:46em}
+.sim-ctl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 4px}
+.sim-ctl input{flex:1;min-width:200px}
+.sim-ctl output{font-weight:700;font-size:20px;min-width:6.5em}
+.sim-ticks{display:flex;justify-content:space-between;gap:2px 6px;flex-wrap:wrap;margin-bottom:16px}
+.sim-ticks button{border:0;background:none;color:var(--muted);font-size:14.5px;padding:2px 2px}
+.sim-ticks button:hover{color:var(--ink);text-decoration:underline}
+.sim-delta{font-size:14.5px;color:var(--muted);font-weight:400}
+.sim-faq{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.sim-faq summary{cursor:pointer;font-weight:700}
+.sim-faq p{margin-top:6px}
+#twsim{width:100%;height:auto;display:block}
+.ts-sea{fill:var(--sea)}
+.ts-ghost path{fill:none;stroke:var(--ink);stroke-opacity:.4;stroke-width:1;stroke-dasharray:3 3}
+.ts-cr{fill:var(--plate);stroke:var(--land-ink);stroke-width:.8}
+.ts-valley{fill:none;stroke:var(--typhoon);stroke-width:2.2;stroke-dasharray:6 4}
+.ts-valley.moved{stroke-opacity:.55}
+.tslab{font-size:15px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3.5px;pointer-events:none}
+.tslab.big{font-size:20px;font-weight:700}
+.tslab.cr{font-weight:700}
+.tslab.sm{font-size:14px}
+.tslab.ts-sea-lab{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:17px}
+.ts-arrow line,.ts-arrow path{stroke:var(--typhoon);stroke-width:3;fill:none;stroke-linecap:round}
+.ts-arrow text{font-size:14.5px;fill:var(--typhoon);font-weight:700;paint-order:stroke;stroke:var(--sea);stroke-width:3.5px}
+.ts-scale path{fill:none;stroke:var(--ink);stroke-width:1.5}
+.ts-scale text{font-size:14px;fill:var(--ink)}
+.ts-badge rect{fill:var(--surface);stroke:var(--line)}
+.ts-badge text{font-size:16px;font-weight:700;fill:var(--ink)}
+.sim-tabs{display:flex;gap:8px;margin-bottom:10px}
+.sim-tabs .chip[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#worldsim{width:100%;height:auto;display:block}
+.ws-bg{fill:var(--surface-2)}
+.ws-sphere{fill:var(--sea);stroke:var(--line)}
+.wslab{font-size:14px;fill:var(--ink);paint-order:stroke;stroke:var(--sea);stroke-width:3px;pointer-events:none}
+.wslab.ocn{font-family:var(--f-display);font-style:italic;fill:var(--muted);font-size:16px}
+@media (max-width:640px){.wslab{font-size:20px;stroke-width:4px}.wslab.ocn{font-size:22px}}
+@media (max-width:640px){
+  .tslab{font-size:22px;stroke-width:4px}.tslab.big{font-size:27px}.tslab.sm{font-size:20px}.tslab.ts-sea-lab{font-size:22px}
+  .ts-arrow text{font-size:21px}.ts-scale text{font-size:20px}.ts-badge text{font-size:22px}
+}
+.home-link{display:block;color:inherit;text-decoration:none;border-radius:12px}
+.home-link .kicker::before{content:"⌂ 海佃地圖首頁 › ";color:var(--ink);font-weight:700}
+.home-link:hover h1,.home-link:focus-visible h1{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+</style>
+<style>
+.top .unit-link{font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:15.5px;white-space:nowrap}
+.top .unit-link:hover{border-color:var(--ink)}
+.top .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+@media (max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.top .unit-link{white-space:normal}.top .links{justify-content:flex-start}}
+/* rail */
+nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.rail .wrap::-webkit-scrollbar{display:none}
+.rail a{flex:none;text-decoration:none;color:var(--ink);font-size:16.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:flex;gap:6px;align-items:center}
+.rail a:hover{border-color:var(--ink)}
+.rail a.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+/* maps */
+.mapbox{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--sea);touch-action:none}
+.mapbox svg{display:block;width:100%;height:auto;max-height:80vh;cursor:grab}
+.mapbox svg:active{cursor:grabbing}
+.mapbox .zoomer{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
+.mapbox .zoomer button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:21px;font-weight:700;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.mapbox .zoomer button:hover{border-color:var(--ink)}
+.mapbox .mhint{position:absolute;left:10px;bottom:10px;font-size:13.5px;color:#10313b;background:#ffffffe0;border-radius:8px;padding:2px 8px;pointer-events:none}
+.mk{cursor:pointer;outline:none}
+.mk:focus-visible circle.dot{stroke:var(--ink);stroke-width:3.5}
+.mk circle.dot{stroke:#fff;stroke-width:2}
+.mk:hover circle.dot,.mk:focus-visible circle.dot{stroke:#10313b;stroke-width:3}
+.mk.sel circle.dot{stroke:#10313b;stroke-width:3.5}
+.mk .ring{fill:none;stroke:#ffd23f;stroke-width:4;opacity:0}
+.mk.sel .ring{opacity:1}
+.mk text,.mlabel{font-size:16px;font-weight:700;fill:#10313b;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.mlabel.soft{font-weight:500;fill:#3d5560;font-size:14px}
+.mlabel.sea{fill:#2a6f8f;font-style:italic;font-weight:500}
+.land{fill:var(--land);stroke:var(--land-ink);stroke-width:.6}
+.land.plain{stroke:none}
+.route{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.route.dash{stroke-dasharray:8 6}
+/* cards and layout */
+.duo{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.duo{grid-template-columns:minmax(0,1fr)}}
+.card h3{font-size:24px}
+.card .meta{font-size:15px;color:var(--muted);margin-top:2px}
+.card p{margin-top:8px}
+.card .k{display:block;font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-top:12px}
+.pill{display:inline-block;font-size:14px;font-weight:700;border-radius:999px;padding:1px 10px;color:#fff}
+.qbox{margin-top:12px;border-radius:12px;background:color-mix(in srgb,var(--plate) 14%,var(--surface));padding:10px 14px}
+.qbox b{display:block;font-size:14px;color:var(--muted);letter-spacing:.06em}
+.tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+.tabs button{border:0;background:none;font-weight:700;font-size:16px;padding:6px 14px;border-radius:999px;color:var(--muted)}
+.tabs button[aria-selected="true"],.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.bigbtn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:9px 18px;font-weight:700;font-size:16.5px;background:var(--ink);color:var(--paper)}
+.bigbtn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.bigbtn:disabled{opacity:.45;cursor:default}
+.hint-line{font-size:15px;color:var(--muted);margin-top:8px}
+/* quiz */
+.quiz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.quiz{grid-template-columns:minmax(0,1fr)}}
+.qcard .qn{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.08em}
+.qcard h3{font-size:20px;margin-top:4px}
+.qopts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.qo{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-size:17px}
+.qo:hover:not(:disabled){border-color:var(--ink)}
+.qo.right{background:color-mix(in srgb,var(--leaf) 22%,var(--surface));border-color:var(--leaf)}
+.qo.wrong{background:color-mix(in srgb,var(--typhoon) 16%,var(--surface));border-color:var(--typhoon)}
+.qo.right::after{content:"　✓ 正確答案";font-weight:700;color:var(--leaf);white-space:nowrap}
+.qo.wrong::after{content:"　✗ 你選的";font-weight:700;color:var(--typhoon);white-space:nowrap}
+.qo.wrong{border-style:dashed}
+.qo:disabled{cursor:default}
+.qfb{margin-top:8px;font-size:16px}
+.qscore{font-family:var(--f-num);font-weight:600;margin-left:8px}
+/* timeline slider with visual */
+.tl{position:relative;margin-top:10px}
+.tl input[type=range]{width:100%;accent-color:var(--plate);height:30px}
+.sim-chart{width:100%;height:auto;display:block}
+.sim-chart .ax text{font-family:var(--f-num);font-size:13px;fill:var(--muted)}
+.sim-chart .ax line,.sim-chart .ax path{stroke:var(--line)}
+.toggles{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.toggles label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;cursor:pointer}
+.toggles input{width:20px;height:20px;margin-top:4px;flex:none}
+.toggles small{display:block;color:var(--muted);font-size:14px}
+.rangebox{margin-top:12px}
+.rangebox label{font-weight:700}
+.rangebox input{width:100%;height:30px}
+.rangebox .rv{font-family:var(--f-num);font-weight:600}
+.story{position:relative}
+.story-panel{min-height:9em}
+.story-nav{display:flex;gap:10px;align-items:center;margin-top:12px}
+.story-dots{display:flex;gap:6px}
+.story-dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.story-dots i.on{background:var(--ink)}
+</style>
+</style>
+<style>
+/* 3D earthquake page (DESIGN.md: dark map box, 16px radius, 44px targets, Okabe–Ito UI accents) */
+.eq-box{position:relative;isolation:isolate;border-radius:16px;overflow:hidden;background:#0c1822;color:#e9eef2;box-shadow:0 10px 30px rgba(8,20,30,.22);display:grid}
+@media (min-width:980px){.eq-box{grid-template-columns:minmax(0,1fr) 340px}}
+.eq-stage{position:relative;height:min(80vh,760px);min-height:520px;overflow:hidden;touch-action:none;background:radial-gradient(120% 90% at 50% 20%,#14283a 0%,#0c1822 70%)}
+@media (max-width:979.98px){.eq-stage{height:auto;min-height:0}.eq-stage .eq-gl{position:relative;height:62vh;min-height:380px}.eq-stage .eq-time{position:static;margin:0 8px 8px}}
+.eq-gl{position:absolute;inset:0}
+#eqCv{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#eqCv:active{cursor:grabbing}
+.eq-load{position:absolute;inset:0;display:grid;place-items:center;font-size:18px;color:#9fb4c4;pointer-events:none}
+.eq-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.eq-lb{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:14px;font-weight:700;color:#e9eef2;text-shadow:0 0 3px #0c1822,0 0 8px #0c1822;letter-spacing:.04em}
+.eq-lb.pl{font-size:16px;color:#F2C14E}
+.eq-lb.tr{font-size:13px;color:#9fd3f5;font-weight:500}
+.eq-views{position:absolute;top:12px;left:12px;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100% - 24px)}
+.eq-views button,.ep-chips button{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #3a5163;background:#0c1822e6;color:#e9eef2;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.eq-views button[aria-pressed="true"],.ep-chips button[aria-pressed="true"]{background:#F2C14E;border-color:#F2C14E;color:#0c1822}
+.eq-views button:focus-visible,.ep-chips button:focus-visible,.eq-play:focus-visible,#eqHist:focus-visible{outline:3px solid #56B4E9;outline-offset:2px}
+.eq-time{position:absolute;left:12px;right:12px;bottom:12px;display:flex;gap:12px;align-items:center;background:#0c1822e6;border:1px solid #2c4253;border-radius:16px;padding:8px 12px}
+.eq-play{width:44px;height:44px;border-radius:50%;border:0;background:#F2C14E;color:#0c1822;font-size:18px;cursor:pointer;flex:none;display:grid;place-items:center}
+.eq-play .ic{margin:0}
+.eq-tl{flex:1;min-width:0}
+.eq-tl-h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.eq-tl-h b{font-size:16px}.eq-tl-h span{font-size:13px;color:#9fb4c4}
+#eqHist{display:block;width:100%;height:44px;cursor:ew-resize;touch-action:none}
+.eq-panel{background:#0f1e29;border-left:1px solid #22384a;padding:12px 16px 16px;overflow:auto;max-height:min(80vh,760px)}
+@media (max-width:979.98px){.eq-panel{border-left:0;border-top:1px solid #22384a;max-height:none}}
+.ep-sec{padding:12px 0;border-top:1px solid #22384a}
+.ep-sec:first-of-type{border-top:0}
+.ep-sec h3{font-family:var(--f-body);font-size:14px;font-weight:700;color:#9fb4c4;margin:0 0 8px}
+.ep-sec h3+.eq-ramp{margin-bottom:12px}
+.ep-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ep-tg{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px;cursor:pointer}
+.ep-tg small{display:block;font-size:13px;color:#9fb4c4}
+.ep-tg input[type=checkbox]{accent-color:#F2C14E}
+.ep-sub{padding-left:34px;font-size:14px;color:#cbd8e1;gap:8px;flex-wrap:wrap;min-height:40px}
+.ep-sub input[type=range]{flex:1;min-width:110px;accent-color:#F2C14E}
+.ep-sub output{min-width:56px;text-align:right;font-size:14px}
+.ep-sub select{font:inherit;font-size:14px;background:#162a38;color:#e9eef2;border:1px solid #3a5163;border-radius:6px;padding:6px 8px;min-height:36px}
+.ep-q summary{font-size:14px;font-weight:700;color:#cbd8e1;cursor:pointer;min-height:32px;display:list-item}
+.ep-q p{font-size:14px;color:#9fb4c4;margin:6px 0 10px;line-height:1.6}
+.eq-ramp{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}
+.eq-ramp div{display:grid;gap:4px;font-size:13px;color:#cbd8e1;text-align:center}
+.eq-ramp i{display:block;height:14px;border-radius:3px}
+.eq-ramp em{font-style:normal;font-size:12px;color:#9fb4c4}
+.eq-sizes{display:flex;align-items:flex-end;gap:14px;font-size:13px;color:#cbd8e1}
+.eq-sizes div{display:grid;justify-items:center;gap:4px}
+.eq-sizes i{display:block;border-radius:50%;background:#e9eef2}
+.eq-note{font-size:14px;color:var(--muted);margin:10px 0 0}
+/* selected quake card */
+.qc{background:#162a38;border-radius:10px;padding:12px 14px;margin-bottom:4px;position:relative}
+.qc h3{margin:0 0 2px;font-size:18px;color:#fff;font-family:var(--f-body)}
+.qc .qc-w{font-size:14px;color:#cbd8e1;margin:0 0 8px}
+.qc-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.qc-g div{background:#0f1e29;border-radius:6px;padding:6px 8px}
+.qc-g span{display:block;font-size:12px;color:#9fb4c4}.qc-g b{font-size:16px;color:#fff}
+.qc-x{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:#cbd8e1;cursor:pointer;display:grid;place-items:center}
+.qc-x:hover{background:#22384a}
+.qc-q{font-size:13px;color:#9fb4c4;margin:8px 0 0}
+.qc-hint{font-size:14px;color:#9fb4c4;margin:0;line-height:1.6}
+/* cross-section */
+#cutPre{margin-bottom:12px}
+.cut-grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.cut-grid{grid-template-columns:minmax(0,1fr)}}
+.cut-map{padding:10px;overflow:hidden}
+#cutMap{display:block;width:100%;aspect-ratio:300/360;border-radius:10px;touch-action:none;cursor:crosshair}
+@media (max-width:820px){#cutMap{max-width:360px;margin:0 auto}}
+.cut-w{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-top:10px;font-size:14px}
+.cut-w select{font:inherit;font-size:14px;margin-left:6px;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-height:36px}
+.cut-w .bigbtn{font-size:14px;padding:8px 14px;min-height:40px}
+.cut-chart{padding:12px;background:#0c1822;border-color:#22384a;color:#e9eef2}
+#cutCv{display:block;width:100%}
+.cut-leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:#cbd8e1;margin-top:8px}
+.cut-leg i{display:inline-block;width:22px;height:0;border-top:3px dashed #56B4E9;vertical-align:middle;margin-right:6px}
+.cut-leg i.cl-land{border-top:3px solid #b8c79f}
+.cut-leg span:last-child{margin-left:auto;color:#9fb4c4}
+.cut-say{margin-top:16px}
+.cut-say h3{margin:0 0 6px;font-size:20px}
+.cut-say p{margin:0;line-height:1.7;max-width:40em}
+/* aftershocks */
+#afPick{margin-bottom:12px}
+.af-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.af-grid{grid-template-columns:minmax(0,1fr)}}
+.af-map{padding:10px;background:#0c1822;border-color:#22384a}
+#afMap{display:block;width:100%;aspect-ratio:1/1;border-radius:10px}
+.af-head h3{margin:0;font-size:22px}.af-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.af-ctl{display:flex;align-items:center;gap:12px;margin:14px 0 8px}
+.af-day{flex:1;display:grid;gap:2px;font-size:16px}.af-day b{font-size:20px}
+.af-day input{width:100%;accent-color:#009E73;min-height:28px}
+.af-play{background:#009E73;color:#fff}
+#afChart{display:block;width:100%;height:150px}
+.af-nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.af-nums div{background:var(--surface-2);border-radius:10px;padding:8px 10px}
+.af-nums span{display:block;font-size:13px;color:var(--muted)}.af-nums b{font-size:22px}
+/* questions + sources */
+.ask-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.ask-grid{grid-template-columns:minmax(0,1fr)}}
+.ask{padding:16px 20px}
+.ask h3{margin:0 0 8px;font-size:18px;font-family:var(--f-body);line-height:1.5}
+.ask .bigbtn{font-size:14px;padding:8px 14px;min-height:40px}
+.ask details{margin-top:10px}
+.ask summary{font-weight:700;cursor:pointer;color:var(--ink);min-height:32px;display:list-item}
+.ask details p{margin:6px 0 0;line-height:1.7}
+.src-list h3{margin:16px 0 6px;font-size:18px}.src-list h3:first-child{margin-top:0}
+.src-list p,.src-list li{line-height:1.7;max-width:40em}
+.src-list ul{margin:0;padding-left:20px}
+.src-ok{display:inline-block;background:#E6F4EF;color:#00573F;border-radius:6px;padding:2px 8px;font-weight:700}
+.eq-all{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid #3a5163;background:transparent;color:#e9eef2;font:inherit;font-size:13px;cursor:pointer}
+.eq-sel{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 2px #0c1822}
+.eq-sel[hidden]{display:none}
+.eq-tl-h span{margin-left:auto}
+#afPick,#cutPre{border-radius:16px}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="assets/site-nav.css?v=1">
+<link rel="stylesheet" href="assets/site.css?v=5">
+<nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
+<script src="assets/site-nav.js?v=3" defer></script>
+<header class="top">
+  <div class="wrap">
+    <div>
+      <h1>臺灣底下的<span class="accent">地震</span></h1>
+      <p class="lede">中央氣象署把每一個規模 3 以上的地震都記了下來：發生在哪裡、多深、多大。把 1990 年到現在的 <b id="nAll" class="num">7 萬多</b>個地震放進 3D 模型，掀開地表，就能看到板塊藏在地底下的樣子。</p>
+    </div>
+  </div>
+</header>
+
+<nav class="rail" aria-label="段落">
+  <div class="wrap" id="rail">
+    <a href="#model"><span class="dot" style="background:#0072B2"></span>3D 地震模型</a>
+    <a href="#cut"><span class="dot" style="background:#D55E00"></span>切一刀看板塊</a>
+    <a href="#after"><span class="dot" style="background:#009E73"></span>大地震之後</a>
+    <a href="#ask"><span class="dot" style="background:#CC79A7"></span>想一想</a>
+    <a href="#data"><span class="dot" style="background:#5E5E5E"></span>資料與方法</a>
+  </div>
+</nav>
+
+<main>
+<section class="unit" id="model">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#0072B2">3D</div>
+      <h2>7 萬多個地震，都在哪裡？</h2>
+      <p class="sub">每一個點都是一個地震。點越大，規模越大；顏色代表多深。拖曳可以轉動，滾輪或兩指可以放大。點一下地震，可以看它的資料。</p>
+    </div>
+    <div class="eq-box" id="eqBox">
+      <div class="eq-stage" id="eqStage" role="img" aria-label="臺灣地震 3D 模型：可以拖曳轉動、縮放">
+        <div class="eq-gl" id="eqGl"><canvas id="eqCv"></canvas>
+        <div class="eq-labels" id="eqLabels" aria-hidden="true"></div>
+        <div class="eq-load" id="eqLoad">正在載入地震資料…</div>
+        <div class="eq-views" role="group" aria-label="視角">
+          <button data-v="tilt" aria-pressed="true">斜看</button>
+          <button data-v="top" aria-pressed="false">從上面看</button>
+          <button data-v="east" aria-pressed="false">從東邊看</button>
+          <button data-v="south" aria-pressed="false">從南邊看</button>
+        </div></div>
+        <div class="eq-time" id="eqTime">
+          <button class="eq-play" id="eqPlay" aria-label="從 1990 年開始播放"><i class="ic ic-play" aria-hidden="true"></i></button>
+          <div class="eq-tl">
+            <div class="eq-tl-h"><b id="eqRange" class="num">1990 – 2026</b><button class="eq-all" id="eqAll" hidden>全部年份</button><span id="eqCount" class="num"></span></div>
+            <canvas id="eqHist" aria-label="每個月的地震數量。拖曳可以選一段時間" role="slider" tabindex="0" aria-valuetext=""></canvas>
+          </div>
+        </div>
+      </div>
+      <aside class="eq-panel" id="eqPanel" aria-label="地震模型設定">
+        <div id="eqCard" aria-live="polite"></div>
+        <div class="ep-sec">
+          <h3>顏色＝多深</h3>
+          <div class="eq-ramp" id="eqRamp"></div>
+          <h3>大小＝規模</h3>
+          <div class="eq-sizes" id="eqSizes"></div>
+        </div>
+        <div class="ep-sec">
+          <h3>只看比較大的地震</h3>
+          <div class="ep-chips" id="eqMag" role="group" aria-label="規模">
+            <button data-m="3" aria-pressed="true">全部</button><button data-m="4" aria-pressed="false">4 以上</button><button data-m="5" aria-pressed="false">5 以上</button><button data-m="6" aria-pressed="false">6 以上</button>
+          </div>
+        </div>
+        <div class="ep-sec">
+          <h3>地圖上要顯示</h3>
+          <label class="ep-tg"><input type="checkbox" id="tgTerrain" checked><span>地形和海底</span></label>
+          <label class="ep-tg ep-sub">地表透明<input type="range" id="clear" min="0" max="90" step="5" value="45" aria-describedby="clearV"><output id="clearV" class="num">45%</output></label>
+          <label class="ep-tg ep-sub">地表抬高<input type="range" id="lift" min="0" max="200" step="10" value="0" aria-describedby="liftV"><output id="liftV" class="num">0 公里</output></label>
+          <label class="ep-tg ep-sub">山的高度放大<select id="exag"><option value="1">1 倍（真實）</option><option value="3">3 倍</option><option value="5" selected>5 倍</option></select></label>
+          <label class="ep-tg"><input type="checkbox" id="tgSlab"><span>隱沒的板塊表面<small>（USGS Slab2 模型）</small></span></label>
+          <label class="ep-tg"><input type="checkbox" id="tgGnss"><span>臺灣每年移動的方向<small>（GNSS 測站）</small></span></label>
+          <label class="ep-tg"><input type="checkbox" id="tgSec"><span>只看剖面附近的地震</span></label>
+        </div>
+        <details class="ep-sec ep-q">
+          <summary>定位準確度（A 最準，D 誤差較大）</summary>
+          <p>外海和山區的測站少，算出來的位置誤差比較大，常是 C 或 D 級。它們仍然是真的地震。</p>
+          <div class="ep-chips" id="eqQ" role="group" aria-label="定位準確度">
+            <button data-q="0" aria-pressed="true">A</button><button data-q="1" aria-pressed="true">B</button><button data-q="2" aria-pressed="true">C</button><button data-q="3" aria-pressed="true">D</button>
+          </div>
+        </details>
+      </aside>
+    </div>
+    <p class="eq-note">地震的深度是<b>真實比例</b>（1 公里就是 1 公里）。只有陸地上的山放大，海底深度沒有放大，所以外海的淺地震會正確地出現在海底下面。</p>
+  </div>
+</section>
+
+<section class="unit" id="cut">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#D55E00">切</div>
+      <h2>切一刀，看看地底下的板塊</h2>
+      <p class="sub">像切蛋糕一樣，沿著一條線把地球切開，看側面。地震排成的斜線，就是板塊插進地底的地方。選一條線，或拖曳地圖上的 A、B 兩點自己切。</p>
+    </div>
+    <div class="tabs" id="cutPre" role="tablist" aria-label="切哪裡">
+      <button role="tab" data-c="n" aria-selected="true">北部・宜蘭外海</button>
+      <button role="tab" data-c="m" aria-selected="false">中部・花蓮到臺中</button>
+      <button role="tab" data-c="s" aria-selected="false">南部・恆春半島</button>
+    </div>
+    <div class="cut-grid">
+      <div class="panel cut-map">
+        <canvas id="cutMap" aria-label="切線位置地圖：拖曳 A、B 兩點可以移動切線" role="application"></canvas>
+        <div class="cut-w"><label>切線兩邊各取<select id="cutW"><option value="10">10 公里</option><option value="20" selected>20 公里</option><option value="40">40 公里</option></select></label>
+          <button class="bigbtn alt" id="cut3d">在 3D 模型裡看</button></div>
+      </div>
+      <div class="panel cut-chart">
+        <canvas id="cutCv" aria-label="剖面圖：橫軸是沿著切線的距離，縱軸是深度"></canvas>
+        <div class="cut-leg"><span><i class="cl-slab"></i>板塊上緣（USGS Slab2 模型）</span><span><i class="cl-land"></i>陸地（高度放大 10 倍）</span><span id="cutN" class="num"></span></div>
+      </div>
+    </div>
+    <div class="panel pad cut-say" id="cutSay" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="unit" id="after">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#009E73">震</div>
+      <h2>大地震之後，餘震怎麼變化？</h2>
+      <p class="sub">大地震之後，附近還會有很多比較小的地震，叫做餘震。選一個大地震，按播放，一天一天看餘震出現。</p>
+    </div>
+    <div class="tabs" id="afPick" role="tablist" aria-label="選一個大地震"></div>
+    <div class="af-grid">
+      <div class="panel af-map"><canvas id="afMap" aria-label="主震和餘震的位置"></canvas></div>
+      <div class="panel pad af-side">
+        <div class="af-head" id="afHead"></div>
+        <div class="af-ctl"><button class="eq-play af-play" id="afPlay" aria-label="播放"><i class="ic ic-play" aria-hidden="true"></i></button>
+          <label class="af-day"><span>第 <b id="afDay" class="num">0</b> 天</span><input type="range" id="afRange" min="0" max="60" value="60" aria-label="主震後第幾天"></label></div>
+        <canvas id="afChart" aria-label="每天的餘震數量"></canvas>
+        <div class="af-nums" id="afNums"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="unit" id="ask">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#CC79A7">想</div>
+      <h2>看模型，找答案</h2>
+      <p class="sub">先自己在上面的模型和剖面圖裡找，再打開看答案。</p>
+    </div>
+    <div class="ask-grid" id="askList"></div>
+  </div>
+</section>
+
+<section class="unit" id="data">
+  <div class="wrap">
+    <div class="unit-head">
+      <div class="badge" style="background:#5E5E5E">源</div>
+      <h2>資料從哪裡來？</h2>
+    </div>
+    <div class="panel pad src-list" id="srcList"></div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><p class="credit">地震資料：交通部中央氣象署地震目錄（政府資料開放授權條款第 1 版）。地形：NOAA ETOPO 2022。板塊表面：USGS Slab2（Hayes 等，2018）。GNSS：見「臺灣每年都在移動」。</p></div></footer>
+<script>
+(function(){const H='https://geo.twranger.com/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
+  const a=document.createElement('a');a.href=H;a.className='home-link';a.setAttribute('aria-label','回到海佃地圖首頁：'+h.textContent);k.parentNode.insertBefore(a,k);a.appendChild(k);a.appendChild(h);})();
+/* shared helpers for the unit pages */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* Taiwan relief map in an SVG. opts.crop=[lon0,lon1,lat0,lat1] picks the visible area.
+   Returns {svg,g,P,k} where P(lon,lat)->[x,y] in map units and k() is the current zoom. */
+function reliefMap(svgSel,opts={}){
+  const R=opts.relief||RELIEF.tw,kx=Math.cos(23.6*Math.PI/180),cell=(R.lon1-R.lon0)/R.w;
+  const P=(lon,lat)=>[(lon-R.lon0)/cell*kx,(R.lat1-lat)/cell];
+  const c=opts.crop||[R.lon0,R.lon1,R.lat0,R.lat1];const a=P(c[0],c[3]),b=P(c[1],c[2]);
+  const VW=b[0]-a[0],VH=b[1]-a[1];
+  const svg=d3.select(svgSel).attr('viewBox',`0 0 ${VW} ${VH}`);
+  svg.append('rect').attr('width',VW).attr('height',VH).attr('fill','var(--sea)');
+  const g=svg.append('g'),inner=g.append('g').attr('transform',`translate(${-a[0]},${-a[1]})`);
+  const img=inner.append('image').attr('href',opts.src||R.src).attr('x',0).attr('y',0).attr('width',R.w*kx).attr('height',R.h).attr('preserveAspectRatio','none');
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||8]).translateExtent([[0,0],[VW,VH]]).extent([[0,0],[VW,VH]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();opts.onZoom&&opts.onZoom(K);});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/VW,r.height/VH);upd();opts.onZoom&&opts.onZoom(K);}}).observe(svg.node());
+  const api={svg,g:inner,P,k:()=>K,s:()=>S,VW,VH,img,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),
+    home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    flyTo:(lon,lat,k)=>{const p=P(lon,lat);svg.transition().duration(700).call(z.transform,d3.zoomIdentity.translate(VW/2,VH/2).scale(k).translate(-(p[0]-a[0]),-(p[1]-a[1])));},
+    // a group that stays the same size on screen while zooming
+    pin:(lon,lat)=>{const p=P(lon,lat);return inner.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);}};
+  return api;}
+function zoomButtons(box,api){const z=document.createElement('div');z.className='zoomer';
+  z.innerHTML='<button aria-label="放大">＋</button><button aria-label="縮小">－</button><button aria-label="回到整張地圖">⤢</button>';
+  const [i,o,h]=z.querySelectorAll('button');i.onclick=api.zoomIn;o.onclick=api.zoomOut;h.onclick=api.home;box.appendChild(z);}
+
+/* flat map (world or East Asia) with land shapes from LANDS */
+function flatMap(svgSel,feats,proj,opts={}){
+  const svg=d3.select(svgSel);const W=+svg.attr('data-w'),H=+svg.attr('data-h');svg.attr('viewBox',`0 0 ${W} ${H}`);
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','var(--sea)');
+  const g=svg.append('g');const path=d3.geoPath(proj);
+  g.append('g').selectAll('path').data(feats).join('path').attr('class','land plain').attr('d',path);
+  let K=1,S=1;const upd=()=>svg.selectAll('.zs').attr('transform',function(){const p=this.dataset.p.split(',');return `translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`;});
+  const z=d3.zoom().scaleExtent([1,opts.maxZoom||6]).translateExtent([[0,0],[W,H]]).extent([[0,0],[W,H]])
+    .on('zoom',e=>{K=e.transform.k;g.attr('transform',e.transform);upd();});
+  svg.call(z).on('dblclick.zoom',null);
+  new ResizeObserver(()=>{const r=svg.node().getBoundingClientRect();if(r.width){S=Math.min(r.width/W,r.height/H);upd();}}).observe(svg.node());
+  return {svg,g,path,proj,W,H,k:()=>K,
+    zoomIn:()=>svg.transition().duration(300).call(z.scaleBy,1.6),zoomOut:()=>svg.transition().duration(300).call(z.scaleBy,1/1.6),home:()=>svg.transition().duration(500).call(z.transform,d3.zoomIdentity),
+    pin:(lon,lat)=>{const p=proj([lon,lat]);return g.append('g').attr('class','zs').attr('data-p',p.join(',')).attr('transform',`translate(${p[0]},${p[1]}) scale(${Math.min(1,Math.max(S,0.72))/(K*S)})`);},sc:()=>K*S/Math.min(1,Math.max(S,0.72))};}
+
+/* map marker: coloured dot + label that stays readable when zoomed */
+function marker(api,lon,lat,o){const m=api.pin(lon,lat).attr('class','zs mk').attr('tabindex',0).attr('role','button').attr('aria-label',o.label);
+  m.append('circle').attr('class','ring').attr('r',(o.r||9)+5);
+  m.append('circle').attr('class','dot').attr('r',o.r||9).attr('fill',o.color||'var(--typhoon)');
+  if(o.text!==false){const t=m.append('text').text(o.label).attr('dy',5);
+    if(o.side==='l')t.attr('x',-(o.r||9)-6).attr('text-anchor','end');else if(o.side==='t')t.attr('y',-(o.r||9)-8).attr('dy',0).attr('text-anchor','middle');else if(o.side==='b')t.attr('y',(o.r||9)+18).attr('dy',0).attr('text-anchor','middle');else t.attr('x',(o.r||9)+6);}
+  if(o.onClick){m.on('click',o.onClick);m.on('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();o.onClick(e);}});}
+  return m;}
+
+/* quiz */
+function quiz(box,scoreEl,QZ){const st={};
+  const draw=()=>{box.innerHTML=QZ.map((z,i)=>`<div class="panel pad qcard" data-q="${i}"><div class="qn">第 ${i+1} 題</div><h3>${z.q}</h3><div class="qopts">${z.o.map((o,j)=>`<button class="qo" data-j="${j}">${o}</button>`).join('')}</div><div class="qfb"></div></div>`).join('');score();};
+  const score=()=>{const n=Object.keys(st).length,c=Object.values(st).filter(Boolean).length;scoreEl.textContent=n?`答對 ${c} / ${QZ.length}`:'';};
+  box.addEventListener('click',e=>{const b=e.target.closest('.qo');if(!b)return;const card=b.closest('.qcard'),i=+card.dataset.q;if(i in st)return;const j=+b.dataset.j,ok=j===QZ[i].a;st[i]=ok;
+    card.querySelectorAll('.qo').forEach((x,k)=>{if(k===QZ[i].a)x.classList.add('right');else if(k===j)x.classList.add('wrong');x.disabled=true;});
+    card.querySelector('.qfb').innerHTML=(ok?'<b style="color:var(--leaf)">答對了！</b> ':'<b style="color:var(--typhoon)">再想想。</b> ')+QZ[i].e;score();});
+  draw();return ()=>{for(const k in st)delete st[k];draw();};}
+
+/* rail highlight */
+function railSpy(){const links=$$('#rail a'),secs=$$('section.unit');
+  const set=()=>{const mid=innerHeight*0.35;let cur=null;secs.forEach(x=>{const r=x.getBoundingClientRect();if(r.top<=mid&&r.bottom>mid)cur=x;});links.forEach(a=>a.classList.toggle('on',!!cur&&a.getAttribute('href')==='#'+cur.id));};
+  addEventListener('scroll',()=>requestAnimationFrame(set),{passive:true});set();}
+
+/* small line chart for simulations */
+function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w||640,H=opt.h||260,M={l:46,r:30,t:18,b:30};svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+  const x=d3.scaleLinear().domain(opt.x).range([M.l,W-M.r]),y=d3.scaleLinear().domain(opt.y).range([H-M.b,M.t]);
+  svg.append('g').attr('class','ax').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x).ticks(opt.xt||6).tickFormat(opt.xf||(d=>d)));
+  svg.append('g').attr('class','ax').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5));
+  series.forEach(s=>{svg.append('path').attr('d',d3.line().x(p=>x(p[0])).y(p=>y(p[1]))(s.pts)).attr('fill','none').attr('stroke',s.color).attr('stroke-width',3).attr('stroke-dasharray',s.dash||null);
+    if(s.label){const l=s.pts[s.pts.length-1];svg.append('text').attr('x',x(l[0])-4).attr('y',y(l[1])-8).attr('text-anchor','end').attr('font-size',14).attr('font-weight',700).attr('fill',s.color).text(s.label);}});
+  if(opt.ylab)svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('font-size',13).attr('fill','var(--muted)').text(opt.ylab);
+  return {x,y,svg};}
+
+/* 臺灣底下的地震 — 3D earthquake model, cross-sections and aftershock replays.
+   Data: data/eq/eq.bin (CWA catalog), geo.json (slabs, coast, GNSS, named quakes), terrain.bin + tex.webp (ETOPO 2022). */
+(()=>{
+const B='https://geo.twranger.com/data/eq/',V='?v=1';
+const LON0=121,LAT0=23.5,KX=111.32*Math.cos(23.5*Math.PI/180),KY=110.95;
+const RG={lon0:118.5,lon1:123.5,lat0:20.5,lat1:26.5};
+const X=lon=>(lon-LON0)*KX,Z=lat=>-(lat-LAT0)*KY;
+const T0=Date.UTC(1990,0,1)-8*3600e3;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STOPS=[[0,[255,228,92]],[30,[245,160,74]],[70,[232,96,122]],[150,[168,107,232]],[300,[90,169,255]]];
+const dcol=d=>{for(let i=1;i<STOPS.length;i++){if(d<=STOPS[i][0]||i===STOPS.length-1){const [a,ca]=STOPS[i-1],[b,cb]=STOPS[i];const t=Math.max(0,Math.min(1,(d-a)/(b-a)));return ca.map((v,k)=>Math.round(v+(cb[k]-v)*t));}}};
+const css=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+const nf=n=>n.toLocaleString('zh-TW');
+const TOWNS=[['臺北',121.52,25.04],['基隆',121.74,25.13],['宜蘭',121.75,24.75],['蘇澳',121.86,24.6],['花蓮',121.6,23.98],['玉里',121.31,23.33],['池上',121.22,23.1],['臺東',121.15,22.76],['恆春',120.74,22.0],['屏東',120.49,22.67],['高雄',120.3,22.62],['臺南',120.21,23.0],['嘉義',120.45,23.48],['斗六',120.54,23.71],['南投',120.69,23.91],['集集',120.78,23.83],['埔里',120.97,23.97],['臺中',120.68,24.14],['彰化',120.54,24.08],['苗栗',120.82,24.56],['新竹',120.97,24.8],['桃園',121.3,24.99],['馬公',119.57,23.57],['綠島',121.49,22.66],['蘭嶼',121.55,22.04]];
+const DIRS=['北','東北','東','東南','南','西南','西','西北'];
+const kmBetween=(a,b,c,d)=>Math.hypot((c-a)*KX,(d-b)*KY);
+function where(lon,lat){let best=null,bd=1e9;for(const t of TOWNS){const d=kmBetween(t[1],t[2],lon,lat);if(d<bd){bd=d;best=t;}}
+  if(bd<6)return best[0]+'附近';const ang=Math.atan2((lon-best[1])*KX,(lat-best[2])*KY)*180/Math.PI;const dir=DIRS[Math.round(((ang+360)%360)/45)%8];
+  return `${best[0]}${dir}方約 ${Math.round(bd/5)*5||5} 公里${hAt(lon,lat)<0?'的海上':''}`;}
+const fmtT=t=>{const d=new Date(T0+t*86400e3+8*3600e3);return {y:d.getUTCFullYear(),m:d.getUTCMonth()+1,d:d.getUTCDate(),h:d.getUTCHours(),mi:d.getUTCMinutes()};};
+const dayOf=(y,m,d)=>(Date.UTC(y,m-1,d)-8*3600e3-T0)/86400e3;
+
+let E,G,TER,TEX,META;
+let tMin=0,tMax=0,mMin=3,qMask=[1,1,1,1],sel=-1;
+const cut={a:null,b:null,w:20,pre:'n'};
+const S={};// three.js state
+
+/* ---------- loading ---------- */
+const imgP=new Promise((res,rej)=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>res(im);im.onerror=rej;im.src=B+'tex.webp'+V;});
+Promise.all([fetch(B+'eq.json'+V).then(r=>r.json()),fetch(B+'eq.bin'+V).then(r=>r.arrayBuffer()),fetch(B+'geo.json'+V).then(r=>r.json()),fetch(B+'terrain.bin'+V).then(r=>r.arrayBuffer()),imgP])
+.then(([m,b,g,t,im])=>{META=m;G=g;TEX=im;TER=new Int16Array(t);parse(b,m.n);init();})
+.catch(e=>{console.error(e);const l=$('#eqLoad');if(l)l.textContent='資料載入失敗，請重新整理頁面。';});
+
+function parse(buf,N){const t=new Uint32Array(buf,0,N),lo=new Uint16Array(buf,4*N,N),la=new Uint16Array(buf,6*N,N),de=new Uint16Array(buf,8*N,N),ma=new Uint8Array(buf,10*N,N),q=new Uint8Array(buf,11*N,N);
+  E={n:N,t:new Float32Array(N),lon:new Float32Array(N),lat:new Float32Array(N),dep:new Float32Array(N),mag:new Float32Array(N),q};
+  for(let i=0;i<N;i++){E.t[i]=t[i]/1440;E.lon[i]=118+lo[i]/65535*6;E.lat[i]=20+la[i]/65535*7;E.dep[i]=de[i]/10;E.mag[i]=ma[i]/10;}
+  tMin=0;tMax=E.t[N-1]+1;}
+function hAt(lon,lat){const c=(lon-RG.lon0)/5*300-.5,r=(lat-RG.lat0)/6*360-.5;if(c<0||r<0||c>299||r>359)return -3000;
+  const c0=Math.floor(c),r0=Math.floor(r),c1=Math.min(299,c0+1),r1=Math.min(359,r0+1),fx=c-c0,fy=r-r0,v=(rr,cc)=>TER[rr*300+cc];
+  return (v(r0,c0)*(1-fx)+v(r0,c1)*fx)*(1-fy)+(v(r1,c0)*(1-fx)+v(r1,c1)*fx)*fy;}
+const pass=i=>E.t[i]>=tMin&&E.t[i]<=tMax&&E.mag[i]>=mMin-1e-3&&qMask[E.q[i]];
+
+function init(){
+  for(const n of G.named){const [y,m,d]=n.d.split('-').map(Number),a=dayOf(y,m,d);let b=-1;for(let i=0;i<E.n;i++){if(E.t[i]>=a&&E.t[i]<a+1&&(b<0||E.mag[i]>E.mag[b]))b=i;}n.i=b;}
+  $('#nAll').textContent=nf(E.n);$('#eqLoad').remove();
+  legend();init3d();initHist();initPanel();initCut();initAfter();initAsk();initSrc();update();
+}
+
+/* ---------- legend ---------- */
+function legend(){
+  $('#eqRamp').innerHTML=[[0,30,'淺'],[30,70,''],[70,150,''],[150,300,'深']].map(([a,b,w],k)=>`<div><i style="background:linear-gradient(90deg,${css(dcol(a))},${css(dcol(b))})"></i>${a}–${b}${k===3?'+':''}<em>${w||'&nbsp;'}</em></div>`).join('')+`<div><i style="background:${css(dcol(300))}"></i>公里<em>&nbsp;</em></div>`;
+  $('#eqSizes').innerHTML=[3,4,5,6,7].map(m=>{const s=Math.min(40,3.2*Math.pow(1.75,m-3));return `<div><i style="width:${s}px;height:${s}px"></i>${m}</div>`;}).join('');
+}
+
+/* ---------- 3D ---------- */
+function init3d(){
+  const cv=$('#eqCv'),st=$('#eqGl');
+  const R=S.r=new THREE.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.setClearColor(0x0c1822,1);
+  const sc=S.sc=new THREE.Scene();const cam=S.cam=new THREE.PerspectiveCamera(38,1,2,8000);
+  S.view={az:.35,el:.6,dist:950,tx:0,ty:-70,tz:20};S.exag=5;S.lift=0;S.clear=.45;
+  // earthquakes
+  const N=E.n,pos=new Float32Array(N*3),am=new Float32Array(N),at=new Float32Array(N),aq=new Float32Array(N),ad=new Float32Array(N);
+  const order=[...Array(N).keys()].sort((a,b)=>E.mag[a]-E.mag[b]);
+  for(let k=0;k<N;k++){const i=order[k];pos[k*3]=X(E.lon[i]);pos[k*3+1]=-E.dep[i];pos[k*3+2]=Z(E.lat[i]);am[k]=E.mag[i];at[k]=E.t[i];aq[k]=E.q[i];ad[k]=E.dep[i];}
+  S.order=order;
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('aMag',new THREE.BufferAttribute(am,1));g.setAttribute('aT',new THREE.BufferAttribute(at,1));g.setAttribute('aQ',new THREE.BufferAttribute(aq,1));g.setAttribute('aDep',new THREE.BufferAttribute(ad,1));
+  const ramp=STOPS.map(s=>`vec3(${(s[1][0]/255).toFixed(3)},${(s[1][1]/255).toFixed(3)},${(s[1][2]/255).toFixed(3)})`);
+  S.pm=new THREE.ShaderMaterial({uniforms:{uT0:{value:0},uT1:{value:1e9},uM:{value:3},uQ:{value:new THREE.Vector4(1,1,1,1)},uScale:{value:900},uSecOn:{value:0},uSec:{value:new THREE.Vector4()},uSecW:{value:20}},
+   vertexShader:`uniform float uT0,uT1,uM,uScale,uSecOn,uSecW;uniform vec4 uQ,uSec;attribute float aMag,aT,aQ,aDep;varying vec3 vC;
+    vec3 rp(float d){if(d<30.)return mix(${ramp[0]},${ramp[1]},d/30.);if(d<70.)return mix(${ramp[1]},${ramp[2]},(d-30.)/40.);if(d<150.)return mix(${ramp[2]},${ramp[3]},(d-70.)/80.);return mix(${ramp[3]},${ramp[4]},clamp((d-150.)/150.,0.,1.));}
+    void main(){float qm=aQ<.5?uQ.x:aQ<1.5?uQ.y:aQ<2.5?uQ.z:uQ.w;bool on=aT>=uT0&&aT<=uT1&&aMag>=uM-.001&&qm>.5;
+     if(uSecOn>.5){vec2 p=position.xz,a=uSec.xy,ab=uSec.zw-uSec.xy;float t=clamp(dot(p-a,ab)/dot(ab,ab),0.,1.);if(length(p-(a+t*ab))>uSecW)on=false;}
+     vec4 mv=modelViewMatrix*vec4(position,1.);gl_Position=on?projectionMatrix*mv:vec4(2.,2.,2.,1.);
+     gl_PointSize=on?clamp(1.6*pow(1.75,aMag-3.)*uScale/(-mv.z),1.6,64.):0.;vC=rp(aDep);}`,
+   fragmentShader:`varying vec3 vC;void main(){float r=length(gl_PointCoord-.5);if(r>.5)discard;gl_FragColor=vec4(mix(vC*.35,vC,smoothstep(.5,.4,r)),1.);}`});
+  S.pts=new THREE.Points(g,S.pm);sc.add(S.pts);
+  // terrain
+  const W=5*KX,H=6*KY,tg=new THREE.PlaneGeometry(W,H,299,359);tg.rotateX(-Math.PI/2);S.tg=tg;
+  const tex=new THREE.Texture(TEX);tex.needsUpdate=true;tex.anisotropy=4;
+  S.terr=new THREE.Mesh(tg,new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,transparent:true,opacity:1,depthWrite:false}));S.terr.renderOrder=2;sc.add(S.terr);setTerrain();
+  // frame + depth ruler
+  const fr=[],x0=X(RG.lon0),x1=X(RG.lon1),z0=Z(RG.lat1),z1=Z(RG.lat0),D=-320;
+  const sq=y=>[[x0,y,z0],[x1,y,z0],[x1,y,z0],[x1,y,z1],[x1,y,z1],[x0,y,z1],[x0,y,z1],[x0,y,z0]];
+  fr.push(...sq(0),...sq(D),[x0,0,z0],[x0,D,z0],[x1,0,z0],[x1,D,z0],[x1,0,z1],[x1,D,z1],[x0,0,z1],[x0,D,z1]);
+  for(let d=-50;d>D;d-=50){fr.push([x1,d,z1],[x1-14,d,z1],[x1,d,z1],[x1,d,z1-14]);}
+  S.frame=lines(fr,0x5d7a90,.55);sc.add(S.frame);
+  // coast
+  const cl=[];for(const p of G.land){for(let k=0;k+3<p.length;k+=2)cl.push([X(p[k]),.3,Z(p[k+1])],[X(p[k+2]),.3,Z(p[k+3])]);}
+  S.coast=lines(cl,0xe9eef2,.6);sc.add(S.coast);
+  // slabs
+  S.slab=new THREE.Group();for(const k of ['ryu','man'])S.slab.add(slabMesh(G.slab[k]));S.slab.visible=false;sc.add(S.slab);
+  // GNSS arrows
+  const ar=[];for(const s of G.gnss){const x=X(s[1]),z=Z(s[2]),y=Math.max(0,hAt(s[1],s[2]))/1000*5+1.5,ex=x+s[4],ez=z-s[5];const L=Math.hypot(s[4],s[5]);if(L<2)continue;
+    const ux=(ex-x)/L,uz=(ez-z)/L,h=Math.min(8,L*.35);ar.push([x,y,z],[ex,y,ez],[ex,y,ez],[ex-ux*h-uz*h*.5,y,ez-uz*h+ux*h*.5],[ex,y,ez],[ex-ux*h+uz*h*.5,y,ez-uz*h-ux*h*.5]);}
+  S.gn=lines(ar,0xF2C14E,1);S.gn.visible=false;sc.add(S.gn);S.gnY=G.gnss;
+  // section plane
+  S.secG=new THREE.Group();S.secG.visible=false;sc.add(S.secG);
+  // labels
+  S.lbs=[['歐亞板塊',119.5,25.6,4,'pl'],['菲律賓海板塊',122.7,21.3,4,'pl'],['琉球海溝',123.0,23.7,2,'tr'],['馬尼拉海溝',119.75,20.9,2,'tr'],
+    ...[['臺北',121.52,25.04],['臺中',120.68,24.14],['高雄',120.3,22.62],['宜蘭',121.75,24.75],['花蓮',121.6,23.98],['臺東',121.15,22.76],['恆春',120.74,22.0]].map(t=>[t[0],t[1],t[2],0,'tw'])];
+  $('#eqLabels').innerHTML=S.lbs.map((l,i)=>`<span class="eq-lb ${l[4]}" id="lb${i}">${l[0]}</span>`).join('')+'<span class="eq-sel" id="eqSel" hidden></span>'+[50,100,150,200,250,300].map(d=>`<span class="eq-lb tr" id="dk${d}">${d} 公里</span>`).join('');
+  // controls
+  ctrl(cv);new ResizeObserver(resize).observe(st);resize();go('tilt',true);
+}
+function lines(arr,color,op){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(arr.flat(),3));return new THREE.LineSegments(g,new THREE.LineBasicMaterial({color,transparent:op<1,opacity:op,depthWrite:op>=1}));}
+function slabMesh(s){const P=[],I=[],idx=new Int32Array(s.nx*s.ny).fill(-1),L=[];
+  for(let r=0;r<s.ny;r++)for(let c=0;c<s.nx;c++){const z=s.z[r*s.nx+c];if(z==null)continue;idx[r*s.nx+c]=P.length/3;P.push(X(s.x0+c*s.d),-z,Z(s.y0+r*s.d));}
+  const id=(r,c)=>idx[r*s.nx+c],pt=k=>[P[k*3],P[k*3+1],P[k*3+2]];
+  for(let r=0;r<s.ny-1;r++)for(let c=0;c<s.nx-1;c++){const a=id(r,c),b=id(r,c+1),d=id(r+1,c),e=id(r+1,c+1);if(a<0||b<0||d<0||e<0)continue;I.push(a,b,d,b,e,d);
+    if(r%3===0)L.push(pt(a),pt(b));if(c%3===0)L.push(pt(a),pt(d));}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));g.setIndex(I);
+  const grp=new THREE.Group();grp.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0x9fd3f5,transparent:true,opacity:.16,side:THREE.DoubleSide,depthWrite:false})));grp.add(lines(L,0x9fd3f5,.45));return grp;}
+function setTerrain(){const p=S.tg.attributes.position;for(let r=0;r<360;r++)for(let c=0;c<300;c++){const e=TER[(359-r)*300+c];p.setY(r*300+c,(e>0?e*S.exag:e)/1000+S.lift);}
+  p.needsUpdate=true;S.terr.material.opacity=1-S.clear;if(S.coast)S.coast.position.y=S.lift;dirty();}
+function resize(){const st=$('#eqGl'),w=st.clientWidth,h=st.clientHeight;S.r.setSize(w,h,false);S.cam.aspect=w/h;S.cam.updateProjectionMatrix();S.pm.uniforms.uScale.value=900*S.r.getPixelRatio()*Math.sqrt(h/700);S.W=w;S.H=h;dirty();}
+const VIEWS={tilt:{az:.35,el:.62,f:1},top:{az:0,el:1.5,f:.95},east:{az:Math.PI/2,el:.09,f:1.32},south:{az:0,el:.09,f:1.38}};
+function fitDist(v){const a=S.W/S.H,fy=Math.tan(19*Math.PI/180),need=v.el>1.2?Math.max(690/2/fy,560/2/(fy*a)):Math.max(420/2/fy,(v.az>.8?690:560)/2/(fy*a));return need*v.f*(a<.8&&v.el<1.2?1.15:1);}
+function go(k,now){const v=VIEWS[k],tgt={az:v.az,el:v.el,dist:fitDist(v),tx:0,ty:v.el>1.2?0:-140,tz:v.el>1.2?0:10};if(k==='tilt'){tgt.ty=-90;}
+  $$('.eq-views button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===k)));tween(tgt,now||RM?0:700);}
+function tween(to,ms){const from={...S.view};const t0=performance.now();cancelAnimationFrame(S.tw);
+  const step=now=>{const k=ms?Math.min(1,(now-t0)/ms):1,e=1-Math.pow(1-k,3);for(const p in to)S.view[p]=from[p]+(to[p]-from[p])*e;dirty();if(k<1)S.tw=requestAnimationFrame(step);};S.tw=requestAnimationFrame(step);}
+function place(){const v=S.view,c=Math.cos(v.el);S.cam.position.set(v.tx+v.dist*c*Math.sin(v.az),v.ty+v.dist*Math.sin(v.el),v.tz+v.dist*c*Math.cos(v.az));S.cam.up.set(0,1,0);
+  if(v.el>1.45){S.cam.up.set(-Math.sin(v.az),0,-Math.cos(v.az));}S.cam.lookAt(v.tx,v.ty,v.tz);S.cam.updateMatrixWorld();}
+function dirty(){if(!S.raf)S.raf=requestAnimationFrame(()=>{S.raf=0;draw();});}
+function draw(){place();S.r.render(S.sc,S.cam);labels();}
+const proj=(x,y,z)=>{const v=new THREE.Vector3(x,y,z).project(S.cam);return v.z>1?null:[(v.x+1)/2*S.W,(1-v.y)/2*S.H];};
+function labels(){const side=S.view.el<.35;S.lbs.forEach((l,i)=>{const e=document.getElementById('lb'+i);if(side&&l[4]==='tw'){e.style.display='none';return;}const y=l[4]==='tw'?Math.max(0,hAt(l[1],l[2]))/1000*S.exag+S.lift+4:l[3]+S.lift;const p=S.terr.visible||l[4]!=='tw'?proj(X(l[1]),y,Z(l[2])):proj(X(l[1]),2,Z(l[2]));
+    if(!p||p[0]<0||p[1]<0||p[0]>S.W||p[1]>S.H){e.style.display='none';return;}e.style.display='';e.style.left=p[0]+'px';e.style.top=p[1]+'px';});
+  const x1=X(RG.lon1),z1=Z(RG.lat0);[50,100,150,200,250,300].forEach(d=>{const e=document.getElementById('dk'+d),p=proj(x1+6,-d,z1+6);if(!p||S.view.el>1.3){e.style.display='none';return;}e.style.display='';e.style.left=(p[0]+28)+'px';e.style.top=p[1]+'px';});
+  const se=$('#eqSel');if(sel>=0){const p=proj(X(E.lon[sel]),-E.dep[sel],Z(E.lat[sel]));if(p){se.hidden=false;se.style.left=p[0]+'px';se.style.top=p[1]+'px';}else se.hidden=true;}else se.hidden=true;}
+function ctrl(cv){const P=new Map();let moved=0,last=null;
+  const panV=(dx,dy)=>{const v=S.view,k=v.dist/S.H*0.75,ca=Math.cos(v.az),sa=Math.sin(v.az);
+    v.tx-=(dx*ca)*k;v.tz-=(-dx*sa)*k;if(v.el>1.0){v.tx-=(dy*sa)*k;v.tz-=(dy*ca)*k;}else v.ty+=dy*k;
+    v.tx=Math.max(-320,Math.min(320,v.tx));v.tz=Math.max(-380,Math.min(380,v.tz));v.ty=Math.max(-340,Math.min(60,v.ty));dirty();};
+  cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);P.set(e.pointerId,[e.clientX,e.clientY]);moved=0;last=null;e.preventDefault();});
+  cv.addEventListener('pointermove',e=>{if(!P.has(e.pointerId))return;const [px,py]=P.get(e.pointerId),dx=e.clientX-px,dy=e.clientY-py;P.set(e.pointerId,[e.clientX,e.clientY]);moved+=Math.abs(dx)+Math.abs(dy);
+    if(P.size===1){if(e.buttons&2||e.shiftKey)panV(dx,dy);else{S.view.az-=dx*.006;S.view.el=Math.max(.02,Math.min(1.5,S.view.el+dy*.005));dirty();}}
+    else if(P.size===2){const [a,b]=[...P.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]),m=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+      if(last){S.view.dist=Math.max(120,Math.min(2600,S.view.dist*last.d/d));panV(m[0]-last.m[0],m[1]-last.m[1]);}last={d,m};}});
+  const up=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);last=null;if(moved<6&&e.type==='pointerup')pick(e);};
+  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);cv.addEventListener('contextmenu',e=>e.preventDefault());
+  cv.addEventListener('wheel',e=>{e.preventDefault();S.view.dist=Math.max(120,Math.min(2600,S.view.dist*Math.exp(e.deltaY*.0012)));dirty();},{passive:false});
+}
+function pick(e){const r=$('#eqCv').getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=-1,bd=1e9;
+  S.cam.updateMatrixWorld();const m=new THREE.Matrix4().multiplyMatrices(S.cam.projectionMatrix,S.cam.matrixWorldInverse).elements;
+  const sec=$('#tgSec').checked&&cut.a;
+  for(let i=0;i<E.n;i++){if(!pass(i))continue;const x=X(E.lon[i]),y=-E.dep[i],z=Z(E.lat[i]);if(sec&&segDist(x,z)>cut.w)continue;
+    const w=m[3]*x+m[7]*y+m[11]*z+m[15];if(w<=0)continue;const sx=((m[0]*x+m[4]*y+m[8]*z+m[12])/w+1)/2*S.W,sy=(1-(m[1]*x+m[5]*y+m[9]*z+m[13])/w)/2*S.H;
+    const rad=Math.max(5,.5*1.6*Math.pow(1.75,E.mag[i]-3)*S.pm.uniforms.uScale.value/w/S.r.getPixelRatio())+4;const d=Math.hypot(sx-mx,sy-my);
+    if(d<rad){const score=d-E.mag[i]*2;if(score<bd){bd=score;best=i;}}}
+  sel=best;card();dirty();}
+function segDist(x,z){const ax=X(cut.a[0]),az=Z(cut.a[1]),bx=X(cut.b[0]),bz=Z(cut.b[1]),ux=bx-ax,uz=bz-az,t=Math.max(0,Math.min(1,((x-ax)*ux+(z-az)*uz)/(ux*ux+uz*uz)));return Math.hypot(x-ax-t*ux,z-az-t*uz);}
+const QTXT=['A：位置最準','B：位置很準','C：位置大致準確','D：位置誤差較大'];
+function card(){const c=$('#eqCard');if(sel<0){c.innerHTML=`<p class="qc-hint">點一下模型裡的地震，這裡會顯示它的時間、規模和深度。</p>`;return;}
+  const f=fmtT(E.t[sel]),nm=G.named.find(n=>n.i===sel);
+  c.innerHTML=`<div class="qc"><button class="qc-x" aria-label="關閉"><i class="ic ic-x" aria-hidden="true"></i></button>
+   <h3>${nm?nm.n+'・':''}${f.y} 年 ${f.m} 月 ${f.d} 日</h3><p class="qc-w">${String(f.h).padStart(2,'0')}:${String(f.mi).padStart(2,'0')}，${where(E.lon[sel],E.lat[sel])}</p>
+   <div class="qc-g"><div><span>規模</span><b class="num">${E.mag[sel].toFixed(1)}</b></div><div><span>深度</span><b class="num">${E.dep[sel].toFixed(1)}</b> <span style="display:inline">公里</span></div><div><span>定位</span><b>${'ABCD'[E.q[sel]]}</b></div></div>
+   <p class="qc-q">${QTXT[E.q[sel]]}。經緯度 ${E.lon[sel].toFixed(2)}°E、${E.lat[sel].toFixed(2)}°N。</p></div>`;
+  c.querySelector('.qc-x').onclick=()=>{sel=-1;card();dirty();};}
+
+/* ---------- timeline ---------- */
+function initHist(){const cv=$('#eqHist');S.hm=Math.ceil((E.t[E.n-1]+1)/30.4375);let a0=null;
+  const mOf=x=>{const r=cv.getBoundingClientRect();return Math.max(0,Math.min(S.hm-1,Math.floor((x-r.left)/r.width*S.hm)));};
+  const setM=(m0,m1)=>{tMin=Math.min(m0,m1)*30.4375;tMax=(Math.max(m0,m1)+1)*30.4375;if(Math.max(m0,m1)>=S.hm-1)tMax=E.t[E.n-1]+1;update();};
+  cv.addEventListener('pointerdown',e=>{stopPlay();cv.setPointerCapture(e.pointerId);a0=mOf(e.clientX);S.hDrag=0;});
+  cv.addEventListener('pointermove',e=>{if(a0==null)return;const m=mOf(e.clientX);if(Math.abs(m-a0)>1)S.hDrag=1;if(S.hDrag)setM(a0,m);});
+  cv.addEventListener('pointerup',e=>{if(a0==null)return;const m=mOf(e.clientX);if(!S.hDrag){const y=Math.floor(m/12);setM(y*12,Math.min(S.hm-1,y*12+11));}a0=null;});
+  cv.addEventListener('keydown',e=>{const y0=Math.round(tMin/365.25),y1=Math.round(tMax/365.25)-1;let a=y0,b=y1;
+    if(e.key==='ArrowRight')b=Math.min(36,b+1);else if(e.key==='ArrowLeft')b=Math.max(a,b-1);else if(e.key==='Home'){a=0;b=99;}else return;e.preventDefault();setM(a*12,Math.min(S.hm-1,b*12+11));});
+  $('#eqPlay').onclick=()=>S.play?stopPlay():startPlay();
+  $('#eqAll').onclick=()=>{stopPlay();tMin=0;tMax=E.t[E.n-1]+1;update();};
+  new ResizeObserver(drawHist).observe(cv);}
+function drawHist(){const cv=$('#eqHist'),dpr=Math.min(2,devicePixelRatio||1),w=cv.clientWidth,h=cv.clientHeight;if(!w)return;cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+  const c=new Uint16Array(S.hm);for(let i=0;i<E.n;i++)if(E.mag[i]>=mMin-1e-3&&qMask[E.q[i]])c[Math.min(S.hm-1,Math.floor(E.t[i]/30.4375))]++;
+  const mx=Math.max(...c),bw=w/S.hm,y0=h-14;x.clearRect(0,0,w,h);
+  for(let m=0;m<S.hm;m++){const on=(m+1)*30.4375>tMin&&m*30.4375<tMax;x.fillStyle=on?'#F2C14E':'#3a5163';const bh=Math.max(c[m]?1:0,Math.sqrt(c[m]/mx)*(y0-2));x.fillRect(m*bw,y0-bh,Math.max(1,bw-.3),bh);}
+  x.fillStyle='#9fb4c4';x.font='11px "IBM Plex Mono",monospace';x.textAlign='center';for(let y=1990;y<=2026;y+=(w<500?10:5)){x.fillText(String(y),((y-1990)*12+6)*bw,h-2);}
+  const y1=fmtT(tMin).y,y2=fmtT(Math.min(tMax,E.t[E.n-1])).y;$('#eqHist').setAttribute('aria-valuetext',`${y1} 到 ${y2} 年`);}
+function startPlay(){const end=E.t[E.n-1]+1;if(tMax>=end-1)tMax=tMin+30;S.play=1;$('#eqPlay').innerHTML='<i class="ic ic-pause" aria-hidden="true"></i>';$('#eqPlay').setAttribute('aria-label','暫停');
+  let prev=performance.now();const span=end-tMin,dur=RM?60e3:30e3;const step=now=>{if(!S.play)return;tMax=Math.min(end,tMax+(now-prev)/dur*span);prev=now;update(true);if(tMax>=end){stopPlay();return;}requestAnimationFrame(step);};requestAnimationFrame(step);}
+function stopPlay(){S.play=0;$('#eqPlay').innerHTML='<i class="ic ic-play" aria-hidden="true"></i>';$('#eqPlay').setAttribute('aria-label','從 1990 年開始播放');}
+
+/* ---------- panel ---------- */
+function initPanel(){
+  $$('.eq-views button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+  $$('#eqMag button').forEach(b=>b.onclick=()=>{mMin=+b.dataset.m;$$('#eqMag button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));update();drawCut();});
+  $$('#eqQ button').forEach(b=>b.onclick=()=>{const k=+b.dataset.q;qMask[k]=qMask[k]?0:1;b.setAttribute('aria-pressed',String(!!qMask[k]));update();drawCut();});
+  $('#tgTerrain').onchange=e=>{S.terr.visible=e.target.checked;dirty();};
+  $('#clear').oninput=e=>{S.clear=+e.target.value/100;$('#clearV').textContent=e.target.value+'%';setTerrain();};
+  $('#lift').oninput=e=>{S.lift=+e.target.value;$('#liftV').textContent=S.lift+' 公里';setTerrain();};
+  $('#exag').onchange=e=>{S.exag=+e.target.value;setTerrain();};
+  $('#tgSlab').onchange=e=>{S.slab.visible=e.target.checked;dirty();};
+  $('#tgGnss').onchange=e=>{S.gn.visible=e.target.checked;dirty();};
+  $('#tgSec').onchange=e=>{S.pm.uniforms.uSecOn.value=e.target.checked?1:0;S.secG.visible=e.target.checked;dirty();};
+  card();}
+function update(fast){const u=S.pm.uniforms;u.uT0.value=tMin;u.uT1.value=tMax;u.uM.value=mMin;u.uQ.value.set(...qMask);
+  let n=0;for(let i=0;i<E.n;i++)if(pass(i))n++;
+  const a=fmtT(tMin),b=fmtT(Math.min(tMax,E.t[E.n-1]));$('#eqRange').textContent=S.play?`${a.y} 年 → ${b.y} 年 ${b.m} 月`:(a.y===b.y?`${a.y} 年`:`${a.y} – ${b.y} 年`);
+  $('#eqCount').textContent=`顯示 ${nf(n)} 個地震`;$('#eqAll').hidden=S.play||(tMin<=0&&tMax>=E.t[E.n-1]);if(sel>=0&&!pass(sel)){sel=-1;card();}
+  drawHist();dirty();void fast;}
+
+/* ---------- cross-section ---------- */
+const CUTS={n:{a:[122.0,23.3],b:[122.0,25.75],t:'北部：菲律賓海板塊往北插進去',p:'從花蓮外海往北切到基隆外海。南邊的地震很淺，越往北越深，排成一條斜線，最深超過 200 公里。這條斜線就是<b>菲律賓海板塊</b>從南邊往北，斜斜地插到<b>歐亞板塊</b>下面（叫做「隱沒」）。宜蘭外海常有很深的地震，就是這個原因。<br>藍色虛線是美國地質調查所推算的板塊上緣。它比地震排成的斜線淺一些：一方面地震大多發生在插下去的板塊「裡面」，另一方面，用不同資料算出來的深度也會有差異。'},
+  m:{a:[120.3,24.0],b:[122.3,24.0],t:'中部：兩個板塊正面相撞',p:'從彰化外海切到花蓮外海。這裡的地震大多很淺，在 50 公里以內，擠在臺灣島和花蓮外海的下面。兩個板塊在這裡正面碰撞，把地殼擠高，堆出了中央山脈。'},
+  s:{a:[119.6,22.0],b:[121.8,22.0],t:'南部：歐亞板塊往東插進去',p:'從高雄外海切到蘭嶼附近的海上。地震排成一條往<b>東</b>越來越深的斜線。這次是<b>歐亞板塊</b>（南海那一塊）往東插到<b>菲律賓海板塊</b>下面，方向和北部剛好相反。臺灣就夾在這兩個方向相反的隱沒帶中間。'}};
+function initCut(){
+  $$('#cutPre button').forEach(b=>b.onclick=()=>{setCut(b.dataset.c);});
+  $('#cutW').onchange=e=>{cut.w=+e.target.value;S.pm.uniforms.uSecW.value=cut.w;sec3d();drawCut();};
+  $('#cut3d').onclick=()=>{$('#tgSec').checked=true;$('#tgSec').onchange({target:$('#tgSec')});const ang=Math.atan2(X(cut.b[0])-X(cut.a[0]),Z(cut.b[1])-Z(cut.a[1]));
+    const mx=(X(cut.a[0])+X(cut.b[0]))/2,mz=(Z(cut.a[1])+Z(cut.b[1]))/2;tween({az:ang+Math.PI/2,el:.12,dist:Math.max(380,kmLen()*1.5),tx:mx,ty:-110,tz:mz},RM?0:800);
+    $$('.eq-views button').forEach(b=>b.setAttribute('aria-pressed','false'));$('#model').scrollIntoView({behavior:RM?'auto':'smooth'});};
+  const cv=$('#cutMap');let drag=null;
+  const ll=e=>{const r=cv.getBoundingClientRect();return [RG.lon0+(e.clientX-r.left)/r.width*5,RG.lat1-(e.clientY-r.top)/r.height*6];};
+  const hit=e=>{const r=cv.getBoundingClientRect(),[lo,la]=ll(e);for(const k of ['a','b']){const dx=(cut[k][0]-lo)/5*r.width,dy=(cut[k][1]-la)/6*r.height;if(Math.hypot(dx,dy)<24)return k;}return null;};
+  cv.addEventListener('pointerdown',e=>{drag=hit(e);if(drag){cv.setPointerCapture(e.pointerId);e.preventDefault();}});
+  cv.addEventListener('pointermove',e=>{if(!drag){cv.style.cursor=hit(e)?'grab':'default';return;}const [lo,la]=ll(e);cut[drag]=[Math.max(RG.lon0,Math.min(RG.lon1,lo)),Math.max(RG.lat0,Math.min(RG.lat1,la))];cut.pre='';
+    $$('#cutPre button').forEach(b=>b.setAttribute('aria-selected','false'));sec3d();drawCut();});
+  cv.addEventListener('pointerup',()=>{drag=null;});
+  new ResizeObserver(()=>drawCut()).observe($('.cut-chart'));setCut('n');}
+function setCut(k){const c=CUTS[k];cut.a=[...c.a];cut.b=[...c.b];cut.pre=k;$$('#cutPre button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.c===k)));sec3d();drawCut();}
+const kmLen=()=>kmBetween(cut.a[0],cut.a[1],cut.b[0],cut.b[1]);
+function sec3d(){const u=S.pm.uniforms;u.uSec.value.set(X(cut.a[0]),Z(cut.a[1]),X(cut.b[0]),Z(cut.b[1]));u.uSecW.value=cut.w;
+  S.secG.clear();const ax=X(cut.a[0]),az=Z(cut.a[1]),bx=X(cut.b[0]),bz=Z(cut.b[1]);
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([ax,8,az,bx,8,bz,bx,-320,bz,ax,8,az,bx,-320,bz,ax,-320,az],3));
+  S.secG.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xD55E00,transparent:true,opacity:.1,side:THREE.DoubleSide,depthWrite:false})));
+  S.secG.add(lines([[ax,8,az],[bx,8,bz],[bx,8,bz],[bx,-320,bz],[bx,-320,bz],[ax,-320,az],[ax,-320,az],[ax,8,az]],0xff8a3d,.9));dirty();}
+function slabAt(lon,lat){for(const k of ['ryu','man']){const s=G.slab[k],c=(lon-s.x0)/s.d,r=(lat-s.y0)/s.d,c0=Math.floor(c),r0=Math.floor(r);if(c0<0||r0<0||c0>=s.nx-1||r0>=s.ny-1)continue;
+  const v=(rr,cc)=>s.z[rr*s.nx+cc];const a=v(r0,c0),b=v(r0,c0+1),d=v(r0+1,c0),e=v(r0+1,c0+1);if(a==null||b==null||d==null||e==null)continue;const fx=c-c0,fy=r-r0;return (a*(1-fx)+b*fx)*(1-fy)+(d*(1-fx)+e*fx)*fy;}return null;}
+function drawCut(){if(!E)return;const mc=$('#cutMap'),dpr=Math.min(2,devicePixelRatio||1);
+  // map
+  {const w=mc.clientWidth,h=mc.clientHeight;mc.width=w*dpr;mc.height=h*dpr;const x=mc.getContext('2d');x.scale(dpr,dpr);x.drawImage(TEX,0,0,w,h);
+   const P=(lo,la)=>[(lo-RG.lon0)/5*w,(RG.lat1-la)/6*h];
+   x.fillStyle='rgba(12,24,34,.35)';x.fillRect(0,0,w,h);
+   for(let i=0;i<E.n;i+=1){if(E.mag[i]<4)continue;const p=P(E.lon[i],E.lat[i]);x.fillStyle=css(dcol(E.dep[i]));x.fillRect(p[0]-.8,p[1]-.8,1.6,1.6);}
+   const a=P(...cut.a),b=P(...cut.b),L=Math.hypot(b[0]-a[0],b[1]-a[1])||1,nx=-(b[1]-a[1])/L,ny=(b[0]-a[0])/L,wp=cut.w/(5*KX)*w;
+   x.fillStyle='rgba(213,94,0,.28)';x.beginPath();x.moveTo(a[0]+nx*wp,a[1]+ny*wp);x.lineTo(b[0]+nx*wp,b[1]+ny*wp);x.lineTo(b[0]-nx*wp,b[1]-ny*wp);x.lineTo(a[0]-nx*wp,a[1]-ny*wp);x.fill();
+   x.strokeStyle='#fff';x.lineWidth=2.5;x.beginPath();x.moveTo(...a);x.lineTo(...b);x.stroke();
+   for(const [p,t] of [[a,'A'],[b,'B']]){x.fillStyle='#D55E00';x.strokeStyle='#fff';x.lineWidth=2.5;x.beginPath();x.arc(p[0],p[1],13,0,7);x.fill();x.stroke();x.fillStyle='#fff';x.font='bold 15px "Noto Sans TC",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(t,p[0],p[1]+1);}}
+  // section chart
+  const cv=$('#cutCv'),cw=cv.clientWidth||600,L=kmLen(),ax=X(cut.a[0]),az=Z(cut.a[1]),ux=(X(cut.b[0])-ax)/L,uz=(Z(cut.b[1])-az)/L;
+  const pts=[];let maxD=0;for(let i=0;i<E.n;i++){if(E.mag[i]<mMin-1e-3||!qMask[E.q[i]])continue;const px=X(E.lon[i])-ax,pz=Z(E.lat[i])-az,s=px*ux+pz*uz;if(s<0||s>L)continue;if(Math.abs(px*uz-pz*ux)>cut.w)continue;pts.push(i);if(E.dep[i]>maxD)maxD=E.dep[i];}
+  const D=Math.min(320,Math.max(150,Math.ceil((maxD+10)/50)*50)),TOP=45,pl=46,pr=14,pt=22,pb=34;
+  let s=(cw-pl-pr)/L;s=Math.min(s,(Math.min(620,innerHeight*.75)-pt-pb)/(D+TOP));const W=L*s,H=(D+TOP)*s,ch=pt+H+pb,ox=pl+((cw-pl-pr)-W)/2;
+  cv.style.height=ch+'px';cv.width=cw*dpr;cv.height=ch*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,cw,ch);
+  const Y=d=>pt+(TOP+d)*s,XX=k=>ox+k*s;
+  // terrain profile (land x10, sea floor true)
+  x.beginPath();x.moveTo(XX(0),Y(0));const prof=[];for(let k=0;k<=L;k+=1){const lon=cut.a[0]+(cut.b[0]-cut.a[0])*k/L,lat=cut.a[1]+(cut.b[1]-cut.a[1])*k/L,e=hAt(lon,lat)/1000;prof.push(e>0?-e*10:-e);}
+  x.fillStyle='#16324a';x.beginPath();x.moveTo(XX(0),Y(0));prof.forEach((d,k)=>x.lineTo(XX(k),Y(Math.max(0,d))));x.lineTo(XX(L),Y(0));x.fill();
+  x.fillStyle='#8aa06a';x.beginPath();x.moveTo(XX(0),Y(0));prof.forEach((d,k)=>x.lineTo(XX(k),Y(Math.min(0,d))));x.lineTo(XX(L),Y(0));x.fill();
+  // grid
+  x.strokeStyle='#22384a';x.lineWidth=1;x.fillStyle='#9fb4c4';x.font='12px "IBM Plex Mono",monospace';x.textAlign='right';x.textBaseline='middle';
+  for(let d=0;d<=D;d+=50){x.beginPath();x.moveTo(XX(0),Y(d));x.lineTo(XX(L),Y(d));x.stroke();x.fillText(String(d),XX(0)-6,Y(d));}
+  x.textAlign='center';x.textBaseline='top';for(let k=0;k<=L;k+=50){x.beginPath();x.moveTo(XX(k),Y(D));x.lineTo(XX(k),Y(D)+4);x.stroke();x.fillText(String(k),XX(k),Y(D)+6);}
+  x.save();x.translate(12,Y(D/2));x.rotate(-Math.PI/2);x.textAlign='center';x.textBaseline='middle';x.font='13px "Noto Sans TC",sans-serif';x.fillText('深度（公里）',0,0);x.restore();
+  x.textAlign='right';x.font='13px "Noto Sans TC",sans-serif';x.fillText('距離 A 點（公里）',XX(L),Y(D)+20);
+  // quakes
+  pts.sort((a,b)=>E.mag[a]-E.mag[b]);for(const i of pts){const k=(X(E.lon[i])-ax)*ux+(Z(E.lat[i])-az)*uz,r=Math.max(1.3,1.1*Math.pow(1.6,E.mag[i]-3)*Math.sqrt(s*1.6));
+    x.fillStyle=css(dcol(E.dep[i]));x.beginPath();x.arc(XX(k),Y(E.dep[i]),r,0,7);x.fill();if(r>3){x.strokeStyle='rgba(12,24,34,.7)';x.lineWidth=1;x.stroke();}}
+  // slab line
+  x.strokeStyle='#56B4E9';x.lineWidth=3;x.setLineDash([8,6]);x.beginPath();let on=false;for(let k=0;k<=L;k+=2){const lon=cut.a[0]+(cut.b[0]-cut.a[0])*k/L,lat=cut.a[1]+(cut.b[1]-cut.a[1])*k/L,z=slabAt(lon,lat);
+    if(z==null||z>D){on=false;continue;}if(!on){x.moveTo(XX(k),Y(z));on=true;}else x.lineTo(XX(k),Y(z));}x.stroke();x.setLineDash([]);
+  // ends
+  x.font='bold 15px "Noto Sans TC",sans-serif';x.textBaseline='bottom';x.fillStyle='#fff';x.textAlign='left';x.fillText('A',XX(0),pt-4);x.textAlign='right';x.fillText('B',XX(L),pt-4);
+  const wide=false;if(wide){x.font='13px "Noto Sans TC",sans-serif';x.fillStyle='#cbd8e1';x.textAlign='left';x.fillText(where(...cut.a),XX(0)+16,pt-5);x.textAlign='right';x.fillText(where(...cut.b),XX(L)-16,pt-5);}
+  $('#cutN').textContent=(wide?'':`A：${where(...cut.a)}。B：${where(...cut.b)}。`)+`切線兩邊 ${cut.w} 公里內有 ${nf(pts.length)} 個地震（規模 ${mMin} 以上）`;
+  const c=CUTS[cut.pre];$('#cutSay').innerHTML=c?`<h3>${c.t}</h3><p>${c.p}</p>`:`<h3>你自己切的剖面</h3><p>這一刀從 ${where(...cut.a)} 切到 ${where(...cut.b)}，長約 ${Math.round(L)} 公里。看看地震有沒有排成斜線？斜線往哪一邊變深？虛線是科學家推算的板塊表面。</p>`;}
+
+/* ---------- aftershocks ---------- */
+const AFT={'921':'南投集集附近，車籠埔斷層錯動，是臺灣百年來傷亡最慘重的地震。','0403':'花蓮外海，是 921 之後臺灣最大的地震。4 月 22、23 日，附近又發生一群規模 6 左右的地震，所以第 20 天左右餘震又突然變多。','池上':'臺東池上。前一天晚上，附近的關山先發生了一個規模 6 多的地震。','恆春':'恆春外海，8 分鐘內連續發生兩個規模 7 左右的地震，海底電纜被震斷，網路中斷好幾天。','331':'花蓮外海，臺北的興建中大樓吊車掉落。','美濃':'高雄美濃，臺南的維冠大樓倒塌。','0206':'花蓮近海，市區有幾棟大樓倒塌、傾斜。'};
+let af={k:0,day:60,tm:0};
+function initAfter(){const pick=$('#afPick');const L=G.named.slice().sort((a,b)=>b.d.localeCompare(a.d));pick.innerHTML=L.map(n=>`<button role="tab" data-i="${n.i}" aria-selected="false">${n.d.slice(0,4)} ${n.n}</button>`).join('');
+  $$('#afPick button').forEach(b=>b.onclick=()=>{stopAf();af.k=+b.dataset.i;af.day=60;$$('#afPick button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));afCalc();afDraw();});
+  $('#afRange').oninput=e=>{stopAf();af.day=+e.target.value;afDraw();};
+  $('#afPlay').onclick=()=>af.tm?stopAf():playAf();
+  new ResizeObserver(()=>afDraw()).observe($('.af-grid'));$$('#afPick button')[0].click();}
+function afCalc(){const i=af.k,t0=E.t[i],R=E.mag[i]>=7?100:60,lo=E.lon[i],la=E.lat[i];const L=[];
+  for(let j=0;j<E.n;j++){const dt=E.t[j]-t0;if(dt<0||dt>=61)continue;if(j!==i&&kmBetween(lo,la,E.lon[j],E.lat[j])>R)continue;L.push(j);}af.list=L;af.R=R;
+  af.daily=new Array(61).fill(0);for(const j of L)if(j!==i)af.daily[Math.floor(E.t[j]-t0)]++;
+  const f=fmtT(t0),nm=G.named.find(n=>n.i===i);$('#afHead').innerHTML=`<h3>${nm.n}</h3><p>${f.y} 年 ${f.m} 月 ${f.d} 日 ${String(f.h).padStart(2,'0')}:${String(f.mi).padStart(2,'0')}・規模 ${E.mag[i].toFixed(1)}・深度 ${E.dep[i].toFixed(1)} 公里<br>${AFT[nm.s]||''}</p>`;
+  const sum=(a,b)=>af.daily.slice(a,b).reduce((s,v)=>s+v,0);
+  $('#afNums').innerHTML=`<div><span>第 1 天</span><b class="num">${nf(af.daily[0])}</b></div><div><span>第 2～7 天</span><b class="num">${nf(sum(1,7))}</b></div><div><span>60 天一共</span><b class="num">${nf(sum(0,60))}</b></div>`;}
+function afDraw(){if(!af.list)return;$('#afDay').textContent=af.day;$('#afRange').value=af.day;const i=af.k,t0=E.t[i],dpr=Math.min(2,devicePixelRatio||1);
+  {const cv=$('#afMap'),w=cv.clientWidth,h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+   const span=af.R*2.6,klon=span/KX,klat=span/KY,lo0=E.lon[i]-klon/2,la1=E.lat[i]+klat/2;const sx=TEX.width/5,sy=TEX.height/6;
+   x.drawImage(TEX,(lo0-RG.lon0)*sx,(RG.lat1-la1)*sy,klon*sx,klat*sy,0,0,w,h);x.fillStyle='rgba(12,24,34,.25)';x.fillRect(0,0,w,h);
+   const P=(lo,la)=>[(lo-lo0)/klon*w,(la1-la)/klat*h],kpx=w/span;
+   for(const j of af.list){if(j===i)continue;const d=E.t[j]-t0;if(d>af.day+1)continue;const p=P(E.lon[j],E.lat[j]),r=Math.max(1.6,1.3*Math.pow(1.6,E.mag[j]-3)*Math.sqrt(kpx*2));
+     const today=d>=af.day&&af.day<60;x.fillStyle=css(dcol(E.dep[j]));x.globalAlpha=today?1:.8;x.beginPath();x.arc(p[0],p[1],r,0,7);x.fill();if(today){x.strokeStyle='#fff';x.lineWidth=2;x.stroke();}}
+   x.globalAlpha=1;const p=P(E.lon[i],E.lat[i]);star(x,p[0],p[1],15);
+   x.strokeStyle='rgba(255,255,255,.6)';x.lineWidth=2;const bar=20*kpx;x.beginPath();x.moveTo(w-bar-14,h-16);x.lineTo(w-14,h-16);x.stroke();x.fillStyle='#fff';x.font='13px "Noto Sans TC",sans-serif';x.textAlign='right';x.fillText('20 公里',w-14,h-22);}
+  {const cv=$('#afChart'),w=cv.clientWidth,h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+   const mx=Math.max(...af.daily),pl=36,pb=22,bw=(w-pl)/61;x.font='12px "IBM Plex Mono",monospace';x.fillStyle=getComputedStyle(document.body).color;x.strokeStyle='rgba(127,140,150,.35)';
+   const nice=[10,20,50,100,200,500,1000].find(v=>v>=mx/3)||mx;for(let v=0;v<=mx;v+=nice){const y=h-pb-(v/mx)*(h-pb-8);x.beginPath();x.moveTo(pl,y);x.lineTo(w,y);x.stroke();x.textAlign='right';x.textBaseline='middle';x.fillText(String(v),pl-6,y);}
+   for(let d=0;d<61;d++){const bh=(af.daily[d]/mx)*(h-pb-8);x.fillStyle=d<=af.day?'#009E73':'rgba(127,140,150,.3)';x.fillRect(pl+d*bw,h-pb-bh,Math.max(1,bw-1),bh);}
+   x.textAlign='center';x.textBaseline='top';x.fillStyle=getComputedStyle(document.body).color;[0,10,20,30,40,50,60].forEach(d=>{x.textAlign=d===60?'right':d===0?'left':'center';x.fillText(d===0?'1':d===60?'60 天':String(d),d===60?w:pl+d*bw+(d?bw/2:0),h-pb+5);});}}
+function star(x,cx,cy,r){x.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.45:r;x.lineTo(cx+rr*Math.cos(a),cy+rr*Math.sin(a));}x.closePath();x.fillStyle='#F2C14E';x.fill();x.strokeStyle='#0c1822';x.lineWidth=2;x.stroke();}
+function playAf(){if(af.day>=60)af.day=0;$('#afPlay').innerHTML='<i class="ic ic-pause" aria-hidden="true"></i>';$('#afPlay').setAttribute('aria-label','暫停');
+  af.tm=setInterval(()=>{af.day++;afDraw();if(af.day>=60)stopAf();},RM?600:280);afDraw();}
+function stopAf(){clearInterval(af.tm);af.tm=0;$('#afPlay').innerHTML='<i class="ic ic-play" aria-hidden="true"></i>';$('#afPlay').setAttribute('aria-label','播放');}
+
+/* ---------- questions + sources ---------- */
+function initAsk(){const Q=[
+  ['從東邊看，宜蘭外海底下的地震排成什麼形狀？','排成一條往北越來越深的斜線，最深超過 200 公里。這是菲律賓海板塊往北插到歐亞板塊下面（隱沒）留下的痕跡。','打開「從東邊看」和板塊表面',()=>{$('#tgSlab').checked=true;S.slab.visible=true;go('east');}],
+  ['北部和南部的斜線，往同一個方向變深嗎？','不一樣。北部往北變深（菲律賓海板塊插到歐亞板塊下面），南部往東變深（歐亞板塊插到菲律賓海板塊下面）。臺灣剛好夾在兩個隱沒帶中間。','看南部的剖面',()=>{setCut('s');$('#cut').scrollIntoView({behavior:RM?'auto':'smooth'});}],
+  ['臺灣東部和西部，哪一邊的地震比較多？','東部（花蓮、臺東）和東部外海多很多，因為這裡靠近兩個板塊的交界。西部平原的地震比較少，大多也比較淺。','從上面看',()=>go('top')],
+  ['規模 6 以上的大地震，大多發生在哪裡？','大多在東部和東部外海，也有一些在中部和南部的陸地下面，例如 1999 年的集集地震。','只看規模 6 以上',()=>{$$('#eqMag button')[3].click();go('top');}],
+  ['按播放鍵，看 1999 年和 2024 年發生了什麼事？','這兩年各突然多出一大群點：1999 年 9 月的集集地震和 2024 年 4 月的花蓮地震，主震之後跟著很多餘震。','從 1990 年開始播放',()=>{tMin=0;tMax=30;update();startPlay();$('#model').scrollIntoView({behavior:RM?'auto':'smooth'});}],
+  ['臺灣每年移動的箭頭和地震有什麼關係？','東部的箭頭最長，代表菲律賓海板塊推著臺灣往西北移動。地底下的岩石一直被擠壓，力量累積到受不了就會突然錯動，這就是地震。所以東部的箭頭最長，地震也最多。','打開移動箭頭',()=>{$('#tgGnss').checked=true;S.gn.visible=true;go('top');}]];
+  $('#askList').innerHTML=Q.map((q,i)=>`<div class="panel ask"><h3>${i+1}. ${q[0]}</h3><button class="bigbtn alt" data-k="${i}">${q[2]}</button><details><summary>看答案</summary><p>${q[1]}</p></details></div>`).join('');
+  $$('#askList button').forEach(b=>b.onclick=()=>{Q[+b.dataset.k][3]();if(+b.dataset.k!==1&&+b.dataset.k!==4)$('#model').scrollIntoView({behavior:RM?'auto':'smooth'});dirty();});}
+function initSrc(){const m=META,h=m.n_history,c=m.n-h,f=fmtT(E.t[E.n-1]);
+  $('#srcList').innerHTML=`<h3>地震</h3><p>交通部中央氣象署「地震目錄」（政府資料開放平臺第 97095 號資料集）：規模 3 以上、東經 118–124 度、北緯 20–27 度範圍內的地震。</p>
+   <ul><li>1990–2025 年歷史目錄：<b class="num">${nf(h)}</b> 筆 <span class="src-ok">和氣象署目錄筆數一致</span></li><li>${m.current_period[0].slice(0,4)} 年 1 月到 ${f.m} 月：<b class="num">${nf(c)}</b> 筆</li><li>一共 <b class="num">${nf(m.n)}</b> 筆，最後一筆是 ${f.y} 年 ${f.m} 月 ${f.d} 日。每個月自動更新一次。</li></ul>
+   <p>每個地震的位置和深度，是用很多個地震測站收到震波的時間算出來的，所以有誤差。外海和山區的測站比較少，定位等級常是 C 或 D。</p>
+   <h3>地形和海底</h3><p>NOAA ETOPO 2022（15 弧秒網格）。3D 模型用 1 弧分的平均高度。陸地高度可以放大，海底深度和地震深度都是真實比例。</p>
+   <h3>板塊表面</h3><p>美國地質調查所 USGS Slab2（Hayes 等，2018）的琉球隱沒帶和馬尼拉隱沒帶模型。這是科學家根據地震位置和其他觀測推算出來的「板塊上緣」，不是直接看到的。</p>
+   <h3>臺灣每年移動的方向</h3><p>中央氣象署、中央研究院等單位的 GNSS 測站，2010–2024 年的平均速度，以澎湖白沙為參考點。詳細說明在「<a href="https://geo.twranger.com/gnss.html">臺灣每年都在移動</a>」。</p>`;}
+})();
+</script>
