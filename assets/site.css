@@ -1,20 +1,38 @@
 /* 海佃地圖 shared fixes that apply on top of each page's own styles (DESIGN.md §3–§8).
    Loaded after the page <style>, so equal-specificity rules here win. */
 
-/* §3.2 Contrast — white text on light data colours: switch to ink text */
-.unit-head .badge[style*="--plate"],.unit-head .badge[style*="#e0a800"],
-.tag[style*="--trans"],.dbtn,.temps button[style]{color:var(--ink)!important}
-.dbtn.playing{color:#fff!important}
-/* white text on mid-tone chips: shade the chip so white text reaches 4.5:1 */
-.tag[style*="--conv"],.tag[style*="--div"],.cat.c1,.cal-bar,.crop-ico,.pill,.dg-dots i.on{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28)}
-/* coloured words on light panels: same hue, darker */
-.think b,.pastcards .when{color:#8a5a0c}
-.pastcards b,.missions b{color:#0b7d93}
-.sg-h{filter:brightness(.72)}
-.ext-link a,.risk a,.linkbtn,.fv em,.sh-f.prob span,.deer-hud span:first-child{filter:brightness(.8)}
+/* §3.2 Contrast. Data colours stay the same hue but use a darker shade wherever they
+   carry text: white text on a coloured chip, or coloured text on a light panel.
+   Inline styles like style="background:var(--conv)" pick these up automatically. */
+.tag,.pill,.cal-bar,.crop-ico,.dg-dots i,.badge,.ext-link a,.risk a,.linkbtn,.fv em,.sh-f.prob span,.deer-hud span:first-child,.think b{
+ --conv:#af4d00;--div:#007781;--trans:#896400;--leaf:#447740;--wind:#23719b;--rain:#2a7484;--typhoon:#bf3e26;--plate:#916011;--land-ink:#5f704f;--water:#286db2;--flood:#0a7489}
+/* chips whose colour is written as a hex value */
+.pill[style*="#C77C00"]{background:#a56700!important}
+.pill[style*="#e0663a"]{background:#bc5631!important}
+.pill[style*="#D55E00"]:not([style*="color"]){background:#af4d00!important}
+.cat[style*="#3B8EDB"]{background:#2f70ad!important}
+.cal-bar[style*="#7a8fd6"]{background:#5a6ca6!important}
+.badge[style*="#e0a800"]{background:#866500!important}
+.badge[style*="#B86E00"]{background:#9a5c00!important}
+.dbtn{color:var(--ink)}.dbtn.playing{color:#fff}
+.temps button[style]{color:#140a04!important}
+.pastcards .when{color:#916011}
+.pastcards b,.missions b,.result .big b{color:#0a7489}
+.sg-h{color:color-mix(in srgb,var(--c) 68%,#000)}
+.yb-row i[style*="#1b1b1b"]{color:#000!important}
+.res-legend span{color:var(--ink)}
+.credit{opacity:1;color:var(--muted);font-size:13px}
+.nuc{opacity:1;color:var(--muted)}.nuc b,.nuc .m{color:var(--muted)}
 
 /* §8 Emphasis blocks: tinted panel with a title, no thick side border (Impeccable: side-tab) */
 .think{border-left:0!important;border-radius:10px!important;background:color-mix(in srgb,var(--plate) 9%,var(--surface))!important}
+.risk{border:0!important;border-radius:10px!important;background:color-mix(in srgb,var(--plate) 8%,var(--surface))!important}
+
+/* §8 No cards inside cards: inner boxes are a fill only (no border, no shadow) */
+.pwq,.concept>div,.stat div,.result,.sg-col{border:0!important;box-shadow:none!important}
+.pwq,.sg-col{background:var(--surface-2)}
+.sg-col.cur{background:color-mix(in srgb,var(--c) 12%,var(--surface))}
+.pw-ttl{border:0!important}
 
 /* §4 Line length: CJK paragraphs ≤ 40 characters */
 .lede,.unit-head p.sub,.sub,.panel p,.note,.src,footer p,.wrap>p,.lg-note{max-width:40em}
@@ -33,18 +51,9 @@
 .leaflet-container .leaflet-control-attribution{font-size:12px;color:#c9d6df;background:#0c1822e6}
 .leaflet-container .leaflet-control-attribution a{color:#e9eef2}
 
-/* Data-coloured chips that already set their own dark text keep their original colour */
-.pill[style*="color:"]{box-shadow:none}
-.yb-row i{filter:none}
-.yb-row i[style*="color:#fff"]{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28)}
-.yb-row i[style*="#1b1b1b"]{color:#000!important}
-
 /* Small labels: no wide letter-spacing (Impeccable: eyebrow) */
 .pp-eye{letter-spacing:0}
 
-.cal-bar[aria-pressed="true"]{box-shadow:inset 0 0 0 999px rgba(0,0,0,.28),0 0 0 3px var(--paper),0 0 0 5px var(--ink)}
-.temps button[style]{color:#140a04!important}
-.res-legend span{color:var(--ink)}
 
 /* Touch targets (WCAG 2.5.8, ≥24px) */
 input[type=checkbox],input[type=radio]{width:24px;height:24px;flex:none}
