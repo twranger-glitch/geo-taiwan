@@ -1,0 +1,80 @@
+[
+  {
+    "antipattern": "side-tab",
+    "name": "Side-tab accent border",
+    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "div.gseg.g-s — 3px stripe child (right)",
+    "selector": "div.gseg.g-s"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "4.0:1 (need 4.5:1) — text #708389 on #ffffff (and 1 more)",
+    "selector": "li.nuc > div > b"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "2.4:1 (need 4.5:1) — text #99a9af on #ffffff",
+    "selector": "div > span.m"
+  },
+  {
+    "antipattern": "low-contrast",
+    "name": "Low contrast text",
+    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "2.1:1 (need 4.5:1) — text #98aaae on #e9f0ef",
+    "selector": "p.credit"
+  },
+  {
+    "antipattern": "nested-cards",
+    "name": "Nested cards",
+    "description": "Cards inside cards create visual noise and excessive depth. Flatten the hierarchy — use spacing, typography, and dividers instead of nesting containers.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "Card inside card",
+    "selector": "div.pw-ttl.leaflet-control"
+  },
+  {
+    "antipattern": "nested-cards",
+    "name": "Nested cards",
+    "description": "Cards inside cards create visual noise and excessive depth. Flatten the hierarchy — use spacing, typography, and dividers instead of nesting containers.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "Card inside card (and 5 more)",
+    "selector": "div.pwq:nth-of-type(1)"
+  },
+  {
+    "antipattern": "shape-assembled-illustration",
+    "name": "Shape-assembled illustration",
+    "description": "A large inline SVG that builds a pictorial scene from a pile of primitive shapes reads as placeholder clip art, not illustration. Icons, logos, and data graphics are fine at their scale; a hero-sized visual deserves real artwork, a photograph, or a deliberately drawn graphic.",
+    "severity": "advisory",
+    "category": "slop",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "inline <svg> scene: 29 primitive shapes, ~300x300px, 3 fill colors",
+    "advisory": true,
+    "selector": "body"
+  }
+]
