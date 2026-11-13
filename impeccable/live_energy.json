@@ -1,5 +1,16 @@
 [
   {
+    "antipattern": "side-tab",
+    "name": "Side-tab accent border",
+    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "https://geo.twranger.com/energy.html",
+    "line": 0,
+    "snippet": "div.gseg.g-s — 9px stripe child (right)",
+    "selector": "div.gseg.g-s"
+  },
+  {
     "antipattern": "shape-assembled-illustration",
     "name": "Shape-assembled illustration",
     "description": "A large inline SVG that builds a pictorial scene from a pile of primitive shapes reads as placeholder clip art, not illustration. Icons, logos, and data graphics are fine at their scale; a hero-sized visual deserves real artwork, a photograph, or a deliberately drawn graphic.",
@@ -7,7 +18,7 @@
     "category": "slop",
     "file": "https://geo.twranger.com/energy.html",
     "line": 0,
-    "snippet": "inline <svg> scene: 29 primitive shapes, ~300x300px, 3 fill colors",
+    "snippet": "inline <svg> scene: 28 primitive shapes, ~300x300px, 4 fill colors",
     "advisory": true,
     "selector": "body"
   }
