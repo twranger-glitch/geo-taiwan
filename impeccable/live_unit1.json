@@ -1,27 +1,5 @@
 [
   {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "https://geo.twranger.com/unit1.html",
-    "line": 0,
-    "snippet": "2.1:1 (need 4.5:1) — text #98aaae on #e9f0ef",
-    "selector": "p.credit"
-  },
-  {
-    "antipattern": "nested-cards",
-    "name": "Nested cards",
-    "description": "Cards inside cards create visual noise and excessive depth. Flatten the hierarchy — use spacing, typography, and dividers instead of nesting containers.",
-    "severity": "warning",
-    "category": "slop",
-    "file": "https://geo.twranger.com/unit1.html",
-    "line": 0,
-    "snippet": "Card inside card (and 1 more)",
-    "selector": "div.concept > div:nth-of-type(1)"
-  },
-  {
     "antipattern": "repeating-stripes-gradient",
     "name": "Repeating-gradient stripes",
     "description": "Repeating-gradient stripes used as surface decoration are a recurring generated-UI signature. Reach for a deliberate texture or leave the surface plain.",

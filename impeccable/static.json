@@ -17,7 +17,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/energy.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 12 more)"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 13 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -60,38 +60,6 @@
     "snippet": "1.7:1 (need 4.5:1) — text #000000 on #31382f (and 1 more)"
   },
   {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/energy.html",
-    "line": 0,
-    "snippet": "1.8:1 (need 3:1) — text #e2eef0 on #e0a800",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/energy.html",
-    "line": 0,
-    "snippet": "2.3:1 (need 3:1) — text #ffffff on #5cb6e6",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/energy.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
-  },
-  {
     "antipattern": "cramped-padding",
     "name": "Cramped padding",
     "description": "Text is too close to the edge of its container. Two shapes: (1) an element with its own text where the space between the rendered text and the border box is too small for the font size, and (2) a wrapper whose children's text lands flush against a visible boundary (border, outline, or non-transparent background) with nothing to inset it. Add at least 8px (ideally 12–16px) of space inside bordered, outlined, or colored containers.",
@@ -180,27 +148,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 8 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
-    "line": 0,
-    "snippet": "2.7:1 (need 3:1) — text #ffffff on #ff7155"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 9 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -231,26 +179,6 @@
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
     "line": 0,
     "snippet": "1.7:1 (need 4.5:1) — text #000000 on #31382f"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
-    "line": 0,
-    "snippet": "2.2:1 (need 3:1) — text #ffffff on #7cc070"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/explore.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -311,7 +239,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/gnss.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 10 more)"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 11 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -322,16 +250,6 @@
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/gnss.html",
     "line": 0,
     "snippet": "1.3:1 (need 4.5:1) — text #000000 on #11252c (and 17 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/gnss.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -432,7 +350,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
     "line": 0,
-    "snippet": "2.7:1 (need 4.5:1) — text #ff7155 on #ffffff (and 2 more)"
+    "snippet": "2.7:1 (need 4.5:1) — text #ff7155 on #ffffff"
   },
   {
     "antipattern": "low-contrast",
@@ -442,18 +360,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 29 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "2.7:1 (need 3:1) — text #ffffff on #ff7155 (and 1 more)",
-    "advisory": true
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 30 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -483,7 +390,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
     "line": 0,
-    "snippet": "2.3:1 (need 4.5:1) — text #8a5a0c on #25322e (and 2 more)"
+    "snippet": "2.5:1 (need 4.5:1) — text #916011 on #25322e (and 2 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -503,72 +410,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
     "line": 0,
-    "snippet": "2.3:1 (need 4.5:1) — text #5cb6e6 on #ffffff (and 2 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "2.6:1 (need 3:1) — text #ffffff on #5ea6ea",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "2.3:1 (need 3:1) — text #ffffff on #5cb6e6",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "2.1:1 (need 3:1) — text #ffffff on #5cc3d6",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "2.2:1 (need 3:1) — text #ffffff on #7cc070",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
     "snippet": "1.3:1 (need 3:1) — text #000000 on #0e2026 (and 1 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042",
-    "advisory": true
   },
   {
     "antipattern": "low-contrast",
@@ -590,16 +432,6 @@
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
     "line": 0,
     "snippet": "1.2:1 (need 4.5:1) — text #e2eef0 on #ffffff"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/index.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -710,7 +542,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/prehistory.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 1 more)"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 2 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -721,16 +553,6 @@
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/prehistory.html",
     "line": 0,
     "snippet": "1.3:1 (need 4.5:1) — text #000000 on #11252c (and 3 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/prehistory.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -811,7 +633,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 5 more)"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 6 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -847,23 +669,11 @@
     "antipattern": "low-contrast",
     "name": "Low contrast text",
     "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
+    "severity": "warning",
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
     "line": 0,
-    "snippet": "2.7:1 (need 3:1) — text #ffffff on #ff7155",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042",
-    "advisory": true
+    "snippet": "3.0:1 (need 4.5:1) — text #bf3e26 on #11252c"
   },
   {
     "antipattern": "low-contrast",
@@ -873,7 +683,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
     "line": 0,
-    "snippet": "2.7:1 (need 4.5:1) — text #8a5a0c on #11252c (and 2 more)"
+    "snippet": "2.9:1 (need 4.5:1) — text #916011 on #11252c (and 2 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -883,7 +693,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
     "line": 0,
-    "snippet": "3.3:1 (need 4.5:1) — text #0b7d93 on #11252c (and 6 more)"
+    "snippet": "2.9:1 (need 4.5:1) — text #0a7489 on #11252c (and 6 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -895,16 +705,6 @@
     "line": 0,
     "snippet": "1.2:1 (need 3:1) — text #ffffff on #e2eef0",
     "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/sealevel.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -985,28 +785,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit1.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 6 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit1.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit1.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 7 more)"
   },
   {
     "antipattern": "cramped-padding",
@@ -1047,40 +826,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 19 more)"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
-    "snippet": "2.7:1 (need 3:1) — text #ffffff on #ff7155",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
-    "snippet": "2.2:1 (need 3:1) — text #ffffff on #7cc070",
-    "advisory": true
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 20 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -1120,40 +866,8 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
     "line": 0,
-    "snippet": "2.3:1 (need 3:1) — text #ffffff on #5cb6e6",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
-    "snippet": "1.9:1 (need 3:1) — text #ffffff on #3fd0c8",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
     "snippet": "1.2:1 (need 3:1) — text #ffffff on #e2eef0",
     "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit3.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",
@@ -1294,7 +1008,7 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
     "line": 0,
-    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 20 more)"
+    "snippet": "2.6:1 (need 4.5:1) — text #8ca6ad on #ffffff (and 21 more)"
   },
   {
     "antipattern": "low-contrast",
@@ -1304,62 +1018,8 @@
     "category": "quality",
     "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
     "line": 0,
-    "snippet": "2.3:1 (need 3:1) — text #ffffff on #5cb6e6",
+    "snippet": "4.47:1 (need 4.5:1) — text #bf3e26 on #eaebec",
     "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 3:1) — text #e2eef0 on #f2b042",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "2.7:1 (need 3:1) — text #ffffff on #ff7155",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "2.1:1 (need 3:1) — text #ffffff on #5cc3d6",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "advisory",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "2.2:1 (need 3:1) — text #ffffff on #7cc070",
-    "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "2.3:1 (need 4.5:1) — text #ff7155 on #eaebec"
   },
   {
     "antipattern": "low-contrast",
@@ -1371,16 +1031,6 @@
     "line": 0,
     "snippet": "1.2:1 (need 3:1) — text #ffffff on #e2eef0",
     "advisory": true
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "/home/runner/work/geo-taiwan/geo-taiwan/unit4.html",
-    "line": 0,
-    "snippet": "1.6:1 (need 4.5:1) — text #c0ced2 on #ffffff"
   },
   {
     "antipattern": "cramped-padding",

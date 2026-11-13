@@ -1,49 +1,5 @@
 [
   {
-    "antipattern": "side-tab",
-    "name": "Side-tab accent border",
-    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
-    "severity": "warning",
-    "category": "slop",
-    "file": "https://geo.twranger.com/explore.html",
-    "line": 0,
-    "snippet": "border-left: 5px",
-    "selector": "div.risk:nth-of-type(1)"
-  },
-  {
-    "antipattern": "nested-cards",
-    "name": "Nested cards",
-    "description": "Cards inside cards create visual noise and excessive depth. Flatten the hierarchy — use spacing, typography, and dividers instead of nesting containers.",
-    "severity": "warning",
-    "category": "slop",
-    "file": "https://geo.twranger.com/explore.html",
-    "line": 0,
-    "snippet": "Card inside card (and 2 more)",
-    "selector": "div.risk:nth-of-type(1)"
-  },
-  {
-    "antipattern": "side-tab",
-    "name": "Side-tab accent border",
-    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
-    "severity": "warning",
-    "category": "slop",
-    "file": "https://geo.twranger.com/explore.html",
-    "line": 0,
-    "snippet": "border-left: 5px",
-    "selector": "div.risk:nth-of-type(2)"
-  },
-  {
-    "antipattern": "side-tab",
-    "name": "Side-tab accent border",
-    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
-    "severity": "warning",
-    "category": "slop",
-    "file": "https://geo.twranger.com/explore.html",
-    "line": 0,
-    "snippet": "border-left: 5px",
-    "selector": "div.risk:nth-of-type(3)"
-  },
-  {
     "antipattern": "low-contrast",
     "name": "Low contrast text",
     "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
@@ -150,16 +106,5 @@
     "snippet": "placeholder \"例如：我願意擔任解說志工\" 4.3:1 (need 4.5:1) — text #757575 on #f4f8f7",
     "advisory": true,
     "selector": "label.sh-f:nth-of-type(11) > textarea"
-  },
-  {
-    "antipattern": "low-contrast",
-    "name": "Low contrast text",
-    "description": "Text does not meet WCAG AA contrast requirements (4.5:1 for body, 3:1 for large text). Increase the contrast between text and background.",
-    "severity": "warning",
-    "category": "quality",
-    "file": "https://geo.twranger.com/explore.html",
-    "line": 0,
-    "snippet": "2.1:1 (need 4.5:1) — text #98aaae on #e9f0ef",
-    "selector": "p.credit"
   }
 ]
