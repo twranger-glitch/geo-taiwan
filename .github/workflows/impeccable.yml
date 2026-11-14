@@ -34,7 +34,7 @@ jobs:
         env:
           IMPECCABLE_BROWSER: /usr/bin/google-chrome
         run: |
-          for p in "" unit1.html sealevel.html unit3.html unit4.html explore.html energy.html gnss.html quakes.html prehistory.html; do
+          for p in "" unit1.html sealevel.html unit3.html unit4.html explore.html energy.html gnss.html quakes.html prehistory.html nmth-quest.html; do
             n=${p%.html}; n=${n:-index}
             for try in 1 2 3; do
               npx -y impeccable@latest detect --json "https://geo.twranger.com/$p" > "out/live_$n.json" 2> "out/live_$n.err" && break
