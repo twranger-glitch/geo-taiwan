@@ -560,6 +560,12 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .gm-rope li::before{content:"";position:absolute;left:16px;width:14px;height:14px;border-radius:50%;background:#efe6d2;border:2px solid #8a7a5a}
 .gm-rope li.ok .tagx{border-color:#2e7d5b;box-shadow:0 0 0 2px #2e7d5b}
 .gm-rope li.bad .tagx{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+.gm-rope.strata{gap:0}.gm-rope.strata::before{display:none}
+.gm-rope.strata li{padding:12px 10px}.gm-rope.strata li::before{display:none}
+.gm-rope.strata li:nth-child(1){background:#c9b48a}.gm-rope.strata li:nth-child(2){background:#a98d62}.gm-rope.strata li:nth-child(3){background:#86694a}
+.gm-rope.strata li:nth-child(n+2){border-top:2px dashed rgba(60,40,20,.35)}
+.gm-ground{font:700 14px var(--serif);letter-spacing:.3em;color:#5b6b3a;border-bottom:4px solid #6d8a3e;padding:4px 0;margin-top:8px}
+.gm-ground.deep{color:#4a3826;border:0;border-top:4px solid #4a3826;margin-top:0}
 .gm-rope em{display:block;font:700 14px var(--serif);font-style:normal;color:#2e7d5b}
 .gm-mv{width:44px;height:44px;border:1px solid #bfae86;background:#faf5e8;color:var(--ink);cursor:pointer;display:grid;place-items:center}
 .gm-mv svg{width:18px;height:18px}.gm-mv[disabled]{opacity:.25;cursor:default}
@@ -779,7 +785,7 @@ const ST=[
  intro:'大約兩千多年前，臺灣進入鐵器時代。新北市八里的十三行遺址，留下了很多線索。',
  steps:[
  {t:'choice',ev:['煉鐵爐的遺跡','鐵渣','玻璃珠、瑪瑙珠','中國古代的銅錢'],q:'十三行遺址找到了上面這些東西。從這些證據可以知道，十三行的人做了哪兩件事？',o:['自己煉鐵，也和島外的人交換東西','只會用石器，不會用鐵','從外國搬來一座城堡','種植稻米，賣給荷蘭人'],a:0,no:{1:'有煉鐵爐和鐵渣，表示他們會煉鐵。',2:'城堡是很久以後的事。',3:'荷蘭人要再過一千多年才來。'},why:'煉鐵爐和鐵渣說明他們<b>自己煉鐵</b>；玻璃珠、瑪瑙珠和銅錢不是臺灣做的，說明他們和<b>島外的人交換東西</b>。'},
- {t:'sort',q:'把這三樣工具，依照出現的時代排好（最早的在最上面）。',items:['打製石器','磨製石器','鐵斧'],why:'打製石器（舊石器時代）→ 磨製石器（新石器時代）→ 鐵器（鐵器時代）。新的技術常是從舊的技術改良來的。'},
+ {t:'sort',strata:1,q:'考古學家往下挖，越舊的東西埋得越深。把這三樣工具放進土層：最舊的放最下面，越新的越上面。',items:['鐵斧','磨製石器','打製石器'],why:'由下往上：打製石器（舊石器時代）→ 磨製石器（新石器時代）→ 鐵器（鐵器時代）。新的技術常是從舊的技術改良來的。'},
  {t:'choice',q:'這個展區的名字叫「鐵器時代：人群的再到來？或文化變革？」為什麼要打兩個問號？',o:['因為展覽還沒做完','因為學者有不同的看法：可能是新的人群來了，也可能是原本的人學會新技術、和海外貿易，自己改變了','因為鐵器時代根本不存在','因為問號比較好看'],a:1,no:{0:'展覽已經完成了，問號是故意的。',2:'十三行的煉鐵爐就是鐵器時代的證據。',3:'展區名稱的每個符號都有意思喔。'},why:'博物館的說明提到兩種看法：一種認為是新的移民帶來鐵器；另一種認為還是原本的人群，只是引進、發明了新技術，又和海外貿易，文化因此改變。<b>問號代表還在研究中</b>。'}],
  site:{look:'在展區裡找找看鐵器時代留下的東西。',q:'你找到了哪些？（可以選很多個）',multi:1,o:['珠子','鐵器','煉鐵留下的東西','陶器','我都沒找到'],why:'把你最喜歡的一件記下來：它是什麼？可能拿來做什麼？'},
  more:[['史前生存大冒險：金屬器時代','prehistory.html']]},
@@ -794,7 +800,7 @@ const ST=[
 {id:'s5',tease:'荷蘭人、西班牙人、漢人、日本人',zone:'倚海而生的島與人',sub:'登上臺灣的各國人士',url:NM+'b7b0bad8-88e5-4e54-a3f2-7253a53e3c52',tour:TOUR2,c:'#D55E00',ico:'fort',stamp:'城',unit:'第四單元 4-2',
  intro:'中國和日本的私商、海盜，最早把臺灣當成會合貿易的地方。17 世紀，歐洲的荷蘭人和西班牙人也來了，在臺灣蓋起城堡。',
  steps:[
- {t:'map',q:'把三座城堡放到地圖上正確的位置。先點城堡的名字，再點地圖。',pins:['zl','sv','sd'],why:'荷蘭人 1624 年在今臺南安平一帶登陸，蓋了<b>熱蘭遮城</b>；西班牙人 1626 年到北部雞籠（基隆）的社寮島（和平島）蓋<b>聖薩爾瓦多城</b>，又在淡水蓋<b>聖多明哥城</b>（後來重建成今天的紅毛城）。'},
+ {t:'match',q:'這三座城堡是誰蓋的？蓋在今天的哪裡？',L:['熱蘭遮城','聖薩爾瓦多城','聖多明哥城'],R:['荷蘭人蓋的，在今天的臺南安平','西班牙人蓋的，在今天的基隆和平島','西班牙人蓋的，在今天的新北淡水'],a:[0,1,2],why:'荷蘭人 1624 年在今臺南安平一帶登陸，蓋了<b>熱蘭遮城</b>；西班牙人 1626 年到北部雞籠（基隆）的社寮島（和平島）蓋<b>聖薩爾瓦多城</b>，又在淡水蓋<b>聖多明哥城</b>（後來重建成今天的紅毛城）。'},
  {t:'match',q:'這些人來到臺灣，主要做了什麼？',L:['荷蘭人','西班牙人','漢人','日本人'],R:['在臺南蓋熱蘭遮城，把臺灣當成和中國、日本貿易的轉運站','在雞籠、淡水蓋城堡，也傳播天主教','被招募來開墾，種稻米和甘蔗','到臺灣做生意的商人'],a:[0,1,2,3],why:'荷蘭人和西班牙人都想把臺灣當成貿易據點；荷蘭人從中國招募漢人來開墾，種稻米和甘蔗、輸出蔗糖；日本商人也常來臺灣交易。'},
  {t:'choice',q:'西元 1642 年，荷蘭人派兵北上，把西班牙人趕走。為什麼？',o:['想獨占臺灣的經濟利益','西班牙人先攻打臺南','因為北部天氣比較好','為了保護原住民'],a:0,no:{1:'課本裡沒有這件事，是荷蘭人主動北上的。',2:'天氣不是打仗的原因。',3:'荷蘭人主要是為了自己的利益。'},why:'荷蘭人想<b>獨占臺灣的經濟利益</b>，所以派兵北上，把西班牙人趕走，勢力擴張到臺灣北部。'}],
  site:{look:'在展區裡找找看：有沒有不同國家的人的畫像、模型或物品？',q:'你看到了哪些人的東西？（可以選很多個）',multi:1,o:['荷蘭人','西班牙人','漢人','日本人','原住民'],why:'選一個人，想像他為什麼要冒險渡海來到臺灣，寫下來。'},
@@ -1063,11 +1069,11 @@ function choice(st){const ord=shuffleOf(st.o.length,ST.indexOf(R.s)*10+L.i);
  $$('.gm-slip').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i===st.a){b.classList.add('yes');$$('.gm-slip').forEach(x=>x.disabled=true);A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();}
   else{b.classList.add('no');b.disabled=true;L.miss++;A.play('bad');$('#gmFb').innerHTML=fb('no','<b>不對</b>'+(st.no&&st.no[i]||'翻一下筆記本再想想。'));}});}
 function sort(st){const n=st.items.length;let ord=shuffleOf(n,ST.indexOf(R.s)*7+L.i+3);
- const draw=checked=>{card(`<p class="gm-q">${st.q}</p><ol class="gm-rope">${ord.map((i,k)=>`<li class="${checked?(i===k?'ok':'bad'):''}"><span class="tagx" style="--r:${[-1.2,.8,-.5,1.1,-.9,.6][k]}deg">${esc(st.items[i])}${checked&&st.years&&i===k?`<em>西元 ${st.years[i]} 年</em>`:''}</span><span class="gm-mvs"><button class="gm-mv" data-k="${k}" data-d="-1" aria-label="把「${esc(st.items[i])}」往上移" ${k===0?'disabled':''}>${UP}</button><button class="gm-mv" data-k="${k}" data-d="1" aria-label="把「${esc(st.items[i])}」往下移" ${k===n-1?'disabled':''}>${DN}</button></span></li>`).join('')}</ol>
+ const draw=checked=>{card(`<p class="gm-q">${st.q}</p>${st.strata?'<div class="gm-ground">地面</div>':''}<ol class="gm-rope${st.strata?' strata':''}">${ord.map((i,k)=>`<li class="${checked?(i===k?'ok':'bad'):''}"><span class="tagx" style="--r:${[-1.2,.8,-.5,1.1,-.9,.6][k]}deg">${esc(st.items[i])}${checked&&st.years&&i===k?`<em>西元 ${st.years[i]} 年</em>`:''}</span><span class="gm-mvs"><button class="gm-mv" data-k="${k}" data-d="-1" aria-label="把「${esc(st.items[i])}」往上移" ${k===0?'disabled':''}>${UP}</button><button class="gm-mv" data-k="${k}" data-d="1" aria-label="把「${esc(st.items[i])}」往下移" ${k===n-1?'disabled':''}>${DN}</button></span></li>`).join('')}</ol>${st.strata?'<div class="gm-ground deep">最深</div>':''}
   <div class="gm-row"><button class="gm-btn" id="gmChk">這樣排</button></div><div id="gmFb"></div>`);
   $$('.gm-mv').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,d=+b.dataset.d;[ord[k],ord[k+d]]=[ord[k+d],ord[k]];A.play('click');draw(false);const f=$(`.gm-mv[data-k="${k+d}"][data-d="${d}"]`)||$(`.gm-mv[data-k="${k+d}"]`);f&&f.focus();});
   $('#gmChk').onclick=()=>{const right=ord.filter((i,k)=>i===k).length;if(right===n){draw(true);$$('.gm-mv').forEach(x=>x.disabled=true);$('#gmChk').remove();A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();}
-   else{L.miss++;L.sm++;A.play('bad');draw(true);$('#gmFb').innerHTML=fb('no',`<b>順序不對</b>有 ${right} 張的位置對了。${L.sm>=2?(st.years?'提示：荷蘭人和西班牙人都比鄭氏早。':'提示：先找出最早的那一張。'):'紅框的要換位置。'}`);}};};
+   else{L.miss++;L.sm++;A.play('bad');draw(true);$('#gmFb').innerHTML=fb('no',`<b>順序不對</b>有 ${right} 張的位置對了。${L.sm>=2?(st.years?'提示：荷蘭人和西班牙人都比鄭氏早。':st.strata?'提示：舊石器時代最早，要埋在最下面。':'提示：先找出最早的那一張。'):'紅框的要換位置。'}`);}};};
  draw(false);}
 function match(st){const n=st.L.length,oR=shuffleOf(n,ST.indexOf(R.s)*5+L.i+1),pick=new Array(n).fill(-1);
  const draw=checked=>{card(`<p class="gm-q">${st.q}</p><div class="gm-match">${st.L.map((l,i)=>`<div class="gm-mr ${checked?(pick[i]===st.a[i]?'ok':'bad'):''}" role="group" aria-label="${esc(l)}"><b>${esc(l)}</b><div class="opts">${oR.map(r=>`<button class="gm-slip" data-i="${i}" data-r="${r}" aria-pressed="${pick[i]===r}">${esc(st.R[r])}</button>`).join('')}</div></div>`).join('')}</div>
