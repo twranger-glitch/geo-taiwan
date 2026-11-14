@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-Hant">
 <meta charset="utf-8">
-<title>臺史博尋寶任務｜海佃地圖</title>
-<meta name="description" content="跟著國立臺灣歷史博物館常設展「斯土斯民」的 7 個展區，找證據、想原因、集印章。教室和博物館現場都能玩。">
+<title>臺史博：閉館之後｜海佃地圖</title>
+<meta name="description" content="晚上的臺史博，七個展區的說明卡被淋濕了。拿起手電筒看展品、找證據，把說明卡寫回去。第三、四單元複習，教室和博物館現場都能玩。">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -429,129 +429,199 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 .story-dots i.on{background:var(--ink)}
 </style>
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Serif+TC:wght@500;700;900&display=swap">
 <style>
-/* 臺史博尋寶任務 (DESIGN.md: light paper theme, Okabe–Ito accents, 44px targets, no emoji icons) */
-.qs-start{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
-@media (max-width:860px){.qs-start{grid-template-columns:minmax(0,1fr)}}
-.qs-modes{display:grid;gap:10px}
-.qs-mode{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;text-align:left;padding:14px 16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;min-height:72px}
-.qs-mode[aria-pressed="true"]{border-color:#0072B2;box-shadow:0 0 0 2px #0072B2 inset;background:color-mix(in srgb,#0072B2 7%,var(--surface))}
-.qs-mode svg{width:48px;height:48px}
-.qs-mode b{display:block;font-size:18px}.qs-mode span{font-size:14px;color:var(--muted);line-height:1.5}
-.qs-name{display:grid;gap:6px;margin:14px 0}
-.qs-name label{font-weight:700}
-.qs-name input{font:inherit;font-size:18px;padding:10px 14px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);min-height:48px}
-.qs-name input:focus-visible{outline:3px solid #0072B2;outline-offset:2px}
-.qs-opt{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px;cursor:pointer}
-.qs-route{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:4px}
-.qs-st{position:relative;display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center;text-align:left;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;min-height:84px}
-.qs-st:hover{border-color:var(--c)}
-.qs-st:focus-visible,.qs-btn:focus-visible,.qs-ch:focus-visible,.qs-mv:focus-visible,.qs-pin:focus-visible{outline:3px solid #0072B2;outline-offset:2px}
-.qs-st .qs-ico{width:56px;height:56px;border-radius:14px;background:color-mix(in srgb,var(--c) 14%,var(--surface));display:grid;place-items:center;color:var(--c)}
-.qs-st .qs-ico svg{width:34px;height:34px}
-.qs-st small{display:block;font-size:13px;color:var(--muted);font-weight:700}
-.qs-st b{display:block;font-size:17px;line-height:1.35}
-.qs-st .qs-zone{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.4}
-.qs-st .qs-stars{position:absolute;top:10px;right:12px;font-size:14px;color:#8a5a0c;letter-spacing:1px}
-.qs-st.done{border-color:var(--c);background:color-mix(in srgb,var(--c) 6%,var(--surface))}
-.qs-group{margin:18px 0 8px;font-size:15px;color:var(--muted);font-weight:700;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.qs-group b{color:var(--ink);font-size:17px}
-/* station */
-.qs-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
-.qs-back{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
-.qs-crumb{font-size:14px;color:var(--muted)}
-.qs-card{background:var(--surface);border-radius:16px;padding:20px 22px;box-shadow:0 2px 10px rgba(16,49,59,.08)}
-@media (max-width:600px){.qs-card{padding:16px}}
-.qs-title{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;margin-bottom:12px}
-.qs-title .qs-ico{width:64px;height:64px;border-radius:16px;background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c);display:grid;place-items:center}
-.qs-title .qs-ico svg{width:40px;height:40px}
-.qs-title h3{margin:0;font-size:24px;line-height:1.3}
-.qs-title p{margin:2px 0 0;font-size:14px;color:var(--muted)}
-.qs-intro{font-size:17px;line-height:1.75;max-width:40em;margin:0 0 12px}
-.qs-steps{display:flex;gap:6px;margin:12px 0 16px;flex-wrap:wrap}
-.qs-steps i{display:block;height:6px;width:44px;border-radius:999px;background:var(--line)}
-.qs-steps i.on{background:var(--c)}.qs-steps i.ok{background:#009E73}
-.qs-q{font-size:19px;line-height:1.6;font-weight:700;margin:0 0 12px;max-width:40em}
-.qs-ev{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.qs-ev span{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:10px;background:var(--surface-2);font-size:15px;border:1px dashed var(--line)}
-.qs-tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--c);color:#fff;margin-bottom:8px}
-.qs-tag.site{background:#00573F}
-.qs-opts{display:grid;gap:8px}
-.qs-ch{display:flex;align-items:center;gap:12px;text-align:left;min-height:52px;padding:10px 16px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:17px;cursor:pointer;line-height:1.5}
-.qs-ch:hover{border-color:#0072B2}
-.qs-ch .k{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-weight:700;font-size:15px}
-.qs-ch.no{border-color:#b3541e;background:#fbeee6;color:#6b2d00}
-.qs-ch.yes{border-color:#007a55;background:#e6f4ef;color:#00573F}
-.qs-ch[aria-pressed="true"]{border-color:#0072B2;background:#e8f2fa}
-.qs-fb{margin-top:12px;padding:12px 16px;border-radius:12px;font-size:16px;line-height:1.7;max-width:46em}
-.qs-fb.ok{background:#e6f4ef;color:#00573F}.qs-fb.no{background:#fbeee6;color:#6b2d00}.qs-fb.info{background:var(--surface-2);color:var(--ink)}
-.qs-fb b{display:block;margin-bottom:2px}
+/* 臺史博：閉館之後 — night museum game. Art direction: ink + wash on paper, museum serif labels, handwritten notes.
+   No neon, no glass cards, no emoji: everything should feel made by hand. */
+:root{--pp:#efe6d2;--pp2:#e4d7bb;--ink:#22262a;--ink2:#4a4f53;--red:#b8442c;--night:#0d1215;--warm:#ffe9b8;
+ --serif:"Noto Serif TC","Songti TC",serif;--hand:"LXGW WenKai TC","Kaiti TC","STKaiti",serif}
+.hw{font-family:var(--hand)}
+.gm{position:relative;isolation:isolate;border-radius:6px;overflow:hidden;background:var(--night);color:var(--pp);
+ height:min(86vh,820px);min-height:560px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+@media (max-width:700px){.gm{height:auto;min-height:88vh}}
+.gm:fullscreen{height:100vh;border-radius:0}
+.gm-paper{background-color:var(--pp);color:var(--ink);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.gm-bar{position:absolute;top:10px;right:10px;z-index:30;display:flex;gap:6px}
+.gm-bar button{min-height:40px;padding:0 14px;border-radius:3px;border:1px solid rgba(239,230,210,.35);background:rgba(13,18,21,.7);color:var(--pp);font:500 14px var(--serif);cursor:pointer;letter-spacing:.05em}
+.gm-bar button:hover{border-color:var(--warm)}
+.gm button:focus-visible,.gm [tabindex]:focus-visible,.gm input:focus-visible,.gm textarea:focus-visible{outline:3px solid #f2c14e;outline-offset:3px}
+.gm-scr{position:absolute;inset:0;display:none}
+.gm-scr.on{display:block;animation:gmIn .45s ease-out}
+@keyframes gmIn{from{opacity:0}to{opacity:1}}
+/* intro: a letter on the desk */
+.gm-desk{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#3a2f25 0%,#1a1512 70%);display:grid;place-items:center;padding:62px 24px 24px;overflow:auto}
+.gm-letter{position:relative;width:min(640px,100%);padding:38px 42px 30px;transform:rotate(-1.2deg);box-shadow:0 2px 0 #d8caa8,0 22px 40px rgba(0,0,0,.5)}
+@media (max-width:600px){.gm-letter{padding:28px 22px 22px;transform:none}}
+.gm-letter::before{content:"";position:absolute;top:-14px;left:46%;width:110px;height:30px;background:rgba(222,210,170,.75);transform:rotate(3deg);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.gm-letter h2{font:900 30px/1.3 var(--serif);margin:0 0 4px;letter-spacing:.06em}
+.gm-letter .sub{font:500 14px var(--serif);color:var(--ink2);letter-spacing:.2em;margin-bottom:16px;max-width:none}
+.gm-letter p.hw{font-size:20px;line-height:1.85;margin:0 0 10px;color:#2a2d30}
+.gm-letter .sig{text-align:right;font-size:20px}
+.gm-badge{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:center;margin:18px 0 6px;padding:12px 14px;border:2px solid var(--ink);border-radius:4px;background:#f7f1e3}
+.gm-badge b{font:700 14px var(--serif);letter-spacing:.15em;color:var(--red);grid-column:1/-1}
+.gm-badge label{font:500 16px var(--serif)}
+.gm-badge input{font:400 22px var(--hand);border:0;border-bottom:2px dashed var(--ink2);background:transparent;color:var(--ink);padding:4px 2px;min-height:44px;width:100%}
+.gm-where{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 4px}
+.gm-where button{flex:1 1 200px;text-align:left;min-height:56px;padding:10px 14px;border:2px solid var(--ink2);background:transparent;color:var(--ink);font:500 16px var(--serif);cursor:pointer;border-radius:3px}
+.gm-where button small{display:block;font:400 14px var(--hand);color:var(--ink2);margin-top:2px}
+.gm-where button[aria-pressed="true"]{border-color:var(--red);background:rgba(184,68,44,.08);box-shadow:0 0 0 2px var(--red)}
+.gm-go{display:inline-flex;align-items:center;gap:10px;margin-top:14px;min-height:52px;padding:0 26px;border:0;border-radius:3px;background:var(--ink);color:var(--pp);font:700 18px var(--serif);letter-spacing:.12em;cursor:pointer}
+.gm-go:hover{background:#000}
+.gm-go.red{background:var(--red)}
+/* floor plan */
+.gm-plan{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr;padding:22px 26px;overflow:auto}
+@media (max-width:640px){.gm-plan{padding:62px 14px 18px}}
+.gm-plan h3{font:900 26px var(--serif);letter-spacing:.08em;margin:0;color:var(--pp)}
+.gm-plan .hint{font:400 18px var(--hand);color:#cdbf9f;margin:4px 0 0}
+.gm-plan svg{width:100%;height:100%;min-height:380px;max-height:640px}
+.gm-room{cursor:pointer}
+.gm-room rect{fill:#151c20;stroke:#6d6656;stroke-width:2;transition:fill .4s}
+.gm-room:hover rect,.gm-room:focus rect{stroke:var(--warm)}
+.gm-room.done rect{fill:#e9c98a;stroke:#e9c98a}
+.gm-room text{font-family:var(--serif);fill:#d8ccb0}
+.gm-room.done text{fill:#2a2015}
+.gm-room .no{font-size:13px;letter-spacing:.2em}
+.gm-room .nm{font-size:17px;font-weight:700}
+/* a room in the dark */
+.gm-room-scr{position:absolute;inset:0}
+.gm-pan{position:absolute;inset:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.gm-pan::-webkit-scrollbar{display:none}
+.gm-world{position:relative;height:100%;aspect-ratio:1200/700;min-width:100%}
+.gm-scene{position:absolute;inset:0;width:100%;height:100%}
+.gm-dark{position:absolute;inset:0;pointer-events:none;z-index:5;transition:opacity 1.6s ease-out;
+ background:radial-gradient(circle at var(--x,50%) var(--y,55%),rgba(255,233,184,.10) 0,rgba(255,233,184,.04) 90px,rgba(8,11,13,.0) 120px,rgba(8,11,13,.86) 210px,rgba(8,11,13,.96) 340px)}
+.gm-lit .gm-dark{opacity:0}
+.gm-obj{cursor:zoom-in;outline:none}
+.gm-obj .glint{fill:var(--warm);opacity:.85;animation:glint 2.4s ease-in-out infinite}
+@keyframes glint{0%,100%{opacity:.15}50%{opacity:.9}}
+.gm-obj.seen .glint{display:none}
+.gm-obj:focus-visible .frame{stroke:#f2c14e;stroke-width:4}
+.gm-tag{font:700 15px var(--serif);fill:var(--ink)}
+.gm-hud{position:absolute;left:12px;bottom:12px;right:12px;z-index:10;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:space-between;pointer-events:none}
+.gm-hud>*{pointer-events:auto}
+.gm-note{max-width:min(420px,100%);padding:12px 16px;box-shadow:0 8px 20px rgba(0,0,0,.4);transform:rotate(-.6deg)}
+.gm-note b{font:700 14px var(--serif);letter-spacing:.12em;color:var(--red)}
+.gm-note p{font:400 18px/1.6 var(--hand);margin:2px 0 0}
+.gm-hud .gm-go{margin:0}
+.gm-title-wall{position:absolute;left:24px;top:64px;z-index:6;font-family:var(--serif);color:#e9dcc0;text-shadow:0 1px 0 rgba(0,0,0,.5);max-width:calc(100% - 200px)}
+.gm-title-wall small{display:block;font-size:13px;letter-spacing:.3em;opacity:.8}
+.gm-title-wall b{font-size:24px;letter-spacing:.06em;font-weight:900}
+@media (max-width:600px){.gm-title-wall b{font-size:18px}.gm-title-wall{max-width:calc(100% - 24px);top:58px}}
+.gm-back{position:absolute;top:10px;left:10px;z-index:31}
+/* close-up on the worktable */
+.gm-close{position:absolute;inset:0;z-index:20;background:rgba(5,7,8,.72);display:grid;place-items:center;padding:16px;overflow:auto}
+.gm-card{position:relative;width:min(760px,100%);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+@media (max-width:700px){.gm-card{grid-template-columns:1fr;padding:16px}}
+.gm-card h4{font:900 24px var(--serif);margin:0 0 4px;letter-spacing:.05em}
+.gm-card .act{font:400 18px var(--hand);color:var(--ink2);margin:0 0 10px}
+.gm-card .clue{font:400 20px/1.75 var(--hand);color:var(--ink);min-height:3em}
+.gm-card .clue b{color:var(--red);font-weight:700}
+.gm-tray{position:relative;aspect-ratio:1/1;background:#d9cba9;border:1px solid #b9a77f;border-radius:2px;overflow:hidden;touch-action:none}
+.gm-tray svg,.gm-tray canvas{position:absolute;inset:0;width:100%;height:100%}
+.gm-tray canvas{cursor:grab}
+.gm-meter{height:6px;background:#cdbd97;border-radius:3px;margin:8px 0 0;overflow:hidden}
+.gm-meter i{display:block;height:100%;width:0;background:var(--red);transition:width .2s}
+.gm-x{position:absolute;top:8px;right:8px;width:44px;height:44px;border:0;background:transparent;font:700 22px var(--serif);color:var(--ink);cursor:pointer}
+.gm-shard{cursor:grab}
+.gm-lens{position:absolute;width:140px;height:140px;border-radius:50%;border:5px solid #3b3026;pointer-events:none;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+/* the label card: answering is restoring the wet museum label */
+.gm-label-scr{position:absolute;inset:0;overflow:auto;background:linear-gradient(#20282d,#141a1d);padding:62px 18px 30px}
+.gm-label{position:relative;width:min(820px,100%);margin:0 auto;padding:28px 32px 26px;box-shadow:0 2px 0 #d8caa8,0 26px 50px rgba(0,0,0,.55)}
+@media (max-width:600px){.gm-label{padding:20px 16px}}
+.gm-label .zone{font:500 13px var(--serif);letter-spacing:.3em;color:var(--ink2)}
+.gm-label h3{font:900 26px/1.35 var(--serif);margin:4px 0 12px;letter-spacing:.04em}
+.gm-label .pin{position:absolute;top:-10px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#d9654a,#7a2614);box-shadow:0 3px 4px rgba(0,0,0,.4)}
+.gm-q{font:400 21px/1.7 var(--hand);color:#1f2326;margin:0 0 14px}
+.gm-ev{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.gm-ev span{font:400 17px var(--hand);padding:4px 10px;background:#f7f0dd;border:1px solid #cdbd97;transform:rotate(-1deg)}
+.gm-ev span:nth-child(2n){transform:rotate(1.2deg)}
+.gm-slips{display:grid;gap:10px}
+.gm-slip{display:flex;gap:12px;align-items:flex-start;text-align:left;min-height:54px;padding:12px 16px;border:1px solid #bfae86;background:#faf5e8;color:var(--ink);font:400 19px/1.55 var(--hand);cursor:pointer;box-shadow:0 2px 0 #d9cba9;transition:transform .12s}
+.gm-slip:hover{transform:translateY(-2px) rotate(-.3deg)}
+.gm-slip .k{font:700 15px var(--serif);color:var(--ink2);min-width:20px;padding-top:3px}
+.gm-slip.no{opacity:.55;text-decoration:line-through;text-decoration-color:var(--red);cursor:default;transform:none}
+.gm-slip.yes{background:#fff;border-color:#2e7d5b;box-shadow:0 0 0 2px #2e7d5b}
+.gm-slip[aria-pressed="true"]{border-color:var(--ink);background:#fff}
+.gm-fb{margin-top:14px;font:400 19px/1.75 var(--hand);padding:12px 16px;border:1px solid currentColor}
+.gm-fb.ok{color:#1f5e44;background:rgba(46,125,91,.08)}.gm-fb.no{color:#8a2f1c;background:rgba(184,68,44,.08)}.gm-fb.info{color:var(--ink);background:rgba(0,0,0,.04)}
+.gm-fb b{font:700 16px var(--serif);display:block;letter-spacing:.1em}
+.gm-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.gm-btn{min-height:48px;padding:0 22px;border:2px solid var(--ink);border-radius:3px;background:var(--ink);color:var(--pp);font:700 16px var(--serif);letter-spacing:.1em;cursor:pointer}
+.gm-btn.alt{background:transparent;color:var(--ink)}
+.gm-btn[disabled]{opacity:.4;cursor:default}
+.gm-prog{display:flex;gap:6px;margin:0 0 14px}
+.gm-prog i{width:28px;height:4px;background:#cdbd97}.gm-prog i.on{background:var(--ink)}.gm-prog i.ok{background:#2e7d5b}
+/* sort: tags on a string */
+.gm-rope{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px;position:relative}
+.gm-rope::before{content:"";position:absolute;left:22px;top:-6px;bottom:-6px;width:2px;background:#8a7a5a}
+.gm-rope li{position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;padding:8px 10px 8px 0}
+.gm-rope .tagx{grid-column:2;padding:10px 14px;background:#faf5e8;border:1px solid #bfae86;font:400 19px/1.45 var(--hand);transform:rotate(var(--r,0deg));box-shadow:0 2px 0 #d9cba9}
+.gm-rope li::before{content:"";position:absolute;left:16px;width:14px;height:14px;border-radius:50%;background:#efe6d2;border:2px solid #8a7a5a}
+.gm-rope li.ok .tagx{border-color:#2e7d5b;box-shadow:0 0 0 2px #2e7d5b}
+.gm-rope li.bad .tagx{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+.gm-rope em{display:block;font:700 14px var(--serif);font-style:normal;color:#2e7d5b}
+.gm-mv{width:44px;height:44px;border:1px solid #bfae86;background:#faf5e8;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.gm-mv svg{width:18px;height:18px}.gm-mv[disabled]{opacity:.25;cursor:default}
+.gm-mvs{display:flex;gap:4px}
+/* match: put each thing in the right drawer */
+.gm-match{display:grid;gap:12px}
+.gm-mr{display:grid;grid-template-columns:minmax(110px,180px) 1fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #bfae86}
+@media (max-width:600px){.gm-mr{grid-template-columns:1fr}}
+.gm-mr>b{font:700 18px var(--serif)}
+.gm-mr .opts{display:flex;flex-wrap:wrap;gap:6px}
+.gm-mr .gm-slip{min-height:44px;font-size:16px;padding:6px 12px}
+.gm-mr.ok>b{color:#1f5e44}.gm-mr.bad>b{color:#8a2f1c}
+/* map */
+.gm-mapw{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:16px;align-items:start}
+@media (max-width:700px){.gm-mapw{grid-template-columns:1fr}}
+.gm-map{width:100%;max-width:320px;background:#d9c9a2;border:1px solid #a8956b;cursor:crosshair;display:block}
+.gm-map .land{fill:#efe2c0;stroke:#a8956b;stroke-width:.8}
+.gm-map .pinm circle{stroke:#fff;stroke-width:2}
+.gm-map .pinm text{font:700 12px var(--serif);fill:var(--ink);paint-order:stroke;stroke:#efe2c0;stroke-width:3px}
+.gm-map .miss{fill:none;stroke:var(--red);stroke-width:2;stroke-dasharray:3 3}
+.gm-pins{display:grid;gap:8px}
+.gm-pinb{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 14px;border:1px solid #bfae86;background:#faf5e8;color:var(--ink);font:400 18px var(--hand);cursor:pointer;text-align:left}
+.gm-pinb i{width:14px;height:14px;border-radius:50%;background:var(--pc)}
+.gm-pinb[aria-pressed="true"]{border:2px solid var(--ink)}
+.gm-pinb.ok{border-color:#2e7d5b}
+.gm-pinb small{display:block;font-size:14px;color:var(--ink2)}
+/* on-site task card */
+.gm-site{border:2px dashed #2e7d5b;padding:14px 16px;margin:0 0 12px;background:rgba(46,125,91,.05)}
+.gm-site h4{font:700 16px var(--serif);letter-spacing:.1em;margin:0 0 6px;color:#1f5e44}
+.gm-site .zn{display:inline-block;font:700 18px var(--serif);padding:6px 12px;background:#fff;border:1px solid #bfae86;margin:2px 0 8px}
+.gm-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.gm-links a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--ink2);color:var(--ink);font:500 14px var(--serif);text-decoration:none;border-radius:2px}
+.gm-notearea{width:100%;min-height:90px;font:400 19px/1.6 var(--hand);padding:10px 12px;border:1px solid #bfae86;background:#fffdf6;color:var(--ink)}
+/* lights on + stamp */
+.gm-stampbox{position:absolute;inset:0;z-index:25;display:grid;place-items:center;background:rgba(10,8,6,.35);padding:16px}
+.gm-stampcard{width:min(520px,100%);padding:26px 28px;text-align:center;box-shadow:0 22px 50px rgba(0,0,0,.5);transform:rotate(.8deg)}
+.gm-seal{display:inline-grid;place-items:center;width:132px;height:132px;border:6px double var(--red);border-radius:50%;color:var(--red);font:900 58px var(--serif);transform:rotate(-12deg) scale(1);margin:6px auto 10px;
+ background:radial-gradient(circle,rgba(184,68,44,.06),rgba(184,68,44,0) 70%)}
+.gm-seal.thud{animation:thud .42s cubic-bezier(.2,1.6,.4,1)}
+@keyframes thud{0%{transform:rotate(-12deg) scale(2.2);opacity:0}60%{opacity:1}100%{transform:rotate(-12deg) scale(1)}}
+.gm-stampcard h4{font:900 24px var(--serif);margin:0 0 4px}
+.gm-stampcard p{font:400 19px/1.7 var(--hand);margin:6px 0}
+.gm-stars{font:700 20px var(--serif);color:var(--red);letter-spacing:4px}
+/* dawn ending */
+.gm-dawn{position:absolute;inset:0;background:linear-gradient(#f4d9a8,#e9b98a 40%,#8e6a5a);display:grid;place-items:center;padding:62px 20px 20px;overflow:auto}
+@media (prefers-reduced-motion:reduce){.gm-scr.on,.gm-seal.thud{animation:none}.gm-obj .glint{animation:none;opacity:.7}.gm-dark{transition:none}.gm-slip{transition:none}}
+/* passport (outside the game) + printable certificate */
+.qs-pass{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin:12px 0}
+@media (max-width:700px){.qs-pass{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.qs-pass div{aspect-ratio:1;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:6px}
+.qs-pass div.on{border:5px double #b8442c;color:#b8442c;font-family:"Noto Serif TC",serif;font-weight:900;font-size:30px;transform:rotate(-8deg)}
 .qs-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
 .qs-btn{min-height:48px;padding:0 20px;border-radius:999px;border:2px solid #10313b;background:#10313b;color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer}
 .qs-btn.alt{background:var(--surface);color:var(--ink)}
 .qs-btn[disabled]{opacity:.45;cursor:default}
-/* sort */
-.qs-sort{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:s}
-.qs-sort li{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:8px 10px 8px 12px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-size:17px;line-height:1.45}
-.qs-sort li::before{counter-increment:s;content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:15px}
-.qs-sort li.ok{border-color:#007a55;background:#e6f4ef}.qs-sort li.bad{border-color:#b3541e;background:#fbeee6}
-.qs-sort li em{display:block;font-style:normal;font-size:13px;color:var(--muted)}
-.qs-mvs{display:flex;gap:4px}
-.qs-mv{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center}
-.qs-mv svg{width:18px;height:18px}
-.qs-mv[disabled]{opacity:.3;cursor:default}
-/* match */
-.qs-match{display:grid;gap:10px}
-.qs-mr{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
-@media (max-width:600px){.qs-mr{grid-template-columns:1fr}}
-.qs-mr>b{font-size:17px}
-.qs-mr .qs-chips{display:flex;flex-wrap:wrap;gap:6px}
-.qs-mr .qs-ch{min-height:44px;font-size:15px;padding:6px 12px;border-width:1px}
-.qs-mr.ok{background:#e6f4ef}.qs-mr.bad{background:#fbeee6}
-/* map */
-.qs-mapw{display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:16px;align-items:start}
-@media (max-width:700px){.qs-mapw{grid-template-columns:minmax(0,1fr)}}
-.qs-map{width:100%;max-width:320px;height:auto;background:#cfe6f2;border-radius:14px;cursor:crosshair;touch-action:manipulation;display:block}
-.qs-map .land{fill:#d5ddc0;stroke:#b5c19b;stroke-width:.8}
-.qs-map .pin circle{stroke:#fff;stroke-width:2}
-.qs-map .pin text{font-size:12px;font-weight:700;fill:#10313b;paint-order:stroke;stroke:#fff;stroke-width:3px}
-.qs-map .miss{fill:none;stroke:#b3541e;stroke-width:2;stroke-dasharray:3 3}
-.qs-pins{display:grid;gap:8px}
-.qs-pin{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px;cursor:pointer;text-align:left}
-.qs-pin i{width:14px;height:14px;border-radius:50%;background:var(--pc);flex:none}
-.qs-pin[aria-pressed="true"]{border-color:#0072B2;box-shadow:0 0 0 2px #0072B2 inset}
-.qs-pin.ok{border-color:#007a55;background:#e6f4ef}
-.qs-pin small{display:block;font-size:13px;color:var(--muted)}
-/* on-site */
-.qs-site{border:2px dashed #00573F;border-radius:14px;padding:14px 16px;background:color-mix(in srgb,#009E73 6%,var(--surface))}
-.qs-site h4{margin:0 0 6px;font-size:17px;font-family:var(--f-body)}
-.qs-zone-name{display:inline-block;font-size:18px;font-weight:700;padding:6px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);margin:4px 0 8px}
-.qs-note{width:100%;min-height:90px;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);line-height:1.6}
-.qs-note:focus-visible{outline:3px solid #0072B2;outline-offset:2px}
-.qs-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.qs-links a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:14px;text-decoration:none}
-.qs-links a:hover{border-color:#0072B2}
-/* finish + passport */
-.qs-done{text-align:center;padding:8px 0}
-.qs-stamp{display:inline-grid;place-items:center;width:120px;height:120px;border-radius:50%;border:5px double var(--c);color:var(--c);font-family:var(--f-display);font-size:48px;transform:rotate(-8deg);margin:8px auto}
-.qs-done h3{font-size:24px;margin:8px 0 4px}
-.qs-pass{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:12px 0}
-@media (max-width:700px){.qs-pass{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.qs-pass div{aspect-ratio:1;border-radius:50%;border:3px dashed var(--line);display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:6px}
-.qs-pass div.on{border:4px double var(--c);color:var(--c);font-family:var(--f-display);font-size:30px;transform:rotate(-6deg)}
 .qs-cert{display:none}
 .qs-teacher summary{font-weight:700;cursor:pointer;min-height:40px;display:list-item;font-size:17px}
 .qs-teacher ol{padding-left:22px}.qs-teacher li{margin:10px 0;line-height:1.65}
 .qs-teacher .ans{color:#00573F;font-weight:700}
-@media print{
- body *{visibility:hidden}
- .qs-cert,.qs-cert *{visibility:visible}
- .qs-cert{display:block!important;position:absolute;inset:0;padding:24mm 18mm;font-size:14pt;color:#000}
- .qs-cert h2{font-size:26pt;margin:0 0 6mm;text-align:center}
- .qs-cert .qs-pass div{border-color:#333;color:#333}
- .qs-cert .qs-pass div.on{color:#000;border-color:#000}
- .qs-cert .cn{margin:3mm 0;padding:3mm;border:1px solid #999;border-radius:3mm}
-}
+@media print{body *{visibility:hidden}.qs-cert,.qs-cert *{visibility:visible}
+ .qs-cert{display:block!important;position:absolute;inset:0;padding:24mm 18mm;font-size:14pt;color:#000;font-family:"Noto Serif TC",serif}
+ .qs-cert h2{font-size:26pt;margin:0 0 6mm;text-align:center}.qs-cert .cn{margin:3mm 0;padding:3mm;border:1px solid #999}}
 </style>
 <link rel="stylesheet" href="assets/site-nav.css?v=1">
 <link rel="stylesheet" href="assets/site.css?v=5">
@@ -560,51 +630,39 @@ nav.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:
 <header class="top">
   <div class="wrap">
     <div>
-      <h1>臺史博<span class="accent">尋寶任務</span></h1>
-      <p class="lede">國立臺灣歷史博物館的常設展「斯土斯民：臺灣的故事」，從第一批來到臺灣的人，一路講到鄭氏和清朝。跟著 7 個展區，像考古學家和歷史學家一樣找證據、想原因，集滿 7 個印章。在教室玩、到博物館現場玩都可以。</p>
+      <h1>臺史博：<span class="accent">閉館之後</span></h1>
+      <p class="lede">晚上九點，國立臺灣歷史博物館的燈都關了。常設展「斯土斯民」七個展區的說明卡被漏水淋濕，明天一早就有校外教學。拿起手電筒，看展品、找證據，把說明卡寫回去。</p>
     </div>
   </div>
 </header>
-
-<nav class="rail" aria-label="段落">
-  <div class="wrap" id="rail">
-    <a href="#route"><span class="dot" style="background:#0072B2"></span>任務路線</a>
-    <a href="#pass"><span class="dot" style="background:#D55E00"></span>我的護照</a>
-    <a href="#teacher"><span class="dot" style="background:#5E5E5E"></span>老師版</a>
-  </div>
-</nav>
-
 <main>
-<section class="unit" id="route">
+<section class="unit" id="game" style="padding-top:8px">
   <div class="wrap">
-    <div id="qsApp" aria-live="polite"></div>
+    <div class="gm" id="gm" aria-label="臺史博：閉館之後（遊戲）">
+      <div class="gm-bar"><button id="gmSnd" aria-pressed="false">聲音：關</button><button id="gmFs">全螢幕</button></div>
+      <div class="gm-scr" id="scIntro"></div>
+      <div class="gm-scr" id="scPlan"></div>
+      <div class="gm-scr" id="scRoom"></div>
+      <div class="gm-scr" id="scLabel"></div>
+      <div class="gm-scr" id="scDawn"></div>
+    </div>
   </div>
 </section>
-
 <section class="unit" id="pass">
   <div class="wrap">
-    <div class="unit-head">
-      <div class="badge" style="background:#D55E00">章</div>
-      <h2>我的尋寶護照</h2>
-      <p class="sub">每完成一個展區，就蓋一個印章。集滿 7 個，可以印出證書。</p>
-    </div>
+    <div class="unit-head"><div class="badge" style="background:#b8442c">章</div><h2>志工印章</h2><p class="sub">每修好一個展區的說明卡，就蓋一個印章。集滿七個，可以印出證書。</p></div>
     <div class="panel pad" id="qsPass"></div>
   </div>
 </section>
-
 <section class="unit" id="teacher">
   <div class="wrap">
-    <div class="unit-head">
-      <div class="badge" style="background:#5E5E5E">師</div>
-      <h2>給老師</h2>
-      <p class="sub">題目對應康軒五上第三單元（史前文化）和第四單元（大航海時代）。展區名稱依臺史博「點集臺灣史」線上博物館。</p>
-    </div>
+    <div class="unit-head"><div class="badge" style="background:#5E5E5E">師</div><h2>給老師</h2><p class="sub">題目對應康軒五上第三單元（史前文化）和第四單元（大航海時代）。展區名稱依臺史博「點集臺灣史」線上博物館。</p></div>
     <div class="panel pad" id="qsTeacher"></div>
   </div>
 </section>
 </main>
 <div class="qs-cert" id="qsCert" aria-hidden="true"></div>
-<footer><div class="wrap"><p class="credit">展區名稱與介紹：國立臺灣歷史博物館「點集臺灣史」線上博物館。題目內容依康軒版五年級上學期社會課本第三、四單元。本頁不是臺史博官方網站。</p></div></footer>
+<footer><div class="wrap"><p class="credit">展區名稱與介紹：國立臺灣歷史博物館「點集臺灣史」線上博物館。故事中的研究員是虛構人物。本頁不是臺史博官方網站。</p></div></footer>
 <script>
 (function(){const H='https://geo.twranger.com/';const hd=document.querySelector('header.top');if(!hd)return;const k=hd.querySelector('.kicker'),h=hd.querySelector('h1');if(!k||!h||k.closest('a'))return;
   const a=document.createElement('a');a.href=H;a.className='home-link';a.setAttribute('aria-label','回到海佃地圖首頁：'+h.textContent);k.parentNode.insertBefore(a,k);a.appendChild(k);a.appendChild(h);})();
@@ -688,26 +746,14 @@ function lineChart(svgSel,series,opt){const svg=d3.select(svgSel);const W=opt.w|
   if(opt.ylab)svg.append('text').attr('x',M.l).attr('y',M.t-2).attr('font-size',13).attr('fill','var(--muted)').text(opt.ylab);
   return {x,y,svg};}
 
-/* 臺史博尋寶任務 — 7 stations following the NMTH permanent exhibition 「斯土斯民」, classroom mode and on-site mode. */
+/* 臺史博：閉館之後 — a night in the museum. Explore each dark gallery with a flashlight, look closely at the
+   exhibits, then rewrite the rain-soaked labels. Seven galleries follow the NMTH permanent exhibition 「斯土斯民」. */
 (()=>{
-const KEY='hhl-nmth-quest-v1';
+const KEY='hhl-nmth-night-v1';
 const MAP={"d": "M272,46L268,48L265,51L263,53L260,57L257,71L259,80L263,88L262,91L262,91L262,96L259,98L260,102L258,103L256,106L253,116L248,120L243,118L240,117L239,116L238,115L237,116L238,118L236,118L234,119L235,121L231,120L227,118L224,118L220,115L215,114L211,115L208,112L206,110L206,104L210,101L213,97L214,93L215,89L218,86L219,82L223,81L227,79L229,77L232,75L234,73L234,70L236,67L239,65L242,65L243,64L246,62L249,61L251,60L253,58L254,56L257,55L259,53L259,50L260,49L265,48L267,47L270,46Z M118,133L125,140L128,143L132,144L134,145L135,148L135,151L136,152L137,152L139,153L140,155L137,155L136,156L137,160L135,160L135,161L136,163L135,163L136,165L136,165L136,166L136,166L136,167L136,167L135,168L135,169L134,170L135,171L135,172L135,172L134,173L134,173L135,173L136,174L135,174L136,174L136,175L136,175L137,176L139,176L140,176L139,179L132,179L125,178L117,175L110,175L103,176L94,170L97,167L98,164L100,161L103,157L106,154L107,148L110,146L110,145L112,140L113,138L114,136L115,135L118,133Z M137,179L139,176L136,175L135,174L135,173L135,173L135,171L135,168L136,167L136,166L136,164L135,161L138,157L140,155L148,155L151,152L153,149L156,145L160,143L162,145L165,144L172,142L176,138L181,137L186,134L191,132L196,130L201,129L204,129L209,133L204,136L203,141L206,146L202,151L201,158L201,163L200,168L198,172L196,177L194,181L197,184L198,189L196,197L192,201L190,203L189,208L184,209L179,212L178,217L175,217L168,215L161,214L155,212L154,205L155,201L150,199L145,198L140,199L136,198L136,193L137,190L137,186L137,180Z M80,208L81,209L81,210L81,210L80,210L79,210L79,211L79,211L78,211L79,211L78,211L78,212L78,212L78,212L78,212L77,212L78,213L78,213L77,213L77,213L77,213L77,213L77,212L77,213L76,213L76,214L76,213L76,212L76,212L76,212L76,212L76,213L75,214L75,213L75,213L75,214L74,213L74,214L74,214L74,215L74,216L73,216L73,215L73,215L73,215L73,216L73,217L73,218L74,218L73,218L73,217L72,216L72,214L72,213L73,213L74,212L74,212L75,212L77,210L77,210L78,209L79,209L80,208Z M94,170L107,175L115,174L122,177L131,179L137,181L137,185L137,186L137,188L137,190L137,192L137,193L136,195L136,198L137,197L139,199L143,198L145,197L145,200L146,201L145,203L142,203L140,202L137,203L137,202L136,201L133,202L131,202L129,201L126,201L124,199L123,196L121,197L118,197L116,197L116,198L114,198L113,197L112,197L110,199L107,201L104,203L101,204L100,206L98,206L97,209L92,210L90,210L86,208L86,206L86,204L86,200L85,198L85,196L83,196L86,190L87,188L88,180L89,177L91,175L92,172Z M255,29L255,30L255,31L255,31L254,31L255,31L255,32L254,32L252,31L251,32L250,32L250,33L250,33L251,33L251,35L251,36L252,37L251,38L251,38L249,38L248,38L247,38L246,38L245,37L244,37L243,36L243,35L243,35L241,35L240,34L240,34L239,33L240,33L239,31L239,30L238,30L238,29L238,28L239,28L241,28L242,27L243,27L244,26L245,26L246,25L246,26L245,26L246,26L247,26L248,26L248,27L249,27L250,27L250,27L251,27L251,26L252,27L252,27L252,28L253,28L254,28L255,28L255,28L255,29Z M231,23L232,23L233,23L232,24L232,26L234,27L234,28L235,29L235,30L234,31L235,32L237,34L237,34L237,36L236,36L236,37L237,38L236,39L237,40L238,41L240,41L241,41L241,42L239,42L238,42L236,42L235,42L234,44L234,45L235,46L235,47L236,48L236,48L234,49L233,48L232,48L231,48L230,47L229,46L229,46L228,45L227,45L227,43L225,42L223,43L223,40L225,38L224,35L220,33L220,31L221,29L222,28L223,27L224,25L225,26L227,24L229,23L229,22L230,22L231,21L231,23Z M272,46L268,47L263,49L259,50L258,55L254,56L252,59L248,60L243,64L239,65L235,68L234,73L232,77L227,79L222,80L218,74L218,69L217,64L212,62L209,61L209,59L207,56L206,53L207,48L208,47L212,45L213,43L214,41L214,40L214,39L213,38L209,37L208,36L204,33L204,31L211,29L215,23L219,18L225,13L228,11L235,13L240,19L242,22L244,21L243,23L245,26L240,28L239,31L241,34L244,36L249,39L251,36L250,32L255,31L255,30L258,31L262,31L265,31L267,32L267,36L268,40L274,43L275,44Z M206,106L207,111L209,112L212,115L214,114L219,114L217,119L215,121L213,124L211,127L208,131L204,130L202,130L200,129L197,130L193,131L190,131L186,134L183,134L179,137L176,138L174,139L172,142L168,142L163,143L161,146L161,143L158,142L156,145L154,148L153,150L152,152L150,154L148,156L138,152L136,152L135,150L134,145L130,143L125,139L119,132L123,123L126,118L129,115L133,109L137,108L139,111L142,115L149,119L154,121L163,123L165,118L170,118L174,119L178,123L181,120L184,119L187,117L190,115L192,113L195,113L197,111L199,108L201,108L206,106Z M138,242L137,244L136,247L134,249L132,251L129,258L126,260L123,263L119,266L118,268L117,269L115,273L114,276L112,275L110,276L109,277L108,278L107,279L105,279L100,277L98,278L95,276L92,276L89,276L87,271L86,267L76,261L75,256L77,252L79,243L81,238L83,231L86,232L89,234L92,234L95,231L98,228L100,226L103,223L106,223L113,221L115,221L116,221L118,221L119,222L121,223L122,224L121,225L123,226L124,227L123,228L125,229L126,231L125,235L125,238L126,241L129,243L131,241L133,242L136,241Z M222,81L219,84L217,88L214,90L210,88L210,85L209,82L206,78L204,75L204,71L200,69L198,67L196,66L194,65L192,64L190,63L189,61L189,58L186,58L184,56L180,55L179,52L178,51L175,51L172,51L174,46L179,40L190,35L194,32L198,31L202,32L206,34L209,36L208,36L209,37L212,37L213,38L214,39L214,39L213,40L214,41L215,42L213,43L213,45L211,47L208,47L206,48L207,50L207,53L206,55L207,56L209,58L209,61L208,61L211,63L214,62L217,64L219,68L216,71L217,74L220,77Z M200,107L198,109L197,111L195,113L193,111L191,114L190,115L187,116L186,118L183,120L181,120L179,121L176,122L174,119L171,118L168,118L165,120L163,123L155,123L151,120L148,118L142,115L140,112L137,110L136,108L136,105L139,102L140,98L142,94L143,91L146,88L148,85L150,83L156,80L159,75L162,74L164,74L165,76L166,76L168,77L169,77L170,76L171,77L170,79L171,79L171,81L172,82L173,83L174,84L176,85L178,87L180,86L181,88L181,92L180,94L181,96L180,99L182,100L185,99L188,99L191,99L194,99L195,98L197,101L199,104L200,106Z M117,209L118,209L118,210L118,210L118,210L118,211L119,211L119,211L119,211L120,210L120,211L121,211L121,211L121,212L122,212L122,212L122,212L123,213L123,213L123,213L123,214L123,214L123,214L122,215L122,215L122,216L122,216L120,216L120,215L119,216L118,216L118,217L118,217L117,217L116,218L116,217L116,217L116,217L115,216L115,215L114,216L113,215L113,215L111,215L112,215L112,214L112,214L112,213L112,213L111,212L111,212L111,211L111,211L112,211L112,211L113,210L113,211L113,211L115,210L115,210L116,210L115,210L116,209L116,210L116,210L116,209L117,209Z M146,199L150,200L155,201L154,205L155,210L158,214L165,214L167,215L164,216L162,218L159,219L157,223L154,225L152,227L149,229L147,231L143,235L139,234L137,234L137,238L136,241L132,241L129,242L125,241L124,236L126,230L123,229L123,226L121,225L122,223L120,222L117,221L115,221L112,221L104,224L100,228L96,230L90,234L87,232L87,224L87,223L87,220L86,218L85,216L87,212L83,212L88,209L94,211L98,207L103,204L107,201L111,197L114,197L116,197L120,197L123,197L128,201L131,202L137,201L137,203L141,203L146,203Z M169,214L174,217L176,222L174,224L175,228L178,231L174,234L168,238L164,242L163,248L162,253L160,261L159,266L155,271L156,278L160,283L157,282L152,284L148,282L142,281L138,280L132,281L125,285L120,285L118,292L116,308L114,320L106,321L102,319L98,311L97,307L98,302L97,297L93,288L91,283L89,276L95,276L99,278L105,279L108,279L109,277L111,275L114,275L117,269L118,267L123,263L128,259L132,252L135,248L137,244L137,238L137,234L140,234L143,234L148,231L150,229L153,227L156,224L158,221L161,219L163,216L167,216Z M225,368L225,368L225,369L225,369L226,369L227,369L227,369L227,369L228,369L228,369L229,369L230,369L230,369L230,369L230,369L231,368L231,368L231,369L231,369L231,369L231,370L231,370L231,371L232,371L232,371L231,371L231,371L231,372L231,372L231,373L231,373L231,373L231,373L231,373L232,374L233,375L233,375L234,375L234,375L234,375L234,375L235,376L235,376L235,376L234,376L234,377L234,378L233,378L233,378L232,377L233,377L232,377L232,377L232,377L232,377L231,377L231,378L231,377L231,377L231,376L231,376L230,375L230,375L230,375L229,375L229,375L228,375L228,375L228,375L227,374L227,374L227,373L226,373L226,373L226,373L226,373L226,373L225,373L225,373L225,372L225,372L225,372L225,371L225,371L225,371L225,371L225,371L225,370L225,370L225,369L224,369L224,369L224,369L224,368L225,368Z M223,303L224,303L224,303L224,303L224,303L224,303L225,303L225,302L225,302L225,303L225,303L225,303L225,303L225,303L225,304L225,304L225,304L225,304L225,305L225,305L225,305L225,305L225,305L225,305L224,305L224,306L224,306L224,306L224,307L225,307L225,307L225,307L225,307L225,307L225,307L225,307L224,307L224,307L224,307L224,308L224,308L224,308L224,307L223,307L223,306L223,306L222,306L221,306L222,305L222,305L221,304L221,303L221,303L221,303L221,303L221,303L221,303L222,303L223,303L223,303L223,302L223,303Z M159,284L157,279L155,272L158,266L161,261L162,254L162,249L164,244L167,239L173,235L179,235L180,239L185,242L192,243L195,251L200,254L204,255L207,250L208,246L209,242L210,238L212,233L215,229L214,225L216,220L219,218L224,218L221,225L219,232L217,236L216,241L214,248L216,253L214,254L210,256L208,262L206,266L203,272L201,277L196,281L192,285L193,289L189,295L179,303L171,316L163,339L161,352L157,351L154,349L153,346L152,343L150,339L148,334L151,332L149,327L149,322L147,315L149,307L154,301L157,299L162,296L163,291L160,287Z M219,115L226,118L231,120L235,120L236,119L238,117L237,115L240,117L241,117L246,119L249,127L241,134L236,146L238,156L235,163L232,177L230,185L229,193L227,202L225,210L224,218L219,217L216,220L215,226L214,230L212,235L210,240L208,244L206,247L206,252L201,256L197,252L193,245L187,242L181,240L179,235L178,231L175,228L174,223L176,221L177,217L178,213L183,209L188,208L189,204L192,201L196,198L197,191L197,185L194,181L196,178L198,173L201,169L201,165L201,159L202,152L206,147L204,141L203,136L209,133L211,127L214,123L217,118Z M20,223L20,223L20,223L20,223L20,223L20,223L20,223L20,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,223L21,224L21,224L21,224L21,224L21,224L21,225L21,225L21,225L22,225L22,225L22,225L21,225L21,225L21,226L22,225L22,225L22,225L22,225L22,225L22,225L22,225L22,225L22,225L22,226L22,226L22,226L22,226L22,226L22,226L21,226L21,226L21,227L21,227L22,227L22,228L21,227L21,227L21,227L21,227L21,227L20,227L20,227L19,227L19,227L19,227L19,227L19,227L19,227L19,226L20,226L20,225L20,225L20,225L20,225L20,225L20,225L20,225L20,225L20,224L20,224L20,224L20,223L20,223L19,223L19,223L19,223L20,223L20,223Z M29,191L31,193L31,194L32,196L32,198L33,199L33,200L34,201L35,200L35,200L36,200L37,201L38,200L39,203L39,205L37,204L35,205L32,207L32,209L30,210L28,210L26,208L25,206L25,205L27,208L28,208L29,208L30,208L31,206L30,206L28,206L27,205L28,204L28,204L26,204L28,202L29,201L29,202L30,203L31,201L31,199L30,198L30,197L29,195L29,193L25,195L24,197L22,198L22,201L22,203L20,204L17,204L20,203L20,201L20,200L21,199L21,198L21,196L22,195L23,194L24,196L27,192Z M167,76L166,76L166,76L165,76L165,76L164,75L164,74L164,73L163,74L162,74L161,74L160,74L161,73L162,71L163,70L162,70L162,69L162,67L163,65L164,63L164,63L165,62L164,61L166,61L167,61L168,62L170,63L171,63L172,64L173,64L175,66L176,67L175,67L176,68L176,68L176,69L176,69L176,69L176,70L177,71L176,71L175,71L175,70L173,69L172,69L172,70L171,71L171,71L170,70L170,71L170,72L169,72L169,73L168,73L168,73L167,74L167,74L167,74L167,75L167,76L167,76Z M214,90L213,94L213,97L210,101L207,104L203,108L200,107L200,104L196,100L194,99L191,99L186,99L183,100L180,98L181,95L180,93L181,88L179,87L176,85L174,83L172,82L171,81L170,80L170,77L170,77L168,77L167,76L167,75L168,73L170,71L171,70L175,70L176,70L176,68L175,66L171,63L166,61L168,57L173,51L175,51L178,51L179,52L180,55L183,56L186,58L188,58L190,60L189,62L191,63L194,65L194,66L196,66L199,67L200,69L204,71L204,74L206,78L208,81L209,83L210,86L211,89Z M115,326L117,313L116,304L118,292L120,285L122,285L126,285L133,281L138,280L140,283L143,280L148,282L151,285L154,282L158,283L159,285L162,288L163,292L163,295L159,298L157,300L153,301L150,307L147,312L148,318L149,324L148,327L152,331L150,332L148,335L149,339L152,341L151,345L154,347L154,349L157,351L159,352L163,350L162,357L163,362L163,366L163,374L158,379L157,384L159,389L156,386L153,385L149,382L148,383L147,385L145,385L143,378L142,373L143,372L144,368L144,365L142,361L141,356L140,353L137,349L136,343L132,337L120,330Z", "w": 295, "h": 400, "L0": 119.3, "A1": 25.4, "k": 0.917060074385124, "S": 111.11111111111117};
 const BASE='https://geo.twranger.com/';
 const NM='https://the.nmth.gov.tw/nmth/zh-tw/Location/';
 const TOUR1='https://my.matterport.com/show/?m=uSLGE4QjdeS&sr=3.06,.71&ss=14&lang=en',TOUR2='https://my.matterport.com/show/?m=uSLGE4QjdeS&sr=-3.01,1.11&ss=26&lang=en';
-const sv=(p,f)=>`<svg viewBox="0 0 40 40" aria-hidden="true" fill="${f?'currentColor':'none'}" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-const ICO={
- stone:sv('<path d="M8 28 L16 9 L27 12 L33 26 L20 32 Z"/><path d="M16 9 L19 20 L27 12 M19 20 L20 32"/>'),
- pot:sv('<path d="M13 8 h14 M15 8 c0 4-7 6-7 14 c0 6 5 10 12 10 s12-4 12-10 c0-8-7-10-7-14"/><path d="M10 20 h20 M11 25 h18"/>'),
- bead:sv('<circle cx="11" cy="20" r="4.5"/><circle cx="20" cy="20" r="4.5"/><circle cx="29" cy="20" r="4.5"/><path d="M4 20 h2.5 M33.5 20 H36"/>'),
- ship:sv('<path d="M6 27 h28 l-4 6 H10 Z"/><path d="M20 27 V6 M20 8 l10 8 H20 M20 11 l-9 7 h9"/>'),
- fort:sv('<path d="M7 33 V16 h5 v-4 h4 v4 h8 v-4 h4 v4 h5 V33 Z"/><path d="M17 33 v-7 a3 3 0 0 1 6 0 v7"/>'),
- deer:sv('<path d="M12 30 v-8 c0-3 3-5 7-5 h7 l3-4 M26 17 v13 M15 30 v-6 M23 30 v-6"/><path d="M29 13 l-2-6 M29 13 l3-5 M29 13 l4 -2"/><circle cx="18" cy="21" r=".8"/><circle cx="22" cy="20" r=".8"/>'),
- scroll:sv('<path d="M10 8 h18 a4 4 0 0 1 0 8 h-3 v16 H11 a4 4 0 0 1 0-8 h3 V8"/><path d="M17 14 h8 M17 19 h8 M17 24 h5"/>'),
- school:sv('<path d="M6 16 L20 8 L34 16 L20 24 Z"/><path d="M12 19 v8 c4 4 12 4 16 0 v-8"/>'),
- pin:sv('<path d="M20 34 s-10-10-10-17 a10 10 0 0 1 20 0 c0 7-10 17-10 17 Z"/><circle cx="20" cy="17" r="3.5"/>')};
-const UP='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const DN='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const LOC={bxd:['八仙洞',121.49,23.40],bn:['卑南',121.11,22.78],ss:['十三行',121.40,25.15],kd:['墾丁',120.80,21.95],zl:['熱蘭遮城',120.16,23.00],sv:['聖薩爾瓦多城',121.77,25.16],sd:['聖多明哥城',120.44,25.18]};
 /* ---------- the seven stations ---------- */
 const ST=[
@@ -770,131 +816,331 @@ const ST=[
  {t:'choice',q:'最後一題：從史前時代到鄭氏時期，哪一件事一直都對臺灣很重要？',o:['和海外的交流、貿易','下雪','蓋高樓','騎馬打仗'],a:0,no:{1:'臺灣平地很少下雪喔。',2:'那時候還沒有高樓。',3:'臺灣是島，和外面往來主要靠船。'},why:'史前時代的玉流傳到東南亞、十三行的人用東西換玻璃珠、大航海時代的轉運貿易、鄭氏的海上貿易：<b>臺灣四面環海，和海外的交流一直都很重要</b>。這也是常設展這一區叫「倚海而生的島與人」的原因。'}],
  site:{look:'這是最後一個展區。回頭想想你今天看到的東西。',q:'你覺得哪一個時代最有趣？',o:['舊石器時代','新石器時代','鐵器時代','大航海時代','鄭氏時期'],why:'寫下你的理由，帶回教室和同學分享。'},
  more:[['大航海時代的臺灣：臺江內海的變化','unit4.html']]}];
-/* ---------- state ---------- */
-let S={name:'',mode:'class',st:{},notes:{},timer:0};
-try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+
+/* ---------- hand-drawn exhibits (ink + wash, drawn with a wobble filter) ---------- */
+const INK='#22262a',RED='#b8442c',PAPER='#efe6d2';
+const G={
+ chopper:`<path d="M-46 22 L-30 -26 L6 -38 L40 -14 L48 20 L4 36 Z" fill="#a39581"/><path d="M-30 -26 L-12 4 L6 -38 M-12 4 L4 36 M-12 4 L28 0 L40 -14 M28 0 L48 20" fill="none"/><path d="M-40 10 l8 -4 M-36 -4 l7 -3 M30 22 l6 -6" opacity=".6"/>`,
+ bone:`<path d="M-50 10 C-20 0 20 -6 52 -24 C40 -10 20 2 -46 22 Z" fill="#e2d6bd"/><circle cx="-50" cy="16" r="9" fill="#e2d6bd"/><path d="M-20 10 l10 -3 M0 4 l10 -3" opacity=".6"/>`,
+ ash:`<ellipse cx="0" cy="10" rx="58" ry="16" fill="#3b3836"/><path d="M-34 8 q8 -10 16 0 q8 -12 18 -2 q10 -10 20 2" fill="none" stroke="#6b645e"/><circle cx="-20" cy="12" r="3" fill="#1a1918"/><circle cx="14" cy="6" r="4" fill="#1a1918"/><circle cx="30" cy="14" r="2.5" fill="#1a1918"/>`,
+ empty:`<rect x="-40" y="-6" width="80" height="34" rx="3" fill="${PAPER}"/><path d="M-30 6 h40 M-30 16 h56" opacity=".55"/><text x="0" y="-16" text-anchor="middle" class="hw" font-size="17" fill="${RED}" stroke="none">陶器？農具？</text>`,
+ shards:`<path d="M-44 -6 L-14 -30 L-4 -4 L-30 16 Z" fill="#b57a50"/><path d="M0 -26 L34 -18 L26 8 L2 0 Z" fill="#a86c44"/><path d="M-22 22 L8 8 L18 32 L-10 38 Z" fill="#b57a50"/><path d="M-36 -8 l20 -12 M-30 2 l18 -12 M6 -18 l20 4 M4 -10 l20 4 M-12 24 l18 -8" opacity=".55"/>`,
+ adze:`<path d="M-14 -44 L14 -44 L22 34 Q0 46 -22 34 Z" fill="#6f7c70"/><path d="M-20 30 Q0 40 20 30" fill="none"/><path d="M-6 -36 L-8 22 M6 -36 L8 22" opacity=".35"/>`,
+ knife:`<path d="M-52 -10 Q0 -26 52 -10 L46 14 Q0 22 -46 14 Z" fill="#7d8478"/><circle cx="-12" cy="-6" r="4.5" fill="${PAPER}"/><circle cx="12" cy="-6" r="4.5" fill="${PAPER}"/><path d="M-44 12 Q0 20 44 12" fill="none" opacity=".5"/>`,
+ jade:`<circle cx="0" cy="0" r="32" fill="#5f9a78"/><circle cx="0" cy="0" r="12" fill="${PAPER}"/><path d="M-2 -32 L2 -12" stroke-width="3"/><path d="M-26 -14 q8 4 12 -2 M14 18 q8 -2 10 -10" opacity=".5"/>`,
+ slag:`<path d="M-40 14 Q-46 -12 -18 -24 Q8 -38 30 -18 Q50 0 34 20 Q10 34 -16 30 Q-34 28 -40 14 Z" fill="#4a4140"/><circle cx="-12" cy="-6" r="6" fill="#2b2524"/><circle cx="14" cy="4" r="8" fill="#2b2524"/><circle cx="-4" cy="16" r="4" fill="#2b2524"/><path d="M20 -16 q6 2 8 8" stroke="#8a5a3c"/>`,
+ furnace:`<path d="M-34 40 L-26 -24 Q0 -46 26 -24 L34 40 Z" fill="#9c6b48"/><ellipse cx="0" cy="-26" rx="16" ry="6" fill="#3b2a20"/><path d="M-10 40 v-18 a10 10 0 0 1 20 0 v18" fill="#3b2a20"/><path d="M34 10 L58 0" stroke-width="5"/><path d="M-20 0 h12 M8 14 h14" opacity=".5"/>`,
+ beads:`${[-36,-18,0,18,36].map((x,i)=>`<circle cx="${x}" cy="${Math.sin(i)*6}" r="${i%2?8:10}" fill="${['#4f86b8','#c0603e','#7fb7c9','#d08a3c','#3f6fa0'][i]}"/>`).join('')}<path d="M-50 4 Q0 26 50 4" fill="none" opacity=".5"/>`,
+ coins:`<circle cx="-16" cy="4" r="22" fill="#9a8a5a"/><rect x="-23" y="-3" width="14" height="14" fill="${PAPER}"/><circle cx="20" cy="-6" r="18" fill="#8d7e52"/><rect x="14" y="-12" width="12" height="12" fill="${PAPER}"/>`,
+ facepot:`<path d="M-30 -30 h60 l6 10 q6 50 -36 62 q-42 -12 -36 -62 Z" fill="#a8714a"/><circle cx="-10" cy="0" r="3.5" fill="${INK}"/><circle cx="10" cy="0" r="3.5" fill="${INK}"/><path d="M0 4 v10 M-8 22 q8 6 16 0" fill="none"/>`,
+ ship:`<path d="M-60 18 Q0 40 60 14 L52 30 Q0 46 -54 32 Z" fill="#7a5638"/><path d="M-6 16 V-48 M24 14 V-36" /><path d="M-6 -46 Q24 -30 -6 -10 Z M24 -34 Q44 -22 24 -6 Z" fill="#e8dcc0"/><path d="M-6 -48 l14 4 -14 4" fill="${RED}"/>`,
+ oldmap:`<rect x="-58" y="-40" width="116" height="80" rx="3" fill="#e4d3ac"/><path d="M-30 -30 q-12 30 4 62 q14 -8 10 -30 q-2 -20 -14 -32 Z" fill="#c9b07a" transform="rotate(-75 0 0)"/><text x="18" y="28" class="hw" font-size="13" fill="${RED}" stroke="none">I. Formosa</text><path d="M-50 -30 l12 8 M40 -30 l-10 10" opacity=".4"/>`,
+ crates:`<rect x="-56" y="-6" width="40" height="34" fill="#a07a50"/><rect x="-12" y="-18" width="36" height="46" fill="#8d6a44"/><ellipse cx="44" cy="10" rx="16" ry="20" fill="#e8e2d4"/><path d="M34 0 q10 -6 20 0 M34 12 q10 -6 20 0" stroke="#3f6fa0" fill="none"/><path d="M-56 6 h40 M-12 0 h36 M-12 14 h36" opacity=".5"/>`,
+ fort:`<path d="M-58 30 V-6 h14 v-10 h10 v10 h20 v-10 h10 v10 h20 v-10 h10 v10 h14 V30 Z" fill="#b8835e"/><rect x="-18" y="-30" width="36" height="24" fill="#c99470"/><path d="M-14 -30 v-8 h8 v8 M6 -30 v-8 h8 v8"/><path d="M-6 30 v-14 a6 6 0 0 1 12 0 v14" fill="${INK}"/><path d="M0 -38 V-58 l14 5 -14 5" fill="${RED}"/>`,
+ people:`${[-42,-14,14,42].map((x,i)=>`<g transform="translate(${x} 0)"><circle cx="0" cy="-22" r="9" fill="#e9d2b0"/><path d="M-12 30 L-10 -8 Q0 -14 10 -8 L12 30 Z" fill="${['#2f4b6e','#7a3b2e','#5c6b3f','#3d3a4f'][i]}"/>${i===0?'<path d="M-12 -30 h24 l-4 -6 h-16 Z" fill="#222"/>':i===1?'<path d="M-10 -32 q10 -8 20 0" fill="#222"/>':i===2?'<path d="M-14 -28 L0 -40 L14 -28 Z" fill="#c9a04a"/>':'<path d="M-4 -33 h8 v-5 h-8 Z" fill="#222"/>'}</g>`).join('')}`,
+ hide:`<path d="M-50 -24 Q-30 -36 -10 -26 Q10 -38 32 -28 Q52 -30 54 -6 Q60 18 40 30 Q10 40 -16 32 Q-44 36 -52 14 Q-60 -6 -50 -24 Z" fill="#b08458"/>${[[-20,-6],[6,-12],[24,8],[-4,14],[-30,12]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.5" fill="#efe6d2"/>`).join('')}`,
+ contract:`<rect x="-46" y="-44" width="92" height="88" fill="#e9dcbc"/><g class="hw" font-size="10" stroke="none" fill="${INK}"><text x="-38" y="-24">ka ni nai</text><text x="-38" y="-10">ki nauno</text><text x="-38" y="4">pa sa ni</text></g><path d="M8 -26 v52 M18 -26 v40 M28 -26 v48" stroke-width="2" opacity=".75"/><circle cx="30" cy="30" r="8" fill="none" stroke="${RED}"/>`,
+ deer:`<path d="M-40 20 Q-38 -8 -8 -10 L22 -12 L30 -26 L38 -24 L34 -8 Q40 4 30 10 L26 20 M-34 20 v18 M-20 20 v18 M14 20 v18 M24 20 v18" fill="#b9874f"/><path d="M30 -26 l-4 -16 M30 -26 l8 -14 M34 -40 l6 -4" fill="none"/>${[[-26,0],[-12,-2],[2,2],[-18,10],[8,10]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#f3ead8" stroke="none"/>`).join('')}`,
+ years:`<path d="M-60 0 H60" stroke-width="3"/>${[-50,-26,-2,22,46].map((x,i)=>`<g transform="translate(${x} 0)"><path d="M0 0 v12"/><rect x="-11" y="12" width="22" height="22" fill="${PAPER}" transform="rotate(${[-6,4,-3,6,-4][i]} 0 12)"/></g>`).join('')}`,
+ trademap:`<rect x="-58" y="-42" width="116" height="84" fill="#e4d6b4"/><path d="M-6 6 q-6 14 2 22 q6 -10 2 -22 Z" fill="#c9b07a"/><path d="M-4 16 Q-30 -10 -44 -20 M0 18 Q30 -20 44 -30 M2 24 Q20 34 40 34" fill="none" stroke="${RED}" stroke-dasharray="4 4"/><circle cx="-44" cy="-20" r="4" fill="${INK}"/><circle cx="44" cy="-30" r="4" fill="${INK}"/><circle cx="40" cy="34" r="4" fill="${INK}"/>`};
+/* rooms: what is in each display, and what students learn when they look closely */
+const ROOMS={
+ s1:{wall:'#5a4a3a',floor:'#3a3029',items:[
+  {k:'chopper',n:'石器',x:300,y:400,act:'brush',clue:'邊緣有一片一片敲下來的痕跡。這是用石頭互相敲打做成的工具，叫做<b>打製石器</b>。'},
+  {k:'bone',n:'骨角器',x:560,y:420,act:'look',clue:'用動物的骨頭或角磨尖做成的工具，可以拿來刺、挖東西，也可能用來捕魚。'},
+  {k:'ash',n:'洞穴地面',x:820,y:430,act:'brush',clue:'地上有一層黑黑的炭屑和灰燼。住在洞裡的人<b>會用火</b>。'},
+  {k:'empty',n:'空的展臺',x:1020,y:390,act:'look',clue:'研究員的便條：「這一區<b>沒有找到陶器</b>，也<b>沒有種田的工具</b>。」找不到，也是一種證據。'}]},
+ s2:{wall:'#3f5446',floor:'#2c372f',items:[
+  {k:'shards',n:'陶器碎片',x:300,y:410,act:'shards',clue:'碎片拼回去，是一個罐子，外面有繩子壓出來的紋路。陶罐可以<b>煮東西、裝糧食</b>。'},
+  {k:'adze',n:'石斧',x:540,y:400,act:'look',clue:'表面磨得又光又滑，刀口很鋒利。這是<b>磨製石器</b>，比打製石器好用。'},
+  {k:'knife',n:'石刀',x:780,y:420,act:'look',clue:'石刀上有兩個小洞，可以穿繩子套在手上，用來<b>割小米的穗</b>。'},
+  {k:'jade',n:'玉耳飾',x:1010,y:400,act:'look',clue:'綠色的玉做成的耳飾。玉的原料來自<b>花蓮豐田</b>一帶，東南亞的遺址也找到過臺灣的玉。'}]},
+ s3:{wall:'#3b4656',floor:'#2a3039',items:[
+  {k:'slag',n:'黑色硬塊',x:290,y:420,act:'brush',clue:'這是<b>鐵渣</b>，煉鐵時剩下來的渣。有鐵渣，表示這裡的人自己煉鐵。'},
+  {k:'furnace',n:'煉鐵爐模型',x:520,y:390,act:'look',clue:'考古學家在十三行找到<b>煉鐵爐</b>的遺跡。旁邊的管子是用來送風、讓火更熱的。'},
+  {k:'beads',n:'珠子',x:770,y:420,act:'look',clue:'玻璃珠、瑪瑙珠，臺灣本地做不出來。它們是<b>和島外的人交換</b>來的。'},
+  {k:'coins',n:'銅錢',x:1010,y:420,act:'brush',clue:'中國古代的銅錢，也是從島外來的。十三行的人和外地有往來。'}]},
+ s4:{wall:'#2f4458',floor:'#232f3b',items:[
+  {k:'ship',n:'帆船模型',x:300,y:400,act:'look',clue:'大航海時代的帆船。航海技術進步以後，歐洲人可以走<b>海路</b>直接到亞洲。'},
+  {k:'crates',n:'貨箱',x:580,y:420,act:'look',clue:'瓷器、絲綢、香料：歐洲人很喜歡亞洲的這些商品，可是走陸路運送很難，價格很貴。'},
+  {k:'oldmap',n:'古地圖',x:880,y:400,act:'look',clue:'地圖上寫著「I. Formosa」。Formosa 是「美麗的」。臺灣位在日本和東南亞之間，是很好的轉運站。'}]},
+ s5:{wall:'#4e3b33',floor:'#33271f',items:[
+  {k:'fort',n:'城堡模型',x:320,y:400,act:'look',clue:'荷蘭人 1624 年在今臺南安平一帶登陸，蓋了<b>熱蘭遮城</b>。'},
+  {k:'people',n:'四個人的畫像',x:640,y:410,act:'look',clue:'荷蘭人、西班牙人、漢人、日本人，都在這個時期來到臺灣。每一群人來的目的都不一樣。'},
+  {k:'oldmap',n:'北部的地圖',x:930,y:400,act:'look',clue:'西班牙人 1626 年到北部雞籠（基隆），蓋了聖薩爾瓦多城，又在淡水蓋了聖多明哥城。'}]},
+ s6:{wall:'#4a3f2e',floor:'#302920',items:[
+  {k:'deer',n:'梅花鹿',x:300,y:410,act:'look',clue:'以前臺灣西部平原上，有成千上萬隻梅花鹿。'},
+  {k:'hide',n:'鹿皮',x:580,y:420,act:'look',clue:'鹿皮在日本很搶手，可以做盔甲的內襯。荷蘭人向原住民收購鹿皮，再賣到日本。'},
+  {k:'contract',n:'一張舊文件',x:880,y:400,act:'magnify',clue:'用<b>羅馬字母</b>拼寫的原住民語言，旁邊是漢字。這是原住民和漢人簽的土地契約。'}]},
+ s7:{wall:'#3a3a3a',floor:'#272727',items:[
+  {k:'years',n:'年代牆',x:340,y:390,act:'look',clue:'1624、1626、1642、1652、1662、1683：短短六十年，臺灣換了好幾個統治者。'},
+  {k:'trademap',n:'貿易地圖',x:660,y:400,act:'look',clue:'鄭氏政權把臺灣當成轉運站，和日本、中國、東南亞做生意。'},
+  {k:'ship',n:'鄭氏的船',x:950,y:410,act:'look',clue:'1662 年，鄭氏取代荷蘭政權，仍然靠海上貿易生存。後來清朝取代鄭氏。'}]}};
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const app=$('#qsApp');
-let cur=null,step=0,miss=0,stepMiss=0;
+let S={name:'',mode:'class',st:{},notes:{},seen:{},snd:1};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const NUM=['一','二','三','四','五','六','七'];
+/* ---------- sound: room tone, footsteps, paper, brush, stamp, and a quiet generative score ---------- */
+const A=(()=>{let ac=null,master=null,musicG=null,rev=null,on=false,mt=0,brushN=null;
+ const init=()=>{if(ac)return;ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.8;master.connect(ac.destination);
+  const len=ac.sampleRate*2.6,ir=ac.createBuffer(2,len,ac.sampleRate);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6);}
+  rev=ac.createConvolver();rev.buffer=ir;const rg=ac.createGain();rg.gain.value=.55;rev.connect(rg);rg.connect(master);
+  musicG=ac.createGain();musicG.gain.value=0;musicG.connect(master);musicG.connect(rev);};
+ const noise=(dur)=>{const b=ac.createBuffer(1,ac.sampleRate*dur,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const s=ac.createBufferSource();s.buffer=b;return s;};
+ const env=(node,t,a,peak,rel)=>{const g=ac.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+rel);node.connect(g);return g;};
+ const pluck=(f,t,vol=.12,dest)=>{const o=ac.createOscillator(),o2=ac.createOscillator();o.type='sine';o2.type='triangle';o.frequency.value=f;o2.frequency.value=f*2.001;
+  const g=env(o,t,.005,vol,1.8),g2=env(o2,t,.005,vol*.25,.6);g.connect(dest||master);g2.connect(dest||master);o.start(t);o2.start(t);o.stop(t+2.2);o2.stop(t+1);};
+ let drone=null;
+ const startMusic=()=>{if(drone)return;const t=ac.currentTime;drone=[];[73.42,110,146.83].forEach((f,i)=>{const o=ac.createOscillator();o.type='triangle';o.frequency.value=f*(1+(i-1)*.002);const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=420;const g=ac.createGain();g.gain.value=.0001;g.gain.linearRampToValueAtTime(.045/(i+1),t+4);o.connect(lp);lp.connect(g);g.connect(musicG);o.start();drone.push([o,g]);});
+  musicG.gain.linearRampToValueAtTime(.9,t+3);const scale=[293.66,329.63,369.99,440,493.88,587.33,659.25,739.99];
+  const tick=()=>{if(!on)return;const now=ac.currentTime;const n=1+(Math.random()<.35);for(let k=0;k<n;k++)pluck(scale[Math.floor(Math.random()*scale.length)]*(Math.random()<.2?.5:1),now+k*.38+Math.random()*.05,.06,musicG);mt=setTimeout(tick,1600+Math.random()*2800);};tick();};
+ const stopMusic=()=>{clearTimeout(mt);if(!drone)return;const t=ac.currentTime;drone.forEach(([o,g])=>{g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(.0001,t+1.2);o.stop(t+1.3);});drone=null;};
+ const fx={
+  click:()=>{const t=ac.currentTime,s=noise(.03),f=ac.createBiquadFilter();f.type='highpass';f.frequency.value=2500;s.connect(f);env(f,t,.001,.25,.04).connect(master);s.start(t);},
+  step:()=>{const t=ac.currentTime;[0,.32,.64].forEach(d=>{const s=noise(.12),f=ac.createBiquadFilter();f.type='lowpass';f.frequency.value=380;s.connect(f);env(f,t+d,.004,.5,.12).connect(rev);s.start(t+d);});},
+  paper:()=>{const t=ac.currentTime,s=noise(.35),f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=3200;f.Q.value=.7;s.connect(f);env(f,t,.03,.18,.3).connect(master);s.start(t);},
+  stamp:()=>{const t=ac.currentTime,o=ac.createOscillator();o.type='sine';o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(48,t+.18);env(o,t,.002,.7,.25).connect(master);o.start(t);o.stop(t+.4);
+   const s=noise(.08),f=ac.createBiquadFilter();f.type='lowpass';f.frequency.value=1200;s.connect(f);env(f,t,.001,.4,.07).connect(master);s.start(t);},
+  good:()=>{const t=ac.currentTime;pluck(587.33,t,.12);pluck(880,t+.13,.1);},
+  bad:()=>{const t=ac.currentTime;pluck(196,t,.1);},
+  lights:()=>{const t=ac.currentTime;[293.66,369.99,440,587.33,739.99].forEach((f,i)=>pluck(f,t+i*.12,.08,rev));const s=noise(.05),hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=1800;s.connect(hp);env(hp,t,.001,.3,.04).connect(master);s.start(t);},
+  reveal:()=>{const t=ac.currentTime;pluck(440,t,.07,rev);pluck(659.25,t+.09,.06,rev);}};
+ return {
+  on:()=>on,
+  set(v){on=v;if(v){init();ac.resume();startMusic();}else if(ac){stopMusic();}},
+  play(k){if(!on||!ac)return;try{fx[k]&&fx[k]();}catch(e){}},
+  brush(v){if(!on||!ac)return;if(v&&!brushN){const s=noise(2),f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;f.Q.value=.5;const g=ac.createGain();g.gain.value=.08;s.loop=true;s.connect(f);f.connect(g);g.connect(master);s.start();brushN=[s,g];}
+   else if(!v&&brushN){const [s,g]=brushN;g.gain.setTargetAtTime(0,ac.currentTime,.05);s.stop(ac.currentTime+.2);brushN=null;}}};})();
+const sndBtn=$('#gmSnd');const sndUI=()=>{sndBtn.textContent=`聲音：${A.on()?'開':'關'}`;sndBtn.setAttribute('aria-pressed',String(A.on()));};
+sndBtn.onclick=()=>{A.set(!A.on());S.snd=A.on()?1:0;save();sndUI();};
+$('#gmFs').onclick=()=>{const g=$('#gm');if(document.fullscreenElement)document.exitFullscreen();else g.requestFullscreen&&g.requestFullscreen().catch(()=>{});};
+document.addEventListener('fullscreenchange',()=>{$('#gmFs').textContent=document.fullscreenElement?'離開全螢幕':'全螢幕';});
+const show=id=>{$$('.gm-scr').forEach(s=>s.classList.toggle('on',s.id===id));};
+/* ---------- intro: a letter left on the volunteer desk ---------- */
+function intro(){const el=$('#scIntro');
+ el.innerHTML=`<div class="gm-desk"><div class="gm-letter gm-paper">
+  <h2>給今晚值班的志工</h2><div class="sub">國立臺灣歷史博物館・常設展「斯土斯民」</div>
+  <p class="hw">下午那場大雨，屋頂漏水，七個展區的說明卡全被淋濕了，字都糊成一片。</p>
+  <p class="hw">明天早上九點，有好幾班小學生要來校外教學。拜託你拿著手電筒，到每個展區仔細看看展品，找出證據，把說明卡重新寫好。</p>
+  <p class="hw">展品不會說話，但它們會留下線索。</p>
+  <p class="hw sig">研究員 林姐</p>
+  <div class="gm-badge"><b>夜間志工證</b><label for="gmName">名字</label><input id="gmName" maxlength="12" value="${esc(S.name)}" autocomplete="off" placeholder="寫上你的名字"></div>
+  <div class="gm-where" role="group" aria-label="你在哪裡玩">
+   <button data-m="class" aria-pressed="${S.mode==='class'}">在教室裡<small>用手電筒逛「線上展廳」</small></button>
+   <button data-m="site" aria-pressed="${S.mode==='site'}">我在臺史博現場<small>每一區多一個看實物的現場任務</small></button></div>
+  <button class="gm-go" id="gmStart">拿起手電筒</button></div></div>`;
+ $('#gmName').oninput=e=>{S.name=e.target.value.trim();save();pass();};
+ $$('.gm-where button').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;save();$$('.gm-where button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+ $('#gmStart').onclick=()=>{if(S.snd&&!A.on()){A.set(true);sndUI();}A.play('step');plan();};
+ show('scIntro');}
+/* ---------- the floor plan ---------- */
+const LAY={wide:{vb:'0 0 980 600',w:200,h:[160,190],pos:[[60,70],[290,70],[520,70],[60,330],[290,330],[520,330],[750,330]],
+  walls:'M40 50 H730 V290 M40 310 H960 V560 H40 Z',l1:[44,38,'start'],l2:[952,548,'end'],door:[490,590],
+  hall:'M160 230 V265 M390 230 V265 M620 230 V265 M160 265 H850 M160 265 V330 M390 265 V330 M620 265 V330 M850 265 V330'},
+ tall:{vb:'0 0 440 800',w:185,h:[140,140],pos:[[25,60],[230,60],[25,215],[25,440],[230,440],[25,595],[230,595]],
+  walls:'M12 45 H428 V370 H12 Z M12 425 H428 V750 H12 Z',l1:[14,34,'start'],l2:[14,414,'start'],door:[220,785],
+  hall:'M117 200 V215 M322 200 V230 M117 355 V395 H322 V230 M220 370 V425 M117 425 V440 M322 425 V440'}};
+function plan(){const n=ST.filter(s=>S.st[s.id]).length,el=$('#scPlan'),K=LAY[$('#gm').clientWidth<640?'tall':'wide'];
+ const lab=(t,[x,y,a])=>`<text x="${x}" y="${y}" text-anchor="${a||'middle'}" font-family="Noto Serif TC,serif" font-size="15" fill="#9c917a" letter-spacing="4">${t}</text>`;
+ el.innerHTML=`<div class="gm-plan"><div><h3>常設展 平面圖</h3><p class="hint">${n===7?'七張說明卡都修好了。天快亮了……':`今晚要修好七張說明卡，已經修好 ${n} 張。點一個展區走進去。`}</p></div>
+ <svg viewBox="${K.vb}" role="group" aria-label="常設展平面圖">
+  <path d="${K.walls}" fill="none" stroke="#3b4247" stroke-width="2"/>${lab('最初的抵岸',K.l1)}${lab('倚海而生的島與人',K.l2)}
+  <path d="${K.hall}" fill="none" stroke="#6d6656" stroke-width="2" stroke-dasharray="3 7"/>
+  ${ST.map((s,i)=>{const [x,y]=K.pos[i],d=S.st[s.id],w=K.w,h=K.h[i<3?0:1];const nm=s.sub.split('：')[0].replace('，集結！','');return `<g class="gm-room${d?' done':''}" data-s="${s.id}" tabindex="0" role="button" aria-label="第${NUM[i]}展間：${s.sub}${d?'（已修好）':''}">
+   <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2"/>
+   ${d?'':`<g transform="translate(${x+w-58} ${y+h-44}) scale(.5)" opacity=".2" stroke="#efe6d2" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="ghost">${G[ROOMS[s.id].items[0].k].replace(/fill="[^"]*"/g,'fill="none"')}</g>`}
+   <text class="no" x="${x+14}" y="${y+28}">第${NUM[i]}展間</text>
+   <text class="nm" x="${x+14}" y="${y+56}">${nm.length>7?nm.slice(0,7):nm}</text>${nm.length>7?`<text class="nm" x="${x+14}" y="${y+80}">${nm.slice(7)}</text>`:''}
+   ${d?`<g transform="translate(${x+w-46} ${y+h-36}) rotate(-12)"><circle r="26" fill="none" stroke="#b8442c" stroke-width="3"/><circle r="21" fill="none" stroke="#b8442c" stroke-width="1"/><text text-anchor="middle" y="9" font-family="Noto Serif TC,serif" font-weight="900" font-size="24" fill="#b8442c">${s.stamp}</text></g>`:''}</g>`;}).join('')}
+  ${lab('入口',[...K.door])}
+ </svg>${n===7?'<div style="text-align:center"><button class="gm-go red" id="gmDawn">走出展場，天亮了</button></div>':''}</div>`;
+ $$('.gm-room').forEach(g=>{g.onclick=()=>room(g.dataset.s);g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();room(g.dataset.s);}};});
+ const d=$('#gmDawn');if(d)d.onclick=dawn;show('scPlan');pass();}
+/* ---------- a dark gallery ---------- */
+let R=null,darkT=0;
+const wob=`<filter id="wob"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
+ <radialGradient id="spot" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#fff2cc" stop-opacity=".35"/><stop offset="1" stop-color="#fff2cc" stop-opacity="0"/></radialGradient>`;
+function sceneSVG(s,rm){const seen=S.seen[s.id]||[];
+ return `<svg class="gm-scene" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="false"><defs>${wob}</defs>
+ <rect width="1200" height="700" fill="${rm.wall}"/>${[...Array(24)].map((_,i)=>`<path d="M${i*52+10} 0 V520" stroke="rgba(0,0,0,.08)" stroke-width="${1+i%3}"/>`).join('')}
+ <path d="M0 520 H1200 V700 H0 Z" fill="${rm.floor}"/><path d="M0 520 H1200" stroke="rgba(0,0,0,.35)" stroke-width="6"/>
+ ${[...Array(9)].map((_,i)=>`<path d="M${-200+i*190} 700 L${300+i*80} 520" stroke="rgba(255,255,255,.04)" stroke-width="2"/>`).join('')}
+ <text x="1170" y="120" text-anchor="end" font-family="Noto Serif TC,serif" font-weight="900" font-size="64" fill="rgba(255,240,210,.07)" letter-spacing="10">${s.zone}</text>
+ ${rm.items.map((it,i)=>{const x=it.x,y=it.y,sn=seen.includes(i);return `<g class="gm-obj${sn?' seen':''}" data-i="${i}" tabindex="0" role="button" aria-label="${sn?it.n:'看不清楚的展品'}：靠近看">
+   <path d="M${x-80} ${y-150} L${x+80} ${y-150} L${x+110} ${y+70} L${x-110} ${y+70} Z" fill="url(#spot)" opacity=".7"/>
+   <rect x="${x-95}" y="${y+62}" width="190" height="${600-y}" fill="#2a2420" stroke="rgba(0,0,0,.4)"/><rect x="${x-95}" y="${y+62}" width="190" height="10" fill="rgba(255,255,255,.08)"/>
+   <g filter="url(#wob)" stroke="#22262a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(${x} ${y}) scale(1.25)">${G[it.k]}</g>
+   <rect class="frame" x="${x-100}" y="${y-110}" width="200" height="172" fill="url(#glass)" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+   <g transform="translate(${x} ${y+112}) rotate(${(i%2?1.5:-1.5)})"><rect x="-62" y="-16" width="124" height="34" fill="${sn?'#efe6d2':'#cfc3a6'}"/><text class="gm-tag" text-anchor="middle" y="7">${sn?it.n:'？'}</text></g>
+   <path class="glint" d="M${x+64} ${y-86} l4 -12 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 Z"/></g>`;}).join('')}
+ </svg>`;}
+function room(id){const s=ST.find(x=>x.id===id),rm=ROOMS[id];R={s,rm};A.play('step');
+ const el=$('#scRoom');el.classList.remove('gm-lit');
+ el.innerHTML=`<div class="gm-room-scr"><div class="gm-pan" id="gmPan"><div class="gm-world" id="gmRoomScr">${sceneSVG(s,rm)}<div class="gm-dark" id="gmDark"></div></div></div>
+  <div class="gm-title-wall"><small>第${NUM[ST.indexOf(s)]}展間・${s.zone}</small><b>${s.sub}</b></div>
+  <button class="gm-btn alt gm-back" id="gmBack" style="background:rgba(13,18,21,.7);color:#efe6d2;border-color:rgba(239,230,210,.4)">← 平面圖</button>
+  <div class="gm-hud"><div class="gm-note gm-paper" id="gmNote"></div><div id="gmHudBtn"></div></div></div>`;
+ const scr=$('#gmRoomScr'),dk=$('#gmDark');
+ const mv=e=>{const r=scr.getBoundingClientRect();dk.style.setProperty('--x',(e.clientX-r.left)+'px');dk.style.setProperty('--y',(e.clientY-r.top)+'px');};
+ scr.addEventListener('pointermove',mv);scr.addEventListener('pointerdown',mv);
+ $$('.gm-obj').forEach(g=>{const go=()=>closeup(+g.dataset.i);g.onclick=go;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};
+  g.onfocus=()=>{const pn=$('#gmPan'),fb=g.getBoundingClientRect(),pr=pn.getBoundingClientRect();if(fb.left<pr.left||fb.right>pr.right)pn.scrollLeft+=fb.left+fb.width/2-(pr.left+pr.width/2);const b=g.getBoundingClientRect(),r=scr.getBoundingClientRect();dk.style.setProperty('--x',(b.left+b.width/2-r.left)+'px');dk.style.setProperty('--y',(b.top+b.height/2-r.top)+'px');};});
+ $('#gmBack').onclick=()=>{A.play('step');plan();};
+ {const f=$('.gm-obj .frame').getBoundingClientRect(),r=scr.getBoundingClientRect();dk.style.setProperty('--x',(f.left+f.width/2-r.left)+'px');dk.style.setProperty('--y',(f.top+f.height/2-r.top)+'px');}
+ if(S.st[id])el.classList.add('gm-lit');
+ clearTimeout(darkT);darkT=setTimeout(()=>{if(R&&R.s===s&&(S.seen[id]||[]).length<rm.items.length)hud(true);},40000);
+ hud(false);show('scRoom');}
+function hud(help){const s=R.s,rm=R.rm,n=(S.seen[s.id]||[]).length,N=rm.items.length,all=n>=N;
+ $('#gmNote').innerHTML=all?`<b>林姐的便條</b><p>線索都找到了。去把說明卡寫好吧。</p>`:`<b>林姐的便條</b><p>${n===0?`用手電筒照照看，閃一下的地方就是展品。靠近看，把線索記下來。${$('#gmPan').scrollWidth>$('#gmPan').clientWidth+20?'展間很長，左右滑動走走看。':''}`:`再找找看，還有 ${N-n} 件展品沒看過。`}${help?'<br>找不到嗎？開一盞小燈試試。':''}</p>`;
+ $('#gmHudBtn').innerHTML=all?`<button class="gm-go red" id="gmWrite">${S.st[s.id]?'再寫一次說明卡':'寫說明卡'}</button>`:help?`<button class="gm-go" id="gmLamp">開一盞小燈</button>`:'';
+ const w=$('#gmWrite');if(w)w.onclick=()=>labels();const l=$('#gmLamp');if(l)l.onclick=()=>{$('#gmDark').style.opacity=.35;A.play('click');l.remove();};}
+/* ---------- close-up on the worktable ---------- */
+function closeup(i){const it=R.rm.items[i],s=R.s;A.play('click');
+ const wrap=document.createElement('div');wrap.className='gm-close';wrap.setAttribute('role','dialog');wrap.setAttribute('aria-modal','true');wrap.setAttribute('aria-label',it.n);
+ const actTxt={brush:'用刷子輕輕把沙土刷掉。',shards:'把碎片拖回原本的位置，拼成一個罐子。',magnify:'用放大鏡看看上面寫了什麼。',look:'仔細看看。'}[it.act];
+ wrap.innerHTML=`<div class="gm-card gm-paper"><button class="gm-x" aria-label="放回去">×</button>
+  <div><div class="gm-tray" id="gmTray"></div>${it.act==='brush'?'<div class="gm-meter"><i id="gmMeter"></i></div>':''}</div>
+  <div><h4>${it.n}</h4><p class="act">${actTxt}</p><div class="clue" id="gmClue" aria-live="polite"></div><div class="gm-row" id="gmClueBtn"></div></div></div>`;
+ $('#scRoom').appendChild(wrap);
+ const close=()=>{wrap.remove();A.play('paper');const g=$(`.gm-obj[data-i="${i}"]`);g&&g.focus({preventScroll:true});};
+ wrap.querySelector('.gm-x').onclick=close;wrap.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+ const tray=$('#gmTray'),big=`<svg viewBox="-80 -80 160 160"><defs>${wob}</defs><g filter="url(#wob)" stroke="#22262a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${G[it.k]}</g></svg>`;
+ const reveal=()=>{if($('#gmClue').innerHTML)return;A.play('reveal');$('#gmClue').innerHTML=it.clue;$('#gmClueBtn').innerHTML=`<button class="gm-btn" id="gmKeep">記進筆記本</button>`;
+  const k=$('#gmKeep');k.onclick=()=>{const L=S.seen[s.id]=S.seen[s.id]||[];if(!L.includes(i))L.push(i);save();A.play('paper');wrap.remove();
+   const g=$(`.gm-obj[data-i="${i}"]`);g.classList.add('seen');g.querySelector('.gm-tag').textContent=it.n;g.setAttribute('aria-label',it.n+'：靠近看');g.previousElementSibling;hud(false);g.focus({preventScroll:true});};k.focus();};
+ if(it.act==='brush'){tray.innerHTML=big+'<canvas id="gmSand" aria-label="沙土：拖曳刷掉"></canvas>';const cv=$('#gmSand'),r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=r.width*dpr;cv.height=r.height*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+   x.fillStyle='#b9a37a';x.fillRect(0,0,r.width,r.height);for(let k=0;k<1400;k++){x.fillStyle=`rgba(${Math.random()<.5?'90,70,40':'230,215,180'},${Math.random()*.35})`;x.fillRect(Math.random()*r.width,Math.random()*r.height,2,2);}
+   x.globalCompositeOperation='destination-out';let down=false,last=null,done=false;
+   const pct=()=>{const d=x.getImageData(0,0,cv.width,cv.height).data;let c=0,t=0;for(let k=3;k<d.length;k+=64){t++;if(d[k]<40)c++;}return c/t;};
+   const brush=e=>{const b=cv.getBoundingClientRect(),p=[e.clientX-b.left,e.clientY-b.top];x.lineCap='round';x.lineWidth=Math.max(34,b.width*.11);x.beginPath();x.moveTo(...(last||p));x.lineTo(...p);x.stroke();last=p;
+    const v=pct();$('#gmMeter').style.width=Math.min(100,v/.55*100)+'%';if(v>.55&&!done){done=true;A.brush(false);cv.style.transition='opacity .6s';cv.style.opacity=0;reveal();}};
+   cv.addEventListener('pointerdown',e=>{down=true;last=null;cv.setPointerCapture(e.pointerId);A.brush(true);brush(e);});cv.addEventListener('pointermove',e=>{if(down)brush(e);});
+   const up=()=>{down=false;A.brush(false);};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+   cv.tabIndex=0;cv.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();cv.style.opacity=0;done=true;reveal();}});cv.focus();}
+ else if(it.act==='shards'){const T=[[-30,-6],[16,-12],[-4,24]],start=[[-55,52],[50,50],[55,-52]];
+   tray.innerHTML=`<svg viewBox="-80 -80 160 160" id="gmSh"><defs>${wob}</defs><path d="M-38 -40 h76 l6 10 q8 70 -44 84 q-52 -14 -44 -84 Z" fill="none" stroke="#8a7a5a" stroke-width="1.5" stroke-dasharray="4 4"/>
+    ${[0,1,2].map(k=>`<g class="gm-shard" data-k="${k}" tabindex="0" role="button" aria-label="碎片 ${k+1}" transform="translate(${start[k][0]} ${start[k][1]})" filter="url(#wob)" stroke="#22262a" stroke-width="2"><path d="${['M-18 -14 L10 -18 L14 10 L-14 14 Z','M-14 -12 L16 -8 L12 14 L-16 10 Z','M-16 -10 L16 -12 L14 12 L-12 14 Z'][k]}" fill="${['#b57a50','#a86c44','#b98257'][k]}"/><path d="M-10 -4 h16 M-8 4 h16" opacity=".5"/></g>`).join('')}</svg>`;
+   const svg=$('#gmSh'),pos=start.map(p=>[...p]),ok=[0,0,0];let drag=null;
+   const toSvg=e=>{const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse());};
+   const set=(k,x,y)=>{pos[k]=[x,y];svg.querySelector(`[data-k="${k}"]`).setAttribute('transform',`translate(${x} ${y})`);};
+   const check=k=>{if(Math.hypot(pos[k][0]-T[k][0],pos[k][1]-T[k][1])<16){set(k,...T[k]);ok[k]=1;A.play('click');svg.querySelector(`[data-k="${k}"]`).style.pointerEvents='none';}if(ok.every(Boolean)){svg.insertAdjacentHTML('beforeend',`<g filter="url(#wob)" stroke="#22262a" stroke-width="2.4" opacity="0" id="gmPot"><path d="M-38 -40 h76 l6 10 q8 70 -44 84 q-52 -14 -44 -84 Z" fill="#b57a50"/>${[-24,-12,0,12,24].map(y=>`<path d="M-34 ${y} q34 8 68 0" fill="none" opacity=".45"/>`).join('')}</g>`);
+     const p=$('#gmPot');p.style.transition='opacity .8s';requestAnimationFrame(()=>p.setAttribute('opacity','1'));setTimeout(reveal,RM?0:500);}};
+   $$('.gm-shard').forEach(g=>{const k=+g.dataset.k;g.addEventListener('pointerdown',e=>{drag={k,o:toSvg(e)};g.setPointerCapture(e.pointerId);});
+    g.addEventListener('pointermove',e=>{if(!drag||drag.k!==k)return;const p=toSvg(e);set(k,pos[k][0]+p.x-drag.o.x,pos[k][1]+p.y-drag.o.y);drag.o=p;});
+    g.addEventListener('pointerup',()=>{drag=null;check(k);});
+    g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();set(k,...T[k]);check(k);}});});}
+ else if(it.act==='magnify'){tray.innerHTML=big+`<div class="gm-lens" id="gmLens" hidden><svg viewBox="-80 -80 160 160" style="position:absolute;width:420%;height:420%"><g stroke="#22262a" stroke-width="1.6" stroke-linecap="round">${G[it.k]}</g></svg></div>`;
+   let moved=0;const lens=$('#gmLens'),sv=lens.firstChild;
+   tray.addEventListener('pointermove',e=>{const b=tray.getBoundingClientRect(),px=e.clientX-b.left,py=e.clientY-b.top;lens.hidden=false;lens.style.left=(px-70)+'px';lens.style.top=(py-70)+'px';sv.style.left=(-px*4.2+70)+'px';sv.style.top=(-py*4.2+70)+'px';if(++moved>40)reveal();});
+   tray.tabIndex=0;tray.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();reveal();}});tray.addEventListener('click',()=>{if(moved>8)reveal();});setTimeout(()=>{if(!moved)tray.focus();},50);}
+ else{tray.innerHTML=big;setTimeout(reveal,RM?0:700);}
+ wrap.querySelector('.gm-x').focus();}
+/* ---------- rewriting the labels (the questions) ---------- */
+let L=null;
+const UP='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const DN='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const shuffleOf=(n,seed)=>{const a=[...Array(n).keys()];let x=seed*9301+49297;for(let i=n-1;i>0;i--){x=(x*9301+49297)%233280;const j=Math.floor(x/233280*(i+1));[a[i],a[j]]=[a[j],a[i]];}if(a.every((v,i)=>v===i))a.push(a.shift());return a;};
-const stars=n=>'★'.repeat(n)+'☆'.repeat(3-n);
-/* ---------- route ---------- */
-function route(){cur=null;const done=ST.filter(s=>S.st[s.id]).length;
- app.innerHTML=`<div class="unit-head"><div class="badge" style="background:#0072B2">尋</div><h2>${S.name?esc(S.name)+'的':''}尋寶路線</h2><p class="sub">已完成 ${done} / 7 個展區。展區可以照順序走，也可以跳著玩。</p></div>
- <div class="qs-start">
-  <div class="panel pad">
-   <div class="qs-modes" role="group" aria-label="在哪裡玩">
-    <button class="qs-mode" data-m="class" aria-pressed="${S.mode==='class'}">${ICO.school}<span><b>教室模式</b><span>看證據、回答問題。不用去博物館也能玩。</span></span></button>
-    <button class="qs-mode" data-m="site" aria-pressed="${S.mode==='site'}">${ICO.pin}<span><b>博物館現場模式</b><span>到臺史博常設展「斯土斯民」，每一關多一個「找展區、看實物」的現場任務。</span></span></button>
-   </div>
-   <div class="qs-name"><label for="qsNm">你的名字（印在證書上）</label><input id="qsNm" maxlength="12" value="${esc(S.name)}" autocomplete="off"></div>
-   <label class="qs-opt"><input type="checkbox" id="qsTm" ${S.timer?'checked':''}> 挑戰模式：每個展區限時 5 分鐘（可以不開）</label>
-  </div>
-  <div class="panel pad"><h3 style="margin:0 0 6px;font-size:18px">怎麼玩？</h3>
-   <ol style="margin:0;padding-left:22px;line-height:1.8"><li>選一個展區開始。</li><li>每個展區有 3～4 道題目：看證據、排順序、配對、在地圖上找位置。</li><li>答錯可以再試，會有提示。一次答對越多，星星越多。</li><li>完成就蓋一個印章，集滿 7 個印出證書。</li></ol>
-   <p class="note" style="margin:10px 0 0">沒辦法去現場？每一關都有臺史博的「線上 3D 展廳」連結，可以在網路上逛展覽。</p></div>
- </div>
- ${[['最初的抵岸','史前時代（第三單元）',ST.slice(0,3)],['倚海而生的島與人','大航海時代（第四單元）',ST.slice(3)]].map(([z,u,L])=>`<div class="qs-group"><b>展區：${z}</b>${u}</div><div class="qs-route">${L.map(s=>{const k=ST.indexOf(s)+1,d=S.st[s.id];return `<button class="qs-st${d?' done':''}" data-s="${s.id}" style="--c:${s.ink||s.c}"><span class="qs-ico">${ICO[s.ico]}</span><span><small>第 ${k} 站${d?'・已完成':''}</small><b>${s.sub.split('：')[0]}</b><span class="qs-zone">${s.tease}</span></span>${d?`<span class="qs-stars" aria-label="${d.stars} 顆星">${stars(d.stars)}</span>`:''}</button>`;}).join('')}</div>`).join('')}`;
- $$('.qs-mode').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;save();$$('.qs-mode').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
- $('#qsNm').oninput=e=>{S.name=e.target.value.trim();save();pass();};
- $('#qsTm').onchange=e=>{S.timer=e.target.checked?1:0;save();};
- $$('.qs-st').forEach(b=>b.onclick=()=>open(b.dataset.s));pass();}
-/* ---------- station ---------- */
-let tmT=0,tmLeft=0;
-function open(id){cur=ST.find(s=>s.id===id);step=0;miss=0;cur._steps=(S.mode==='site'?[{t:'site'}]:[]).concat(cur.steps);if(S.mode==='site')cur._steps.push({t:'note'});
- clearInterval(tmT);if(S.timer){tmLeft=300;tmT=setInterval(()=>{tmLeft--;const e=$('#qsTime');if(e)e.textContent=`剩下 ${Math.floor(tmLeft/60)}:${String(tmLeft%60).padStart(2,'0')}`;if(tmLeft<=0){clearInterval(tmT);if(e)e.textContent='時間到！慢慢來，繼續完成吧';}},1000);}
- render();$('#route').scrollIntoView({behavior:RM?'auto':'smooth'});}
-function shell(inner){const s=cur,k=ST.indexOf(s)+1,N=cur._steps.length;
- app.innerHTML=`<div class="qs-head"><button class="qs-back" id="qsBack">← 回到路線</button><span class="qs-crumb">${s.unit}・第 ${k} 站／7 ${S.timer?`・<b id="qsTime"></b>`:''}</span></div>
- <div class="qs-card" style="--c:${s.ink||s.c}"><div class="qs-title"><span class="qs-ico">${ICO[s.ico]}</span><div><p>展區：${s.zone}</p><h3>${s.sub}</h3></div></div>
- ${step===0?`<p class="qs-intro">${s.intro}</p>`:''}
- <div class="qs-steps" aria-label="第 ${Math.min(step+1,N)} 題，共 ${N} 題">${cur._steps.map((_,i)=>`<i class="${i<step?'ok':i===step?'on':''}"></i>`).join('')}</div>
- ${inner}</div>`;$('#qsBack').onclick=()=>{clearInterval(tmT);route();};}
-function render(){const st=cur._steps[step];stepMiss=0;if(!st)return finish();({choice,sort,match,map:mapStep,site,note})[st.t](st);}
-function next(){step++;render();const c=$('.qs-card');c&&c.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});}
-const fb=(cls,html)=>`<div class="qs-fb ${cls}" role="status">${html}</div>`;
-function okBox(why){return fb('ok','<b>答對了！</b>'+why)+`<div class="qs-row"><button class="qs-btn" id="qsNext">${step+1<cur._steps.length?'下一題':'完成這一站'}</button></div>`;}
-function bindNext(){const b=$('#qsNext');if(b){b.onclick=next;b.focus();}}
-const tag=t=>`<span class="qs-tag">${t}</span>`;
-function choice(st){const ord=shuffleOf(st.o.length,ST.indexOf(cur)*10+step);
- shell(`${tag('想一想')}${st.ev?`<div class="qs-ev">${st.ev.map(e=>`<span>${esc(e)}</span>`).join('')}</div>`:''}<p class="qs-q">${st.q}</p><div class="qs-opts">${ord.map((i,k)=>`<button class="qs-ch" data-i="${i}"><span class="k">${'ABCD'[k]}</span>${st.o[i]}</button>`).join('')}</div><div id="qsFb"></div>`);
- $$('.qs-ch').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i===st.a){b.classList.add('yes');$$('.qs-ch').forEach(x=>x.disabled=true);$('#qsFb').innerHTML=okBox(st.why);bindNext();}
-  else{b.classList.add('no');b.disabled=true;miss++;stepMiss++;$('#qsFb').innerHTML=fb('no','<b>再想想</b>'+(st.no&&st.no[i]||'回頭看看題目裡的線索。'));}});}
-function sort(st){const n=st.items.length;let ord=shuffleOf(n,ST.indexOf(cur)*7+step+3);
- const draw=(checked)=>{shell(`${tag('排排看')}<p class="qs-q">${st.q}</p><ol class="qs-sort" id="qsSort">${ord.map((i,k)=>`<li class="${checked?(i===k?'ok':'bad'):''}">${esc(st.items[i])}${checked&&st.years&&i===k?`<em>西元 ${st.years[i]} 年</em>`:''}<span class="qs-mvs"><button class="qs-mv" data-k="${k}" data-d="-1" aria-label="把「${esc(st.items[i])}」往上移" ${k===0?'disabled':''}>${UP}</button><button class="qs-mv" data-k="${k}" data-d="1" aria-label="把「${esc(st.items[i])}」往下移" ${k===n-1?'disabled':''}>${DN}</button></span></li>`).join('')}</ol>
-  <div class="qs-row"><button class="qs-btn" id="qsChk">檢查順序</button></div><div id="qsFb"></div>`);
-  $$('.qs-mv').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,d=+b.dataset.d;[ord[k],ord[k+d]]=[ord[k+d],ord[k]];draw(false);const f=$(`.qs-mv[data-k="${k+d}"][data-d="${d}"]`)||$(`.qs-mv[data-k="${k+d}"]`);f&&f.focus();});
-  $('#qsChk').onclick=()=>{const right=ord.filter((i,k)=>i===k).length;if(right===n){draw(true);$$('.qs-mv').forEach(x=>x.disabled=true);$('#qsChk').remove();$('#qsFb').innerHTML=okBox(st.why);bindNext();}
-   else{miss++;stepMiss++;draw(true);$('#qsFb').innerHTML=fb('no',`<b>還不對</b>有 ${right} 個放對位置了（綠色）。${stepMiss>=2&&!st.years?'提示：先找出最早的那一個。':stepMiss>=2?'提示：荷蘭人和西班牙人都比鄭氏早。':'把紅色的移一移，再檢查一次。'}`);}};};
+function labels(){const s=R.s;L={steps:(S.mode==='site'?[{t:'site'}]:[]).concat(s.steps).concat(S.mode==='site'?[{t:'note'}]:[]),i:0,miss:0};A.play('paper');stepRender();}
+function card(inner,title){const s=R.s,N=L.steps.length,seen=(S.seen[s.id]||[]).map(i=>R.rm.items[i]);
+ $('#scLabel').innerHTML=`<div class="gm-label-scr"><div class="gm-label gm-paper"><span class="pin" style="left:24px"></span><span class="pin" style="right:24px"></span>
+  <div class="zone">第${NUM[ST.indexOf(s)]}展間・${s.zone}</div><h3>${title||s.sub}</h3>
+  <div class="gm-prog" aria-label="第 ${Math.min(L.i+1,N)} 張，共 ${N} 張">${L.steps.map((_,k)=>`<i class="${k<L.i?'ok':k===L.i?'on':''}"></i>`).join('')}</div>${inner}
+  ${seen.length?`<details style="margin-top:16px"><summary class="hw" style="font-size:18px;cursor:pointer;min-height:36px">翻開我的筆記本（${seen.length} 條線索）</summary><ul class="hw" style="font-size:18px;line-height:1.7">${seen.map(it=>`<li><b>${it.n}</b>：${it.clue}</li>`).join('')}</ul></details>`:''}
+  <div class="gm-row"><button class="gm-btn alt" id="gmRet">回到展間</button></div></div></div>`;
+ $('#gmRet').onclick=()=>room(s.id);show('scLabel');$('#scLabel').scrollTop=0;}
+function stepRender(){const st=L.steps[L.i];L.sm=0;if(!st)return finishRoom();({choice,sort,match,map:mapStep,site,note})[st.t](st);}
+function nextStep(){L.i++;A.play('paper');stepRender();}
+const fb=(c,h)=>`<div class="gm-fb ${c}" role="status">${h}</div>`;
+const okBox=why=>fb('ok','<b>寫對了</b>'+why)+`<div class="gm-row"><button class="gm-btn" id="gmNext">${L.i+1<L.steps.length?'下一張':'把說明卡掛回去'}</button></div>`;
+const bindNext=()=>{const b=$('#gmNext');if(b){b.onclick=nextStep;b.focus();}};
+function choice(st){const ord=shuffleOf(st.o.length,ST.indexOf(R.s)*10+L.i);
+ card(`${st.ev?`<div class="gm-ev">${st.ev.map(e=>`<span>${esc(e)}</span>`).join('')}</div>`:''}<p class="gm-q">${st.q}</p><div class="gm-slips">${ord.map((i,k)=>`<button class="gm-slip" data-i="${i}"><span class="k">${'甲乙丙丁'[k]}</span><span>${st.o[i]}</span></button>`).join('')}</div><div id="gmFb"></div>`);
+ $$('.gm-slip').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i===st.a){b.classList.add('yes');$$('.gm-slip').forEach(x=>x.disabled=true);A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();}
+  else{b.classList.add('no');b.disabled=true;L.miss++;A.play('bad');$('#gmFb').innerHTML=fb('no','<b>好像不太對</b>'+(st.no&&st.no[i]||'回頭看看筆記本裡的線索。'));}});}
+function sort(st){const n=st.items.length;let ord=shuffleOf(n,ST.indexOf(R.s)*7+L.i+3);
+ const draw=checked=>{card(`<p class="gm-q">${st.q}</p><ol class="gm-rope">${ord.map((i,k)=>`<li class="${checked?(i===k?'ok':'bad'):''}"><span class="tagx" style="--r:${[-1.2,.8,-.5,1.1,-.9,.6][k]}deg">${esc(st.items[i])}${checked&&st.years&&i===k?`<em>西元 ${st.years[i]} 年</em>`:''}</span><span class="gm-mvs"><button class="gm-mv" data-k="${k}" data-d="-1" aria-label="把「${esc(st.items[i])}」往上移" ${k===0?'disabled':''}>${UP}</button><button class="gm-mv" data-k="${k}" data-d="1" aria-label="把「${esc(st.items[i])}」往下移" ${k===n-1?'disabled':''}>${DN}</button></span></li>`).join('')}</ol>
+  <div class="gm-row"><button class="gm-btn" id="gmChk">這樣排</button></div><div id="gmFb"></div>`);
+  $$('.gm-mv').forEach(b=>b.onclick=()=>{const k=+b.dataset.k,d=+b.dataset.d;[ord[k],ord[k+d]]=[ord[k+d],ord[k]];A.play('click');draw(false);const f=$(`.gm-mv[data-k="${k+d}"][data-d="${d}"]`)||$(`.gm-mv[data-k="${k+d}"]`);f&&f.focus();});
+  $('#gmChk').onclick=()=>{const right=ord.filter((i,k)=>i===k).length;if(right===n){draw(true);$$('.gm-mv').forEach(x=>x.disabled=true);$('#gmChk').remove();A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();}
+   else{L.miss++;L.sm++;A.play('bad');draw(true);$('#gmFb').innerHTML=fb('no',`<b>順序還不對</b>有 ${right} 張掛對了。${L.sm>=2?(st.years?'提示：荷蘭人和西班牙人都比鄭氏早。':'提示：先找出最早的那一張。'):'把紅框的換換位置。'}`);}};};
  draw(false);}
-function match(st){const n=st.L.length,ordR=shuffleOf(n,ST.indexOf(cur)*5+step+1),pick=new Array(n).fill(-1);
- const draw=(checked)=>{shell(`${tag('配配看')}<p class="qs-q">${st.q}</p><div class="qs-match">${st.L.map((l,i)=>`<div class="qs-mr ${checked?(pick[i]===st.a[i]?'ok':'bad'):''}" role="group" aria-label="${esc(l)}"><b>${esc(l)}</b><div class="qs-chips">${ordR.map(r=>`<button class="qs-ch" data-i="${i}" data-r="${r}" aria-pressed="${pick[i]===r}">${esc(st.R[r])}</button>`).join('')}</div></div>`).join('')}</div>
-  <div class="qs-row"><button class="qs-btn" id="qsChk" ${pick.includes(-1)?'disabled':''}>檢查</button></div><div id="qsFb"></div>`);
-  $$('.qs-mr .qs-ch').forEach(b=>b.onclick=()=>{pick[+b.dataset.i]=+b.dataset.r;draw(false);const f=$(`.qs-ch[data-i="${b.dataset.i}"][data-r="${b.dataset.r}"]`);f&&f.focus();});
-  $('#qsChk').onclick=()=>{const right=pick.filter((r,i)=>r===st.a[i]).length;if(right===n){draw(true);$$('.qs-mr .qs-ch').forEach(x=>x.disabled=true);$('#qsChk').remove();$('#qsFb').innerHTML=okBox(st.why);bindNext();}
-   else{miss++;stepMiss++;draw(true);$('#qsFb').innerHTML=fb('no',`<b>還不對</b>有 ${right} 個配對正確（綠色），紅色的再換換看。`);}};};
+function match(st){const n=st.L.length,oR=shuffleOf(n,ST.indexOf(R.s)*5+L.i+1),pick=new Array(n).fill(-1);
+ const draw=checked=>{card(`<p class="gm-q">${st.q}</p><div class="gm-match">${st.L.map((l,i)=>`<div class="gm-mr ${checked?(pick[i]===st.a[i]?'ok':'bad'):''}" role="group" aria-label="${esc(l)}"><b>${esc(l)}</b><div class="opts">${oR.map(r=>`<button class="gm-slip" data-i="${i}" data-r="${r}" aria-pressed="${pick[i]===r}">${esc(st.R[r])}</button>`).join('')}</div></div>`).join('')}</div>
+  <div class="gm-row"><button class="gm-btn" id="gmChk" ${pick.includes(-1)?'disabled':''}>這樣配</button></div><div id="gmFb"></div>`);
+  $$('.gm-mr .gm-slip').forEach(b=>b.onclick=()=>{pick[+b.dataset.i]=+b.dataset.r;A.play('click');draw(false);const f=$(`.gm-slip[data-i="${b.dataset.i}"][data-r="${b.dataset.r}"]`);f&&f.focus();});
+  $('#gmChk').onclick=()=>{const right=pick.filter((r,i)=>r===st.a[i]).length;if(right===n){draw(true);$$('.gm-mr .gm-slip').forEach(x=>x.disabled=true);$('#gmChk').remove();A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();}
+   else{L.miss++;A.play('bad');draw(true);$('#gmFb').innerHTML=fb('no',`<b>還有配錯的</b>${right} 個配對了，紅字的再換換看。`);}};};
  draw(false);}
 const P=(lo,la)=>[(lo-MAP.L0)*MAP.k*MAP.S,(MAP.A1-la)*MAP.S];
-const PCOL=['#D55E00','#0072B2','#009E73'];
+const PCOL=['#b8442c','#2f4b6e','#2e7d5b'];
 function mapStep(st){const pl={};let sel=st.pins[0];
- const draw=()=>{const allOk=st.pins.every(p=>pl[p]&&pl[p].ok);
-  shell(`${tag('找位置')}<p class="qs-q">${st.q}</p><div class="qs-mapw"><svg class="qs-map" id="qsMap" viewBox="0 0 ${MAP.w} ${MAP.h}" role="application" aria-label="臺灣地圖：點一下放置位置"><path class="land" d="${MAP.d}"/>
-   ${st.pins.map((p,i)=>{const v=pl[p];if(!v)return '';const [x,y]=v.ok?P(LOC[p][1],LOC[p][2]):[v.x,v.y];return `<g class="pin">${v.ok?'':`<circle class="miss" cx="${x}" cy="${y}" r="10"/>`}<circle cx="${x}" cy="${y}" r="7" fill="${PCOL[i]}"/>${v.ok?`<text x="${x+10}" y="${y+4}">${LOC[p][0]}</text>`:''}</g>`;}).join('')}</svg>
-   <div class="qs-pins">${st.pins.map((p,i)=>`<button class="qs-pin${pl[p]&&pl[p].ok?' ok':''}" data-p="${p}" aria-pressed="${sel===p}" style="--pc:${PCOL[i]}"><i></i><span>${LOC[p][0]}<small>${pl[p]&&pl[p].ok?'放對了！':sel===p?'現在點地圖放這裡':'點我，再點地圖'}</small></span></button>`).join('')}<div id="qsFb"></div></div></div>`);
-  $$('.qs-pin').forEach(b=>b.onclick=()=>{sel=b.dataset.p;draw();});
-  if(allOk){$('#qsFb').innerHTML=okBox(st.why);bindNext();return;}
-  $('#qsMap').addEventListener('click',e=>{if(!sel||(pl[sel]&&pl[sel].ok))return;const svg=$('#qsMap'),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
-   const [tx,ty]=P(LOC[sel][1],LOC[sel][2]),d=Math.hypot(q.x-tx,q.y-ty);const ok=d<22;pl[sel]={x:q.x,y:q.y,ok};
-   let msg='';if(!ok){miss++;stepMiss++;const dx=tx-q.x,dy=ty-q.y;const v=Math.abs(dy)>14?(dy<0?'北':'南'):'',h=Math.abs(dx)>14?(dx>0?'東':'西'):'';msg=`<b>差一點</b>${v||h?`再往${h}${v}邊一點。`:'很接近了，再仔細一點。'}${stepMiss>=2?`提示：${LOC[sel][0]}在${{bxd:'臺東縣的海邊',bn:'臺東',ss:'新北市八里',kd:'屏東恆春半島',zl:'臺南安平',sv:'基隆',sd:'新北市淡水'}[sel]}。`:''}`;}
-   else{const nx=st.pins.find(p=>!(pl[p]&&pl[p].ok));sel=nx||null;}
-   draw();if(msg)$('#qsFb').innerHTML=fb('no',msg);});};
+ const draw=()=>{const all=st.pins.every(p=>pl[p]&&pl[p].ok);
+  card(`<p class="gm-q">${st.q}</p><div class="gm-mapw"><svg class="gm-map" id="gmMap" viewBox="0 0 ${MAP.w} ${MAP.h}" role="application" aria-label="臺灣地圖：點一下放置位置"><path class="land" d="${MAP.d}"/>
+   ${st.pins.map((p,i)=>{const v=pl[p];if(!v)return '';const [x,y]=v.ok?P(LOC[p][1],LOC[p][2]):[v.x,v.y];return `<g class="pinm">${v.ok?'':`<circle class="miss" cx="${x}" cy="${y}" r="10"/>`}<circle cx="${x}" cy="${y}" r="7" fill="${PCOL[i]}"/>${v.ok?`<text x="${x+10}" y="${y+4}">${LOC[p][0]}</text>`:''}</g>`;}).join('')}</svg>
+   <div class="gm-pins">${st.pins.map((p,i)=>`<button class="gm-pinb${pl[p]&&pl[p].ok?' ok':''}" data-p="${p}" aria-pressed="${sel===p}" style="--pc:${PCOL[i]}"><i></i><span>${LOC[p][0]}<small>${pl[p]&&pl[p].ok?'放對了':sel===p?'現在點地圖放這裡':'點我，再點地圖'}</small></span></button>`).join('')}<div id="gmFb"></div></div></div>`);
+  $$('.gm-pinb').forEach(b=>b.onclick=()=>{sel=b.dataset.p;draw();});
+  if(all){A.play('good');$('#gmFb').innerHTML=okBox(st.why);bindNext();return;}
+  $('#gmMap').addEventListener('click',e=>{if(!sel||(pl[sel]&&pl[sel].ok))return;const svg=$('#gmMap'),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+   const [tx,ty]=P(LOC[sel][1],LOC[sel][2]),ok=Math.hypot(q.x-tx,q.y-ty)<22;pl[sel]={x:q.x,y:q.y,ok};let msg='';
+   if(!ok){L.miss++;L.sm++;A.play('bad');const dx=tx-q.x,dy=ty-q.y,v=Math.abs(dy)>14?(dy<0?'北':'南'):'',h=Math.abs(dx)>14?(dx>0?'東':'西'):'';
+    msg=`<b>差一點</b>${v||h?`再往${h}${v}邊一點。`:'很接近了，再仔細一點。'}${L.sm>=2?`${LOC[sel][0]}在${{bxd:'臺東縣的海邊',bn:'臺東',ss:'新北市八里',kd:'屏東恆春半島',zl:'臺南安平',sv:'基隆',sd:'新北市淡水'}[sel]}。`:''}`;}
+   else{A.play('click');sel=st.pins.find(p=>!(pl[p]&&pl[p].ok))||null;}draw();if(msg)$('#gmFb').innerHTML=fb('no',msg);});};
  draw();}
-function site(){const s=cur,o=s.site;
- shell(`<span class="qs-tag site">現場任務</span><div class="qs-site"><h4>1. 找到這個展區</h4><div class="qs-zone-name">${s.zone}　›　${s.sub}</div>
-  <p style="margin:0 0 8px">在臺史博常設展「斯土斯民：臺灣的故事」裡，找到這個展區的牌子。</p>
-  <div class="qs-links"><a href="${s.tour}" target="_blank" rel="noopener">不在現場？看線上 3D 展廳</a><a href="${s.url}" target="_blank" rel="noopener">臺史博展區介紹</a></div>
-  <h4 style="margin-top:14px">2. 仔細看</h4><p style="margin:0 0 8px">${o.look}</p><p class="qs-q" style="font-size:17px">${o.q}</p>
-  <div class="qs-opts" id="qsSiteO">${o.o.map((t,i)=>`<button class="qs-ch" data-i="${i}" aria-pressed="false"><span class="k">${'ABCDE'[i]}</span>${t}</button>`).join('')}</div>
-  ${o.multi?'<div class="qs-row"><button class="qs-btn" id="qsSiteOk" disabled>我選好了</button></div>':''}<div id="qsFb"></div></div>`);
- const chosen=new Set();
- const done=()=>{const ans=[...chosen].map(i=>o.o[i]);S.notes[s.id]=Object.assign(S.notes[s.id]||{},{look:ans.join('、')});save();
-  const right=o.a==null||chosen.has(o.a);$('#qsFb').innerHTML=fb(right?'ok':'info',(right&&o.a!=null?'<b>觀察得很仔細！</b>':'<b>記下來了</b>')+(o.a!=null&&!right?'你看到的可能是比較晚期的石器。':'')+o.why)+`<div class="qs-row"><button class="qs-btn" id="qsNext">下一題</button></div>`;$$('#qsSiteO .qs-ch').forEach(x=>x.disabled=true);const b=$('#qsSiteOk');b&&b.remove();bindNext();};
- $$('#qsSiteO .qs-ch').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(o.multi){chosen.has(i)?chosen.delete(i):chosen.add(i);b.setAttribute('aria-pressed',String(chosen.has(i)));$('#qsSiteOk').disabled=!chosen.size;}else{chosen.add(i);b.setAttribute('aria-pressed','true');done();}});
- const ok=$('#qsSiteOk');if(ok)ok.onclick=done;}
-function note(){const s=cur,v=(S.notes[s.id]||{}).text||'';
- shell(`<span class="qs-tag site">現場筆記</span><p class="qs-q">在「${s.sub.split('：')[0]}」展區，你最想記住的一件事是什麼？</p><p class="note">寫一句話，或寫下一件展品的名字。這段話會印在你的證書上。</p>
-  <textarea class="qs-note" id="qsNote" aria-label="我的現場筆記" maxlength="120">${esc(v)}</textarea>
-  <div class="qs-row"><button class="qs-btn" id="qsNext">完成這一站</button><button class="qs-btn alt" id="qsSkip">先跳過</button></div>`);
- const sv=()=>{S.notes[s.id]=Object.assign(S.notes[s.id]||{},{text:$('#qsNote').value.trim()});save();};
- $('#qsNote').oninput=sv;$('#qsNext').onclick=()=>{sv();next();};$('#qsSkip').onclick=next;}
-function finish(){clearInterval(tmT);const s=cur,n=miss===0?3:miss<=2?2:1,prev=S.st[s.id];S.st[s.id]={stars:Math.max(n,prev?prev.stars:0),mode:S.mode};save();
- const left=ST.filter(x=>!S.st[x.id]),nx=ST.slice(ST.indexOf(s)+1).find(x=>!S.st[x.id])||left[0];
- shell(`<div class="qs-done"><div class="qs-stamp" aria-hidden="true">${s.stamp}</div><h3>第 ${ST.indexOf(s)+1} 站完成！</h3><p style="font-size:20px;color:#8a5a0c;margin:0" aria-label="${n} 顆星">${stars(n)}</p>
-  <p>${miss===0?'全部一次答對！':`答錯了 ${miss} 次，但是你都找到答案了。`}</p></div>
-  <h4 style="margin:12px 0 4px">想知道更多？</h4><div class="qs-links">${s.more.map(([t,u])=>`<a href="${BASE}${u}">${t}</a>`).join('')}<a href="${s.url}" target="_blank" rel="noopener">臺史博展區介紹</a></div>
-  <div class="qs-row">${nx?`<button class="qs-btn" id="qsGo">下一站：${nx.sub.split('：')[0]}</button>`:`<button class="qs-btn" id="qsCertB">集滿 7 個印章！看我的證書</button>`}<button class="qs-btn alt" id="qsRt">回到路線</button></div>`);
- $('.qs-steps').remove();const g=$('#qsGo');if(g)g.onclick=()=>open(nx.id);const c=$('#qsCertB');if(c)c.onclick=()=>{route();$('#pass').scrollIntoView({behavior:RM?'auto':'smooth'});};$('#qsRt').onclick=route;pass();}
-/* ---------- passport + certificate ---------- */
+function site(){const s=R.s,o=s.site;
+ card(`<div class="gm-site"><h4>現場任務・找到這個展區</h4><div class="zn">${s.zone}　›　${s.sub}</div><p class="hw" style="font-size:18px;margin:0">在常設展裡找到這塊展區的牌子，走進去。</p>
+  <div class="gm-links"><a href="${s.tour}" target="_blank" rel="noopener">線上 3D 展廳</a><a href="${s.url}" target="_blank" rel="noopener">臺史博展區介紹</a></div></div>
+  <p class="gm-q">${o.look}<br>${o.q}</p><div class="gm-slips" id="gmSO">${o.o.map((t,i)=>`<button class="gm-slip" data-i="${i}" aria-pressed="false"><span class="k">${'甲乙丙丁戊'[i]}</span><span>${t}</span></button>`).join('')}</div>
+  ${o.multi?'<div class="gm-row"><button class="gm-btn" id="gmSOk" disabled>我選好了</button></div>':''}<div id="gmFb"></div>`,'現場任務');
+ const ch=new Set();const done=()=>{S.notes[s.id]=Object.assign(S.notes[s.id]||{},{look:[...ch].map(i=>o.o[i]).join('、')});save();const right=o.a==null||ch.has(o.a);
+  $('#gmFb').innerHTML=fb(right?'ok':'info',(right&&o.a!=null?'<b>觀察得很仔細</b>':'<b>記下來了</b>')+(o.a!=null&&!right?'你看到的可能是比較晚期的石器。':'')+o.why)+`<div class="gm-row"><button class="gm-btn" id="gmNext">下一張</button></div>`;$$('#gmSO .gm-slip').forEach(x=>x.disabled=true);const b=$('#gmSOk');b&&b.remove();A.play('good');bindNext();};
+ $$('#gmSO .gm-slip').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(o.multi){ch.has(i)?ch.delete(i):ch.add(i);b.setAttribute('aria-pressed',String(ch.has(i)));$('#gmSOk').disabled=!ch.size;}else{ch.add(i);b.setAttribute('aria-pressed','true');done();}});
+ const k=$('#gmSOk');if(k)k.onclick=done;}
+function note(){const s=R.s,v=(S.notes[s.id]||{}).text||'';
+ card(`<p class="gm-q">在這個展區，你最想讓明天的小學生知道的一件事是什麼？寫在說明卡的最下面。</p><textarea class="gm-notearea" id="gmNoteT" maxlength="120" aria-label="我想寫在說明卡上的話">${esc(v)}</textarea>
+  <div class="gm-row"><button class="gm-btn" id="gmNext">寫好了</button><button class="gm-btn alt" id="gmSkip">先跳過</button></div>`,'寫一句給明天的小學生');
+ const sv=()=>{S.notes[s.id]=Object.assign(S.notes[s.id]||{},{text:$('#gmNoteT').value.trim()});save();};$('#gmNoteT').oninput=sv;$('#gmNext').onclick=()=>{sv();nextStep();};$('#gmSkip').onclick=nextStep;}
+/* ---------- lights on, stamp ---------- */
+function finishRoom(){const s=R.s,n=L.miss===0?3:L.miss<=2?2:1,prev=S.st[s.id];S.st[s.id]={stars:Math.max(n,prev?prev.stars:0),mode:S.mode};save();
+ room(s.id);const el=$('#scRoom');setTimeout(()=>{el.classList.add('gm-lit');A.play('lights');},RM?0:250);
+ const nx=ST.slice(ST.indexOf(s)+1).find(x=>!S.st[x.id])||ST.find(x=>!S.st[x.id]);
+ setTimeout(()=>{const box=document.createElement('div');box.className='gm-stampbox';box.innerHTML=`<div class="gm-stampcard gm-paper" role="dialog" aria-modal="true" aria-label="說明卡修好了">
+  <div class="gm-seal thud">${s.stamp}</div><h4>第${NUM[ST.indexOf(s)]}展間的說明卡修好了</h4><div class="gm-stars" aria-label="${n} 顆星">${'★'.repeat(n)}${'☆'.repeat(3-n)}</div>
+  <p>${L.miss===0?'一次都沒寫錯，林姐一定很放心。':`改了 ${L.miss} 次，但每一張都寫對了。`}</p>
+  <div class="gm-links" style="justify-content:center">${s.more.map(([t,u])=>`<a href="${BASE}${u}">${t}</a>`).join('')}</div>
+  <div class="gm-row" style="justify-content:center">${nx?`<button class="gm-btn" id="gmNx">去第${NUM[ST.indexOf(nx)]}展間</button>`:''}<button class="gm-btn alt" id="gmPl">看平面圖</button></div></div>`;
+  $('#scRoom').appendChild(box);A.play('stamp');const g=$('#gmNx');if(g){g.onclick=()=>room(nx.id);g.focus();}$('#gmPl').onclick=plan;if(!g)$('#gmPl').focus();pass();},RM?100:1100);}
+/* ---------- dawn ---------- */
+function dawn(){const tot=ST.reduce((a,s)=>a+(S.st[s.id]?S.st[s.id].stars:0),0);A.play('lights');
+ $('#scDawn').innerHTML=`<div class="gm-dawn"><div class="gm-letter gm-paper" style="transform:rotate(1deg)"><h2>早安</h2><div class="sub">早上八點五十分・博物館大門</div>
+  <p class="hw">${esc(S.name||'志工')}：</p><p class="hw">我一進展場就看到了，七張說明卡全都掛回去了，還寫得比原本的更清楚。你一共拿到 ${tot} 顆星。</p>
+  <p class="hw">你今晚做的事，就是歷史學家和考古學家每天在做的事：<b>看證據，再下判斷；證據不夠的時候，誠實地說「還不確定」。</b></p>
+  <p class="hw">第一班小學生已經在排隊了。要不要留下來，帶他們逛一圈？</p><p class="hw sig">林姐</p>
+  <div class="gm-row"><button class="gm-go red" id="gmCert">去印證書</button><button class="gm-btn alt" id="gmAgain">再逛一次</button></div></div></div>`;
+ $('#gmCert').onclick=()=>$('#pass').scrollIntoView({behavior:RM?'auto':'smooth'});$('#gmAgain').onclick=plan;show('scDawn');}
+/* ---------- passport + certificate (outside the game) ---------- */
 function pass(){const n=ST.filter(s=>S.st[s.id]).length,tot=ST.reduce((a,s)=>a+(S.st[s.id]?S.st[s.id].stars:0),0);
- const ring=ST.map(s=>`<div class="${S.st[s.id]?'on':''}" style="--c:${s.ink||s.c}" title="${s.sub}">${S.st[s.id]?s.stamp:s.sub.split('：')[0]}</div>`).join('');
- $('#qsPass').innerHTML=`<div class="qs-pass" aria-label="已蓋 ${n} 個印章">${ring}</div><p style="font-size:17px">${S.name?esc(S.name)+'，':''}你已經蓋了 <b>${n}</b> 個印章，共 <b>${tot}</b> 顆星。${n<7?'繼續加油！':'全部完成了，太厲害了！'}</p>
-  <div class="qs-row"><button class="qs-btn" id="qsPrint" ${n<7?'disabled':''}>${n<7?`集滿 7 個才能印證書（還差 ${7-n} 個）`:'印出證書'}</button><button class="qs-btn alt" id="qsReset">重新開始</button></div>`;
+ const ring=ST.map((s,i)=>`<div class="${S.st[s.id]?'on':''}" title="${s.sub}">${S.st[s.id]?s.stamp:`第${NUM[i]}展間`}</div>`).join('');
+ $('#qsPass').innerHTML=`<div class="qs-pass" aria-label="已蓋 ${n} 個印章">${ring}</div><p style="font-size:17px">${S.name?esc(S.name)+'，':''}你已經修好 <b>${n}</b> 張說明卡，共 <b>${tot}</b> 顆星。</p>
+  <div class="qs-row"><button class="qs-btn" id="qsPrint" ${n<7?'disabled':''}>${n<7?`修好 7 張才能印證書（還差 ${7-n} 張）`:'印出證書'}</button><button class="qs-btn alt" id="qsReset">重新開始</button></div>`;
  const notes=ST.filter(s=>S.notes[s.id]&&(S.notes[s.id].text||S.notes[s.id].look));const d=new Date();
- $('#qsCert').innerHTML=`<h2>臺史博尋寶任務 完成證書</h2><p style="text-align:center;font-size:16pt"><b>${esc(S.name||'尋寶小隊員')}</b> 完成了「斯土斯民：臺灣的故事」7 個展區的任務，共獲得 ${tot} 顆星。</p><div class="qs-pass">${ring}</div>
-  ${notes.length?`<h3>我的現場筆記</h3>${notes.map(s=>`<div class="cn"><b>${s.sub.split('：')[0]}</b>：${esc([S.notes[s.id].look&&('看到：'+S.notes[s.id].look),S.notes[s.id].text].filter(Boolean).join('。'))}</div>`).join('')}`:''}
+ $('#qsCert').innerHTML=`<h2>臺史博夜間志工 證書</h2><p style="text-align:center;font-size:16pt"><b>${esc(S.name||'夜間志工')}</b> 修好了常設展「斯土斯民」七個展區的說明卡，共獲得 ${tot} 顆星。</p><div class="qs-pass">${ring}</div>
+  ${notes.length?`<h3>我在現場寫下的話</h3>${notes.map(s=>`<div class="cn"><b>${s.sub.split('：')[0]}</b>：${esc([S.notes[s.id].look&&('看到：'+S.notes[s.id].look),S.notes[s.id].text].filter(Boolean).join('。'))}</div>`).join('')}`:''}
   <p style="text-align:right;margin-top:10mm">${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日・海佃地圖</p>`;
  $('#qsPrint').onclick=()=>window.print();
- $('#qsReset').onclick=()=>{if(!confirm('要清除所有印章和筆記，重新開始嗎？'))return;S={name:S.name,mode:S.mode,st:{},notes:{},timer:S.timer};save();route();};}
-/* ---------- teacher key ---------- */
+ $('#qsReset').onclick=()=>{if(!confirm('要清除所有印章、線索和筆記，重新開始嗎？'))return;S={name:S.name,mode:S.mode,st:{},notes:{},seen:{},snd:S.snd};save();intro();pass();};}
 function teacher(){const ans=st=>st.t==='choice'?st.o[st.a]:st.t==='sort'?st.items.map((t,i)=>t+(st.years?`（${st.years[i]}）`:'')).join(' → '):st.t==='match'?st.L.map((l,i)=>`${l}－${st.R[st.a[i]]}`).join('；'):st.t==='map'?st.pins.map(p=>LOC[p][0]).join('、'):'';
- $('#qsTeacher').innerHTML=`<p>每一站 3～4 題，題型有：看證據推理、排順序、配對、在地圖上找位置。答錯可以重試，系統會依答錯次數給 1～3 顆星。學生的進度存在自己的瀏覽器裡，不會上傳。</p>
- <p><b>博物館現場模式</b>：每一站多兩個步驟：先找到展區、觀察實物並勾選看到的東西，最後寫一句現場筆記。觀察題多半沒有標準答案，筆記會印在證書上。臺史博的展品會調整，題目只用到展區名稱和一般性的觀察，不依賴特定展板上的文字。</p>
- <p><b>沒辦法去現場</b>：每一站都附臺史博官方的線上 3D 展廳（Matterport）和展區介紹連結。</p>
+ $('#qsTeacher').innerHTML=`<p><b>玩法</b>：學生扮演臺史博的夜間志工。每個展區先用手電筒找展品、靠近觀察（刷沙土、拼陶片、用放大鏡），把線索記進筆記本，再用線索「重寫被淋濕的說明卡」（3～4 題）。答錯可以重寫，依答錯次數給 1～3 顆星。進度只存在學生自己的瀏覽器裡。</p>
+ <p><b>博物館現場模式</b>：每個展區多兩張卡：找到展區、觀察實物並勾選看到的東西，最後寫一句給明天小學生的話，會印在證書上。觀察題多半沒有標準答案，不依賴特定展板的文字。</p>
+ <p><b>聲音</b>：有背景音樂和音效，右上角可以關掉。音樂是程式即時產生的。</p>
  <details class="qs-teacher"><summary>題目與答案</summary><ol>${ST.map(s=>`<li><b>${s.sub}</b>（${s.unit}）<ol>${s.steps.map(st=>`<li>${st.q.replace(/<[^>]+>/g,'')}<br><span class="ans">答案：${ans(st)}</span></li>`).join('')}</ol></li>`).join('')}</ol></details>`;}
-route();teacher();
-window.__qs={open,route,S:()=>S};
+sndUI();teacher();pass();
+let rzT=0,rzW=0;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{const w=$('#gm').clientWidth<640;if(w!==rzW&&$('#scPlan').classList.contains('on'))plan();rzW=w;},200);});
+if(S.name&&Object.keys(S.st).length)plan();else intro();
+window.__qs={ST,P,LOC,cur:()=>L,room,plan,intro,labels:()=>labels(),closeup:i=>closeup(i),S:()=>S,A};
 })();
 </script>

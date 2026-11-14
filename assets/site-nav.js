@@ -14,7 +14,7 @@ const SITE=[
  {u:'第三單元',t:'尋根探源話臺灣',pages:[
    {f:'unit3.html',n:'尋根探源話臺灣',d:'史前文化、考古遺址、原住民族'},
    {f:'prehistory.html',n:'史前生存大冒險',d:'走進 3D 的史前村落，完成生存任務'}]},
- {u:'第四單元',t:'大航海時代的臺灣',pages:[{f:'unit4.html',n:'大航海時代的臺灣',d:'荷蘭、西班牙、鄭氏，臺江內海的變化'},{f:'nmth-quest.html',n:'臺史博尋寶任務',d:'第三、四單元複習：跟著臺史博 7 個展區集印章'}]},
+ {u:'第四單元',t:'大航海時代的臺灣',pages:[{f:'unit4.html',n:'大航海時代的臺灣',d:'荷蘭、西班牙、鄭氏，臺江內海的變化'},{f:'nmth-quest.html',n:'臺史博：閉館之後',d:'第三、四單元複習：夜間的博物館，拿手電筒找證據、修好七張說明卡'}]},
  {u:'主題探究',t:'守護臺灣最美的風景',pages:[{f:'explore.html',n:'守護臺灣最美的風景',d:'選景點、查資料、做出你的推薦表'}]}];
 const here=document.documentElement.dataset.page||location.pathname.split('/').pop()||'index.html';
 const cur=SITE.findIndex(g=>g.pages.some(p=>p.f===here));const curP=cur>=0?SITE[cur].pages.find(p=>p.f===here):null;
