@@ -532,6 +532,56 @@ body.playing .top .links{flex-direction:row;flex-wrap:wrap}
 .ggauge .hot{bottom:94%;color:#7a2d00}.ggauge .okz{bottom:71%;color:#00684B;font-size:16px}.ggauge .cold{bottom:30%;color:#0072B2}
 .hub{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
 </style>
+<style>
+/* discovery layer */
+.whud{position:absolute;left:10px;top:46px;bottom:10px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;pointer-events:none;max-width:min(360px,calc(100% - 20px))}
+.wgoal{pointer-events:auto;background:#ffffffeb;color:#10313b;border-radius:12px;padding:8px 12px;display:grid;gap:3px;box-shadow:0 3px 12px rgba(0,0,0,.18)}
+.wgoal .wg-k{font-size:13px;color:#557079;font-weight:700}.wgoal b{font-size:17px;line-height:1.4}.wgoal span:not(.wg-k){font-size:14px;color:#3d5560;line-height:1.5}
+.wtools{pointer-events:auto;display:flex;flex-wrap:wrap;gap:8px}
+.wt{min-height:44px;padding:0 16px;border-radius:999px;border:2px solid #10313b;background:#fff;color:#10313b;font:inherit;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.wt.main{background:#10313b;color:#fff}
+.wt:focus-visible,.itm:focus-visible,.act:focus-visible{outline:3px solid #0072B2;outline-offset:2px}
+.wtoast{position:absolute;left:50%;top:56px;transform:translateX(-50%);max-width:min(520px,calc(100% - 24px));background:#10313bf2;color:#fff;border-radius:12px;padding:10px 16px;font-size:16px;line-height:1.6;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:3}
+.wtoast b{color:#F2C14E}
+.wl.res{background:#fffbea;color:#6b4a00;border:2px solid #E69F00;font-size:13px;padding:3px 10px}
+.wl.lock{background:#5d6b72}
+@media (max-width:640px){.w3d .whelp{display:none}.whud{top:56px;max-width:calc(100% - 20px)}.wgoal b{font-size:15px}.wt{font-size:15px;padding:0 12px}.wtoast{top:auto;bottom:84px}}
+.wbh{font-size:16px;margin:12px 0 6px;font-family:var(--f-body)}
+.wb-bag{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.itm{display:grid;grid-template-columns:40px 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center;text-align:left;min-height:56px;padding:6px 10px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.itm i,.bgi i{grid-row:1/3;width:40px;height:40px;border-radius:10px;background:var(--c);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:18px}
+.itm span{font-weight:700;font-size:15px}.itm em{font-style:normal;font-size:13px;color:var(--muted)}
+.itm.on{border-color:#0072B2;background:#e8f2fa;box-shadow:0 0 0 2px #0072B2 inset}
+.wb-acts{display:flex;flex-wrap:wrap;gap:8px}
+.act{min-width:64px;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:20px;font-weight:700;cursor:pointer}
+.act.on{background:#10313b;border-color:#10313b;color:#fff}
+.wb-go{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.wb-pick{font-size:17px;font-weight:700}
+.wb-res{margin-top:12px;min-height:52px}
+.wb-res p{font-size:17px;line-height:1.7;margin:0;padding:10px 14px;border-radius:10px;background:var(--surface)}
+.wb-res p.ok{background:#e6f4ef;color:#00573F}.wb-res p.no{background:#fbeee6;color:#7a3500}
+.bg-list{display:grid;gap:8px}
+.bgi{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:8px 10px}
+.bgi b{display:block;font-size:16px}.bgi span{font-size:14px;color:var(--muted)}
+.skr{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.skh{background:var(--c);color:#fff;border-radius:10px;padding:8px 10px;display:grid}.skh b{font-size:16px}.skh span{font-size:13px;opacity:.9}
+.skg{display:grid;gap:6px}.skgn{font-size:13px;color:var(--muted);font-weight:700}
+.skg>div{display:flex;flex-wrap:wrap;gap:6px}
+.skc{display:inline-flex;align-items:center;gap:4px;min-height:32px;padding:2px 10px;border-radius:999px;border:2px dashed var(--line);color:var(--muted);font-size:14px;font-weight:700}
+.skc.on{border:2px solid var(--c);background:color-mix(in srgb,var(--c) 12%,var(--surface));color:var(--ink)}
+.skc small{font-size:12px;font-weight:500;color:var(--muted)}
+@media (max-width:640px){.skr{grid-template-columns:1fr}}
+.jt{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:16px;align-items:center}
+@media (max-width:640px){.jt{grid-template-columns:1fr}}
+.jt-map svg{width:100%;height:auto;display:block;background:#cfe6f2;border-radius:12px}
+.jt-land{fill:#b8c79f;stroke:#7d9468;stroke-width:1}
+.jt-route{fill:none;stroke:#0072B2;stroke-width:2.5;stroke-dasharray:6 5}
+.jt-pt{fill:#10313b}.jt-pt.dim{fill:#7d8b91}
+.jt-tx{font-size:13px;font-weight:700;fill:#10313b}.jt-tx.dim{fill:#46535a;font-weight:500}
+.jt-boat{fill:#D55E00;stroke:#fff;stroke-width:2}
+.jt-side p{font-size:17px;line-height:1.7}
+.skq{margin-top:12px;background:var(--surface);border-radius:10px;padding:10px 14px;font-size:17px;line-height:1.7}
+</style>
 <link rel="stylesheet" href="assets/site-nav.css?v=1">
 <link rel="stylesheet" href="assets/site.css?v=5">
 <nav class="gnav" id="gnav" aria-label="網站導覽"></nav>
@@ -540,10 +590,10 @@ body.playing .top .links{flex-direction:row;flex-wrap:wrap}
   <div class="wrap">
     <div>
       <h1>史前生存<span class="accent">大冒險</span></h1>
-      <p class="lede">不只是看，要自己動手！敲石頭、生火、抓魚、做陶罐、種小米、煉鐵、做交易……在三個史前時代活下去。最後換你當考古學家，把自己留下的東西挖出來。</p>
+      <p class="lede">不只是看，要自己動手、自己想辦法！撿石頭、黏土和鐵砂，試出敲石器、生火、做陶罐、種小米、煉鐵的方法，在三個史前時代活下去。最後換你當考古學家，把自己留下的東西挖出來。</p>
     </div>
     <div class="links">
-      <button class="unit-link" id="btnTable">時代比較表</button>
+      <button class="unit-link" id="btnSk2">技能圖</button><button class="unit-link" id="btnTable">時代比較表</button>
       <button class="unit-link" id="btnSound" aria-pressed="true">音效：開</button>
     </div>
   </div>
@@ -552,7 +602,7 @@ body.playing .top .links{flex-direction:row;flex-wrap:wrap}
 <section class="unit" id="vStart"><div class="wrap">
   <div class="panel pad start">
     <h2>準備出發，探險家！</h2>
-    <p>你會回到五萬年前，一路活到兩千年前。每個時代有三個任務，每個任務都要<b>親手完成</b>，做得越好星星越多。</p>
+    <p>你會回到五萬年前，一路活到兩千年前。每個時代有三個任務，每個任務都要<b>親手完成</b>，做得越好星星越多。<br>這次<b>沒有人會告訴你怎麼做</b>：在世界裡撿材料，按「動手試試」把東西組合看看，自己想出方法。前一個時代學會的本領，下一個時代還用得到。</p>
     <label for="nm">你的名字（會印在證書上）</label>
     <div class="row"><input id="nm" maxlength="10" autocomplete="off" placeholder="輸入名字"><button class="bigbtn" id="go">出發！</button></div>
     <button class="linkbtn" id="reset" hidden>清除紀錄，重新開始</button>
@@ -568,7 +618,8 @@ body.playing .top .links{flex-direction:row;flex-wrap:wrap}
   <div class="scene-top"><button class="bigbtn alt" id="toHub">← 時光隧道</button><div><h2 id="scTitle"></h2><p class="sub" id="scSub"></p></div><button class="bigbtn" id="guide">帶我去下一個任務</button></div>
   <div class="w3d" id="w3d" hidden><canvas id="wcv" aria-label="3D 史前世界"></canvas><div id="wLabels"></div>
     <div class="whelp">拖曳畫面：轉頭看四周　點地面或光柱：走過去　鍵盤 W A S D 或方向鍵也可以走</div>
-    <button class="wfull" id="wFull" aria-label="全螢幕">⛶ 全螢幕</button><button class="wprompt" id="wPrompt" hidden></button></div>
+    <button class="wfull" id="wFull" aria-label="全螢幕">全螢幕</button>
+    <div class="whud" id="wHud" hidden><div class="wgoal" id="wGoal" aria-live="polite"></div><div class="wtools"><button class="wt main" id="btnWb">動手試試</button><button class="wt" id="btnBag">背包</button><button class="wt" id="btnSk">技能圖</button></div></div><div class="wtoast" id="wToast" role="status" hidden></div><button class="wprompt" id="wPrompt" hidden></button></div>
   <div class="scene" id="scene" tabindex="0" aria-label="史前場景，可以左右拖曳"><div class="scene-in" id="sceneIn"></div></div>
   <p class="note" id="scNote">走到發光的光柱旁邊就能開始任務。任務做得越多，天色越晚，最後會天黑。</p>
   <div class="tasks" id="taskList"></div>
@@ -593,6 +644,23 @@ body.playing .top .links{flex-direction:row;flex-wrap:wrap}
   <div id="gmPlay" hidden><p class="how" id="gmHow"></p><div class="gwrap"><canvas id="gcv" width="720" height="440"></canvas><canvas id="gcv3" hidden></canvas><div id="ghud"><div class="gbar" id="ghBar" hidden><i></i><span></span></div><div class="ginfo" id="ghInfo"></div><div class="ggauge" id="ghGauge" hidden><b class="hot">太熱</b><b class="okz">剛好</b><b class="cold">太冷</b><i class="band"></i><i class="needle"></i></div></div></div><p class="gmsg" id="ghMsg" hidden aria-live="polite"></p><div class="gtray" id="ghTray" hidden></div></div>
   <div id="gmDone" hidden aria-live="polite"></div>
 </div></div>
+<div class="modal" id="wb" hidden role="dialog" aria-modal="true" aria-labelledby="wbT"><div class="mbox wide">
+  <div class="mhead"><h3 id="wbT">動手試試</h3><button class="x" id="wbX" aria-label="關閉">✕</button></div>
+  <p class="note">沒有人會告訴你答案。選 1～2 樣東西，再選一種做法，看看會發生什麼。</p>
+  <h4 class="wbh">1. 選東西（最多 2 樣）</h4><div class="wb-bag" id="wbBag"></div>
+  <h4 class="wbh">2. 選做法</h4><div class="wb-acts" id="wbActs"></div>
+  <div class="wb-go"><span id="wbPick" class="wb-pick"></span><button class="bigbtn" id="wbGo" disabled>試試看</button></div>
+  <div class="wb-res" id="wbRes" aria-live="polite"></div>
+</div></div>
+<div class="modal" id="bg" hidden role="dialog" aria-modal="true" aria-labelledby="bgT"><div class="mbox">
+  <div class="mhead"><h3 id="bgT">背包</h3><button class="x" id="bgX" aria-label="關閉">✕</button></div><div id="bgList" class="bg-list"></div>
+</div></div>
+<div class="modal" id="sk" hidden role="dialog" aria-modal="true" aria-labelledby="skT"><div class="mbox wide">
+  <div class="mhead"><h3 id="skT">史前時代的器物製作與生活技能</h3><button class="x" id="skX" aria-label="關閉">✕</button></div><div id="skBody"></div>
+</div></div>
+<div class="modal" id="jt" hidden role="dialog" aria-modal="true" aria-labelledby="jtT"><div class="mbox wide">
+  <div class="mhead"><h3 id="jtT">划獨木舟去找玉</h3><button class="x" id="jtX" aria-label="關閉">✕</button></div><div id="jtBody" class="jt"></div>
+</div></div>
 <div class="modal" id="tb" hidden role="dialog" aria-modal="true" aria-labelledby="tbT"><div class="mbox wide">
   <div class="mhead"><h3 id="tbT">三個時代比較表</h3><button class="x" id="tbX" aria-label="關閉">✕</button></div>
   <p class="note">這張表要靠你自己完成任務來填滿。還沒做的任務，格子會是問號。</p>
@@ -607,7 +675,7 @@ window.World=(function(){
 if(!window.THREE)return null;
 const T=THREE;try{const t=document.createElement('canvas');if(!(t.getContext('webgl')||t.getContext('experimental-webgl')))return null;}catch(e){return null;}
 let R=null,scene,cam,host,cv,raf=0,last=0,paused=false,era=null,cb={},spots=[],upd=[],terrain,water,wbase,sun,amb,hemi,sky,stars,sunBall,fires=[],Hf=null;
-const S={yaw:0,pitch:0,x:0,z:0,keys:{},auto:null,tod:0,todT:0,near:null,bob:0};
+const S={yaw:0,pitch:0,x:0,z:0,keys:{},auto:null,tod:0,todT:0,near:null,bob:0};let res=[];
 const hash=(x,z)=>{const s=Math.sin(x*127.1+z*311.7)*43758.5453;return s-Math.floor(s);};
 const vn=(x,z)=>{const xi=Math.floor(x),zi=Math.floor(z),xf=x-xi,zf=z-zi,u=xf*xf*(3-2*xf),v=zf*zf*(3-2*zf);return (hash(xi,zi)*(1-u)+hash(xi+1,zi)*u)*(1-v)+(hash(xi,zi+1)*(1-u)+hash(xi+1,zi+1)*u)*v;};
 const fbm=(x,z)=>vn(x,z)*0.6+vn(x*2.1,z*2.1)*0.3+vn(x*4.3,z*4.3)*0.1;
@@ -728,9 +796,10 @@ function init(){host=document.getElementById('w3d');cv=document.getElementById('
 function size(){if(!R||!host)return;const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
 const ray=new T.Raycaster();
 function click(e){const r=cv.getBoundingClientRect(),v=new T.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height*2-1));ray.setFromCamera(v,cam);
+  const hr=ray.intersectObjects(res.map(q=>q.hit));if(hr.length){const q=res.find(q=>q.hit===hr[0].object);S.auto={x:q.x,z:q.z,stop:q.special?2.2:.4};return;}
   const hb=ray.intersectObjects(spots.map(s=>s.hit));if(hb.length){const s=spots.find(s=>s.hit===hb[0].object);S.auto={x:s.x,z:s.z,stop:3.2};return;}
   const ht=ray.intersectObject(terrain);if(ht.length){const p=ht[0].point;if(p.y>-.6&&Math.hypot(p.x-S.x,p.z-S.z)<90)S.auto={x:p.x,z:p.z,stop:.6};}}
-function dispose(){if(!scene)return;scene.traverse(o=>{if(o.geometry&&!Object.values(GEO).includes(o.geometry))o.geometry.dispose();});scene=null;upd=[];fires=[];spots=[];for(const k in MC)delete MC[k];document.getElementById('wLabels').innerHTML='';}
+function dispose(){if(!scene)return;scene.traverse(o=>{if(o.geometry&&!Object.values(GEO).includes(o.geometry))o.geometry.dispose();});scene=null;upd=[];fires=[];spots=[];res=[];for(const k in MC)delete MC[k];document.getElementById('wLabels').innerHTML='';}
 function start(e,tasks,done,callbacks){if(!R)init();cancelAnimationFrame(raf);dispose();era=e;cb=callbacks||{};Hf=HF[e];scene=new T.Scene();scene.fog=new T.Fog('#d2ecf8',70,260);
   // sky
   sky=new T.Mesh(new T.SphereGeometry(600,24,14),new T.ShaderMaterial({side:T.BackSide,fog:false,depthWrite:false,uniforms:{top:{value:new T.Color()},bot:{value:new T.Color()}},vertexShader:'varying float h;void main(){h=normalize(position).y;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'uniform vec3 top;uniform vec3 bot;varying float h;void main(){gl_FragColor=vec4(mix(bot,top,pow(clamp(h*1.25+.04,0.,1.),.55)),1.);}'}));scene.add(sky);
@@ -755,7 +824,29 @@ function start(e,tasks,done,callbacks){if(!R)init();cancelAnimationFrame(raf);di
    gm.count=k;fm.count=f;gm.receiveShadow=true;scene.add(gm,fm);}
   BUILD[e]();const st=START[e];S.x=st[0];S.z=st[1];S.yaw=st[2];S.pitch=-.05;S.auto=null;S.keys={};S.near=null;S.todT=S.tod=e==='museum'?1.75:([0,1,2,3][done]||0);setDone(tasks.map(t=>t.stars||0));
   host.hidden=false;size();paused=false;last=0;raf=requestAnimationFrame(frame);}
-function setDone(arr){spots.forEach((s,i)=>{s.done=arr[i]||0;s.beam.material.color.set(s.done?'#7dffb0':'#ffd23f');s.beam.material.opacity=s.done?.14:.3;s.ring.material.color.set(s.done?'#00a36f':'#ffd23f');});if(era!=='museum')S.todT=Math.min(3,arr.filter(Boolean).length);}
+function setDone(arr,lock){spots.forEach((s,i)=>{s.done=arr[i]||0;s.locked=!!(lock&&lock[i]);const c=s.done?'#7dffb0':s.locked?'#b9c2c6':'#ffd23f';s.beam.material.color.set(c);s.beam.material.opacity=s.done?.14:s.locked?.12:.3;s.ring.material.color.set(s.done?'#00a36f':s.locked?'#8a969c':'#ffd23f');});if(era!=='museum')S.todT=Math.min(3,arr.filter(Boolean).length);}
+
+const WHERE={beach:h=>h>.05&&h<.8,shore:h=>h>.1&&h<2.4,land:h=>h>1.4&&h<9,any:h=>h>.2&&h<11};
+const RLOOK={
+ stone:()=>{const g=new T.Group();g.add(part('ico',M('#8d867a'),.38,.28,.34,0,.22,0));return g;},
+ whet:()=>{const g=new T.Group();g.add(part('box',M('#c2a676'),1,.18,.62,0,.12,0));return g;},
+ branch:()=>{const g=new T.Group();const b=part('cyl',M('#7a5230'),.07,1.5,.07,0,.12,0);b.rotation.z=Math.PI/2;g.add(b);const c=part('cyl',M('#7a5230'),.05,.6,.05,.3,.18,.12);c.rotation.z=1.1;g.add(c);return g;},
+ grass:()=>{const g=new T.Group();for(let i=0;i<5;i++)g.add(part('cone',M('#cdb85c'),.07,.7,.07,rnd(-.18,.18),.35,rnd(-.18,.18)));return g;},
+ shell:()=>{const g=new T.Group();g.add(part('sph',M('#f4e6dc'),.26,.13,.22,0,.08,0),part('sph',M('#efc9b8'),.18,.1,.15,.32,.06,.12));return g;},
+ fruit:()=>{const g=new T.Group();[[0,0],[.2,.1],[-.12,.16]].forEach(([x,z])=>g.add(part('sph',M('#c8433a'),.16,.16,.16,x,.16,z)));return g;},
+ clay:()=>{const g=new T.Group();g.add(part('sph',M('#a8673d'),.5,.22,.42,0,.1,0));return g;},
+ wmillet:()=>{const g=new T.Group();for(let i=0;i<4;i++){const x=rnd(-.25,.25),z=rnd(-.25,.25);g.add(part('cyl',M('#7d9a4a'),.03,1.1,.03,x,.55,z),part('sph',M('#e3b84a'),.08,.22,.08,x+.05,1.12,z));}return g;},
+ piglet:()=>{const g=new T.Group(),c=M('#5a4032');g.add(part('box',c,.5,.36,.8,0,.38,0),part('box',c,.3,.28,.3,0,.44,.5));[[-.16,.25],[.16,.25],[-.16,-.25],[.16,-.25]].forEach(([x,z])=>g.add(part('box',c,.09,.24,.09,x,.12,z)));return g;},
+ ironsand:()=>{const g=new T.Group();g.add(part('sph',M('#2f2c2a'),.6,.08,.5,0,.03,0));return g;},
+ hide:()=>{const g=new T.Group();g.add(part('box',M('#a07850'),1,.04,.7,0,.04,0));return g;},
+ canoe:()=>{const g=new T.Group();const b=part('cyl',M('#7a5230'),.42,3.6,.42,0,.3,0);b.rotation.x=Math.PI/2;b.scale.set(.42,3.6,.3);g.add(b);g.add(part('cyl',M('#5a3d22'),.03,1.6,.03,.4,.6,-.3));return g;}};
+function spawnRes(defs){res.forEach(q=>{scene.remove(q.g,q.hit);q.el.remove();});res=[];const lab=document.getElementById('wLabels');
+  defs.forEach(d=>{let k=0,guard=0,where=d.where;const R0=d.r||48;while(k<d.n&&guard++<6000){if(guard===3000&&where!=='any')where='any';const x=S.x+rnd(-R0,R0),z=S.z+rnd(-R0,R0),h=Hf(x,z);
+    if(Math.abs(x)>92||Math.abs(z)>92||!WHERE[where](h)||!far(x,z,4.5)||res.some(q=>Math.hypot(q.x-x,q.z-z)<3.2)||Math.hypot(x-S.x,z-S.z)<4)continue;
+    const g=RLOOK[d.it]();const ring=new T.Mesh(new T.TorusGeometry(d.special?2:.75,.05,6,24),new T.MeshBasicMaterial({color:'#ffe680'}));ring.rotation.x=Math.PI/2;ring.position.y=.04;g.add(ring);
+    const y=Math.max(h,-.2);g.position.set(x,y,z);scene.add(g);const hit=new T.Mesh(new T.SphereGeometry(d.special?2.4:1.3,8,6),new T.MeshBasicMaterial({visible:false}));hit.position.set(x,y+.6,z);scene.add(hit);
+    const el=document.createElement('button');el.className='wl res';el.textContent=d.label;el.tabIndex=-1;el.onclick=()=>{S.auto={x,z,stop:d.special?2.2:.4};};lab.appendChild(el);
+    res.push({it:d.it,label:d.label,special:!!d.special,x,z,y,g,ring,hit,el});k++;}});}
 let slowN=0,frN=0,lowQ=false;
 function frame(t){raf=requestAnimationFrame(frame);if(paused||!scene)return;const raw=(t-(last||t))/1000,dt=Math.min(.05,raw);last=t;const ts=t/1000;
   if(!lowQ&&raw>0){frN++;if(raw>.045)slowN++;if(frN>=90){if(slowN>45){lowQ=true;R.shadowMap.enabled=false;sun.castShadow=false;R.setPixelRatio(1);size();scene.traverse(o=>{if(o.material)o.material.needsUpdate=true;});}frN=slowN=0;}}
@@ -772,10 +863,15 @@ function frame(t){raf=requestAnimationFrame(frame);if(paused||!scene)return;cons
   // beacons, labels, prompt
   let near=null,nd=1e9;const w=host.clientWidth,h=host.clientHeight,v=new T.Vector3();
   spots.forEach(s=>{s.ring.rotation.z=ts*.8;if(era!=='museum')s.ring.scale.setScalar(1+Math.sin(ts*3)*.08);const dd=Math.hypot(s.x-S.x,s.z-S.z);if(dd<7&&dd<nd){nd=dd;near=s;}
-    v.set(s.x,s.y+(era==='museum'?2.2:5.2),s.z).project(cam);if(v.z<1&&v.z>-1&&(era!=='museum'||dd<24)){s.el.style.display='';s.el.style.transform=`translate(-50%,-50%) translate(${((v.x+1)/2*w).toFixed(1)}px,${((1-v.y)/2*h).toFixed(1)}px)`;const txt=era==='museum'?(s.done?`${s.n}｜看展品`:'？ 還沒解鎖'):`${s.n}｜${s.done?'★'.repeat(s.done)+'☆'.repeat(3-s.done):Math.max(1,Math.round(dd/0.7))+' 步'}`;if(s.el.textContent!==txt)s.el.textContent=txt;s.el.classList.toggle('done',!!s.done);}else s.el.style.display='none';});
+    v.set(s.x,s.y+(era==='museum'?2.2:5.2),s.z).project(cam);if(v.z<1&&v.z>-1&&(era!=='museum'||dd<24)){s.el.style.display='';s.el.style.transform=`translate(-50%,-50%) translate(${((v.x+1)/2*w).toFixed(1)}px,${((1-v.y)/2*h).toFixed(1)}px)`;const txt=era==='museum'?(s.done?`${s.n}｜看展品`:'？ 還沒解鎖'):`${s.n}｜${s.done?'★'.repeat(s.done)+'☆'.repeat(3-s.done):s.locked?'還不會':Math.max(1,Math.round(dd/0.7))+' 步'}`;if(s.el.textContent!==txt)s.el.textContent=txt;s.el.classList.toggle('done',!!s.done);s.el.classList.toggle('lock',!!s.locked&&!s.done);}else s.el.style.display='none';});
+  // gatherable things: pick up when close, label when nearby
+  for(let i=res.length-1;i>=0;i--){const q=res[i];q.g.rotation.y+=dt*.6;q.ring.rotation.z=ts*1.4;q.g.position.y=q.y+Math.sin(ts*2+i)*.06;const dd=Math.hypot(q.x-S.x,q.z-S.z);
+    if(q.special){if(dd<3&&!q.fired){q.fired=1;cb.onPick&&cb.onPick(q);}else if(dd>6)q.fired=0;}
+    else if(dd<1.9){scene.remove(q.g,q.hit);q.el.remove();res.splice(i,1);cb.onPick&&cb.onPick(q);continue;}
+    v.set(q.x,q.y+1.6,q.z).project(cam);if(dd<18&&v.z<1&&v.z>-1){q.el.style.display='';q.el.style.transform=`translate(-50%,-50%) translate(${((v.x+1)/2*w).toFixed(1)}px,${((1-v.y)/2*h).toFixed(1)}px)`;}else q.el.style.display='none';}
   if(near!==S.near){S.near=near;cb.onNear&&cb.onNear(near);}
   R.render(scene,cam);}
-return {start,setDone,stop(){cancelAnimationFrame(raf);era=null;if(host)host.hidden=true;dispose();},pause(p){paused=p;S.keys={};last=0;},art(id){return ART[id]();},walkTo(id){const s=spots.find(s=>s.id===id);if(s)S.auto={x:s.x,z:s.z,stop:3.2};},state:S,get spots(){return spots;}};
+return {start,setDone,spawnRes,stop(){cancelAnimationFrame(raf);era=null;if(host)host.hidden=true;dispose();},pause(p){paused=p;S.keys={};last=0;},art(id){return ART[id]();},walkTo(id){const s=spots.find(s=>s.id===id);if(s)S.auto={x:s.x,z:s.z,stop:3.2};},state:S,get spots(){return spots;}};
 })();
 
 /* the nine hands-on games, in 3D (three.js r128).  Falls back to the 2D versions when WebGL is missing. */
@@ -1202,7 +1298,7 @@ let cur=null;
 const MUSEUM={k:'museum',n:'我的史前博物館',site:'露天展示廣場',ago:'現在',c:'#882255',tasks:[]};
 const ARTN={food:'貝殼和魚骨',knap:'打製石器',fire:'鑽木取火的工具',farm:'小米和石刀',grind:'磨製石斧',pot:'陶罐',trade:'玻璃珠和瑪瑙珠',smelt:'鐵刀和鐵渣',chop:'鐵斧'};
 const REAL={old:'想看真正的八仙洞文物，可以到臺東的國立臺灣史前文化博物館。',neo:'想看真正的卑南遺址文物，可以到臺東的國立臺灣史前文化博物館和卑南遺址公園。',iron:'想看真正的十三行文物，可以到新北市八里的十三行博物館。'};
-function museum(){cur=MUSEUM;MUSEUM.tasks=ERAS.flatMap(e=>e.tasks.map(t=>({id:t.id,n:ARTN[t.id],src:t,era:e})));show('vScene');$('#scTitle').textContent='我的史前博物館';$('#scTitle').style.color=MUSEUM.c;$('#scSub').textContent='這裡展出的都是你親手做出來的東西。走到展示臺旁邊，可以把展品拿起來轉著看。';$('#scene').hidden=true;$('#guide').hidden=true;$('#scNote').textContent='還沒完成的任務，展示臺上會是問號。';
+function museum(){cur=MUSEUM;MUSEUM.tasks=ERAS.flatMap(e=>e.tasks.map(t=>({id:t.id,n:ARTN[t.id],src:t,era:e})));show('vScene');$('#scTitle').textContent='我的史前博物館';$('#wHud').hidden=true;$('#scTitle').style.color=MUSEUM.c;$('#scSub').textContent='這裡展出的都是你親手做出來的東西。走到展示臺旁邊，可以把展品拿起來轉著看。';$('#scene').hidden=true;$('#guide').hidden=true;$('#scNote').textContent='還沒完成的任務，展示臺上會是問號。';
   W3.start('museum',MUSEUM.tasks.map(t=>({id:t.id,n:t.n,stars:S.st[t.id]||0})),0,{onTask:exhibit,onNear:s=>{const b=$('#wPrompt');b.hidden=!s;if(s){b.dataset.t=s.id;b.textContent=S.st[s.id]?`看展品：${s.n}　（按 E）`:'這個展品還沒解鎖';}}});
   $('#taskList').innerHTML=MUSEUM.tasks.map(t=>`<button class="tk" data-t="${t.id}"><b>${S.st[t.id]?t.n:'？'}</b><span>${S.st[t.id]?stars(S.st[t.id]):'還沒解鎖'}</span></button>`).join('');}
 function exhibit(id){const t=MUSEUM.tasks.find(t=>t.id===id);task=null;W3.pause(true);if(document.fullscreenElement)try{document.exitFullscreen();}catch(e){}$('#gm').hidden=false;$('#gmIntro').hidden=true;const d=$('#gmDone');d.hidden=false;
@@ -1215,11 +1311,11 @@ function hub(){show('vHub');$('#hubHi').textContent=`${S.name}，時光隧道準
   const h=ERAS.map((e,i)=>{const open=i===0||eraDone(ERAS[i-1]),d=eraDone(e);return `<button class="node" style="--c:${e.c}" data-e="${e.k}" ${open?'':'disabled'}><span class="ago">${e.ago}</span><b>${e.n}</b><span class="site">${e.site}</span>${d?`<span class="bdg">${e.badge}</span>`:''}<span class="st" aria-label="${eraStars(e)} 顆星">${e.tasks.map(t=>S.st[t.id]?'★':'☆').join('')}</span><span class="lk">${open?(d?`完成！共 ${eraStars(e)} / 9 顆星，可以再挑戰`:'進入這個時代 →'):'先完成上一個時代'}</span></button>`;}).join('');
   const dOpen=allDone();$('#hub').innerHTML=h+`<button class="node" style="--c:#882255" data-e="dig" ${dOpen?'':'disabled'}><span class="ago">現在</span><b>換你當考古學家</b><span class="site">把你留下的東西挖出來</span>${S.dig?'<span class="bdg">小小考古學家</span>':''}<span class="st">${S.dig?'★':'☆'}</span><span class="lk">${dOpen?(S.dig?'完成！去領證書 →':'開始挖掘 →'):'先完成三個時代'}</span></button>`+(W3&&window.G3?`<button class="node" style="--c:#5E5E5E" data-e="museum"><span class="ago">隨時開放</span><b>我的史前博物館</b><span class="site">走進 3D 展場，看你親手做的東西</span><span class="st">${total()?Object.keys(S.st).length+' / 9 件展品':'還沒有展品'}</span><span class="lk">進去參觀 →</span></button>`:'');}
 $('#hub').addEventListener('click',e=>{const b=e.target.closest('.node');if(!b||b.disabled)return;if(b.dataset.e==='museum')museum();else if(b.dataset.e==='dig'){S.dig?cert():dig();}else scene(b.dataset.e);});
-function scene(k){cur=ERAS.find(e=>e.k===k);$('#scNote').textContent='走到發光的光柱旁邊就能開始任務。任務做得越多，天色越晚，最後會天黑。';show('vScene');$('#scTitle').textContent=`${cur.n}・${cur.site}`;$('#scTitle').style.color=cur.c;$('#scSub').textContent=`${cur.ago}。完成三個任務，在天黑前準備好過夜。`;if(W3){$('#scene').hidden=true;W3.start(k,cur.tasks.map(t=>({id:t.id,n:t.n,stars:S.st[t.id]||0})),cur.tasks.filter(t=>S.st[t.id]).length,{onTask:openTask,onNear:s=>{const b=$('#wPrompt');b.hidden=!s;if(s){b.dataset.t=s.id;b.textContent=`開始任務：${s.n}　（按 E）`;}}});}else{$('#scNote').textContent='用手指或滑鼠左右拖曳看看四周，點有名字的圓圈開始任務。';}paint();$('#scene').scrollLeft=0;}
+function scene(k){cur=ERAS.find(e=>e.k===k);$('#scNote').textContent='走到發光的光柱旁邊就能開始任務。任務做得越多，天色越晚，最後會天黑。';show('vScene');$('#scTitle').textContent=`${cur.n}・${cur.site}`;$('#scTitle').style.color=cur.c;$('#scSub').textContent=`${cur.ago}。撿材料、動手試試，自己想出方法，再完成三個任務。`;if(W3){$('#scene').hidden=true;W3.start(k,cur.tasks.map(t=>({id:t.id,n:t.n,stars:S.st[t.id]||0})),cur.tasks.filter(t=>S.st[t.id]).length,{onTask:openTask,onPick:q=>pick(q),onNear:s=>{const b=$('#wPrompt');b.hidden=!s;if(s){b.dataset.t=s.id;b.textContent=canDo(s.id)?`開始任務：${s.n}　（按 E）`:`還不會「${s.n}」：看提示（按 E）`;}}});craftEnter();}else{$('#scNote').textContent='用手指或滑鼠左右拖曳看看四周，點有名字的圓圈開始任務。';}paint();$('#scene').scrollLeft=0;}
 function paint(){if(cur===MUSEUM)return;const n=cur.tasks.filter(t=>S.st[t.id]).length;
   $('#sceneIn').innerHTML=`<svg viewBox="0 0 1560 440" preserveAspectRatio="none" aria-hidden="true">${SC[cur.k]}<rect width="1560" height="440" fill="#1b2a4a" opacity="${[0,0.14,0.3,0.5][n]}"/>${n===3?'<g fill="#fff"><circle cx="200" cy="50" r="2"/><circle cx="500" cy="30" r="2"/><circle cx="900" cy="44" r="2"/><circle cx="1100" cy="24" r="2"/><circle cx="1450" cy="40" r="2"/></g>':''}</svg>`+cur.tasks.map(t=>`<button class="spot ${S.st[t.id]?'done':''}" style="left:${t.x}%;top:${t.y}%" data-t="${t.id}">${t.n}<small>${S.st[t.id]?stars(S.st[t.id]):'點我開始'}</small></button>`).join('');
   $('#taskList').innerHTML=cur.tasks.map(t=>`<button class="tk" data-t="${t.id}"><b>${t.n}</b><span>${S.st[t.id]?stars(S.st[t.id]):'還沒做'}</span></button>`).join('');
-  $('#guide').hidden=n===3;if(W3&&!$('#w3d').hidden)W3.setDone(cur.tasks.map(t=>S.st[t.id]||0));}
+  $('#guide').hidden=n===3;if(W3&&!$('#w3d').hidden)W3.setDone(cur.tasks.map(t=>S.st[t.id]||0),cur.tasks.map(t=>!canDo(t.id)));hudGoal();}
 function goSpot(id){if(W3&&!$('#w3d').hidden){W3.walkTo(id);$('#w3d').scrollIntoView({block:'center',behavior:'smooth'});return;}const t=cur.tasks.find(t=>t.id===id),sc=$('#scene');sc.scrollTo({left:t.x/100*1560-sc.clientWidth/2,behavior:'smooth'});}
 $('#guide').onclick=()=>{const t=cur.tasks.find(t=>!S.st[t.id]);if(t)goSpot(t.id);};
 let moved=0;
@@ -1238,7 +1334,7 @@ function openTask(id){if(document.fullscreenElement)try{document.exitFullscreen(
   $('#gmGo').onclick=play;$('#gmGo').focus();}
 function play(){try{speechSynthesis.cancel();}catch(e){}$('#gmIntro').hidden=true;$('#gmDone').hidden=true;$('#gmPlay').hidden=false;$('#gmHow').textContent=task.how;stopGame&&stopGame();const my=++runId,finish=n=>{if(my===runId)finishTask(n);};const use3=window.G3&&G3.has(task.id);$('#gcv').hidden=!!use3;$('#gcv3').hidden=!use3;$('#ghud').hidden=!use3;if(use3){$('#gmHow').textContent='';stopGame=G3.run(task.id,finish);}else{$('#ghMsg').hidden=true;$('#ghTray').hidden=true;runGame(a=>G[task.id](a,finish));}}
 let runId=0;
-function finishTask(n){runId++;stopGame&&stopGame();stopGame=null;const best=Math.max(S.st[task.id]||0,n),first=!S.st[task.id];S.st[task.id]=best;save();$('#gmPlay').hidden=true;const d=$('#gmDone');d.hidden=false;
+function finishTask(n){runId++;stopGame&&stopGame();stopGame=null;const best=Math.max(S.st[task.id]||0,n),first=!S.st[task.id];S.st[task.id]=best;S.known[task.id]=1;save();if(first)grant(task.id);$('#gmPlay').hidden=true;const d=$('#gmDone');d.hidden=false;
   d.innerHTML=`<div class="done"><div class="stars" aria-label="${n} 顆星">${stars(n)}</div><p style="font-size:19px;font-weight:700">${['','完成了！再練習一次會更熟練。','做得不錯！','太厲害了，你是高手！'][n]}</p>
    <div class="fact" style="--c:${cur.c}"><b>你剛剛學到的事</b><br>${task.fact}<br><button class="say" data-t="${esc(task.fact)}">唸給我聽</button></div>
    <div class="qq"><b>${task.q.t}</b>${shuffle(task.q.o.map((o,i)=>[o,i])).map(([o,i])=>`<button class="qo" data-i="${i}">${o}</button>`).join('')}<p class="qfb" id="qfb"></p></div>
@@ -1248,6 +1344,173 @@ function finishTask(n){runId++;stopGame&&stopGame();stopGame=null;const best=Mat
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 function closeGm(){runId++;stopGame&&stopGame();stopGame=null;try{speechSynthesis.cancel();}catch(e){}$('#gm').hidden=true;if(cur&&!$('#vScene').hidden)paint();W3&&W3.pause(false);}
 $('#gmX').onclick=closeGm;
+
+/* ---------- discovery layer: gather, try things out, unlock skills (技術會延續) ---------- */
+S.bag=S.bag||{};S.known=S.known||{};S.took=S.took||{};S.sk=S.sk||{};S.fails=S.fails||{};
+Object.keys(S.st).forEach(id=>{S.known[id]=1;});
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TWSVG='<svg viewBox="0 0 169 300" role="img" aria-label="臺灣地圖：從卑南沿著東海岸划到花蓮豐田"><path d="M158,31L155,34L153,35L151,38L147,50L149,59L152,64L151,66L151,70L148,73L150,75L147,77L144,85L139,88L135,86L134,85L132,85L132,85L132,86L130,87L130,89L127,88L123,86L120,86L115,83L111,83L109,82L108,78L111,74L114,70L115,66L117,63L118,59L122,58L125,56L128,55L129,52L129,49L132,47L135,46L137,45L139,43L142,42L144,41L145,39L148,38L149,36L149,33L153,33L156,32L158,31Z M40,98L45,104L49,106L52,107L53,109L53,112L53,113L55,113L56,114L56,115L54,115L55,118L53,119L53,120L54,121L53,122L54,123L54,123L54,124L54,124L54,125L53,125L53,127L53,127L53,128L53,129L53,129L53,130L53,129L53,130L53,130L54,130L54,131L54,131L56,132L57,132L56,134L49,133L42,132L37,130L30,131L22,127L24,125L25,122L27,119L29,115L31,111L33,109L34,108L36,104L36,102L37,101L39,100Z M54,134L55,132L54,130L53,130L53,129L53,127L54,125L54,124L54,122L54,120L54,115L61,115L66,114L67,111L70,106L73,107L75,106L82,105L85,103L90,99L95,97L100,96L104,96L108,96L108,99L105,103L108,109L104,114L104,121L103,124L102,129L101,134L100,137L101,141L100,148L96,151L94,154L92,157L87,159L85,163L83,162L75,161L69,160L68,154L68,150L62,149L58,148L54,148L55,144L54,141L55,137Z M10,157L11,157L11,158L10,158L10,158L10,158L10,158L9,159L9,159L10,159L9,159L9,159L8,159L9,160L9,160L8,160L8,160L8,160L8,160L8,160L8,160L8,160L8,159L7,159L7,159L7,160L7,160L7,160L7,161L6,160L6,161L6,161L6,162L5,162L5,161L5,161L5,162L5,163L6,164L5,164L5,163L4,162L5,160L5,160L6,159L6,159L8,158L8,158L9,157L10,156Z M21,127L32,131L39,131L46,133L54,134L55,138L54,139L54,141L55,142L55,144L54,145L53,147L54,148L55,149L58,148L60,147L61,150L62,151L60,153L57,153L56,152L55,152L55,151L52,151L50,151L48,151L46,150L44,148L43,147L41,147L39,147L38,148L37,148L36,148L35,148L33,149L30,152L28,153L26,154L24,155L23,157L20,158L17,157L16,156L15,153L15,151L15,149L15,147L13,147L15,142L16,140L17,134L18,132L20,129Z M146,18L146,19L146,20L145,19L145,20L145,20L144,20L143,20L142,21L142,21L142,21L142,22L142,23L143,25L143,25L142,25L141,25L140,25L139,24L138,24L136,23L136,23L136,23L134,22L134,22L134,21L133,20L133,19L132,19L132,18L133,18L134,17L136,17L136,16L137,16L138,15L138,15L138,16L139,16L140,16L140,16L141,17L142,16L142,16L143,16L143,16L143,17L144,17L145,17L146,17L146,18Z M127,13L128,13L128,14L128,15L129,16L129,18L130,18L130,19L130,21L131,21L132,22L132,23L131,24L132,25L131,26L132,27L133,27L134,28L135,28L133,28L132,28L131,28L130,28L130,30L130,31L130,32L131,33L130,33L129,33L128,33L127,33L126,32L126,31L125,31L124,31L124,29L123,28L121,29L122,26L122,24L119,21L119,19L120,18L121,17L122,15L123,15L124,14L125,13L126,13L127,12L127,13Z M158,31L154,32L150,33L149,37L145,39L143,42L139,43L136,46L132,47L129,51L127,55L123,57L118,55L116,50L116,45L112,44L110,43L109,39L108,37L108,33L110,32L114,30L115,28L113,26L114,26L113,25L110,24L108,22L106,19L112,18L115,13L120,7L124,5L130,5L134,10L136,12L137,12L138,15L134,17L133,20L136,23L139,25L144,24L142,21L145,20L147,18L150,19L153,20L155,20L156,25L158,28L162,29Z M108,78L109,82L111,83L114,83L118,84L117,88L114,91L112,94L109,96L106,96L104,95L101,96L97,97L94,98L91,99L87,102L85,102L83,105L78,105L74,106L73,108L71,105L69,107L67,110L66,113L65,114L63,116L55,113L53,112L52,108L48,106L44,99L43,93L46,87L49,84L53,78L56,81L58,84L65,88L71,91L76,87L81,87L85,89L87,89L91,88L93,85L96,84L99,82L101,81L103,78L106,79Z M55,182L54,184L53,187L51,189L49,193L46,196L44,199L40,201L40,203L38,205L37,208L35,208L33,209L33,210L32,211L30,211L26,210L24,211L21,209L18,209L16,204L13,200L7,196L8,191L10,185L11,179L13,174L16,175L19,176L22,174L25,171L27,169L29,169L34,167L37,167L38,166L40,167L41,168L43,168L42,169L43,170L44,171L44,172L46,173L45,176L46,179L46,182L49,183L51,181L53,182Z M120,58L118,61L115,64L112,65L111,62L110,59L108,56L106,53L105,50L103,48L101,47L99,46L97,45L95,44L95,42L93,40L91,40L88,39L87,36L86,35L83,35L83,33L85,28L94,23L99,21L102,20L105,21L110,23L109,23L110,24L113,25L113,26L114,26L114,26L114,27L115,28L113,29L113,30L111,32L108,32L108,33L109,36L108,38L109,39L110,41L110,43L111,44L114,43L116,45L118,48L116,51L117,54L120,57Z M103,78L102,80L101,83L99,82L96,84L95,85L93,86L91,88L88,88L87,90L84,89L81,87L78,87L76,90L71,91L67,89L63,87L58,84L56,82L54,80L54,77L56,74L58,70L59,66L61,63L63,61L67,58L71,55L74,53L76,53L77,54L78,55L79,55L80,55L80,56L80,57L81,58L82,59L83,60L85,61L86,63L88,63L89,65L87,68L89,70L88,72L90,73L93,72L97,72L99,72L100,73L102,75L103,78Z M39,157L40,157L40,157L40,158L40,158L40,159L41,159L41,159L41,158L41,158L42,158L42,158L42,159L42,159L43,159L43,159L43,160L44,160L44,160L44,160L44,161L44,161L44,161L43,161L43,162L43,162L43,163L42,162L41,162L40,162L40,162L40,163L40,163L39,163L38,164L38,163L38,163L38,163L38,163L37,162L37,162L36,162L36,162L35,161L35,161L35,161L35,160L35,160L35,160L35,160L35,159L35,159L35,159L35,159L36,158L36,158L36,159L36,158L37,158L38,158L38,158L38,157L38,157L38,157L39,158L39,157L39,157Z M61,149L66,150L68,152L68,156L70,161L76,161L77,162L75,163L72,165L70,167L68,170L66,171L63,173L60,175L57,177L54,176L55,180L53,182L50,182L46,182L45,177L46,173L44,171L43,170L43,168L41,167L39,166L37,167L30,168L26,171L23,173L19,177L13,172L16,168L16,166L16,164L15,161L17,159L15,157L20,158L25,156L28,152L33,149L36,148L38,148L41,147L44,148L49,151L53,151L55,152L58,152L62,151Z M79,161L84,164L84,167L83,171L86,173L83,176L78,180L75,184L73,188L73,195L72,199L69,205L70,211L72,214L68,214L64,213L59,212L55,212L48,216L43,216L40,219L38,232L37,244L30,242L28,240L25,234L25,229L24,225L19,217L19,213L20,209L24,210L30,211L32,210L33,209L36,209L38,204L40,201L44,198L48,195L52,189L54,185L55,180L55,176L57,177L61,175L64,172L67,171L69,169L71,165L74,164L76,162Z M122,280L122,280L123,280L123,280L123,280L124,280L124,280L124,280L124,280L125,280L125,280L126,280L126,280L126,280L127,280L127,280L127,280L127,280L127,280L127,281L127,281L127,281L127,282L128,282L128,282L127,282L127,282L127,283L127,283L127,284L127,284L127,284L127,284L127,284L128,284L129,285L129,285L129,285L129,285L129,285L130,285L130,285L130,286L130,286L130,286L130,286L129,287L129,287L129,287L128,287L128,287L128,287L128,287L128,287L128,287L127,287L127,287L127,286L127,286L127,286L127,286L126,285L126,285L126,285L126,285L125,285L125,285L125,285L125,285L124,284L124,284L124,284L123,284L123,284L123,283L123,283L123,283L123,283L123,283L123,283L123,283L123,283L123,282L122,282L122,282L123,282L123,282L123,281L123,281L122,281L122,281L122,280L122,280L122,280L122,280Z M72,215L69,210L69,203L73,198L74,192L75,187L76,181L81,177L87,177L89,181L94,184L99,188L104,192L108,192L108,186L110,183L111,180L113,174L115,170L115,166L118,164L121,166L119,173L117,176L116,182L114,188L115,191L113,193L110,198L108,202L105,206L101,213L97,216L98,219L90,227L82,238L75,257L72,267L69,265L67,263L66,260L64,256L64,252L65,249L64,244L63,237L66,229L70,227L74,224L75,218Z M118,84L124,86L129,89L130,87L132,86L132,84L134,85L137,87L142,91L134,100L131,112L130,120L129,130L127,139L125,145L122,156L122,161L118,163L115,166L116,171L112,176L111,180L109,185L108,188L105,192L102,190L97,184L91,182L87,178L86,175L83,172L83,168L84,164L86,161L90,157L94,156L95,151L99,150L101,143L101,137L99,135L101,131L103,126L104,122L103,116L106,110L107,105L106,100L110,97L112,92L117,88Z M77,55L77,54L77,54L76,54L76,54L76,54L76,53L75,52L75,53L74,53L73,53L73,52L73,52L74,50L74,50L74,49L74,49L74,48L75,46L75,44L76,44L76,43L76,43L77,42L78,43L78,44L80,44L81,44L82,45L83,45L84,46L85,47L84,48L84,48L84,48L85,49L85,49L85,49L85,50L85,50L85,51L84,50L84,50L82,49L81,49L82,50L81,50L81,50L80,50L80,51L80,51L79,51L79,52L79,52L78,52L78,53L78,53L78,53L78,54L78,54L78,54Z M114,65L114,69L113,72L109,75L107,79L103,79L102,76L100,73L98,72L94,72L90,73L88,71L88,69L89,66L87,62L85,62L83,60L82,59L81,57L80,56L80,55L79,55L78,54L78,53L79,51L81,50L83,49L85,50L84,48L83,46L79,44L78,41L82,36L84,35L86,35L87,37L89,39L91,40L94,40L95,42L95,44L96,45L99,46L100,47L103,48L104,49L107,51L106,56L109,58L110,60L111,63L113,65Z M37,247L39,235L40,226L41,216L43,216L47,216L54,212L56,213L60,212L64,213L66,214L70,214L72,216L75,218L74,222L73,226L70,227L66,228L63,234L62,240L64,245L65,248L65,252L63,253L64,257L67,260L66,263L67,265L70,266L72,267L74,268L74,274L75,278L74,286L70,289L72,295L69,294L67,292L63,291L63,292L60,293L58,287L59,283L59,280L60,277L59,274L57,269L56,266L54,261L49,255L38,247Z" class="jt-land"/><path d="M91.2,222.0L99.8,218.6L114.0,194.6L124.2,165.4L132.1,132.9L126.6,127.7" class="jt-route"/><circle cx="91.2" cy="220.3" r="4.5" class="jt-pt"/><text x="83.2" y="224.3" text-anchor="end" class="jt-tx">卑南</text><circle cx="121.8" cy="128.6" r="4.5" class="jt-pt"/><text x="113.8" y="132.6" text-anchor="end" class="jt-tx">豐田（玉）</text><circle cx="114.0" cy="17.1" r="4.5" class="jt-pt dim"/><text x="106.0" y="21.1" text-anchor="end" class="jt-tx dim">十三行</text><circle cx="121.1" cy="167.1" r="4.5" class="jt-pt dim"/><text x="113.1" y="171.1" text-anchor="end" class="jt-tx dim">八仙洞</text><circle r="6" id="jtBoat" class="jt-boat"><animateMotion dur="2.3s" fill="freeze" begin="indefinite" path="M91.2,222.0L99.8,218.6L114.0,194.6L124.2,165.4L132.1,132.9L126.6,127.7"/></circle></svg>';
+const IT={
+ stone:{n:'石頭',c:'#7d776c',d:'河邊和海邊的石頭，又硬又重。'},
+ branch:{n:'樹枝',c:'#7a5230',d:'林子裡撿的乾樹枝。'},
+ grass:{n:'乾草',c:'#b39b3c',d:'曬乾的草，一點火星就會燒起來。'},
+ shell:{n:'貝殼',c:'#c99c8a',d:'海邊撿的貝類，裡面的肉可以吃。'},
+ fruit:{n:'野果',c:'#c8433a',d:'林子裡的野果，可以直接吃。'},
+ fish:{n:'魚',c:'#3f7fa6',d:'用長矛抓到的魚。'},
+ chopper:{n:'打製石器',c:'#8a6a44',d:'用石頭敲出銳利邊緣的工具。'},
+ whet:{n:'磨石',c:'#a8895a',d:'扁平的砂岩，加水就能把石頭磨光。'},
+ adze:{n:'磨製石器',c:'#5f6f62',d:'磨得光滑又鋒利的石斧、石鋤。'},
+ clay:{n:'黏土',c:'#a8673d',d:'河邊又黏又軟的泥土。'},
+ greenware:{n:'陶坯',c:'#c08a5a',d:'捏成罐子形狀、還沒燒過的泥土。'},
+ pot:{n:'陶罐',c:'#9a4f2a',d:'燒硬的罐子，可以煮東西、裝食物。'},
+ wmillet:{n:'野生小米',c:'#c9a640',d:'草地上長的小米，穗子裡有種子。'},
+ millet:{n:'小米',c:'#e0b43a',d:'自己種出來的小米。'},
+ piglet:{n:'小野豬',c:'#5a4032',d:'在草地上亂跑的小野豬。'},
+ jaderaw:{n:'玉料',c:'#4f8f6a',d:'從花蓮豐田帶回來的綠色石頭。'},
+ jade:{n:'玉耳飾',c:'#2f7a55',d:'用玉料磨成的耳飾，像卑南遺址的人獸形玉耳飾。'},
+ hide:{n:'獸皮',c:'#a07850',d:'打獵得到的獸皮，可以拿來交換。'},
+ ironsand:{n:'鐵砂',c:'#3a3633',d:'海邊黑色的沙，裡面有鐵。'},
+ charcoal:{n:'木炭',c:'#2b2b2b',d:'悶燒樹枝做成的燃料，比木頭燒得更熱。'},
+ method:{n:'煉鐵的方法',c:'#0072B2',d:'外地人教你的：鐵砂加木炭，用力送風。'},
+ beads:{n:'玻璃珠和瑪瑙珠',c:'#5aa0d8',d:'用東西跟外地人換來的漂亮珠子。'},
+ iron:{n:'鐵塊',c:'#5b6670',d:'煉出來的鐵，可以打成工具。'},
+ slag:{n:'鐵渣',c:'#4a3f3a',d:'煉鐵剩下的渣，考古學家靠它知道這裡煉過鐵。'},
+ ironaxe:{n:'鐵斧',c:'#44515c',d:'又硬又鋒利的鐵斧。'}};
+const ACTS=[['knock','敲'],['grind','磨'],['drill','鑽'],['tie','綁'],['shape','捏'],['burn','燒'],['plant','種'],['feed','餵']];
+const ACTN=Object.fromEntries(ACTS);
+// recipes: idea → unlocks a hands-on task; after that task is done, the same recipe makes the product directly
+const RCP=[
+ {id:'knap',a:['stone','stone'],act:'knock',use:{stone:2},task:'knap',prod:{chopper:1},say:'石頭敲出了一道銳利的邊緣！到發光的「敲打石器」那裡，親手敲一把好用的石器吧。'},
+ {id:'food',a:['chopper','branch'],act:'tie',need:'knap',use:{branch:1},task:'food',say:'尖尖的石器綁在樹枝上，變成一支長矛！到「找食物」那裡試試。'},
+ {id:'fire',a:['branch','grass'],act:'drill',need:'knap',use:{branch:1,grass:1},task:'fire',say:'用打製石器在樹枝上刻出凹槽，再用力鑽，乾草冒煙了！到「生火」那裡把火生起來。'},
+ {id:'grind',a:['chopper','whet'],act:'grind',need:'knap',use:{chopper:1},task:'grind',prod:{adze:1},say:'加點水在磨石上磨，石器的邊變得又光又亮。到「磨製石器」那裡好好磨一把。'},
+ {id:'farm',a:['wmillet','adze'],act:'plant',need:'grind',use:{wmillet:1},task:'farm',prod:{millet:2},say:'用磨製石鋤翻土，把小米種子埋下去。到「種小米」那裡顧好你的田。'},
+ {id:'greenware',a:['clay'],act:'shape',use:{clay:1},make:{greenware:1},say:'你把黏土搓成長條、一圈一圈疊成罐子的樣子。這叫「陶坯」，但它還很軟。'},
+ {id:'pot',a:['greenware'],act:'burn',need:'fire',use:{greenware:1},task:'pot',prod:{pot:1},say:'陶坯放進火裡，燒得硬梆梆的！到「做陶罐」那裡做一個完整的陶罐。'},
+ {id:'jade',a:['jaderaw','whet'],act:'grind',need:'grind',use:{jaderaw:1},make:{jade:1},skill:'jade',say:'玉料很硬，你磨了好久好久，終於磨出一個玉耳飾。'},
+ {id:'herd',a:['piglet','millet'],act:'feed',need:'farm',use:{piglet:1,millet:1},skill:'herd',say:'小野豬跟著小米一路走回家，住進了你做的豬圈。這就是「畜養動物」。'},
+ {id:'charcoal',a:['branch','clay'],act:'burn',need:'fire',use:{branch:2,clay:1},make:{charcoal:2},say:'用泥土蓋住樹枝，讓它悶著燒，不會燒成灰，變成了黑黑的木炭。'},
+ {id:'smelt',a:['ironsand','charcoal'],act:'burn',need:'trade',needItem:'method',use:{ironsand:1,charcoal:1},task:'smelt',prod:{iron:1,slag:1},say:'照外地人教的方法：鐵砂加木炭，再用力送風。到「煉鐵」那裡把火控制好！'},
+ {id:'chop',a:['iron','branch'],act:'knock',need:'smelt',use:{iron:1,branch:1},task:'chop',prod:{ironaxe:1},say:'把燒紅的鐵塊敲成斧頭，裝上木柄。到「試試鐵斧」那裡比比看。'}];
+const NEED_N={knap:'打製石器',fire:'生火',grind:'磨製石器',farm:'種小米',trade:'和外地人交易',smelt:'煉鐵'};
+const NOPE=[
+ [['shell','stone'],'knock','貝殼一敲就碎了，太脆，做不成工具。試試更硬的東西。'],
+ [['stone','branch'],'knock','樹枝被敲斷了。兩樣東西要一樣硬才敲得出銳利的邊。'],
+ [['stone'],'grind','沒有磨石，磨不動。到河邊找找扁平的砂岩。'],
+ [['chopper'],'grind','沒有磨石，磨不動。到河邊找找扁平的砂岩。'],
+ [['clay'],'burn','一團泥土燒完還是一團。先把它「捏」成罐子的樣子。'],
+ [['branch'],'burn','樹枝直接燒，最後只剩一堆灰。如果把它蓋起來悶著燒呢？'],
+ [['ironsand'],'burn','只有鐵砂，燒了也沒變化。還少了什麼？'],
+ [['ironsand','branch'],'burn','樹枝燒得不夠熱，鐵砂一點都沒變。要先做出更熱的燃料。'],
+ [['wmillet'],'plant','地面太硬了，種子撒下去就被小鳥吃掉。要先用工具翻土。'],
+ [['wmillet','chopper'],'plant','打製石器太粗，翻不動土。把它磨得更光滑、更鋒利吧。'],
+ [['branch','branch'],'drill','樹枝冒了一點熱，可是沒有東西接住火星。再加一樣很容易燒起來的東西。'],
+ [['stone','branch'],'tie','鈍鈍的石頭綁在樹枝上，戳不進魚的身體。石頭要先變尖。'],
+ [['piglet'],'feed','小野豬聞了聞你的手就跑開了。要拿牠愛吃的東西。'],
+ [['piglet','fruit'],'feed','小野豬吃完野果就跑回林子裡了。要有一直吃得到的食物，牠才會留下來。']];
+const tradeGoods=()=>['hide','pot','jade'].reduce((a,k)=>a+(S.bag[k]||0),0);
+const canDo=id=>!!S.st[id]||(id==='trade'?tradeGoods()>=2:!!S.known[id]);
+const has=(o)=>Object.entries(o||{}).every(([k,n])=>(S.bag[k]||0)>=n);
+const add=(o,sign=1)=>{for(const [k,n] of Object.entries(o||{})){S.bag[k]=Math.max(0,(S.bag[k]||0)+sign*n);if(!S.bag[k])delete S.bag[k];}};
+const itn=o=>Object.entries(o).map(([k,n])=>`${IT[k].n}${n>1?' ×'+n:''}`).join('、');
+const skillOn=k=>({gather:!!S.sk.gather||!!S.st.food,food:!!S.st.food,fire:!!S.st.fire,knap:!!S.st.knap,grind:!!S.st.grind,pot:!!S.st.pot,farm:!!S.st.farm,herd:!!S.sk.herd,jade:!!S.sk.jade,trade:!!S.st.trade,smelt:!!S.st.smelt})[k];
+const RESDEF={
+ old:[{it:'stone',n:8,where:'shore',label:'石頭'},{it:'branch',n:8,where:'land',label:'樹枝'},{it:'grass',n:6,where:'land',label:'乾草'},{it:'shell',n:8,where:'beach',label:'貝殼',once:1},{it:'fruit',n:6,where:'land',label:'野果',once:1}],
+ neo:[{it:'stone',n:6,where:'shore',label:'石頭'},{it:'branch',n:6,where:'land',label:'樹枝'},{it:'grass',n:4,where:'land',label:'乾草'},{it:'clay',n:6,where:'shore',label:'黏土'},{it:'whet',n:3,where:'shore',label:'磨石'},{it:'wmillet',n:5,where:'land',label:'野生小米'},{it:'piglet',n:1,where:'land',label:'小野豬',once:1},{it:'canoe',n:1,where:'beach',label:'獨木舟',special:1,r:60}],
+ iron:[{it:'branch',n:8,where:'land',label:'樹枝'},{it:'clay',n:5,where:'shore',label:'黏土'},{it:'stone',n:4,where:'shore',label:'石頭'},{it:'ironsand',n:6,where:'beach',label:'鐵砂'},{it:'whet',n:2,where:'shore',label:'磨石'},{it:'hide',n:3,where:'land',label:'獸皮',once:1}]};
+const GOALS={
+ old:[{t:'撿 2 顆石頭',ok:()=>(S.bag.stone||0)>=2||S.known.knap,h:['石頭在河邊和海邊，走過去就會撿起來。']},
+  {t:'動手試試：讓石頭變得銳利',ok:()=>S.known.knap,h:['按「動手試試」，選兩顆石頭，再選一種動作。','石頭要怎麼變尖？用另一顆石頭用力……']},
+  {t:'到「敲打石器」親手做一把',ok:()=>S.st.knap,go:'knap'},
+  {t:'做一支能抓魚的長矛',ok:()=>S.known.food,h:['長矛要用到你剛做的打製石器，還有一根樹枝。','尖尖的石器要怎麼固定在樹枝上？']},
+  {t:'到「找食物」抓魚、撿貝殼',ok:()=>S.st.food,go:'food'},
+  {t:'天黑以前想辦法生火',ok:()=>S.known.fire,h:['生火要用到樹枝和一樣很容易燒的東西。','古人讓木頭和木頭用力摩擦，越轉越熱……']},
+  {t:'到「生火」把火生起來',ok:()=>S.st.fire,go:'fire'}],
+ neo:[{t:'把打製石器磨得更好用',ok:()=>S.known.grind,h:['背包裡沒有打製石器？用兩顆石頭再敲一個。','河邊有扁平的砂岩（磨石）。選石器和磨石，動作是……']},
+  {t:'到「磨製石器」磨一把石斧',ok:()=>S.st.grind,go:'grind'},
+  {t:'把野生小米種下去',ok:()=>S.known.farm,h:['草地上找得到野生小米。','翻土要用磨得鋒利的工具。']},
+  {t:'到「種小米」顧好你的田',ok:()=>S.st.farm,go:'farm'},
+  {t:'做一個能裝小米的罐子',ok:()=>S.known.pot,h:['河邊的黏土可以用。','泥土要先「捏」成形，再想辦法讓它變硬。']},
+  {t:'到「做陶罐」做一個完整的陶罐',ok:()=>S.st.pot,go:'pot'},
+  {t:'（挑戰）養一隻小野豬',ok:()=>S.sk.herd,side:1,h:['草地上有一隻小野豬。','拿你種出來的東西給牠吃。']},
+  {t:'（挑戰）划獨木舟到花蓮豐田找玉，磨成玉耳飾',ok:()=>S.sk.jade,side:1,h:['海邊有一艘獨木舟，走過去就能出發。','玉很硬，要用磨石慢慢磨。']}],
+ iron:[{t:'準備 2 樣東西去河口交易',ok:()=>tradeGoods()>=2||S.st.trade,h:['可以拿去換的：陶罐、獸皮、玉耳飾。','沒有陶罐？用黏土捏、再燒。林子裡有獸皮。']},
+  {t:'到「和外地人交易」',ok:()=>S.st.trade,go:'trade'},
+  {t:'照外地人教的方法，先做木炭',ok:()=>(S.bag.charcoal||0)>0||S.known.smelt,h:['樹枝直接燒會變成灰。','如果用黏土把樹枝蓋住再燒呢？']},
+  {t:'試著把鐵砂煉成鐵',ok:()=>S.known.smelt,h:['海邊黑色的沙就是鐵砂。','鐵砂要和更熱的燃料一起燒。']},
+  {t:'到「煉鐵」把爐溫控制好',ok:()=>S.st.smelt,go:'smelt'},
+  {t:'把鐵塊打成鐵斧',ok:()=>S.known.chop,h:['鐵塊和一根當柄的樹枝。','燒紅的鐵要用力……']},
+  {t:'到「試試鐵斧」比比看',ok:()=>S.st.chop,go:'chop'}]};
+const curGoal=()=>{const L=GOALS[cur&&cur.k]||[];return L.find(g=>!g.ok()&&!g.side)||L.find(g=>!g.ok())||null;};
+let toastT=0;function toast(m){const t=$('#wToast');t.innerHTML=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3600);}
+function hudGoal(){const el=$('#wGoal');if(!el||!cur||!GOALS[cur.k])return;const g=curGoal(),L=GOALS[cur.k],n=L.filter(x=>x.ok()).length;
+  const f=S.fails[cur.k]||0,h=g&&g.h?g.h.slice(0,Math.min(g.h.length,f>=2?2:1)):[];
+  el.innerHTML=g?`<span class="wg-k">筆記 ${n}/${L.length}</span><b>${g.t}</b>${h.map(x=>`<span>${x}</span>`).join('')}`:`<span class="wg-k">筆記 ${n}/${L.length}</span><b>這個時代的事都完成了！</b>`;
+  $('#btnBag').textContent=`背包 ${Object.values(S.bag).reduce((a,b)=>a+b,0)}`;}
+function craftEnter(){if(!W3||!RESDEF[cur.k])return;const defs=RESDEF[cur.k].map(d=>Object.assign({},d,{n:d.once?Math.max(0,d.n-(S.took[cur.k+d.it]||0)):d.n})).filter(d=>d.n>0&&!(d.it==='canoe'&&S.sk.jade));W3.spawnRes(defs);$('#wHud').hidden=false;hudGoal();}
+function pick(q){if(q.it==='canoe'){jadeTrip();return;}add({[q.it]:1});const d=(RESDEF[cur.k]||[]).find(d=>d.it===q.it);if(d&&d.once)S.took[cur.k+q.it]=(S.took[cur.k+q.it]||0)+1;
+  if((q.it==='shell'||q.it==='fruit')&&!S.sk.gather&&((S.bag.shell||0)+(S.bag.fruit||0)>=3)){S.sk.gather=1;toast('你學會了<b>採集</b>：在海邊撿貝殼、在林子裡摘野果。');}
+  else toast(`撿到 <b>${IT[q.it].n}</b>。${IT[q.it].d}`);
+  if(cur.k==='old'&&d&&d.once&&(S.took.oldshell||0)>=8&&(S.took.oldfruit||0)>=6&&!S.sk.moved){S.sk.moved=1;setTimeout(()=>toast('這附近的貝殼和野果都撿光了。舊石器時代的人就是這樣：<b>食物吃完了，就要搬到別的地方</b>。'),3800);}
+  sfx.good&&sfx.good();save();hudGoal();paint();}
+/* workbench */
+let wbSel=[],wbAct='';
+function wbOpen(){W3&&W3.pause(true);$('#wb').hidden=false;wbSel=[];wbAct='';wbDraw();$('#wbRes').innerHTML=`<p>選 1～2 樣東西，再選一種做法，按「試試看」。</p>`;setTimeout(()=>$('#wb .x').focus(),30);}
+function wbDraw(){const ids=Object.keys(S.bag).filter(k=>S.bag[k]>0&&IT[k]);
+  $('#wbBag').innerHTML=ids.length?ids.map(k=>{const n=S.bag[k],used=wbSel.filter(x=>x===k).length;return `<button class="itm${used?' on':''}" data-k="${k}" aria-pressed="${!!used}" style="--c:${IT[k].c}"><i aria-hidden="true">${IT[k].n[0]}</i><span>${IT[k].n}</span><em>${n}${used?`（選了 ${used}）`:''}</em></button>`;}).join(''):'<p class="note">背包是空的。在世界裡走到東西旁邊就會撿起來。</p>';
+  $('#wbActs').innerHTML=ACTS.map(([k,n])=>`<button class="act${wbAct===k?' on':''}" data-a="${k}" aria-pressed="${wbAct===k}">${n}</button>`).join('');
+  $('#wbPick').textContent=wbSel.length?wbSel.map(k=>IT[k].n).join(' ＋ ')+(wbAct?`　→　${ACTN[wbAct]}`:''):'還沒選';$('#wbGo').disabled=!wbSel.length||!wbAct;}
+$('#wbBag')&&$('#wbBag').addEventListener('click',e=>{const b=e.target.closest('.itm');if(!b)return;const k=b.dataset.k,used=wbSel.filter(x=>x===k).length;
+  if(used&&(used>=S.bag[k]||wbSel.length>=2)){wbSel=wbSel.filter(x=>x!==k);}else if(wbSel.length<2)wbSel.push(k);else{wbSel=[wbSel[1],k];}wbDraw();});
+$('#wbActs')&&$('#wbActs').addEventListener('click',e=>{const b=e.target.closest('.act');if(!b)return;wbAct=b.dataset.a;wbDraw();});
+const same=(a,b)=>a.length===b.length&&a.slice().sort().join()===b.slice().sort().join();
+function wbTry(){const sel=wbSel.slice(),act=wbAct,r=RCP.find(r=>same(r.a,sel)&&r.act===act),out=$('#wbRes');let ok=false,msg='';
+  if(!r){const n=NOPE.find(n=>same(n[0],sel)&&n[1]===act);msg=n?n[2]:'好像沒有什麼變化。換個組合或做法試試看。';if(act==='burn'&&!S.st.fire&&!S.known.fire)msg='你還沒有火。先想辦法生火吧。';}
+  else if(r.need&&!(r.need==='trade'?S.st.trade:S.st[r.need])&&!(r.need==='fire'&&S.st.fire)){msg=`你好像想到什麼了，可是還不會「${NEED_N[r.need]}」。技術要一步一步學：先把「${NEED_N[r.need]}」學會吧。`;if(r.id==='smelt')msg='鐵砂和木炭放在一起燒，什麼都沒發生。你不知道該怎麼做……也許從海外來的人會知道。';}
+  else if(r.needItem&&!S.bag[r.needItem])msg='你不知道該怎麼做……也許從海外來的人會知道。';
+  else if(!has(r.use))msg=`材料不夠：需要 ${itn(r.use)}。`;
+  else{ok=true;add(r.use,-1);
+    if(r.task&&!S.st[r.task]){const first=!S.known[r.task];S.known[r.task]=1;msg=(first?'<b>你發現了一個新方法！</b><br>':'')+r.say;}
+    else if(r.task){add(r.prod||{});msg=r.prod?`你已經很熟練了，做出了 <b>${itn(r.prod)}</b>。`:'你已經會了，到發光的光柱那裡再做一次吧。';}
+    else{add(r.make||{});if(r.skill)S.sk[r.skill]=1;msg=`<b>${itn(r.make||{})}${r.skill?'':''}</b><br>${r.say}`;if(r.skill)msg=r.say+(r.make?`<br>得到 <b>${itn(r.make)}</b>。`:'');}}
+  if(!ok){S.fails[cur.k]=(S.fails[cur.k]||0)+1;sfx.bad&&sfx.bad();}else{S.fails[cur.k]=0;sfx.good&&sfx.good();}
+  out.innerHTML=`<p class="${ok?'ok':'no'}">${msg}</p>`;save();wbSel=[];wbAct='';wbDraw();hudGoal();paint();}
+$('#wbGo')&&($('#wbGo').onclick=wbTry);
+function wbClose(){$('#wb').hidden=true;W3&&W3.pause(false);paint();}
+$('#wbX')&&($('#wbX').onclick=wbClose);
+/* bag (read-only list with descriptions) */
+function bagOpen(){W3&&W3.pause(true);$('#bg').hidden=false;const ids=Object.keys(S.bag).filter(k=>IT[k]);$('#bgList').innerHTML=ids.length?ids.map(k=>`<div class="bgi" style="--c:${IT[k].c}"><i aria-hidden="true">${IT[k].n[0]}</i><div><b>${IT[k].n} ×${S.bag[k]}</b><span>${IT[k].d}</span></div></div>`).join(''):'<p class="note">背包是空的。在世界裡走到發光的東西旁邊，就會撿起來。</p>';}
+$('#bgX')&&($('#bgX').onclick=()=>{$('#bg').hidden=true;W3&&W3.pause(false);});
+/* skill chart, laid out like the textbook's 「器物製作與生活技能」 diagram */
+const SKC=[['器物製作',[['knap','打製石器'],['grind','磨製石器'],['pot','製作陶罐'],['jade','玉器'],['smelt','製作鐵器']]],['生活技能',[['fire','使用火'],['gather','採集'],['food','漁獵'],['farm','農耕'],['herd','畜養動物'],['trade','對外貿易']]]];
+const SKERA={old:['knap','fire','gather','food'],neo:['knap','grind','pot','jade','fire','gather','food','farm','herd'],iron:['knap','grind','pot','jade','smelt','fire','gather','food','farm','herd','trade']};
+function skOpen(){W3&&W3.pause(true);$('#sk').hidden=false;const rows=['iron','neo','old'].map(k=>{const e=ERAS.find(e=>e.k===k),prev=k==='iron'?SKERA.neo:k==='neo'?SKERA.old:[];
+   return `<div class="skr" style="--c:${e.c}"><div class="skh"><b>${e.n}</b><span>${e.ago}</span></div>${SKC.map(([g,L])=>`<div class="skg"><span class="skgn">${g}</span><div>${L.filter(([id])=>SKERA[k].includes(id)).map(([id,n])=>{const on=skillOn(id),old=prev.includes(id);return `<span class="skc${on?' on':''}${old?' cont':''}">${on?'':'？ '}${n}${old?'<small>延續</small>':''}</span>`;}).join('')}</div></div>`).join('')}</div>`;}).join('');
+  const n=Object.keys(SKERA.iron).length,on=SKERA.iron.filter(skillOn).length;
+  $('#skBody').innerHTML=`<p class="note">學會一項，格子就會亮起來。標著「延續」的，是上一個時代就會、這個時代還在用的本領。（${on} / ${SKERA.iron.length}）</p>${rows}<div class="skq"><b>想一想</b><br>為什麼不能一開始就煉鐵？煉鐵要用到火、要有陶土做的爐子，方法還是從海外的人學來的。技術大多是在前人的基礎上，一步一步進步的。</div>`;void n;}
+$('#skX')&&($('#skX').onclick=()=>{$('#sk').hidden=true;W3&&W3.pause(false);});
+/* jade trip to 豐田 */
+function jadeTrip(){W3&&W3.pause(true);$('#jt').hidden=false;const b=$('#jtBody');
+  b.innerHTML=`<div class="jt-map">${TWSVG}</div><div class="jt-side"><p>卑南的人用的玉，原料大多來自<b>花蓮豐田</b>一帶。要不要划獨木舟沿著海岸往北，去找玉料？</p><p class="note">考古學家在臺灣各地，還有東南亞的遺址，都找到用豐田玉做的飾品。</p><button class="bigbtn" id="jtGo">出發去豐田</button></div>`;
+  $('#jtGo').onclick=()=>{const am=$('#jtBoat animateMotion');try{am.beginElement();}catch(e){}$('#jtGo').disabled=true;
+    setTimeout(()=>{add({jaderaw:2});save();hudGoal();b.querySelector('.jt-side').innerHTML=`<p><b>你在豐田找到了 2 塊玉料！</b></p><p>玉非常硬，要回到部落，用<b>磨石</b>慢慢磨。</p><button class="bigbtn" id="jtBack">划回卑南</button>`;$('#jtBack').onclick=jtClose;$('#jtBack').focus();},RM?200:2400);};}
+function jtClose(){$('#jt').hidden=true;W3&&W3.pause(false);}
+$('#jtX')&&($('#jtX').onclick=jtClose);
+/* hands-on tasks: locked until you've worked out how; products go into the bag */
+const LOCKTXT={food:'你還不知道要怎麼抓魚。光用手抓不到！先做一支長矛：想想要用哪兩樣東西，怎麼把它們接在一起。',knap:'你還沒想到怎麼做石器。先撿兩顆石頭，到「動手試試」試試看。',fire:'你還沒想到怎麼生火。撿一些樹枝和乾草，到「動手試試」試試看。',
+ grind:'你還沒想到怎麼把石器變得更好用。找一塊扁平的磨石，到「動手試試」試試看。',farm:'你還沒想到怎麼種小米。找到野生小米，再想想要用什麼工具翻土。',pot:'你還沒想到怎麼做陶罐。先找黏土，到「動手試試」試試看。',
+ trade:'外地人想要好東西才肯交換。背包裡要有 2 樣可以換的東西：陶罐、獸皮或玉耳飾。',smelt:'你還不知道怎麼煉鐵。也許外地來的人知道方法。',chop:'你還沒有鐵斧。先煉出鐵塊，再把它打成斧頭。'};
+const GRANT={food:{fish:2},knap:{chopper:1},grind:{adze:1},farm:{millet:4},pot:{pot:2},smelt:{iron:1,slag:1},chop:{ironaxe:1}};
+const _openTask=openTask;
+openTask=function(id){const t=cur&&cur.tasks&&cur.tasks.find(t=>t.id===id);if(cur&&cur!==MUSEUM&&t&&!canDo(id)){if(document.fullscreenElement)try{document.exitFullscreen();}catch(e){}W3&&W3.pause(true);task=t;$('#gm').hidden=false;$('#gmT').textContent=`${cur.n}：${t.n}`;$('#gmPlay').hidden=true;$('#gmDone').hidden=true;$('#gmIntro').hidden=false;
+   $('#gmIntro').innerHTML=`<div class="intro"><p>${t.intro}</p><div class="fact" style="--c:${cur.c}"><b>還不會做</b><br>${LOCKTXT[id]}</div><div class="row"><button class="bigbtn" id="lkWb">打開「動手試試」</button><button class="bigbtn alt" id="lkBack">先去找材料</button></div></div>`;
+   $('#lkWb').onclick=()=>{$('#gm').hidden=true;wbOpen();};$('#lkBack').onclick=closeGm;$('#lkWb').focus();return;}
+  _openTask(id);};
+function grant(id){add(GRANT[id]||{});if(id==='trade'){let need=2;for(const k of ['hide','pot','jade']){while(need&&(S.bag[k]||0)>0){add({[k]:1},-1);need--;}}add({beads:2,method:1});}save();
+  const g=GRANT[id]||(id==='trade'?{beads:2,method:1}:null);if(g)setTimeout(()=>toast(`放進背包：<b>${itn(g)}</b>${id==='trade'?'。外地人還教了你<b>煉鐵的方法</b>！':''}`),400);}
+$('#btnBag')&&($('#btnBag').onclick=bagOpen);$('#btnWb')&&($('#btnWb').onclick=wbOpen);$('#btnSk')&&($('#btnSk').onclick=skOpen);$('#btnSk2')&&($('#btnSk2').onclick=skOpen);
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#wb').hidden)wbClose();else if(!$('#bg').hidden){$('#bg').hidden=true;W3&&W3.pause(false);}else if(!$('#sk').hidden){$('#sk').hidden=true;W3&&W3.pause(false);}else if(!$('#jt').hidden)jtClose();});
+
 function night(){sfx.win();const s=eraStars(cur),i=ERAS.indexOf(cur);$('#nt').hidden=false;$('#ntBox').innerHTML=`<div class="night" style="--c:${cur.c}"><div class="moon" aria-hidden="true">🌙</div><h3 style="font-size:26px">${cur.n}的一天結束了</h3><p style="font-size:18px">${cur.night}</p>
   <div class="bdgbig">徽章：${cur.badge}</div><p class="stars" style="margin-top:8px">${s} / 9 ★</p><ul>${cur.tasks.map(t=>`<li>${t.row[1]}</li>`).join('')}</ul>
   <div class="row" style="justify-content:center;margin-top:14px"><button class="bigbtn alt" id="ntTb">看比較表</button><button class="bigbtn" id="ntGo">${i<2?`前往${ERAS[i+1].n} →`:'回到現在，當考古學家 →'}</button></div></div>`;
@@ -1298,7 +1561,7 @@ $('#go').onclick=()=>{S.name=($('#nm').value||'').trim().slice(0,10)||'探險家
 $('#nm').addEventListener('keydown',e=>{if(e.key==='Enter')$('#go').click();});
 let rs=0;$('#reset').onclick=function(){if(!rs){rs=1;this.textContent='真的要清除嗎？再點一次確定';return;}S={name:'',st:{},dig:0,sound:S.sound};save();location.reload();};
 if(S.name&&Object.keys(S.st).length)hub();
-window.__tm={museum,exhibit,S,G,finish:n=>finishTask(n),openTask,play,scene,hub,dig,cert};
+window.__tm={cr:{jadeTrip,pick,wbOpen,skOpen,canDo},museum,exhibit,S,G,finish:n=>finishTask(n),openTask,play,scene,hub,dig,cert};
 document.body.dataset.ready='1';
 })();
 </script>
